@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bordro Hesaplama</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="top-info">
+            <div class="info-group">
+                <label for="aySecimi">Vergi İstisnası Ayı:</label>
+                <select id="aySecimi">
+                    <option value="ocak">Ocak</option>
+                    <option value="subat">Şubat</option>
+                    <option value="mart">Mart</option>
+                    <option value="nisan">Nisan</option>
+                    <option value="mayis">Mayıs</option>
+                    <option value="haziran">Haziran</option>
+                    <option value="temmuz">Temmuz</option>
+                    <option value="agustos">Ağustos</option>
+                    <option value="eylul">Eylül</option>
+                    <option value="ekim">Ekim</option>
+                    <option value="kasim">Kasım</option>
+                    <option value="aralik">Aralık</option>
+                </select>
+            </div>
+            <div class="info-group">
+                <label for="vergiDilimi">Vergi Dilimi:</label>
+                <select id="vergiDilimi">
+                    <option value="15">15%</option>
+                    <option value="20">20%</option>
+                    <option value="27">27%</option>
+                    <option value="35">35%</option>
+                    <option value="40">40%</option>
+                </select>
+            </div>
+        </div>
+        
+        <h2>Bordro Hesaplama</h2>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <label for="saatlikUcret">Saatlik Ücret (TL)</label>
+                <input type="number" id="saatlikUcret" placeholder="Örn: 200">
+            </div>
+            <div class="input-group">
+                <label for="normalCalisma">Normal Çalışma Saati</label>
+                <input type="number" id="normalCalisma" placeholder="Örn: 225">
+            </div>
+            <div class="input-group">
+                <label for="haftaIciMesai">Hafta İçi Mesai Saati</label>
+                <input type="number" id="haftaIciMesai" placeholder="Örn: 10">
+            </div>
+            <div class="input-group">
+                <label for="geceVardiyasi">Gece Vardiyası Saati</label>
+                <input type="number" id="geceVardiyasi" placeholder="Örn: 8">
+            </div>
+            <div class="input-group">
+                <label for="ulusalBayram">Ulusal Bayram Mesaisi</label>
+                <input type="number" id="ulusalBayram" placeholder="Örn: 8">
+            </div>
+            <div class="input-group">
+                <label for="diniBayram">Dini Bayram Mesaisi</label>
+                <input type="number" id="diniBayram" placeholder="Örn: 8">
+            </div>
+            <div class="input-group">
+                <label for="fazlaMesai">Resmi Tatil Fazla Mesai Saati</label>
+                <input type="number" id="fazlaMesai" placeholder="Örn: 15">
+            </div>
+            <div class="input-group">
+                <label for="bes">BES (Net)</label>
+                <input type="number" id="bes" placeholder="Örn: 1000">
+            </div>
+            <div class="input-group">
+                <label for="yolYardimi">Yol Yardımı (Brüt)</label>
+                <input type="number" id="yolYardimi" placeholder="Örn: 1500">
+            </div>
+        </div>
+        
+        <button id="hesaplaBtn">Hesapla</button>
+        
+        <div class="sonuc-kutusu">
+            <h3>Hesaplama Sonuçları</h3>
+            <table>
+                <tr><td>Brüt Ücret</td><td><span id="brutSonuc"></span></td></tr>
+                <tr><td>SGK İşçi Primi</td><td><span id="sgkIsciPrimi"></span></td></tr>
+                <tr><td>İşsizlik Sig. İşçi Payı</td><td><span id="issizlikIsci"></span></td></tr>
+                <tr><td>Gelir Vergisi Matrahı</td><td><span id="gvMatrahi"></span></td></tr>
+                <tr><td>Gelir Vergisi</td><td><span id="gvSonuc"></span></td></tr>
+                <tr><td>Damga Vergisi</td><td><span id="dvSonuc"></span></td></tr>
+                <tr class="sendika-satir"><td>Sendika Aidatı</td><td><span id="sendikaSonuc"></span></td></tr>
+                <tr class="ikramiye-satir"><td>Net İkramiye</td><td><span id="ikramiyeSonuc"></span></td></tr>
+                <tr><td>Toplam Kesinti</td><td><span id="kesintiSonuc"></span></td></tr>
+                <tr class="net-maas"><td>NET Ücret</td><td><span id="netSonuc"></span></td></tr>
+            </table>
+        </div>
+        
+        <div class="bottom-input-group">
+            <label for="geceVardiyasiSaatlikBrut">Gece Vard. Saatlik Brüt (TL):</label>
+            <input type="number" id="geceVardiyasiSaatlikBrut" value="22.81" step="0.01">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
