@@ -1,163 +1,109 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f4f4f9;
+    color: #333;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    margin: 0;
+    padding: 10px; /* Satır aralığı azaltıldı */
 }
 
-.container {
+h1 {
+    color: #444;
+    margin-top: 0;
+}
+
+.credit {
+    font-size: 0.8em;
+    color: #ccc;
+    margin-bottom: 5px;
+}
+
+main {
     background: #fff;
-    padding: 20px;
-    border-radius: 6px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    width: 350px;
-    text-align: center;
+    padding: 20px; /* İç boşluklar azaltıldı */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
 }
 
-.top-info {
+.controls {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
-    font-size: 12px;
-}
-
-.info-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.info-group select {
-    margin-top: 5px;
-    padding: 5px;
-    font-size: 12px;
-}
-
-h2 {
-    color: #333;
-    font-size: 18px;
-    margin-bottom: 15px;
-}
-
-.input-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+    margin-bottom: 10px; /* Satır aralığı azaltıldı */
 }
 
 .input-group {
-    margin-bottom: 12px;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; /* Satır aralığı azaltıldı */
 }
 
 .input-group label {
-    display: block;
-    margin-bottom: 3px;
-    color: #555;
     font-weight: bold;
-    font-size: 12px;
+    margin-bottom: 3px; /* Satır aralığı azaltıldı */
 }
 
-.input-group input {
-    width: 95%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 12px;
-}
-
-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
+.input-group input, .input-group select {
+    padding: 6px; /* İç boşluklar azaltıldı */
+    border: 1px solid #ddd;
+    border-radius: 5px;
     width: 100%;
+    box-sizing: border-box;
 }
 
-button:hover {
-    background-color: #0056b3;
+.input-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px; /* Satır aralığı azaltıldı */
+    margin-bottom: 20px; /* Satır aralığı azaltıldı */
 }
 
-.sonuc-kutusu {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #e9ecef;
-    border-radius: 4px;
-    text-align: left;
+.results-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px; /* Satır aralığı azaltıldı */
+    text-align: center;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
 }
 
-.sonuc-kutusu h3 {
-    margin-top: 0;
+.result-box {
+    background-color: #e9e9f4;
+    padding: 10px; /* İç boşluklar azaltıldı */
+    border-radius: 8px;
+}
+
+.result-box p:first-child {
+    font-size: 0.9em;
+    color: #555;
+    margin: 0;
+}
+
+.result-box p:last-child {
+    font-size: 1.2em;
+    font-weight: bold;
     color: #333;
-    font-size: 16px;
-    text-align: center;
+    margin: 5px 0 0;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+/* Net maaş kutusunun rengi ve yazısı */
+.net-maas-box {
+    background-color: #e8f5e9; /* Açık yeşil */
 }
 
-td {
-    padding: 6px 0;
-    font-size: 12px;
-    border-bottom: 1px solid #ddd;
+.net-maas-box p:last-child {
+    font-size: calc(1.4em + 2px); /* Yazı 2 punto büyütüldü */
 }
 
-tr:last-child td {
-    border-bottom: none;
-}
-
-td:first-child {
-    font-weight: bold;
-    color: #555;
-}
-
-td:last-child {
-    text-align: right;
-    font-weight: bold;
-    color: #007bff;
-}
-
-.sendika-satir td:last-child {
-    color: #dc3545;
-}
-
-.ikramiye-satir td, .ikramiye-satir td:last-child {
-    font-size: 14px !important;
-    font-weight: bold !important;
-    color: #006400 !important; /* Koyu yeşil renk */
-}
-
-.net-maas td, .net-maas td:last-child {
-    font-size: 16px !important;
-    font-weight: bold !important;
-    color: #006400 !important; /* Koyu yeşil renk */
-}
-
-.bottom-input-group {
-    margin-top: 15px;
-    text-align: center;
-}
-
-.bottom-input-group label {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.bottom-input-group input {
-    width: 100px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 12px;
+/* Mobil görünüm için responsive ayarlar */
+@media (max-width: 768px) {
+    .input-section {
+        grid-template-columns: 1fr; /* Tek sütun yapıldı */
+    }
+    .controls {
+        flex-direction: column; /* Dikey sıralandı */
+    }
 }

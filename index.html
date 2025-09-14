@@ -3,112 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bordro Hesaplama</title>
-<title>Numan ÖZDEMİR'in katkılarıyla</title>
+    <title>Maaş Hesaplama</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="top-info">
-            <div class="info-group">
-                <label for="aySecimi">Vergi İstisnası Ayı:</label>
-                <select id="aySecimi">
-                    <option value="ocak">Ocak</option>
-                    <option value="subat">Şubat</option>
-                    <option value="mart">Mart</option>
-                    <option value="nisan">Nisan</option>
-                    <option value="mayis">Mayıs</option>
-                    <option value="haziran">Haziran</option>
-                    <option value="temmuz">Temmuz</option>
-                    <option value="agustos">Ağustos</option>
-                    <option value="eylul">Eylül</option>
-                    <option value="ekim">Ekim</option>
-                    <option value="kasim">Kasım</option>
-                    <option value="aralik">Aralık</option>
+
+    <p class="credit">Numan Özdemir'in katkılarıyla</p>
+    <h1>Maaş Hesaplama</h1>
+
+    <main>
+        <div class="controls">
+            <div class="input-group">
+                <label for="month">Ay:</label>
+                <select id="month">
+                    <option value="1">Ocak</option>
+                    <option value="2">Şubat</option>
+                    <option value="3">Mart</option>
+                    <option value="4">Nisan</option>
+                    <option value="5">Mayıs</option>
+                    <option value="6">Haziran</option>
+                    <option value="7">Temmuz</option>
+                    <option value="8">Ağustos</option>
+                    <option value="9">Eylül</option>
+                    <option value="10">Ekim</option>
+                    <option value="11">Kasım</option>
+                    <option value="12">Aralık</option>
                 </select>
             </div>
-            <div class="info-group">
-                <label for="vergiDilimi">Vergi Dilimi:</label>
-                <select id="vergiDilimi">
-                    <option value="15">15%</option>
-                    <option value="20">20%</option>
-                    <option value="27">27%</option>
-                    <option value="35">35%</option>
-                    <option value="40">40%</option>
+            <div class="input-group">
+                <label for="tax-rate">Vergi Dilimi:</label>
+                <select id="tax-rate">
+                    <option value="0.15">15%</option>
+                    <option value="0.20">20%</option>
+                    <option value="0.27">27%</option>
+                    <option value="0.35">35%</option>
                 </select>
             </div>
         </div>
         
-        <h2>Bordro Hesaplama</h2>
-<h4>Numan ÖZDEMİR'in katkılarıyla</h4>        
         <div class="input-section">
             <div class="input-group">
-                <label for="saatlikUcret">Saatlik Ücret (TL)</label>
-                <input type="number" id="saatlikUcret" placeholder="Örn: 200">
+                <label for="saat-ucreti">Çalışma saat ücreti:</label>
+                <input type="number" id="saat-ucreti" value="0">
             </div>
             <div class="input-group">
-                <label for="normalCalisma">Normal Çalışma Saati</label>
-                <input type="number" id="normalCalisma" placeholder="Örn: 225">
+                <label for="calisma-gun-saati">Çalışma gün saati:</label>
+                <input type="number" id="calisma-gun-saati" value="0">
             </div>
             <div class="input-group">
-                <label for="haftaIciMesai">Hafta İçi Mesai Saati</label>
-                <input type="number" id="haftaIciMesai" placeholder="Örn: 10">
+                <label for="fazla-mesai-saati">Fazla mesai saati:</label>
+                <input type="number" id="fazla-mesai-saati" value="0">
             </div>
             <div class="input-group">
-                <label for="geceVardiyasi">Gece Vardiyası Saati</label>
-                <input type="number" id="geceVardiyasi" placeholder="Örn: 8">
+                <label for="gece-zammi">Gece zammı:</label>
+                <input type="number" id="gece-zammi" value="0">
             </div>
             <div class="input-group">
-                <label for="ulusalBayram">Ulusal Bayram Mesaisi</label>
-                <input type="number" id="ulusalBayram" placeholder="Örn: 8">
+                <label for="ulusal-bayram">Ulusal bayram çalışması:</label>
+                <input type="number" id="ulusal-bayram" value="0">
             </div>
             <div class="input-group">
-                <label for="diniBayram">Dini Bayram Mesaisi</label>
-                <input type="number" id="diniBayram" placeholder="Örn: 8">
+                <label for="dini-bayram">Dini bayram çalışması:</label>
+                <input type="number" id="dini-bayram" value="0">
             </div>
             <div class="input-group">
-                <label for="fazlaMesai">Resmi Tatil Fazla Mesai Saati</label>
-                <input type="number" id="fazlaMesai" placeholder="Örn: 15">
+                <label for="resmi-tatil">Resmi tatil fazla mesai:</label>
+                <input type="number" id="resmi-tatil" value="0">
             </div>
             <div class="input-group">
-                <label for="bes">BES (Net)</label>
-                <input type="number" id="bes" placeholder="Örn: 1000">
+                <label for="yol-ucreti">Yol ücreti (brüt):</label>
+                <input type="number" id="yol-ucreti" value="0">
             </div>
             <div class="input-group">
-                <label for="yolYardimi">Yol Yardımı (Brüt)</label>
-                <input type="number" id="yolYardimi" placeholder="Örn: 1500">
+                <label for="bes-brut">BES (Brüt):</label>
+                <input type="number" id="bes-brut" value="0">
             </div>
         </div>
-        
-        <button id="hesaplaBtn">Hesapla</button>
-        
-        <div class="sonuc-kutusu">
-            <h3>Hesaplama Sonuçları</h3>
-            <table>
-                <tr><td>Brüt Ücret</td><td><span id="brutSonuc"></span></td></tr>
-                <tr><td>SGK İşçi Primi</td><td><span id="sgkIsciPrimi"></span></td></tr>
-                <tr><td>İşsizlik Sig. İşçi Payı</td><td><span id="issizlikIsci"></span></td></tr>
-                <tr><td>Gelir Vergisi Matrahı</td><td><span id="gvMatrahi"></span></td></tr>
-                <tr><td>Gelir Vergisi</td><td><span id="gvSonuc"></span></td></tr>
-                <tr><td>Damga Vergisi</td><td><span id="dvSonuc"></span></td></tr>
-                <tr class="sendika-satir"><td>Sendika Aidatı</td><td><span id="sendikaSonuc"></span></td></tr>
-                <tr class="ikramiye-satir"><td>Net İkramiye</td><td><span id="ikramiyeSonuc"></span></td></tr>
-                <tr><td>Toplam Kesinti</td><td><span id="kesintiSonuc"></span></td></tr>
-                <tr class="net-maas"><td>NET Ücret</td><td><span id="netSonuc"></span></td></tr>
-            </table>
+
+        <div class="results-section">
+            <div class="result-box">
+                <p>Sendika Ücreti:</p>
+                <p id="sendika-ucreti">0</p>
+            </div>
+            <div class="result-box">
+                <p>Vergi İstisnası:</p>
+                <p id="vergi-istisnasi">0</p>
+            </div>
+            <div class="result-box">
+                <p>İkramiye:</p>
+                <p id="ikramiye">0</p>
+            </div>
+            <div class="result-box net-maas-box">
+                <p>Net Maaş:</p>
+                <p id="net-maas">0</p>
+            </div>
         </div>
-        
-        <div class="bottom-input-group">
-            <label for="geceVardiyasiSaatlikBrut">Gece Vard. Saatlik Brüt (TL):</label>
-            <input type="number" id="geceVardiyasiSaatlikBrut" value="22.81" step="0.01">
-        </div>
-    </div>
+    </main>
+
     <script src="script.js"></script>
 </body>
-
 </html>
-
-
-
-
-
