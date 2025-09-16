@@ -5,7 +5,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px; /* Satır aralığı azaltıldı */
+    padding: 10px;
 }
 
 h1 {
@@ -21,33 +21,38 @@ h1 {
 
 main {
     background: #fff;
-    padding: 20px; /* İç boşluklar azaltıldı */
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 600px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .controls {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px; /* Satır aralığı azaltıldı */
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 .input-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px; /* Satır aralığı azaltıldı */
+    margin-bottom: 10px;
+    width: 48%; /* Kontrol grupları için genişlik ayarı */
 }
 
 .input-group label {
     font-weight: bold;
-    margin-bottom: 3px; /* Satır aralığı azaltıldı */
+    margin-bottom: 3px;
 }
 
 .input-group input, .input-group select {
-    padding: 6px; /* İç boşluklar azaltıldı */
+    padding: 6px;
     border: 1px solid #ddd;
     border-radius: 5px;
     width: 100%;
@@ -57,22 +62,24 @@ main {
 .input-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px; /* Satır aralığı azaltıldı */
-    margin-bottom: 20px; /* Satır aralığı azaltıldı */
+    gap: 15px;
+    margin-bottom: 20px;
+    width: 100%;
 }
 
 .results-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px; /* Satır aralığı azaltıldı */
+    gap: 10px;
     text-align: center;
     border-top: 1px solid #eee;
     padding-top: 15px;
+    width: 100%;
 }
 
 .result-box {
     background-color: #e9e9f4;
-    padding: 10px; /* İç boşluklar azaltıldı */
+    padding: 10px;
     border-radius: 8px;
 }
 
@@ -89,21 +96,35 @@ main {
     margin: 5px 0 0;
 }
 
-/* Net maaş kutusunun rengi ve yazısı */
 .net-maas-box {
-    background-color: #e8f5e9; /* Açık yeşil */
+    background-color: #e8f5e9;
 }
 
 .net-maas-box p:last-child {
-    font-size: calc(1.4em + 2px); /* Yazı 2 punto büyütüldü */
+    font-size: calc(1.4em + 2px);
+}
+
+.social-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
 }
 
 /* Mobil görünüm için responsive ayarlar */
 @media (max-width: 768px) {
     .input-section {
-        grid-template-columns: 1fr; /* Tek sütun yapıldı */
+        grid-template-columns: 1fr;
     }
     .controls {
-        flex-direction: column; /* Dikey sıralandı */
+        flex-direction: column;
+    }
+    .input-group {
+        width: 100%;
     }
 }
