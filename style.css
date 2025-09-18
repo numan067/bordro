@@ -43,7 +43,7 @@ main {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-    width: 48%; /* Kontrol grupları için genişlik ayarı */
+    width: 48%;
 }
 
 .input-group label {
@@ -104,9 +104,16 @@ main {
     font-size: calc(1.4em + 2px);
 }
 
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+}
+
 .social-button {
     display: inline-block;
-    margin-top: 20px;
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -127,4 +134,8 @@ main {
     .input-group {
         width: 100%;
     }
+    .button-container {
+        flex-direction: column;
+    }
+}
 }
