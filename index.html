@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <p class="credit">Numan Özdemir'in katkılarıyla</p>
     <h1>Maaş Hesaplama</h1>
 
     <main>
@@ -75,8 +74,12 @@
                 <input type="number" id="yol-ucreti" value="0">
             </div>
             <div class="input-group">
-                <label for="bes-brut">BES (Brüt):</label>
-                <input type="number" id="bes-brut" value="0">
+                <label for="bes-kesintisi">BES Kesintisi (%):</label>
+                <input type="number" id="bes-kesintisi" value="0">
+            </div>
+            <div class="input-group">
+                <label for="vakif-kesintisi">Vakıf Kesintisi (%):</label>
+                <input type="number" id="vakif-kesintisi" value="0">
             </div>
         </div>
 
@@ -93,6 +96,14 @@
                 <p>İkramiye:</p>
                 <p id="ikramiye">0</p>
             </div>
+             <div class="result-box">
+                <p>BES Kesintisi:</p>
+                <p id="bes-kesintisi-sonuc">0</p>
+            </div>
+             <div class="result-box">
+                <p>Vakıf Kesintisi:</p>
+                <p id="vakif-kesintisi-sonuc">0</p>
+            </div>
             <div class="result-box net-maas-box">
                 <p>Net Maaş:</p>
                 <p id="net-maas">0</p>
@@ -101,7 +112,6 @@
         
         <div class="button-container">
             <a href="https://bordro2025.netlify.app/sosyal.html" class="social-button">Sosyal Yardımlar</a>
-            <a href="https://bordro2025.netlify.app/sozlesme.html" class="social-button">Sözleşme Kitapçığı</a>
         </div>
     </main>
 
