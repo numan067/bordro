@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const brut = normalCalisma + fazlaMesaiBrut + geceVardiyasiBrut + ulusalBayramBrut + diniBayramBrut + resmiTatilBrut + yolUcreti;
         
         // BES ve Vakıf Kesintisi hesaplamaları
-        const besKesintisi = brut * (besKesintisiOran / 100);
-        const vakifKesintisi = (saatUcreti * daysInMonth[selectedMonth]) * (vakifKesintisiOran / 100);
+        const besKesintisi = brut * (besKesintisiOran / 100) * (1 - 0.00759);
+        const vakifKesintisi = (saatUcreti * daysInMonth[selectedMonth] * 7.5) * (vakifKesintisiOran / 100);
 
         // Diğer Kesintiler ve Vergi Hesaplaması
         const sendikaUcreti = saatUcreti * 7;
