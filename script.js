@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const diniBayramInput = document.getElementById('dini-bayram');
     const resmiTatilInput = document.getElementById('resmi-tatil');
     const yolUcretiInput = document.getElementById('yol-ucreti');
-    const besKesintisiInput = document.getElementById('bes-kesintisi');
+    const besNetInput = document.getElementById('bes-kesintisi');
     const vakifKesintisiInput = document.getElementById('vakif-kesintisi');
     const taxRateSelect = document.getElementById('tax-rate');
     const monthSelect = document.getElementById('month');
@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
         1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30,
         7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31
     };
+    
+    const damgaVergisiOrani = 0.00759;
 
     function calculateSalary() {
         const saatUcreti = parseFloat(saatUcretiInput.value) || 0;
@@ -51,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const diniBayram = parseFloat(diniBayramInput.value) || 0;
         const resmiTatil = parseFloat(resmiTatilInput.value) || 0;
         const yolUcreti = parseFloat(yolUcretiInput.value) || 0;
-        const besKesintisiOran = parseFloat(besKesintisiInput.value) || 0;
+        const besNet = parseFloat(besNetInput.value) || 0;
         const vakifKesintisiOran = parseFloat(vakifKesintisiInput.value) || 0;
         const taxRate = parseFloat(taxRateSelect.value) || 0;
         const selectedMonth = parseInt(monthSelect.value);
@@ -67,20 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const brut = normalCalisma + fazlaMesaiBrut + geceVardiyasiBrut + ulusalBayramBrut + diniBayramBrut + resmiTatilBrut + yolUcreti;
         
         // BES ve Vakıf Kesintisi hesaplamaları
-        const besKesintisi = brut * (besKesintisiOran / 100) * (1 - 0.00759);
+        const besBrut = besNet / (1 - damgaVergisiOrani);
         const vakifKesintisi = (saatUcreti * daysInMonth[selectedMonth] * 7.5) * (vakifKesintisiOran / 100);
 
         // Diğer Kesintiler ve Vergi Hesaplaması
         const sendikaUcreti = saatUcreti * 7;
         const sigortaSahisTutari = brut * 0.14;
         const issizlikSahisTutari = brut * 0.01;
-        const damgaVergisi = brut * 0.00759;
+        const damgaVergisi = brut * damgaVergisiOrani;
         
-        const vergiMatrahi = brut - sigortaSahisTutari - issizlikSahisTutari - sendikaUcreti - besKesintisi - vakifKesintisi;
+        const vergiMatrahi = brut - sigortaSahisTutari - issizlikSahisTutari - sendikaUcreti - besBrut - vakifKesintisi;
         
         const aylikVergi = vergiMatrahi * taxRate;
 
-        const toplamKesinti = sigortaSahisTutari + issizlikSahisTutari + aylikVergi + damgaVergisi + sendikaUcreti + besKesintisi + vakifKesintisi;
+        const toplamKesinti = sigortaSahisTutari + issizlikSahisTutari + aylikVergi + damgaVergisi + sendikaUcreti + besBrut + vakifKesintisi;
 
         const vergiIstisnasi = taxExemptionValues[selectedMonth];
         
@@ -90,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ikramiyeBrut = saatUcreti * 225;
         const ikramiyeSGK = ikramiyeBrut * 0.14;
         const ikramiyeIssizlik = ikramiyeBrut * 0.01;
-        const ikramiyeDamga = ikramiyeBrut * 0.00759;
+        const ikramiyeDamga = ikramiyeBrut * damgaVergisiOrani;
         const ikramiyeVergiMatrahi = ikramiyeBrut - ikramiyeSGK - ikramiyeIssizlik;
         const ikramiyeVergi = ikramiyeVergiMatrahi * taxRate;
         
@@ -100,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sendikaUcretiEl.textContent = sendikaUcreti.toFixed(2);
         vergiIstisnasiEl.textContent = vergiIstisnasi.toFixed(2);
         ikramiyeEl.textContent = ikramiyeNet.toFixed(2);
-        besKesintisiSonucEl.textContent = besKesintisi.toFixed(2);
+        besKesintisiSonucEl.textContent = besBrut.toFixed(2);
         vakifKesintisiSonucEl.textContent = vakifKesintisi.toFixed(2);
         netMaasEl.textContent = netMaas.toFixed(2);
     }
