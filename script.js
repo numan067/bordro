@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resmiTatilInput = document.getElementById('resmi-tatil');
     const yolUcretiInput = document.getElementById('yol-ucreti');
     const besKesintisiInput = document.getElementById('bes-kesintisi');
+    const vakifKesintisiYuzdeInput = document.getElementById('vakif-kesintisi-yuzde');
     const taxRateSelect = document.getElementById('tax-rate');
     const monthSelect = document.getElementById('month');
 
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const resmiTatil = parseFloat(resmiTatilInput.value) || 0;
         const yolUcreti = parseFloat(yolUcretiInput.value) || 0;
         const besKesintisi = parseFloat(besKesintisiInput.value) || 0;
+        const vakifKesintisiYuzde = parseFloat(vakifKesintisiYuzdeInput.value) || 0;
         const taxRate = parseFloat(taxRateSelect.value);
 
         const currentMonth = parseInt(monthSelect.value);
@@ -41,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Sizin formülleriniz
         const sendikaUcreti = saatUcreti * 7;
-        const vakifKesintisi = calismaGunSayisi * saatUcreti * 7.5;
         
         const brutFazlaMesai = fazlaMesaiSaati * saatUcreti * 2;
         const brutGeceZammi = geceZammi * 22.81;
@@ -53,6 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const damgaVergisiOrani = 0.00759;
         const besKesintisiBrut = besKesintisi / (1 - damgaVergisiOrani);
+
+        // Yeni Vakıf Kesintisi Formülü
+        const vakifMatrahi = calismaGunSayisi * saatUcreti * 7.5;
+        const vakifKesintisi = vakifMatrahi * (vakifKesintisiYuzde / 100);
 
         // Sigorta Matrahı formülü
         const sigortaMatrahi = toplamBrut - besKesintisiBrut;
@@ -78,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toplamBrutSonuc.textContent = toplamBrut.toFixed(2);
         besKesintisiSonuc.textContent = besKesintisiBrut.toFixed(2);
         vakifKesintisiSonuc.textContent = vakifKesintisi.toFixed(2);
-        netIkramiyeSonuc.textContent = "0.00"; // İkramiye girdisi kaldırıldığı için sıfır gösteriliyor
+        netIkramiyeSonuc.textContent = "0.00"; 
         netMaasSonuc.textContent = netMaas.toFixed(2);
     }
 
@@ -92,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resmiTatilInput,
         yolUcretiInput,
         besKesintisiInput,
+        vakifKesintisiYuzdeInput,
         taxRateSelect,
         monthSelect
     ];
