@@ -6,11 +6,10 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 10px;
-    /* Yeni logo adresi ile güncellendi */
     background-image: url('https://bordro.pages.dev/logo_seluloz.jpg');
     background-repeat: no-repeat;
-    background-position: top right;
-    background-size: 150px;
+    background-position: center center;
+    background-size: cover;
     background-attachment: fixed;
 }
 
