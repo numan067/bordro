@@ -42,7 +42,7 @@ main {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-    width: 48%;
+    width: 100%;
 }
 
 .input-group label {
@@ -50,7 +50,7 @@ main {
     margin-bottom: 3px;
 }
 
-.input-group input, .input-group select {
+.input-group input, .input-group select, .input-group textarea {
     padding: 6px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -113,27 +113,4 @@ main {
 
 .social-button {
     display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Mobil görünüm için responsive ayarlar */
-@media (max-width: 768px) {
-    .input-section {
-        grid-template-columns: 1fr;
-    }
-    .controls {
-        flex-direction: column;
-    }
-    .input-group {
-        width: 100%;
-    }
-    .button-container {
-        flex-direction: column;
-    }
-}
+    padding:
