@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const inputs = document.querySelectorAll('input[type="number"], select');
     const saatUcretiInput = document.getElementById('saat-ucreti');
     const calismaGunSaatiInput = document.getElementById('calisma-gun-saati');
     const fazlaMesaiSaatiInput = document.getElementById('fazla-mesai-saati');
@@ -8,43 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const diniBayramInput = document.getElementById('dini-bayram');
     const resmiTatilInput = document.getElementById('resmi-tatil');
     const yolUcretiInput = document.getElementById('yol-ucreti');
-    const besNetInput = document.getElementById('bes-kesintisi');
+    const ikramiyeBrutInput = document.getElementById('ikramiye-brut');
+    const besKesintisiInput = document.getElementById('bes-kesintisi');
     const vakifKesintisiInput = document.getElementById('vakif-kesintisi');
     const taxRateSelect = document.getElementById('tax-rate');
     const monthSelect = document.getElementById('month');
 
-    const sendikaUcretiEl = document.getElementById('sendika-ucreti');
-    const vergiIstisnasiEl = document.getElementById('vergi-istisnasi');
-    const ikramiyeEl = document.getElementById('ikramiye');
-    const besKesintisiSonucEl = document.getElementById('bes-kesintisi-sonuc');
-    const vakifKesintisiSonucEl = document.getElementById('vakif-kesintisi-sonuc');
-    const netMaasEl = document.getElementById('net-maas');
+    const sendikaUcretiSonuc = document.getElementById('sendika-ucreti');
+    const vergiIstisnasiSonuc = document.getElementById('vergi-istisnasi');
+    const toplamBrutSonuc = document.getElementById('toplam-brut');
+    const besKesintisiSonuc = document.getElementById('bes-kesintisi-sonuc');
+    const vakifKesintisiSonuc = document.getElementById('vakif-kesintisi-sonuc');
+    const netMaasSonuc = document.getElementById('net-maas');
 
-    // 2025 yılına ait vergi istisnası değerleri (Gelir Vergisi + Damga Vergisi)
-    const taxExemptionValues = {
-        1: 3315.70 + 197.38, 
-        2: 3315.70 + 197.38, 
-        3: 3315.70 + 197.38, 
-        4: 3315.70 + 197.38, 
-        5: 3315.70 + 197.38, 
-        6: 3315.70 + 197.38, 
-        7: 3315.70 + 197.38, 
-        8: 4257.57 + 197.38, 
-        9: 4420.94 + 197.38, 
-        10: 4420.94 + 197.38, 
-        11: 4420.94 + 197.38, 
-        12: 4420.94 + 197.38  
-    };
-
-    // Her ayın gün sayısı
-    const daysInMonth = {
-        1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30,
-        7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31
-    };
-    
-    const damgaVergisiOrani = 0.00759;
-
-    function calculateSalary() {
+    function calculateMaas() {
         const saatUcreti = parseFloat(saatUcretiInput.value) || 0;
         const calismaGunSaati = parseFloat(calismaGunSaatiInput.value) || 0;
         const fazlaMesaiSaati = parseFloat(fazlaMesaiSaatiInput.value) || 0;
@@ -53,63 +29,73 @@ document.addEventListener('DOMContentLoaded', () => {
         const diniBayram = parseFloat(diniBayramInput.value) || 0;
         const resmiTatil = parseFloat(resmiTatilInput.value) || 0;
         const yolUcreti = parseFloat(yolUcretiInput.value) || 0;
-        const besNet = parseFloat(besNetInput.value) || 0;
-        const vakifKesintisiOran = parseFloat(vakifKesintisiInput.value) || 0;
-        const taxRate = parseFloat(taxRateSelect.value) || 0;
-        const selectedMonth = parseInt(monthSelect.value);
+        const ikramiyeBrut = parseFloat(ikramiyeBrutInput.value) || 0;
+        const besKesintisi = parseFloat(besKesintisiInput.value) || 0;
+        const vakifKesintisiYuzde = parseFloat(vakifKesintisiInput.value) || 0;
 
-        // Brüt Maaş Hesaplaması (İkramiye hariç)
-        const normalCalisma = saatUcreti * calismaGunSaati;
-        const fazlaMesaiBrut = fazlaMesaiSaati * 2 * saatUcreti; 
-        const geceVardiyasiBrut = geceZammi * 22.81;
-        const ulusalBayramBrut = ulusalBayram * 2 * saatUcreti;
-        const diniBayramBrut = diniBayram * 2 * saatUcreti;
-        const resmiTatilBrut = resmiTatil * saatUcreti;
+        const taxRate = parseFloat(taxRateSelect.value);
+        const month = parseInt(monthSelect.value);
         
-        const brut = normalCalisma + fazlaMesaiBrut + geceVardiyasiBrut + ulusalBayramBrut + diniBayramBrut + resmiTatilBrut + yolUcreti;
-        
-        // BES ve Vakıf Kesintisi hesaplamaları
-        const besBrut = besNet / (1 - damgaVergisiOrani);
-        const vakifKesintisi = (saatUcreti * daysInMonth[selectedMonth] * 7.5) * (vakifKesintisiOran / 100);
+        const sendikaOrani = 0.02;
+        const sendikaUcreti = saatUcreti * calismaGunSaati * sendikaOrani;
 
-        // Diğer Kesintiler ve Vergi Hesaplaması
-        const sendikaUcreti = saatUcreti * 7;
-        const sigortaSahisTutari = brut * 0.14;
-        const issizlikSahisTutari = brut * 0.01;
-        const damgaVergisi = brut * damgaVergisiOrani;
+        const brutFazlaMesai = fazlaMesaiSaati * saatUcreti * 1.5;
+        const brutGeceZammi = geceZammi * saatUcreti * 0.15;
+        const brutUlusalBayram = ulusalBayram * saatUcreti * 2;
+        const brutDiniBayram = diniBayram * saatUcreti * 2;
+        const brutResmiTatil = resmiTatil * saatUcreti * 1.5;
         
-        const vergiMatrahi = brut - sigortaSahisTutari - issizlikSahisTutari - sendikaUcreti - besBrut - vakifKesintisi;
+        // Önemli düzeltme: İkramiyeyi brüt toplama ekliyoruz
+        const toplamBrut = (saatUcreti * calismaGunSaati) + brutFazlaMesai + brutGeceZammi + brutUlusalBayram + brutDiniBayram + brutResmiTatil + yolUcreti + ikramiyeBrut;
         
+        const sigortaIscilikOrani = 0.14;
+        const issizlikOrani = 0.01;
+        const sigortaSahis = toplamBrut * sigortaIscilikOrani;
+        const issizlikSahis = toplamBrut * issizlikOrani;
+        const damgaVergisiOrani = 0.00759;
+        const damgaVergisi = toplamBrut * damgaVergisiOrani;
+        const besKesintisiBrut = besKesintisi / (1 - damgaVergisiOrani);
+        
+        const vakifKesintisi = (toplamBrut * vakifKesintisiYuzde) / 100;
+
+        // Vergi Matrahını doğru Brüt Toplam üzerinden hesaplıyoruz
+        const vergiMatrahi = toplamBrut - (sigortaSahis + issizlikSahis + sendikaUcreti + besKesintisiBrut + vakifKesintisi);
         const aylikVergi = vergiMatrahi * taxRate;
 
-        const toplamKesinti = sigortaSahisTutari + issizlikSahisTutari + aylikVergi + damgaVergisi + sendikaUcreti + besBrut + vakifKesintisi;
-
-        const vergiIstisnasi = taxExemptionValues[selectedMonth];
+        // 2024 Vergi İstisnası tutarları
+        const yemekVergiIstisnasi = 4420.94; 
+        const yolVergiIstisnasi = 197.38;
+        const vergiIstisnasiToplam = yemekVergiIstisnasi + yolVergiIstisnasi;
         
-        const netMaas = brut - toplamKesinti + vergiIstisnasi;
-
-        // İkramiye Hesaplaması (Ayrı ve normal bordro kesintileriyle)
-        const ikramiyeBrut = saatUcreti * 225;
-        const ikramiyeSGK = ikramiyeBrut * 0.14;
-        const ikramiyeIssizlik = ikramiyeBrut * 0.01;
-        const ikramiyeDamga = ikramiyeBrut * damgaVergisiOrani;
-        const ikramiyeVergiMatrahi = ikramiyeBrut - ikramiyeSGK - ikramiyeIssizlik;
-        const ikramiyeVergi = ikramiyeVergiMatrahi * taxRate;
+        const netMaas = toplamBrut - (sigortaSahis + issizlikSahis + aylikVergi + damgaVergisi + sendikaUcreti + besKesintisi + vakifKesintisi) + vergiIstisnasiToplam;
         
-        const ikramiyeNet = ikramiyeBrut - ikramiyeSGK - ikramiyeIssizlik - ikramiyeDamga - ikramiyeVergi;
-
-        // Sonuçları ekrana yazdır
-        sendikaUcretiEl.textContent = sendikaUcreti.toFixed(2);
-        vergiIstisnasiEl.textContent = vergiIstisnasi.toFixed(2);
-        ikramiyeEl.textContent = ikramiyeNet.toFixed(2);
-        besKesintisiSonucEl.textContent = besBrut.toFixed(2);
-        vakifKesintisiSonucEl.textContent = vakifKesintisi.toFixed(2);
-        netMaasEl.textContent = netMaas.toFixed(2);
+        sendikaUcretiSonuc.textContent = sendikaUcreti.toFixed(2);
+        vergiIstisnasiSonuc.textContent = vergiIstisnasiToplam.toFixed(2);
+        toplamBrutSonuc.textContent = toplamBrut.toFixed(2);
+        besKesintisiSonuc.textContent = besKesintisiBrut.toFixed(2);
+        vakifKesintisiSonuc.textContent = vakifKesintisi.toFixed(2);
+        netMaasSonuc.textContent = netMaas.toFixed(2);
     }
 
+    const inputs = [
+        saatUcretiInput,
+        calismaGunSaatiInput,
+        fazlaMesaiSaatiInput,
+        geceZammiInput,
+        ulusalBayramInput,
+        diniBayramInput,
+        resmiTatilInput,
+        yolUcretiInput,
+        ikramiyeBrutInput,
+        besKesintisiInput,
+        vakifKesintisiInput,
+        taxRateSelect,
+        monthSelect
+    ];
+    
     inputs.forEach(input => {
-        input.addEventListener('input', calculateSalary);
+        input.addEventListener('input', calculateMaas);
     });
 
-    calculateSalary();
+    calculateMaas();
 });
