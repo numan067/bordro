@@ -13,12 +13,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const monthSelect = document.getElementById('month');
 
     const sendikaUcretiSonuc = document.getElementById('sendika-ucreti');
-    const vergiIstisnasiSonuc = document.getElementById('vergi-istisnasi');
     const toplamBrutSonuc = document.getElementById('toplam-brut');
     const besKesintisiSonuc = document.getElementById('bes-kesintisi-sonuc');
     const vakifKesintisiSonuc = document.getElementById('vakif-kesintisi-sonuc');
     const netIkramiyeSonuc = document.getElementById('net-ikramiye');
+    const vergiIstisnasiSonuc = document.getElementById('vergi-istisnasi');
     const netMaasSonuc = document.getElementById('net-maas');
+
+    // 2025 yılı Gelir ve Damga Vergisi istisnaları (Sizin verdiğiniz tabloya göre)
+    // Kaynak: 57086.jpg
+    const vergiIstisnalari2025 = {
+        1: { gv: 3315.70, dv: 197.38 }, // Ocak
+        2: { gv: 3315.70, dv: 197.38 }, // Şubat
+        3: { gv: 3315.70, dv: 197.38 }, // Mart
+        4: { gv: 3315.70, dv: 197.38 }, // Nisan
+        5: { gv: 3315.70, dv: 197.38 }, // Mayıs
+        6: { gv: 3315.70, dv: 197.38 }, // Haziran
+        7: { gv: 3315.70, dv: 197.38 }, // Temmuz
+        8: { gv: 4257.57, dv: 197.38 }, // Ağustos
+        9: { gv: 4420.93, dv: 197.38 }, // Eylül
+        10: { gv: 4420.93, dv: 197.38 },// Ekim
+        11: { gv: 4420.93, dv: 197.38 },// Kasım
+        12: { gv: 4420.93, dv: 197.38 }// Aralık
+    };
+
 
     function getDaysInMonth(month, year) {
         return new Date(year, month, 0).getDate();
@@ -55,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const damgaVergisiOrani = 0.00759;
         const besKesintisiBrut = besKesintisi / (1 - damgaVergisiOrani);
 
-        // Yeni Vakıf Kesintisi Formülü
+        // Vakıf Kesintisi Formülü
         const vakifMatrahi = calismaGunSayisi * saatUcreti * 7.5;
         const vakifKesintisi = vakifMatrahi * (vakifKesintisiYuzde / 100);
 
@@ -68,15 +86,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const issizlikSahis = sigortaMatrahi * issizlikOrani;
         const damgaVergisi = toplamBrut * damgaVergisiOrani;
         
-        const vergiMatrahi = toplamBrut - (sigortaSahis + issizlikSahis + sendikaUcreti + besKesintisiBrut + vakifKesintisi);
-        const aylikVergi = vergiMatrahi * taxRate;
+        // Vergi İstisnalarını seçilen aya göre belirleme
+        const gvIstisna = vergiIstisnalari2025[currentMonth].gv;
+        const dvIstisna = vergiIstisnalari2025[currentMonth].dv;
+        const vergiIstisnasiToplam = gvIstisna + dvIstisna;
 
-        // 2024 Vergi İstisnası tutarları
-        const yemekVergiIstisnasi = 4420.94; 
-        const yolVergiIstisnasi = 197.38;
-        const vergiIstisnasiToplam = yemekVergiIstisnasi + yolVergiIstisnasi;
+        const vergiMatrahi = toplamBrut - (sigortaSahis + issizlikSahis + sendikaUcreti + besKesintisiBrut + vakifKesintisi);
+        let aylikVergi = vergiMatrahi * taxRate;
         
-        const netMaas = toplamBrut - (sigortaSahis + issizlikSahis + aylikVergi + damgaVergisi + sendikaUcreti + besKesintisi + vakifKesintisi) + vergiIstisnasiToplam;
+        // Vergi istisnası uygulanmış hali
+        if (aylikVergi > gvIstisna) {
+            aylikVergi = aylikVergi - gvIstisna;
+        } else {
+            aylikVergi = 0;
+        }
+
+        const netDamgaVergisi = (damgaVergisi > dvIstisna) ? (damgaVergisi - dvIstisna) : 0;
+
+        const netMaas = toplamBrut - (sigortaSahis + issizlikSahis + aylikVergi + netDamgaVergisi + sendikaUcreti + besKesintisi + vakifKesintisi);
         
         sendikaUcretiSonuc.textContent = sendikaUcreti.toFixed(2);
         vergiIstisnasiSonuc.textContent = vergiIstisnasiToplam.toFixed(2);
