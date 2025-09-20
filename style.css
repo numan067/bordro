@@ -113,4 +113,27 @@ main {
 
 .social-button {
     display: inline-block;
-    padding:
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Mobil görünüm için responsive ayarlar */
+@media (max-width: 768px) {
+    .input-section {
+        grid-template-columns: 1fr;
+    }
+    .controls {
+        flex-direction: column;
+    }
+    .input-group {
+        width: 100%;
+    }
+    .button-container {
+        flex-direction: column;
+    }
+}
