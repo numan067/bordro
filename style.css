@@ -7,9 +7,9 @@ body {
     align-items: center;
     padding: 10px;
     background-image: url('https://bordro.pages.dev/logo_seluloz.jpg');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
+    background-repeat: repeat;
+    background-position: top left;
+    background-size: 75px;
     background-attachment: fixed;
 }
 
