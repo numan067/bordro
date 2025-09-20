@@ -7,7 +7,7 @@ body {
     align-items: center;
     padding: 10px;
     /* Yeni logo adresi ile güncellendi */
-    background-image: url('http://selulozis.org.tr/wp-content/uploads/2016/06/logo_seluloz.jpg');
+    background-image: url('https://bordro.pages.dev/logo_seluloz.jpg');
     background-repeat: no-repeat;
     background-position: top right;
     background-size: 150px;
@@ -20,7 +20,6 @@ h1 {
 }
 
 main {
-    /* Arka plan logosuyla uyumlu olması için şeffaflık eklendi */
     background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
