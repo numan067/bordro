@@ -2,60 +2,34 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     color: #333;
+    margin: 0;
+    padding: 20px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 10px;
-    background-image: url('https://bordro.pages.dev/logo_seluloz.jpg');
-    background-repeat: repeat;
-    background-position: top left;
-    background-size: 75px;
-    background-attachment: fixed;
+    flex-direction: column;
 }
 
 h1 {
-    color: #444;
-    margin-top: 0;
+    color: #5d3fd3;
+    text-align: center;
 }
 
 main {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
+    background: #fff;
+    padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 600px;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .controls {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
-    width: 100%;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    width: 100%;
-}
-
-.input-group label {
-    font-weight: bold;
-    margin-bottom: 3px;
-}
-
-.input-group input, .input-group select, .input-group textarea {
-    padding: 6px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .input-section {
@@ -63,77 +37,103 @@ main {
     grid-template-columns: 1fr 1fr;
     gap: 15px;
     margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="number"],
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .results-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    text-align: center;
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-    width: 100%;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
 .result-box {
     background-color: #e9e9f4;
-    padding: 10px;
+    padding: 15px;
     border-radius: 8px;
+    text-align: center;
 }
 
 .result-box p:first-child {
-    font-size: 0.9em;
-    color: #555;
-    margin: 0;
+    font-weight: bold;
+    color: #5d3fd3;
+    margin: 0 0 5px 0;
 }
 
 .result-box p:last-child {
     font-size: 1.2em;
     font-weight: bold;
     color: #333;
-    margin: 5px 0 0;
+    margin: 0;
 }
 
 .net-maas-box {
-    background-color: #e8f5e9;
+    grid-column: span 2;
+    background-color: #5d3fd3;
+    color: #fff;
+}
+
+.net-maas-box p:first-child {
+    color: #fff;
 }
 
 .net-maas-box p:last-child {
-    font-size: calc(1.4em + 2px);
+    color: #fff;
+    font-size: 1.5em;
 }
 
 .button-container {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-    width: 100%;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .social-button {
-    display: inline-block;
+    background-color: #5d3fd3;
+    color: #fff;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
     border-radius: 5px;
+    text-decoration: none;
     font-weight: bold;
+    transition: background-color 0.3s;
     text-align: center;
 }
 
-/* Mobil görünüm için responsive ayarlar */
-@media (max-width: 768px) {
+.social-button:hover {
+    background-color: #4928b5;
+}
+
+@media (max-width: 480px) {
     .input-section {
         grid-template-columns: 1fr;
     }
-    .controls {
-        flex-direction: column;
+
+    .results-section {
+        grid-template-columns: 1fr;
     }
-    .input-group {
-        width: 100%;
-    }
-    .button-container {
-        flex-direction: column;
+    
+    .net-maas-box {
+        grid-column: span 1;
     }
 }
+
