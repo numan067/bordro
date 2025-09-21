@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ulusalBayram = parseFloat(ulusalBayramInput.value) || 0;
         const diniBayram = parseFloat(diniBayramInput.value) || 0;
         const resmiTatil = parseFloat(resmiTatilInput.value) || 0;
+        const ikramiyeBrut = parseFloat(ikramiyeBrutInput.value) || 0;
         const yolUcreti = parseFloat(yolUcretiInput.value) || 0;
         const besKesintisi = parseFloat(besKesintisiInput.value) || 0;
         const vakifKesintisiYuzde = parseFloat(vakifKesintisiYuzdeInput.value) || 0;
@@ -68,19 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dvIstisna = vergiIstisnalari2025[currentMonth].dv;
         const vergiIstisnasiToplam = gvIstisna + dvIstisna;
 
-        // ** İKRAMİYE HESAPLAMASI **
-        const ikramiyeBrut = saatUcreti * 225;
-        
-        const ikramiyeSigortaSahis = ikramiyeBrut * sigortaIscilikOrani;
-        const ikramiyeIssizlikSahis = ikramiyeBrut * issizlikOrani;
-        const ikramiyeDamgaVergisi = ikramiyeBrut * damgaVergisiOrani;
-        
-        const ikramiyeVergiMatrahi = ikramiyeBrut - (ikramiyeSigortaSahis + ikramiyeIssizlikSahis);
-        let ikramiyeAylikVergi = ikramiyeVergiMatrahi * taxRate;
-        
-        const netIkramiye = ikramiyeBrut - (ikramiyeSigortaSahis + ikramiyeIssizlikSahis + ikramiyeAylikVergi + ikramiyeDamgaVergisi);
-        
-        // ** MAAŞ HESAPLAMASI **
+        // ** MAAŞ HESAPLAMASI (Brüt) **
         const brutCalismaUcreti = calismaGunSaati * saatUcreti;
         const brutFazlaMesai = fazlaMesaiSaati * saatUcreti * 2;
         const brutGeceZammi = geceZammi * 22.81;
@@ -96,10 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const sendikaUcreti = saatUcreti * 7;
         
         // ** TOPLAM BRÜT HESAPLAMASI **
-        // İkramiye ve BES Brüt dahil tüm brüt kalemler
         const toplamBrut = brutCalismaUcreti + brutFazlaMesai + brutGeceZammi + brutUlusalBayram + brutDiniBayram + brutResmiTatil + yolUcreti + besKesintisiBrut + ikramiyeBrut;
 
-        // ** SİGORTA VE VERGİ MATRAHI HESAPLAMASI (Yeni bilgiye göre düzeltildi) **
+        // ** SİGORTA VE VERGİ MATRAHI HESAPLAMASI **
         const sigortaMatrahi = toplamBrut - besKesintisiBrut;
         
         const maasSigortaSahis = sigortaMatrahi * sigortaIscilikOrani;
@@ -119,6 +107,16 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const netMaas = toplamBrut - (maasSigortaSahis + maasIssizlikSahis + maasAylikVergi + maasNetDamgaVergisi + sendikaUcreti + besKesintisi + vakifKesintisi);
         
+        // ** İKRAMİYE HESAPLAMASI **
+        const ikramiyeSigortaSahis = ikramiyeBrut * sigortaIscilikOrani;
+        const ikramiyeIssizlikSahis = ikramiyeBrut * issizlikOrani;
+        const ikramiyeDamgaVergisi = ikramiyeBrut * damgaVergisiOrani;
+        
+        const ikramiyeVergiMatrahi = ikramiyeBrut - (ikramiyeSigortaSahis + ikramiyeIssizlikSahis);
+        let ikramiyeAylikVergi = ikramiyeVergiMatrahi * taxRate;
+        
+        const netIkramiye = ikramiyeBrut - (ikramiyeSigortaSahis + ikramiyeIssizlikSahis + ikramiyeAylikVergi + ikramiyeDamgaVergisi);
+
         // ** EKRAN SONUÇLARI **
         sendikaUcretiSonuc.textContent = sendikaUcreti.toFixed(2);
         vergiIstisnasiSonuc.textContent = vergiIstisnasiToplam.toFixed(2);
@@ -137,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ulusalBayramInput,
         diniBayramInput,
         resmiTatilInput,
+        ikramiyeBrutInput,
         yolUcretiInput,
         besKesintisiInput,
         vakifKesintisiYuzdeInput,
