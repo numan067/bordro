@@ -54,9 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const besKesintisi = parseFloat(besKesintisiInput.value) || 0;
         const vakifKesintisiYuzde = parseFloat(vakifKesintisiYuzdeInput.value) || 0;
         const taxRate = parseFloat(taxRateSelect.value);
-        
-        // Bu değişkenin eksikliği hataya neden oluyordu.
-        const sendikaUcreti = saatUcreti * 7;
 
         const currentMonth = parseInt(monthSelect.value);
         const currentYear = new Date().getFullYear();
@@ -73,10 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const vergiIstisnasiToplam = gvIstisna + dvIstisna;
 
         // ** MAAŞ HESAPLAMASI (İkramiye hariç) **
-        const brutCalismaUcreti = calismaGunSaati * 225;
+        // Maaş bordronuzun yapısına göre güncellendi
+        const brutCalismaUcreti = calismaGunSaati * saatUcreti;
         const brutFazlaMesai = fazlaMesaiSaati * saatUcreti * 2;
-        const brutGeceZammi = geceZammi * 22.81;
-        const brutUlusalBayram = ulusalBayram * saatUcreti * 2;
+        const brutGeceZammi = geceZammi * 22.81; // Bordronuzdaki birim ücreti kullanıldı
+        const brutUlusalBayram = ulusalBayram * saatUcreti * 2; 
         const brutDiniBayram = diniBayram * saatUcreti * 3.5;
         const brutResmiTatil = resmiTatil * 3;
         
@@ -92,6 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const maasSigortaSahis = maasSigortaMatrahi * sigortaIscilikOrani;
         const maasIssizlikSahis = maasSigortaMatrahi * issizlikOrani;
         const maasDamgaVergisi = maasBrut * damgaVergisiOrani;
+        
+        const sendikaUcreti = saatUcreti * 7;
+        
         const maasVergiMatrahi = maasBrut - (maasSigortaSahis + maasIssizlikSahis + sendikaUcreti + besKesintisiBrut + vakifKesintisi);
         
         let maasAylikVergi = maasVergiMatrahi * taxRate;
