@@ -148,3 +148,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     calculateMaas();
 });
+
+        const maasNetDamgaVergisi = (maasDamgaVergisi > dvIstisna) ? (maasDamgaVergisi - dvIstisna) : 0;
+        
+        const netMaas = maasBrut - (maasSigortaSahis + maasIssizlikSahis + maasAylikVergi + maasNetDamgaVergisi + sendikaUcreti + besKesintisi + vakifKesintisi);
+        
+        // ** İKRAMİYE HESAPLAMASI **
+        const ikramiyeSigortaMatrahi = ikramiyeBrut;
+        const ikramiyeSigortaSahis = ikramiyeSigortaMatrahi * sigortaIscilikOrani;
+        const ikramiyeIssizlikSahis = ikramiyeSigortaMatrahi * issizlikOrani;
+        const ikramiyeDamgaVergisi = ikramiyeBrut * damgaVergisiOrani;
+        
+        const ikramiyeVergiMatrahi = ikramiyeBrut - (ikramiyeSigortaSahis + ikramiyeIssizlikSahis);
+        let ikramiyeAylikVergi = ikramiyeVergiMatrahi * taxRate;
+        
+        const netIkramiye = ikramiyeBrut - (ikramiyeSigortaSahis + ikramiyeIssizlikSahis + ikramiyeAylikVergi + ikramiyeDamgaVergisi);
+
+        // ** TOPLAM SONUÇLAR **
+        const sendikaUcreti = saatUcreti * 7;
+        const toplamBrut = maasBrut + ikramiyeBrut;
+        
+        sendikaUcretiSonuc.textContent = sendikaUcreti.toFixed(2);
+        vergiIstisnasiSonuc.textContent = vergiIstisnasiToplam.toFixed(2);
+        toplamBrutSonuc.textContent = toplamBrut.toFixed(2);
+        besKesintisiSonuc.textContent = besKesintisiBrut.toFixed(2);
+        vakifKesintisiSonuc.textContent = vakifKesintisi.toFixed(2);
+        netIkramiyeSonuc.textContent = netIkramiye.toFixed(2);
+        netMaasSonuc.textContent = netMaas.toFixed(2);
+    }
+
+    const inputs = [
+        saatUcretiInput,
+        calismaGunSaatiInput,
+        fazlaMesaiSaatiInput,
+        geceZammiInput,
+        ulusalBayramInput,
+        diniBayramInput,
+        resmiTatilInput,
+        ikramiyeBrutInput,
+        yolUcretiInput,
+        besKesintisiInput,
+        vakifKesintisiYuzdeInput,
+        taxRateSelect,
+        monthSelect
+    ];
+    
+    inputs.forEach(input => {
+        input.addEventListener('input', calculateMaas);
+    });
+
+    calculateMaas();
+});
+
