@@ -3,127 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maaş Hesaplama</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Net Maaş Hesaplayıcı</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 600px; margin: auto; border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .input-group input, .input-group select { width: 100%; padding: 8px; box-sizing: border-box; }
+        .result-group { margin-top: 20px; border-top: 2px solid #333; padding-top: 10px; }
+        .result-row { display: flex; justify-content: space-between; padding: 5px 0; }
+        .result-label { font-weight: bold; }
+        .result-value { text-align: right; }
+        h2 { text-align: center; }
+        h3 { margin-top: 20px; }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h2>Net Maaş Hesaplayıcı</h2>
+        <p>Lütfen bordronuzdaki değerleri giriniz:</p>
 
-    <h1>Maaş Hesaplama</h1>
-
-    <main>
-        <div class="controls">
-            <div class="input-group">
-                <label for="month">Ay:</label>
-                <select id="month">
-                    <option value="1">Ocak</option>
-                    <option value="2">Şubat</option>
-                    <option value="3">Mart</option>
-                    <option value="4">Nisan</option>
-                    <option value="5">Mayıs</option>
-                    <option value="6">Haziran</option>
-                    <option value="7">Temmuz</option>
-                    <option value="8">Ağustos</option>
-                    <option value="9">Eylül</option>
-                    <option value="10">Ekim</option>
-                    <option value="11">Kasım</option>
-                    <option value="12">Aralık</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label for="tax-rate">Vergi Dilimi:</label>
-                <select id="tax-rate">
-                    <option value="0.15">15%</option>
-                    <option value="0.20">20%</option>
-                    <option value="0.27">27%</option>
-                    <option value="0.35">35%</option>
-                </select>
-            </div>
+        <div class="input-group">
+            <label for="month">Ay</label>
+            <select id="month">
+                <option value="1">Ocak</option>
+                <option value="2">Şubat</option>
+                <option value="3">Mart</option>
+                <option value="4">Nisan</option>
+                <option value="5">Mayıs</option>
+                <option value="6">Haziran</option>
+                <option value="7">Temmuz</option>
+                <option value="8">Ağustos</option>
+                <option value="9">Eylül</option>
+                <option value="10">Ekim</option>
+                <option value="11">Kasım</option>
+                <option value="12">Aralık</option>
+            </select>
         </div>
-        
-        <div class="input-section">
-            <div class="input-group">
-                <label for="saat-ucreti">Çalışma saat ücreti:</label>
-                <input type="number" id="saat-ucreti" value="0">
-            </div>
-            <div class="input-group">
-                <label for="calisma-gun-saati">Çalışma gün saati:</label>
-                <input type="number" id="calisma-gun-saati" value="0">
-            </div>
-            <div class="input-group">
-                <label for="fazla-mesai-saati">Fazla mesai saati:</label>
-                <input type="number" id="fazla-mesai-saati" value="0">
-            </div>
-            <div class="input-group">
-                <label for="gece-zammi">Gece zammı:</label>
-                <input type="number" id="gece-zammi" value="0">
-            </div>
-            <div class="input-group">
-                <label for="ulusal-bayram">Ulusal bayram çalışması:</label>
-                <input type="number" id="ulusal-bayram" value="0">
-            </div>
-            <div class="input-group">
-                <label for="dini-bayram">Dini bayram çalışması:</label>
-                <input type="number" id="dini-bayram" value="0">
-            </div>
-            <div class="input-group">
-                <label for="resmi-tatil">Resmi tatil fazla mesai:</label>
-                <input type="number" id="resmi-tatil" value="0">
-            </div>
-            <div class="input-group">
-                <label for="ikramiye-brut">İkramiye (Brüt):</label>
-                <input type="number" id="ikramiye-brut" value="0">
-            </div>
-            <div class="input-group">
-                <label for="yol-ucreti">Yol ücreti (brüt):</label>
-                <input type="number" id="yol-ucreti" value="0">
-            </div>
-            <div class="input-group">
-                <label for="bes-kesintisi">BES Kesintisi (Net):</label>
-                <input type="number" id="bes-kesintisi" value="0">
-            </div>
-            <div class="input-group">
-                <label for="vakif-kesintisi-yuzde">Vakıf Kesintisi (%):</label>
-                <input type="number" id="vakif-kesintisi-yuzde" value="0">
-            </div>
+        <div class="input-group">
+            <label for="saat-ucreti">Saatlik Ücret</label>
+            <input type="number" id="saat-ucreti" value="318.13">
+        </div>
+        <div class="input-group">
+            <label for="calisma-gun-saati">Çalışma Gün Saati</label>
+            <input type="number" id="calisma-gun-saati" value="232.5">
+        </div>
+        <div class="input-group">
+            <label for="fazla-mesai-saati">Fazla Mesai Saati</label>
+            <input type="number" id="fazla-mesai-saati" value="4">
+        </div>
+        <div class="input-group">
+            <label for="gece-zammi">Gece Zammı (Saat)</label>
+            <input type="number" id="gece-zammi" value="78">
+        </div>
+        <div class="input-group">
+            <label for="ulusal-bayram">Ulusal Bayram Çalışması (Saat)</label>
+            <input type="number" id="ulusal-bayram" value="7.5">
+        </div>
+        <div class="input-group">
+            <label for="dini-bayram">Dini Bayram Çalışması (Saat)</label>
+            <input type="number" id="dini-bayram" value="0">
+        </div>
+        <div class="input-group">
+            <label for="resmi-tatil">Resmi Tatil (Saat)</label>
+            <input type="number" id="resmi-tatil" value="0">
+        </div>
+        <div class="input-group">
+            <label for="yol-ucreti">Yol Ücreti</label>
+            <input type="number" id="yol-ucreti" value="0">
+        </div>
+        <div class="input-group">
+            <label for="bes-kesintisi">Net BES Kesintisi</label>
+            <input type="number" id="bes-kesintisi" value="2520.75">
+        </div>
+        <div class="input-group">
+            <label for="vakif-kesintisi-yuzde">Vakıf Kesintisi Yüzdesi</label>
+            <input type="number" id="vakif-kesintisi-yuzde" value="10">
+        </div>
+        <div class="input-group">
+            <label for="tax-rate">Gelir Vergisi Oranı (%)</label>
+            <select id="tax-rate">
+                <option value="0.15">15%</option>
+                <option value="0.20">20%</option>
+                <option value="0.27">27%</option>
+                <option value="0.35">35%</option>
+                <option value="0.40">40%</option>
+            </select>
         </div>
 
-        <div class="results-section">
-            <div class="result-box">
-                <p>Sendika Ücreti:</p>
-                <p id="sendika-ucreti">0</p>
-            </div>
-            <div class="result-box">
-                <p>Vergi İstisnası:</p>
-                <p id="vergi-istisnasi">0</p>
-            </div>
-            <div class="result-box">
-                <p>Toplam Brüt:</p>
-                <p id="toplam-brut">0</p>
-            </div>
-             <div class="result-box">
-                <p>BES Kesintisi (Brüt):</p>
-                <p id="bes-kesintisi-sonuc">0</p>
-            </div>
-             <div class="result-box">
-                <p>Vakıf Kesintisi:</p>
-                <p id="vakif-kesintisi-sonuc">0</p>
-            </div>
-             <div class="result-box">
-                <p>Net İkramiye Tutarı:</p>
-                <p id="net-ikramiye">0</p>
-            </div>
-            <div class="result-box net-maas-box">
-                <p>Net Maaş:</p>
-                <p id="net-maas">0</p>
-            </div>
-        </div>
-        
-        <div class="button-container">
-            <a href="https://bordro.pages.dev/tes.html" class="social-button">Görüş, öneri ve teşekkür</a>
-            <a href="https://bordro.pages.dev/sosyal.html" class="social-button">Sosyal Yardımlar</a>
-        </div>
-    </main>
 
+        <h3>Sonuçlar</h3>
+        <div class="result-group">
+            <div class="result-row">
+                <span class="result-label">Toplam Brüt:</span>
+                <span class="result-value" id="toplam-brut">0.00</span>
+            </div>
+            <div class="result-row">
+                <span class="result-label">Net İkramiye:</span>
+                <span class="result-value" id="net-ikramiye">0.00</span>
+            </div>
+            <div class="result-row">
+                <span class="result-label">Net Maaş:</span>
+                <span class="result-value" id="net-maas">0.00</span>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
