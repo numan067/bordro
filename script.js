@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const ulusalBayramInput = document.getElementById('ulusal-bayram');
     const diniBayramInput = document.getElementById('dini-bayram');
     const resmiTatilInput = document.getElementById('resmi-tatil');
-    const ikramiyeBrutInput = document.getElementById('ikramiye-brut');
     const yolUcretiInput = document.getElementById('yol-ucreti');
     const besKesintisiInput = document.getElementById('bes-kesintisi');
     const vakifKesintisiYuzdeInput = document.getElementById('vakif-kesintisi-yuzde');
@@ -49,9 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const ulusalBayram = parseFloat(ulusalBayramInput.value) || 0;
         const diniBayram = parseFloat(diniBayramInput.value) || 0;
         const resmiTatil = parseFloat(resmiTatilInput.value) || 0;
-        const ikramiyeBrut = parseFloat(ikramiyeBrutInput.value) || 0;
         const yolUcreti = parseFloat(yolUcretiInput.value) || 0;
-        const besKesintisi = parseFloat(besKesintisiInput.value) || 0;
+        const besKesintisiNet = parseFloat(besKesintisiInput.value) || 0;
         const vakifKesintisiYuzde = parseFloat(vakifKesintisiYuzdeInput.value) || 0;
         const taxRate = parseFloat(taxRateSelect.value);
 
@@ -60,8 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const calismaGunSayisi = getDaysInMonth(currentMonth, currentYear);
         
         // Ortak kesinti oranları
-        const sigortaIscilikOrani = 0.14;
-        const issizlikOrani = 0.01;
         const damgaVergisiOrani = 0.00759;
         
         // Vergi İstisnaları
@@ -69,60 +65,53 @@ document.addEventListener('DOMContentLoaded', () => {
         const dvIstisna = vergiIstisnalari2025[currentMonth].dv;
         const vergiIstisnasiToplam = gvIstisna + dvIstisna;
 
-        // ** MAAŞ HESAPLAMASI (Brüt) **
+        // ** MAAŞ HESAPLAMASI (Sizin Sağladığınız Formüllere Göre) **
         const brutCalismaUcreti = calismaGunSaati * saatUcreti;
-        const brutFazlaMesai = fazlaMesaiSaati * saatUcreti * 2;
+        const brutFazlaMesai = fazlaMesaiSaati * 2 * saatUcreti;
         const brutGeceZammi = geceZammi * 22.81;
-        const brutUlusalBayram = ulusalBayram * saatUcreti * 2; 
-        const brutDiniBayram = diniBayram * saatUcreti * 3.5;
+        const brutUlusalBayram = ulusalBayram * 2 * saatUcreti; 
+        const brutDiniBayram = diniBayram * 3.5 * saatUcreti;
         const brutResmiTatil = resmiTatil * 3;
         
-        const besKesintisiBrut = besKesintisi / (1 - damgaVergisiOrani);
+        // Sizin formülünüze göre sigorta matrahı
+        const sigortaMatrahi = brutCalismaUcreti + brutFazlaMesai + brutGeceZammi + brutUlusalBayram + brutDiniBayram + brutResmiTatil;
         
-        const vakifMatrahi = calismaGunSayisi * saatUcreti * 7.5;
-        const vakifKesintisi = vakifMatrahi * (vakifKesintisiYuzde / 100);
-        
-        const sendikaUcreti = saatUcreti * 7;
-        
-        // ** TOPLAM BRÜT HESAPLAMASI **
-        const toplamBrut = brutCalismaUcreti + brutFazlaMesai + brutGeceZammi + brutUlusalBayram + brutDiniBayram + brutResmiTatil + yolUcreti + besKesintisiBrut + ikramiyeBrut;
+        // Sizin formülünüze göre diğer kalemler
+        const sendikaAidati = saatUcreti * 7;
+        const vakifKesintisi = (brutCalismaUcreti * (vakifKesintisiYuzde / 100)); // Sizin formülünüzdeki vakıf kesintisi
 
-        // ** SİGORTA VE VERGİ MATRAHI HESAPLAMASI **
-        const sigortaMatrahi = toplamBrut - besKesintisiBrut;
+        const besKesintisiBrut = besKesintisiNet / (1 - damgaVergisiOrani);
         
-        const maasSigortaSahis = sigortaMatrahi * sigortaIscilikOrani;
-        const maasIssizlikSahis = sigortaMatrahi * issizlikOrani;
-        const maasDamgaVergisi = toplamBrut * damgaVergisiOrani;
+        const damgaVergisiMatrahi = sigortaMatrahi + besKesintisiBrut;
         
-        const maasVergiMatrahi = sigortaMatrahi - (sendikaUcreti + vakifKesintisi);
+        // Yasal Kesintiler
+        const sigortaSahisTutari = sigortaMatrahi * 0.14;
+        const issizlikSahisTutari = sigortaMatrahi * 0.01;
         
-        let maasAylikVergi = maasVergiMatrahi * taxRate;
-        if (maasAylikVergi > gvIstisna) {
-            maasAylikVergi -= gvIstisna;
-        } else {
-            maasAylikVergi = 0;
-        }
+        // Gelir Vergisi Matrahı ve Tutarı
+        const gelirVergisiMatrahi = (sigortaMatrahi * 0.85) - vakifKesintisi - sendikaAidati;
+        const gelirVergisiTutari = (gelirVergisiMatrahi * taxRate);
 
-        const maasNetDamgaVergisi = (maasDamgaVergisi > dvIstisna) ? (maasDamgaVergisi - dvIstisna) : 0;
+        const damgaVergisiTutari = damgaVergisiMatrahi * 0.00759;
         
-        const netMaas = toplamBrut - (maasSigortaSahis + maasIssizlikSahis + maasAylikVergi + maasNetDamgaVergisi + sendikaUcreti + besKesintisi + vakifKesintisi);
+        const yasalKesintiler = sigortaSahisTutari + issizlikSahisTutari + gelirVergisiTutari + damgaVergisiTutari;
+
+        // Özel Kesintiler
+        const ozelKesintiTutari = (besKesintisiNet * 2) + vakifKesintisi + sendikaAidati;
+
+        const netMaas = damgaVergisiMatrahi - yasalKesintiler - ozelKesintiTutari + vergiIstisnasiToplam;
         
-        // ** İKRAMİYE HESAPLAMASI **
-        const ikramiyeSigortaSahis = ikramiyeBrut * sigortaIscilikOrani;
-        const ikramiyeIssizlikSahis = ikramiyeBrut * issizlikOrani;
-        const ikramiyeDamgaVergisi = ikramiyeBrut * damgaVergisiOrani;
-        
+        // ** YALNIZCA İKRAMİYE HESAPLAMASI **
+        const ikramiyeBrut = saatUcreti * 225;
+        const ikramiyeSigortaSahis = ikramiyeBrut * 0.14;
+        const ikramiyeIssizlikSahis = ikramiyeBrut * 0.01;
+        const ikramiyeDamgaVergisi = ikramiyeBrut * 0.00759;
         const ikramiyeVergiMatrahi = ikramiyeBrut - (ikramiyeSigortaSahis + ikramiyeIssizlikSahis);
         let ikramiyeAylikVergi = ikramiyeVergiMatrahi * taxRate;
-        
         const netIkramiye = ikramiyeBrut - (ikramiyeSigortaSahis + ikramiyeIssizlikSahis + ikramiyeAylikVergi + ikramiyeDamgaVergisi);
 
         // ** EKRAN SONUÇLARI **
-        sendikaUcretiSonuc.textContent = sendikaUcreti.toFixed(2);
-        vergiIstisnasiSonuc.textContent = vergiIstisnasiToplam.toFixed(2);
-        toplamBrutSonuc.textContent = toplamBrut.toFixed(2);
-        besKesintisiSonuc.textContent = besKesintisiBrut.toFixed(2);
-        vakifKesintisiSonuc.textContent = vakifKesintisi.toFixed(2);
+        toplamBrutSonuc.textContent = damgaVergisiMatrahi.toFixed(2);
         netIkramiyeSonuc.textContent = netIkramiye.toFixed(2);
         netMaasSonuc.textContent = netMaas.toFixed(2);
     }
@@ -135,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ulusalBayramInput,
         diniBayramInput,
         resmiTatilInput,
-        ikramiyeBrutInput,
         yolUcretiInput,
         besKesintisiInput,
         vakifKesintisiYuzdeInput,
