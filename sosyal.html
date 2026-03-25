@@ -3,87 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sosyal Yardımlar ve Enflasyon</title>
+    <title>Sosyal Yardımlar 2025</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 700px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        h2 { color: #6a1b9a; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; }
-        h3 { color: #2c3e50; font-size: 18px; margin-top: 30px; border-left: 5px solid #6a1b9a; padding-left: 10px; }
-        .aid-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
-        .aid-name { font-weight: 600; color: #444; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
-        th, td { padding: 12px; text-align: center; border: 1px solid #eee; }
-        th { background-color: #6a1b9a; color: white; }
-        tr:nth-child(even) { background-color: #fafafa; }
-        .highlight { font-weight: bold; color: #d32f2f; background-color: #fff3e0; }
-        .back-btn { display: inline-block; margin-top: 30px; padding: 12px 25px; background-color: #6a1b9a; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #6a1b9a; margin-top: 0; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; text-transform: uppercase; }
+        
+        /* Tablo Stilleri */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; table-layout: fixed; }
+        th, td { padding: 12px 15px; text-align: left; border: 1px solid #e0e0e0; }
+        
+        /* Başlıklar */
+        thead th { background-color: #f5f5f5; color: #2c3e50; font-weight: bold; font-size: 14px; text-transform: uppercase; border-bottom: 2px solid #ddd; }
+        thead th:first-child { width: 45%; } /* Yardım Kalemi */
+        thead th:nth-child(2) { width: 25%; } /* Ödeme Günü */
+        thead th:last-child { width: 30%; text-align: right; } /* 2025 Tutarı */
+
+        /* Satırlar */
+        tbody tr:nth-child(even) { background-color: #fafafa; }
+        tbody tr:hover { background-color: #f1f1f1; }
+        tbody td { font-size: 15px; }
+
+        /* Tutar Sütunu Stili */
+        .value-col { text-align: right; font-weight: bold; font-family: 'Courier New', monospace; font-size: 16px !important; color: #2c3e50; }
+        
+        /* Tarih Sütunu */
+        .date-col { color: #888; font-size: 14px !important; }
+
+        /* Dönüş Butonu */
+        .back-btn-container { text-align: center; margin-top: 30px; }
+        .back-btn { display: inline-block; padding: 12px 25px; background-color: #6a1b9a; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px; transition: background 0.3s, transform 0.2s; box-shadow: 0 4px 10px rgba(106, 27, 154, 0.2); }
+        .back-btn:hover { background-color: #4a148c; transform: translateY(-2px); }
+
+        /* Mobil Uyumluluk */
+        @media (max-width: 600px) {
+            th, td { padding: 8px; font-size: 13px; }
+            .value-col { font-size: 14px !important; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Sosyal Yardım Kalemleri</h2>
-    <div id="yardim-listesi">
-        <div class="aid-item"><span class="aid-name">Çocuk Yardımı</span><span class="aid-value">350,00 TL</span></div>
-        <div class="aid-item"><span class="aid-name">Yemek Yardımı (Günlük)</span><span class="aid-value">180,00 TL</span></div>
-        <div class="aid-item"><span class="aid-name">Yakacak Yardımı (Aylık)</span><span class="aid-value">500,00 TL</span></div>
-    </div>
-
-    <h3>2026 Aylık Enflasyon Verileri</h3>
-    <table id="enflasyon-tablosu">
+    <h2>SOSYAL YARDIMLAR</h2>
+    
+    <table>
         <thead>
             <tr>
-                <th>Ay (2026)</th>
-                <th>Aylık TÜFE (%)</th>
-                <th>6 Aylık Birikimli (%)</th>
+                <th>Yardım Kalemi</th>
+                <th>Ödeme Günü</th>
+                <th>2025 Tutarı</th>
             </tr>
         </thead>
-        <tbody id="tablo-govde">
-            </tbody>
+        <tbody>
+            <tr>
+                <td>Servis Aracı (Brüt)</td>
+                <td></td>
+                <td class="value-col">1.559,30 TL</td>
+            </tr>
+            <tr>
+                <td>Bayram Yardımı</td>
+                <td></td>
+                <td class="value-col">7.507,76 TL</td>
+            </tr>
+            <tr>
+                <td>Yakacak Yardımı</td>
+                <td class="date-col">14 Temmuz</td>
+                <td class="value-col">11.550,40 TL</td>
+            </tr>
+            <tr>
+                <td>Yıllık İzin Ücreti</td>
+                <td class="date-col">15 Ağustos</td>
+                <td class="value-col">3.248,55 TL</td>
+            </tr>
+            <tr>
+                <td>Anaokulu ve İlkokul</td>
+                <td></td>
+                <td class="value-col">3.166,25 TL</td>
+            </tr>
+            <tr>
+                <td>Ortaokul</td>
+                <td></td>
+                <td class="value-col">3.788,53 TL</td>
+            </tr>
+            <tr>
+                <td>Lise</td>
+                <td></td>
+                <td class="value-col">6.385,93 TL</td>
+            </tr>
+            <tr>
+                <td>Üniversite</td>
+                <td></td>
+                <td class="value-col">10.536,85 TL</td>
+            </tr>
+            <tr>
+                <td>Gece Vardiyesi S.Ü.</td>
+                <td></td>
+                <td class="value-col">22,81 TL</td>
+            </tr>
+            <tr>
+                <td>Evlenme Yardımı</td>
+                <td></td>
+                <td class="value-col">4.200,00 TL</td>
+            </tr>
+            <tr>
+                <td>Doğum Yardımı</td>
+                <td></td>
+                <td class="value-col">4.200,00 TL</td>
+            </tr>
+            <tr>
+                <td>Ölüm Yardımı</td>
+                <td></td>
+                <td class="value-col">2.875,00 TL</td>
+            </tr>
+        </tbody>
     </table>
-    
-    <p style="font-size: 12px; color: #888; margin-top: 15px;">* Veriler girildikçe birikimli toplam otomatik hesaplanır.</p>
-    <a href="index.html" class="back-btn">← Hesaplayıcıya Dön</a>
+
+    <div class="back-btn-container">
+        <a href="index.html" class="back-btn">← Hesaplayıcıya Dön</a>
+    </div>
 </div>
-
-<script>
-    // --- SADECE BURAYI GÜNCELLEMEN YETERLİ ---
-    const aylikVeriler = [
-        { ay: "Ocak", oran: 3.80 },
-        { ay: "Şubat", oran: 2.95 },
-        { ay: "Mart", oran: 2.10 },
-        { ay: "Nisan", oran: 0 }, // Nisan açıklandığında 0'ı silip oranı yaz
-        { ay: "Mayıs", oran: 0 },
-        { ay: "Haziran", oran: 0 }
-    ];
-    // ----------------------------------------
-
-    const tabloGovde = document.getElementById('tablo-govde');
-    let birikimli = 1;
-
-    aylikVeriler.forEach((data, index) => {
-        const row = document.createElement('tr');
-        let birikimliGosterim = "-";
-        
-        if (data.oran > 0) {
-            // Birikimli Enflasyon Formülü: ((1+oran1/100)*(1+oran2/100)... - 1) * 100
-            birikimli = birikimli * (1 + (data.oran / 100));
-            birikimliGosterim = ((birikimli - 1) * 100).toFixed(2);
-            
-            // Eğer en son girilen veri ise vurgula
-            if (index === aylikVeriler.findLastIndex(d => d.oran > 0)) {
-                row.className = "highlight";
-            }
-        }
-
-        row.innerHTML = `
-            <td>${data.ay}</td>
-            <td>${data.oran > 0 ? data.oran.toFixed(2) : "-"}</td>
-            <td>${birikimliGosterim !== "-" ? birikimliGosterim : "-"}</td>
-        `;
-        tabloGovde.appendChild(row);
-    });
-</script>
 
 </body>
 </html>
