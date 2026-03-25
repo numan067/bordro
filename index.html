@@ -3,34 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Net Maaş Hesaplayıcı</title>
+    <title>Maaş Hesaplama 2026</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; margin: 0; padding: 20px; box-sizing: border-box; }
-        .container { background-color: #ffffff; padding: 25px 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h2 { text-align: center; color: #000; margin-bottom: 5px; font-weight: bold; }
-        p.subtitle { text-align: left; color: #000; margin-bottom: 20px; font-size: 16px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; padding: 20px; margin: 0; }
+        .container { background: #fff; width: 100%; max-width: 450px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        h2 { text-align: center; color: #2c3e50; font-size: 22px; margin-bottom: 20px; }
         
-        .input-group { display: flex; flex-direction: column; margin-bottom: 15px; }
-        .input-group label { margin-bottom: 5px; font-weight: bold; color: #000; font-size: 18px; }
-        .input-group input, .input-group select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: #fff; width: 100%; box-sizing: border-box; }
+        .input-group { margin-bottom: 12px; }
+        .input-group label { display: block; font-size: 13px; color: #666; margin-bottom: 4px; font-weight: 600; }
+        .input-group input, .input-group select { width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 15px; box-sizing: border-box; background: #fafafa; }
+        
+        .results-area { margin-top: 25px; }
+        .res-box { background: #f8f9fa; padding: 10px; border-radius: 10px; text-align: center; margin-bottom: 8px; border: 1px solid #f0f0f0; }
+        .res-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px; }
+        .res-value { font-size: 16px; font-weight: bold; color: #2c3e50; }
+        
+        .net-pay-box { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); color: white; padding: 20px; border-radius: 15px; text-align: center; margin: 20px 0; box-shadow: 0 5px 15px rgba(106, 27, 154, 0.3); }
+        .net-pay-label { font-size: 16px; opacity: 0.9; }
+        .net-pay-value { font-size: 32px; font-weight: 800; margin-top: 5px; }
 
-        .results { border-top: 1px solid #eee; margin-top: 20px; padding-top: 15px; }
-        .result-item { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px; color: #000; }
-        
-        /* Buton Alanı */
-        .bottom-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-        .bottom-buttons button { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; background-color: #fff; color: #000; cursor: pointer; font-size: 14px; text-align: center; transition: background 0.2s; }
-        .bottom-buttons button:hover { background-color: #f0f0f0; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .full-btn { grid-column: span 2; }
+        button { padding: 12px; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; background: #f0f2f5; color: #444; transition: 0.2s; }
+        button:hover { background: #e2e5e9; }
+        .btn-orange { background: #f39c12; color: white; }
+        .btn-orange:hover { background: #d68910; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Net Maaş Hesaplayıcı</h2>
-    <p class="subtitle">Lütfen bordronuzdaki değerleri giriniz:</p>
+    <h2>Maaş Hesaplama 2026</h2>
 
     <div class="input-group">
-        <label>Ay</label>
         <select id="month">
             <option value="1">Ocak</option><option value="2">Şubat</option><option value="3">Mart</option>
             <option value="4">Nisan</option><option value="5">Mayıs</option><option value="6">Haziran</option>
@@ -40,75 +45,43 @@
     </div>
 
     <div class="input-group">
-        <label>Saatlik Ücret</label>
-        <input type="text" id="saat-ucreti" placeholder="318,13">
-    </div>
-
-    <div class="input-group">
-        <label>Çalışma Gün Saati</label>
-        <input type="text" id="calisma-gun-saati" placeholder="232,5">
-    </div>
-
-    <div class="input-group">
-        <label>Fazla Mesai Saati</label>
-        <input type="text" id="fazla-mesai-saati" placeholder="4">
-    </div>
-
-    <div class="input-group">
-        <label>Gece Zammı (Saat)</label>
-        <input type="text" id="gece-zammi" placeholder="78">
-    </div>
-
-    <div class="input-group">
-        <label>Ulusal Bayram Çalışması (Saat)</label>
-        <input type="text" id="ulusal-bayram" placeholder="7,5">
-    </div>
-
-    <div class="input-group">
-        <label>Dini Bayram Çalışması (Saat)</label>
-        <input type="text" id="dini-bayram" placeholder="0">
-    </div>
-
-    <div class="input-group">
-        <label>Resmi Tatil (Saat)</label>
-        <input type="text" id="resmi-tatil" placeholder="0">
-    </div>
-
-    <div class="input-group">
-        <label>Yol Ücreti</label>
-        <input type="text" id="yol-ucreti" placeholder="0">
-    </div>
-
-    <div class="input-group">
-        <label>Net BES Kesintisi</label>
-        <input type="text" id="bes-kesintisi" placeholder="2520,75">
-    </div>
-
-    <div class="input-group">
-        <label>Vakıf Kesintisi Yüzdesi</label>
-        <input type="text" id="vakif-kesintisi-yuzde" placeholder="10">
-    </div>
-
-    <div class="input-group">
-        <label>Gelir Vergisi Oranı (%)</label>
         <select id="tax-rate">
-            <option value="0.15">15%</option>
-            <option value="0.20">20%</option>
-            <option value="0.27">27%</option>
-            <option value="0.35">35%</option>
+            <option value="0.15">Vergi Dilimi: 15%</option>
+            <option value="0.20">Vergi Dilimi: 20%</option>
+            <option value="0.27">Vergi Dilimi: 27%</option>
+            <option value="0.35">Vergi Dilimi: 35%</option>
         </select>
     </div>
 
-    <div class="results">
-        <div class="result-item"><span>Toplam Brüt:</span><span id="toplam-brut">0.00</span></div>
-        <div class="result-item"><span>Net İkramiye:</span><span id="net-ikramiye">0.00</span></div>
-        <div class="result-item"><span>Net Maaş:</span><span id="net-maas">0.00</span></div>
+    <div class="input-group"><label>Çalışma saat ücreti:</label><input type="number" id="saat-ucreti" step="0.01"></div>
+    <div class="input-group"><label>Çalışma gün saati:</label><input type="number" id="calisma-gun-saati"></div>
+    <div class="input-group"><label>Fazla mesai saati:</label><input type="number" id="fazla-mesai-saati"></div>
+    <div class="input-group"><label>Gece zammı saati:</label><input type="number" id="gece-zammi"></div>
+    <div class="input-group"><label>Ulusal bayram (saat):</label><input type="number" id="ulusal-bayram"></div>
+    <div class="input-group"><label>Dini bayram (saat):</label><input type="number" id="dini-bayram"></div>
+    <div class="input-group"><label>Resmi tatil FM (saat):</label><input type="number" id="resmi-tatil"></div>
+    <div class="input-group"><label>Yol ücreti (brüt):</label><input type="number" id="yol-ucreti"></div>
+    <div class="input-group"><label>Net BES Kesintisi:</label><input type="number" id="bes-kesintisi"></div>
+    <div class="input-group"><label>Vakıf Kesintisi (%):</label><input type="number" id="vakif-kesintisi-yuzde" value="10"></div>
+
+    <div class="results-area">
+        <div class="res-box"><div class="res-label">Sendika Ücreti</div><div class="res-value" id="sendika-ucreti">0,00</div></div>
+        <div class="res-box"><div class="res-label">Vergi İstisnası</div><div class="res-value" id="vergi-istisnasi">0,00</div></div>
+        <div class="res-box"><div class="res-label">Toplam Brüt</div><div class="res-value" id="toplam-brut">0,00</div></div>
+        <div class="res-box"><div class="res-label">BES (Brüt)</div><div class="res-value" id="bes-brut">0,00</div></div>
+        <div class="res-box"><div class="res-label">Vakıf Kesintisi</div><div class="res-value" id="vakif-sonuc">0,00</div></div>
+        <div class="res-box"><div class="res-label">Net İkramiye</div><div class="res-value" id="net-ikramiye">0,00</div></div>
     </div>
 
-    <div class="bottom-buttons">
+    <div class="net-pay-box">
+        <div class="net-pay-label">Ödenecek Net Maaş</div>
+        <div class="net-pay-value" id="net-maas">0,00</div>
+    </div>
+
+    <div class="btn-grid">
         <button onclick="window.open('https://bordro.pages.dev/tes.html', '_blank')">Görüş, öneri ve teşekkür</button>
         <button onclick="window.open('https://bordro.pages.dev/sosyal.html', '_blank')">Sosyal yardımlar</button>
-        <button onclick="window.open('https://bordro.pages.dev/enf.html', '_blank')">Enflasyon verileri</button>
+        <button class="full-btn btn-orange" onclick="window.open('https://bordro.pages.dev/enf.html', '_blank')">Enflasyon verileri</button>
     </div>
 </div>
 
