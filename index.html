@@ -7,7 +7,7 @@
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; padding: 20px; margin: 0; }
         .container { background: #fff; width: 100%; max-width: 450px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        h2 { text-align: center; color: #2c3e50; font-size: 22px; margin-bottom: 20px; }
+        h2 { text-align: center; color: #2c3e50; font-size: 22px; margin-bottom: 20px; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; }
         
         .input-group { margin-bottom: 12px; }
         .input-group label { display: block; font-size: 13px; color: #666; margin-bottom: 4px; font-weight: 600; }
@@ -23,11 +23,9 @@
         .net-pay-value { font-size: 32px; font-weight: 800; margin-top: 5px; }
 
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .full-btn { grid-column: span 2; }
+        .full-btn { grid-column: span 2; background: #f39c12 !important; color: white !important; }
         button { padding: 12px; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; background: #f0f2f5; color: #444; transition: 0.2s; }
         button:hover { background: #e2e5e9; }
-        .btn-orange { background: #f39c12; color: white; }
-        .btn-orange:hover { background: #d68910; }
     </style>
 </head>
 <body>
@@ -59,18 +57,18 @@
     <div class="input-group"><label>Gece zammı saati:</label><input type="number" id="gece-zammi"></div>
     <div class="input-group"><label>Ulusal bayram (saat):</label><input type="number" id="ulusal-bayram"></div>
     <div class="input-group"><label>Dini bayram (saat):</label><input type="number" id="dini-bayram"></div>
-    <div class="input-group"><label>Resmi tatil FM (saat):</label><input type="number" id="resmi-tatil"></div>
+    <div class="input-group"><label>Resmi tatil (saat):</label><input type="number" id="resmi-tatil"></div>
     <div class="input-group"><label>Yol ücreti (brüt):</label><input type="number" id="yol-ucreti"></div>
     <div class="input-group"><label>Net BES Kesintisi:</label><input type="number" id="bes-kesintisi"></div>
     <div class="input-group"><label>Vakıf Kesintisi (%):</label><input type="number" id="vakif-kesintisi-yuzde" value="10"></div>
 
     <div class="results-area">
-        <div class="res-box"><div class="res-label">Sendika Ücreti</div><div class="res-value" id="sendika-ucreti">0,00</div></div>
-        <div class="res-box"><div class="res-label">Vergi İstisnası</div><div class="res-value" id="vergi-istisnasi">0,00</div></div>
-        <div class="res-box"><div class="res-label">Toplam Brüt</div><div class="res-value" id="toplam-brut">0,00</div></div>
-        <div class="res-box"><div class="res-label">BES (Brüt)</div><div class="res-value" id="bes-brut">0,00</div></div>
-        <div class="res-box"><div class="res-label">Vakıf Kesintisi</div><div class="res-value" id="vakif-sonuc">0,00</div></div>
-        <div class="res-box"><div class="res-label">Net İkramiye</div><div class="res-value" id="net-ikramiye">0,00</div></div>
+        <div class="res-box"><div class="res-label">SENDİKA ÜCRETİ</div><div class="res-value" id="sendika-ucreti">0,00</div></div>
+        <div class="res-box"><div class="res-label">VERGİ İSTİSNASI</div><div class="res-value" id="vergi-istisnasi">0,00</div></div>
+        <div class="res-box"><div class="res-label">TOPLAM BRÜT</div><div class="res-value" id="toplam-brut">0,00</div></div>
+        <div class="res-box"><div class="res-label">BES (BRÜT)</div><div class="res-value" id="bes-kesintisi-brut-sonuc">0,00</div></div>
+        <div class="res-box"><div class="res-label">VAKIF KESİNTİSİ</div><div class="res-value" id="vakif-kesintisi-sonuc">0,00</div></div>
+        <div class="res-box"><div class="res-label">NET İKRAMİYE</div><div class="res-value" id="net-ikramiye">0,00</div></div>
     </div>
 
     <div class="net-pay-box">
@@ -81,7 +79,7 @@
     <div class="btn-grid">
         <button onclick="window.open('https://bordro.pages.dev/tes.html', '_blank')">Görüş, öneri ve teşekkür</button>
         <button onclick="window.open('https://bordro.pages.dev/sosyal.html', '_blank')">Sosyal yardımlar</button>
-        <button class="full-btn btn-orange" onclick="window.open('https://bordro.pages.dev/enf.html', '_blank')">Enflasyon verileri</button>
+        <button class="full-btn" onclick="window.open('https://bordro.pages.dev/enf.html', '_blank')">Enflasyon verileri</button>
     </div>
 </div>
 
