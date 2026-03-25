@@ -3,35 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Net Maaş Hesaplayıcı 2026</title>
+    <title>Net Maaş Hesaplayıcı</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; margin: 0; padding: 20px; box-sizing: border-box; }
-        .container { background-color: #ffffff; padding: 25px 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
-        h2 { text-align: center; color: #2c3e50; margin-bottom: 5px; }
-        p.subtitle { text-align: center; color: #666; margin-bottom: 25px; font-size: 14px; }
+        .container { background-color: #ffffff; padding: 25px 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h2 { text-align: center; color: #000; margin-bottom: 5px; font-weight: bold; }
+        p.subtitle { text-align: left; color: #000; margin-bottom: 20px; font-size: 16px; }
         
         .input-group { display: flex; flex-direction: column; margin-bottom: 15px; }
-        .input-group label { margin-bottom: 5px; font-weight: 600; color: #444; font-size: 14px; }
-        .input-group input, .input-group select { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; outline: none; }
-        .input-group input:focus { border-color: #6a1b9a; }
+        .input-group label { margin-bottom: 5px; font-weight: bold; color: #000; font-size: 18px; }
+        .input-group input, .input-group select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; background-color: #fff; width: 100%; box-sizing: border-box; }
 
-        .results { border-top: 2px solid #eee; margin-top: 20px; padding-top: 15px; }
-        .result-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; color: #555; }
-        .result-item.total { font-weight: bold; color: #2c3e50; font-size: 18px; margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px; }
+        .results { border-top: 1px solid #eee; margin-top: 20px; padding-top: 15px; }
+        .result-item { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px; color: #000; }
         
-        .bottom-buttons { display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 25px; gap: 10px; }
-        .bottom-buttons button { flex: 1; min-width: 140px; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.3s; }
-        
-        /* Buton Renkleri */
-        .btn-tes { background-color: #ecf0f1; color: #34495e; }
-        .btn-sos { background-color: #6a1b9a; color: white; }
-        .btn-enf { background-color: #f39c12; color: white; }
-        
-        .bottom-buttons button:hover { opacity: 0.8; transform: translateY(-2px); }
-
-        @media (max-width: 480px) {
-            .bottom-buttons button { flex: 1 1 100%; }
-        }
+        /* Buton Alanı */
+        .bottom-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .bottom-buttons button { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; background-color: #fff; color: #000; cursor: pointer; font-size: 14px; text-align: center; transition: background 0.2s; }
+        .bottom-buttons button:hover { background-color: #f0f0f0; }
     </style>
 </head>
 <body>
@@ -52,52 +41,52 @@
 
     <div class="input-group">
         <label>Saatlik Ücret</label>
-        <input type="number" id="saat-ucreti" placeholder="0.00" step="0.01">
+        <input type="text" id="saat-ucreti" placeholder="318,13">
     </div>
 
     <div class="input-group">
         <label>Çalışma Gün Saati</label>
-        <input type="number" id="calisma-gun-saati" placeholder="225">
+        <input type="text" id="calisma-gun-saati" placeholder="232,5">
     </div>
 
     <div class="input-group">
         <label>Fazla Mesai Saati</label>
-        <input type="number" id="fazla-mesai-saati" placeholder="0">
+        <input type="text" id="fazla-mesai-saati" placeholder="4">
     </div>
 
     <div class="input-group">
         <label>Gece Zammı (Saat)</label>
-        <input type="number" id="gece-zammi" placeholder="0">
+        <input type="text" id="gece-zammi" placeholder="78">
     </div>
 
     <div class="input-group">
         <label>Ulusal Bayram Çalışması (Saat)</label>
-        <input type="number" id="ulusal-bayram" placeholder="0">
+        <input type="text" id="ulusal-bayram" placeholder="7,5">
     </div>
 
     <div class="input-group">
         <label>Dini Bayram Çalışması (Saat)</label>
-        <input type="number" id="dini-bayram" placeholder="0">
+        <input type="text" id="dini-bayram" placeholder="0">
     </div>
 
     <div class="input-group">
         <label>Resmi Tatil (Saat)</label>
-        <input type="number" id="resmi-tatil" placeholder="0">
+        <input type="text" id="resmi-tatil" placeholder="0">
     </div>
 
     <div class="input-group">
-        <label>Yol Ücreti (Brüt)</label>
-        <input type="number" id="yol-ucreti" placeholder="0.00">
+        <label>Yol Ücreti</label>
+        <input type="text" id="yol-ucreti" placeholder="0">
     </div>
 
     <div class="input-group">
         <label>Net BES Kesintisi</label>
-        <input type="number" id="bes-kesintisi" placeholder="0.00">
+        <input type="text" id="bes-kesintisi" placeholder="2520,75">
     </div>
 
     <div class="input-group">
-        <label>Vakıf Kesintisi Yüzdesi (%)</label>
-        <input type="number" id="vakif-kesintisi-yuzde" placeholder="10">
+        <label>Vakıf Kesintisi Yüzdesi</label>
+        <input type="text" id="vakif-kesintisi-yuzde" placeholder="10">
     </div>
 
     <div class="input-group">
@@ -112,4 +101,17 @@
 
     <div class="results">
         <div class="result-item"><span>Toplam Brüt:</span><span id="toplam-brut">0.00</span></div>
-        <div class
+        <div class="result-item"><span>Net İkramiye:</span><span id="net-ikramiye">0.00</span></div>
+        <div class="result-item"><span>Net Maaş:</span><span id="net-maas">0.00</span></div>
+    </div>
+
+    <div class="bottom-buttons">
+        <button onclick="window.open('https://bordro.pages.dev/tes.html', '_blank')">Görüş, öneri ve teşekkür</button>
+        <button onclick="window.open('https://bordro.pages.dev/sosyal.html', '_blank')">Sosyal yardımlar</button>
+        <button onclick="window.open('https://bordro.pages.dev/enf.html', '_blank')">Enflasyon verileri</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
