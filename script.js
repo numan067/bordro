@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Giriş alanlarını tanımla
+    // Giriş alanlarını tanımla (HTML'deki ID'ler ile birebir aynı)
     const inputs = [
         'saat-ucreti', 'calisma-gun-saati', 'fazla-mesai-saati', 
         'gece-zammi', 'ulusal-bayram', 'dini-bayram', 
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.taxRate = document.getElementById('tax-rate');
     elements.month = document.getElementById('month');
 
-    // 2026 Vergi İstisnaları
+    // 2026 Vergi İstisnaları (Görseldeki tablodan)
     const istisnalar2026 = {
         1: { gv: 4211.33, dv: 250.70 }, 2: { gv: 4211.33, dv: 250.70 },
         3: { gv: 4211.33, dv: 250.70 }, 4: { gv: 4211.33, dv: 250.70 },
@@ -36,61 +36,59 @@ document.addEventListener('DOMContentLoaded', () => {
         const resmi = val('resmi-tatil');
         const yolBrut = val('yol-ucreti');
         const besNet = val('bes-kesintisi');
-        const vakifYuzde = val('vakif-kesintisi-yuzde');
+        const vakifYuzde = val('vakif-kesintisi-yuzde') || 10;
         const vergiOrani = parseFloat(elements.taxRate.value) || 0.15;
         const ay = parseInt(elements.month.value) || 1;
 
-        // İstisnalar
+        // 1. Kazanç Hesaplamaları
+        const brutNormal = calismaSaati * saatUcreti;
+        const brutFM = FM * saatUcreti * 2; // Fazla mesai %100 eklemeli
+        const brutGece = gece * 22.81; // Gece zammı sabit tutar
+        const brutBayram = (ulusal + dini + resmi) * saatUcreti * 2;
+        
+        const toplamBrut = brutNormal + brutFM + brutGece + brutBayram + yolBrut;
+
+        // 2. İstisnalar
         const gvIstisna = istisnalar2026[ay].gv;
         const dvIstisna = istisnalar2026[ay].dv;
 
-        // 1. Kazançlar
-        const brutCalisma = calismaSaati * saatUcreti;
-        const brutFM = FM * 2 * saatUcreti; // %100 mesai varsayımı
-        const brutGece = gece * 22.81; // Gece tazminatı sabit
-        const brutUlusal = ulusal * 2 * saatUcreti;
-        const brutDini = dini * 2 * saatUcreti;
-        const brutResmi = resmi * 2 * saatUcreti;
-        
-        const toplamBrut = brutCalisma + brutFM + brutGece + brutUlusal + brutDini + brutResmi + yolBrut;
-
-        // 2. Kesintiler
-        const sendikaAidati = saatUcreti * 1.5; // Örnek çarpan
-        const vakifKesintisi = (brutCalisma * vakifYuzde / 100);
-        const besBrut = besNet / 0.85; // %15 vergi avantajı ile brütleştirme
-
-        // 3. Yasal Kesintiler (SGK + İşsizlik %15)
+        // 3. Kesintiler
         const sgkIsci = toplamBrut * 0.14;
         const issizlikIsci = toplamBrut * 0.01;
-        
-        // Vergi Hesaplama
-        const gvMatrahi = toplamBrut - sgkIsci - issizlikIsci;
+        const sendikaAidati = saatUcreti * 7; // Örnek sendika formülü
+        const vakifKesintisi = (brutNormal * vakifYuzde / 100);
+        const besBrut = besNet / (1 - 0.15); // Yaklaşık brütleştirme
+
+        // 4. Vergi Hesaplama
+        const gvMatrahi = toplamBrut - sgkIsci - issizlikIsci - sendikaAidati - vakifKesintisi;
         const gvTutari = Math.max(0, (gvMatrahi * vergiOrani) - gvIstisna);
         const dvTutari = Math.max(0, (toplamBrut * 0.00759) - dvIstisna);
 
-        // 4. Net Maaş
+        // 5. Net Maaş
         const netMaas = toplamBrut - sgkIsci - issizlikIsci - gvTutari - dvTutari - vakifKesintisi - besNet - sendikaAidati;
 
-        // 5. İkramiye (Saat Ücreti x 225 üzerinden yaklaşık net)
+        // 6. İkramiye (Net)
         const ikrBrut = saatUcreti * 225;
-        const ikrNet = ikrBrut * 0.72; // Vergi/SGK sonrası yaklaşık net
+        const ikrNet = ikrBrut * 0.72; // Vergi sonrası net tahmin
 
-        // Sonuçları Yazdır
+        // Sonuçları Yazdır (HTML'deki ID'ler ile tam uyumlu)
         const fmt = (n) => n.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         
-        if(document.getElementById('sendika-ucreti')) document.getElementById('sendika-ucreti').innerText = fmt(sendikaAidati);
-        if(document.getElementById('vergi-istisnasi')) document.getElementById('vergi-istisnasi').innerText = fmt(gvIstisna + dvIstisna);
-        if(document.getElementById('toplam-brut')) document.getElementById('toplam-brut').innerText = fmt(toplamBrut);
-        if(document.getElementById('bes-kesintisi-brut-sonuc')) document.getElementById('bes-kesintisi-brut-sonuc').innerText = fmt(besBrut);
-        if(document.getElementById('vakif-kesintisi-sonuc')) document.getElementById('vakif-kesintisi-sonuc').innerText = fmt(vakifKesintisi);
-        if(document.getElementById('net-ikramiye')) document.getElementById('net-ikramiye').innerText = fmt(ikrNet);
-        if(document.getElementById('net-maas')) document.getElementById('net-maas').innerText = fmt(netMaas > 0 ? netMaas : 0);
+        document.getElementById('sendika-ucreti').innerText = fmt(sendikaAidati);
+        document.getElementById('vergi-istisnasi').innerText = fmt(gvIstisna + dvIstisna);
+        document.getElementById('toplam-brut').innerText = fmt(toplamBrut);
+        document.getElementById('bes-kesintisi-brut-sonuc').innerText = fmt(besBrut);
+        document.getElementById('vakif-kesintisi-sonuc').innerText = fmt(vakifKesintisi);
+        document.getElementById('net-ikramiye').innerText = fmt(ikrNet);
+        document.getElementById('net-maas').innerText = fmt(netMaas > 0 ? netMaas : 0);
     }
 
-    // Tüm inputlara dinleyici ekle
+    // Dinleyicileri ekle
     Object.values(elements).forEach(el => {
         if(el) el.addEventListener('input', hesapla);
     });
+    elements.taxRate.addEventListener('change', hesapla);
+    elements.month.addEventListener('change', hesapla);
     
     // İlk açılışta hesapla
     hesapla();
