@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.taxRate = document.getElementById('tax-rate');
     elements.month = document.getElementById('month');
 
-    // 2026 Vergi İstisnaları
     const istisnalar2026 = {
         1: { gv: 4211.33, dv: 250.70 }, 2: { gv: 4211.33, dv: 250.70 },
         3: { gv: 4211.33, dv: 250.70 }, 4: { gv: 4211.33, dv: 250.70 },
@@ -19,6 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
         8: { gv: 5615.10, dv: 250.70 }, 9: { gv: 5615.10, dv: 250.70 },
         10: { gv: 5615.10, dv: 250.70 }, 11: { gv: 5615.10, dv: 250.70 }, 12: { gv: 5615.10, dv: 250.70 }
     };
+
+    // Ayın gün sayısına göre saati güncelleme fonksiyonu
+    function guncelleAySaati() {
+        const ay = parseInt(elements.month.value);
+        const yil = 2026;
+        // Ayın kaç çektiğini bul (0. gün bir önceki ayın son günüdür)
+        const gunSayisi = new Date(yil, ay, 0).getDate();
+        elements['calisma-gun-saati'].value = gunSayisi * 7.5;
+        hesapla();
+    }
 
     function hesapla() {
         const val = (id) => parseFloat(elements[id]?.value) || 0;
@@ -36,38 +45,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const vergiOrani = parseFloat(elements.taxRate.value) || 0.15;
         const ay = parseInt(elements.month.value) || 1;
 
-        // 1. Brüt Hesaplamaları
+        const gvIstisna = istisnalar2026[ay].gv;
+        const dvIstisna = istisnalar2026[ay].dv;
+
         const brutNormal = calismaSaati * saatUcreti;
         const brutFM = FM * saatUcreti * 2;
         const brutGece = gece * 22.81; 
         const brutBayram = (ulusal + dini + resmi) * saatUcreti * 2;
         const toplamBrut = brutNormal + brutFM + brutGece + brutBayram + yolBrut;
 
-        // 2. İstisnalar
-        const gvIstisna = istisnalar2026[ay].gv;
-        const dvIstisna = istisnalar2026[ay].dv;
-
-        // 3. Kesintiler
-        const sgkIsci = toplamBrut * 0.14;
-        const issizlikIsci = toplamBrut * 0.01;
+        const sgkIsci = toplamBrut * 0.15; // SGK + İşsizlik
         const sendikaAidati = saatUcreti * 7; 
         const vakifKesintisi = (brutNormal * vakifYuzde / 100);
         const besBrut = besNet / 0.85;
 
-        // 4. Vergi ve Net Maaş
-        const gvMatrahi = toplamBrut - sgkIsci - issizlikIsci - sendikaAidati - vakifKesintisi;
+        const gvMatrahi = toplamBrut - sgkIsci - sendikaAidati - vakifKesintisi;
         const gvTutari = Math.max(0, (gvMatrahi * vergiOrani) - gvIstisna);
         const dvTutari = Math.max(0, (toplamBrut * 0.00759) - dvIstisna);
-        const netMaas = toplamBrut - sgkIsci - issizlikIsci - gvTutari - dvTutari - vakifKesintisi - besNet - sendikaAidati;
+        const netMaas = toplamBrut - sgkIsci - gvTutari - dvTutari - vakifKesintisi - besNet - sendikaAidati;
 
-        // 5. İkramiye Hesaplama (Seçili vergi dilimine Duyarlı)
         const ikrBrut = saatUcreti * 225;
-        const ikrSGK = ikrBrut * 0.15;
-        const ikrGV = (ikrBrut - ikrSGK) * vergiOrani;
-        const ikrDV = ikrBrut * 0.00759;
-        const ikrNet = ikrBrut - (ikrSGK + ikrGV + ikrDV);
+        const ikrNet = ikrBrut - (ikrBrut * 0.15 + (ikrBrut * 0.85 * vergiOrani) + (ikrBrut * 0.00759));
 
-        // Sonuçları Yazdır
         const fmt = (n) => n.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         document.getElementById('sendika-ucreti').innerText = fmt(sendikaAidati);
         document.getElementById('vergi-istisnasi').innerText = fmt(gvIstisna + dvIstisna);
@@ -78,10 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('net-maas').innerText = fmt(netMaas > 0 ? netMaas : 0);
     }
 
-    // Dinleyiciler
+    // Olay Dinleyicileri
     Object.values(elements).forEach(el => el && el.addEventListener('input', hesapla));
     elements.taxRate.addEventListener('change', hesapla);
-    elements.month.addEventListener('change', hesapla);
+    // Ay değişince hem saati güncelle hem hesapla
+    elements.month.addEventListener('change', guncelleAySaati);
     
-    hesapla(); // İlk açılışta çalıştır
+    // İlk açılış ayarları
+    guncelleAySaati(); 
 });
