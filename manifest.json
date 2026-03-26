@@ -1,14 +1,15 @@
 {
   "name": "2026 Maaş Hesaplama",
   "short_name": "Maaş2026",
-  "description": "2026 Maaş ve İkramiye Hesaplama",
+  "description": "2026 Maaş ve İkramiye Hesaplama Motoru",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#6a1b9a",
+  "scope": "./",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2654/2654522.png",
+      "src": "icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
