@@ -9,110 +9,56 @@
     <meta name="theme-color" content="#6a1b9a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Maaş2026">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2654/2654522.png">
 
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; margin: 0; padding: 15px; box-sizing: border-box; }
-        .container { background-color: #ffffff; padding: 20px 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
-        h2 { text-align: center; color: #2c3e50; margin-bottom: 20px; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; font-size: 20px; }
-        
-        .top-options { display: flex; justify-content: space-between; margin-bottom: 15px; gap: 10px; }
-        .top-options select { width: 48%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; background-color: #fff; cursor: pointer; }
-        
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
-        .input-group { display: flex; flex-direction: column; }
-        .input-group label { margin-bottom: 4px; font-weight: 600; color: #444; font-size: 12px; }
-        .input-group input { padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; background-color: #fafafa; transition: border 0.3s; }
-        .input-group input:focus { border-color: #6a1b9a; outline: none; }
-        
-        .output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; border-top: 2px solid #f0f0f0; padding-top: 15px; }
-        .output-group { background: #f9f9f9; padding: 8px; border-radius: 8px; text-align: center; border: 1px solid #eee; }
-        .output-label { font-size: 10px; color: #888; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .output-value { font-size: 14px; font-weight: bold; color: #2c3e50; }
-        
-        /* Mor Net Maaş Kutusu */
-        .net-maas-box { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); color: #fff; padding: 15px; border-radius: 12px; text-align: center; margin-top: 20px; box-shadow: 0 4px 15px rgba(106, 27, 154, 0.3); }
-        .net-maas-label { font-size: 16px; font-weight: 600; margin-bottom: 2px; opacity: 0.9; }
-        .net-maas-value { font-size: 30px; font-weight: 800; }
-        
-        .bottom-buttons { display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 20px; gap: 8px; }
-        .bottom-buttons button { flex: 1; min-width: 120px; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; }
-        
-        .btn-default { background-color: #ecf0f1; color: #34495e; }
-        .btn-orange { background-color: #f39c12; color: white; }
-        .bottom-buttons button:hover { opacity: 0.8; transform: translateY(-1px); }
-
-        @media (max-width: 480px) { 
-            .input-grid, .output-grid { grid-template-columns: 1fr; } 
-            .top-options { flex-direction: column; } 
-            .top-options select { width: 100%; }
-            .net-maas-value { font-size: 26px; }
-        }
+        /* Önceki görsel stil kodların buraya gelecek (Mor Tema) */
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; padding: 15px; display: flex; justify-content: center; }
+        .container { background: white; padding: 20px; border-radius: 15px; width: 100%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #6a1b9a; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .input-group { display: flex; flex-direction: column; margin-bottom: 10px; }
+        .input-group label { font-size: 11px; font-weight: bold; margin-bottom: 3px; }
+        .input-group input { padding: 8px; border: 1px solid #ddd; border-radius: 5px; }
+        .net-maas-box { background: linear-gradient(135deg, #6a1b9a, #8e24aa); color: white; padding: 20px; border-radius: 12px; text-align: center; margin-top: 15px; }
+        .net-maas-value { font-size: 32px; font-weight: bold; }
+        .bottom-buttons { display: flex; gap: 5px; margin-top: 15px; }
+        .bottom-buttons button { flex: 1; padding: 10px; border: none; border-radius: 5px; font-size: 11px; cursor: pointer; }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Maaş Hesaplama 2026</h2>
-
         <div class="top-options">
-            <select id="month">
-                <option value="1">Ocak</option><option value="2">Şubat</option><option value="3">Mart</option>
-                <option value="4">Nisan</option><option value="5">Mayıs</option><option value="6">Haziran</option>
-                <option value="7">Temmuz</option><option value="8">Ağustos</option><option value="9">Eylül</option>
-                <option value="10">Ekim</option><option value="11">Kasım</option><option value="12">Aralık</option>
-            </select>
-            <select id="tax-rate">
-                <option value="0.15">Vergi Dilimi: 15%</option>
-                <option value="0.20">Vergi Dilimi: 20%</option>
-                <option value="0.27">Vergi Dilimi: 27%</option>
-                <option value="0.35">Vergi Dilimi: 35%</option>
-            </select>
+            <select id="month"><option value="1">Ocak</option><option value="2">Şubat</option><option value="3">Mart</option><option value="4">Nisan</option><option value="5">Mayıs</option><option value="6">Haziran</option><option value="7">Temmuz</option><option value="8">Ağustos</option><option value="9">Eylül</option><option value="10">Ekim</option><option value="11">Kasım</option><option value="12">Aralık</option></select>
+            <select id="tax-rate"><option value="0.15">15%</option><option value="0.20">20%</option><option value="0.27">27%</option></select>
         </div>
-        
         <div class="input-grid">
-            <div class="input-group"><label>Saat Ücreti:</label><input type="number" id="saat-ucreti" placeholder="0.00" step="0.01"></div>
-            <div class="input-group"><label>Çalışma Gün Saati:</label><input type="number" id="calisma-gun-saati"></div>
-            <div class="input-group"><label>Fazla Mesai (Saat):</label><input type="number" id="fazla-mesai-saati" value="0"></div>
-            <div class="input-group"><label>Gece Zammı (Saat):</label><input type="number" id="gece-zammi" value="0"></div>
-            <div class="input-group"><label>Ulusal Bayram (Saat):</label><input type="number" id="ulusal-bayram" value="0"></div>
-            <div class="input-group"><label>Dini Bayram (Saat):</label><input type="number" id="dini-bayram" value="0"></div>
-            <div class="input-group"><label>Resmi Tatil FM:</label><input type="number" id="resmi-tatil" value="0"></div>
-            <div class="input-group"><label>Yol Ücreti (Brüt):</label><input type="number" id="yol-ucreti" value="0"></div>
-            <div class="input-group"><label>Net BES Kesintisi:</label><input type="number" id="bes-kesintisi" value="0"></div>
-            <div class="input-group"><label>Vakıf Kesintisi (%):</label><input type="number" id="vakif-kesintisi-yuzde" value="0"></div>
-        </div>
-
-        <div class="output-grid">
-            <div class="output-group"><div class="output-label">Sendika Ücreti</div><div class="output-value" id="sendika-ucreti">0,00</div></div>
-            <div class="output-group"><div class="output-label">Vergi İstisnası</div><div class="output-value" id="vergi-istisnasi">0,00</div></div>
-            <div class="output-group"><div class="output-label">Toplam Brüt</div><div class="output-value" id="toplam-brut">0,00</div></div>
-            <div class="output-group"><div class="output-label">BES (Brüt)</div><div class="output-value" id="bes-kesintisi-brut-sonuc">0,00</div></div>
-            <div class="output-group"><div class="output-label">Vakıf Kesintisi</div><div class="output-value" id="vakif-kesintisi-sonuc">0,00</div></div>
-            <div class="output-group"><div class="output-label">Net İkramiye</div><div class="output-value" id="net-ikramiye">0,00</div></div>
-        </div>
-
+            <div class="input-group"><label>Saat Ücreti:</label><input type="number" id="saat-ucreti" step="0.01"></div>
+            <div class="input-group"><label>Çalışma Saati:</label><input type="number" id="calisma-gun-saati"></div>
+            <div class="input-group"><label>Fazla Mesai:</label><input type="number" id="fazla-mesai-saati" value="0"></div>
+            <div class="input-group"><label>Vakıf (%):</label><input type="number" id="vakif-kesintisi-yuzde" value="0"></div>
+            </div>
         <div class="net-maas-box">
-            <div class="net-maas-label">Ödenecek Net Maaş</div>
+            <div>Ödenecek Net Maaş</div>
             <div class="net-maas-value" id="net-maas">0,00</div>
         </div>
-
         <div class="bottom-buttons">
-            <button class="btn-default" onclick="window.open('tes.html', '_self')">Görüş ve Öneri</button>
-            <button class="btn-default" onclick="window.open('sosyal.html', '_self')">Sosyal Yardımlar</button>
-            <button class="btn-orange" onclick="window.open('https://bordro.pages.dev/enf.html', '_blank')">Enflasyon Verileri</button>
+            <button onclick="location.href='tes.html'">Görüşler</button>
+            <button onclick="location.href='sosyal.html'">Sosyal Yardımlar</button>
         </div>
     </div>
 
+    <script src="script.js"></script>
     <script>
+        // PWA Kaydı - ERR_FAILED Hatasını engellemek için ./ kullanımı
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('PWA Kayıt Başarılı'))
-                    .catch(err => console.log('PWA Kayıt Hatası:', err));
+                navigator.serviceWorker.register('./sw.js')
+                    .then(() => console.log("Uygulama hazır."))
+                    .catch(err => console.log("Hata:", err));
             });
         }
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
