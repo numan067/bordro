@@ -1,0 +1,17 @@
+{
+  "name": "2026 Maaş Hesaplama",
+  "short_name": "Maaş2026",
+  "description": "2026 yılı güncel maaş ve ikramiye hesaplama motoru",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f4f7f6",
+  "theme_color": "#6a1b9a",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2654/2654522.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
