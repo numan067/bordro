@@ -14,7 +14,7 @@
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; margin: 0; padding: 15px; box-sizing: border-box; }
         .container { background-color: #ffffff; padding: 25px 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 650px; }
-        h2 { text-align: center; color: #2c3e50; margin-bottom: 25px; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; }
+        h2 { text-align: center; color: #2c3e50; margin-bottom: 25px; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; font-size: 22px; }
         
         .top-options { display: flex; justify-content: space-between; margin-bottom: 20px; gap: 10px; }
         .top-options select { width: 48%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; background-color: #fff; cursor: pointer; }
@@ -30,7 +30,7 @@
         .output-label { font-size: 11px; color: #888; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         .output-value { font-size: 16px; font-weight: bold; color: #2c3e50; }
         
-        /* Orijinal Mor Kutu */
+        /* Orijinal Mor Net Maaş Kutusu */
         .net-maas-box { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); color: #fff; padding: 20px; border-radius: 12px; text-align: center; margin-top: 25px; box-shadow: 0 4px 15px rgba(106, 27, 154, 0.3); }
         .net-maas-label { font-size: 18px; font-weight: 600; margin-bottom: 5px; opacity: 0.9; }
         .net-maas-value { font-size: 34px; font-weight: 800; }
@@ -98,16 +98,17 @@
         <div class="bottom-buttons">
             <button class="btn-default" onclick="location.href='tes.html'">Görüş ve Öneri</button>
             <button class="btn-default" onclick="location.href='sosyal.html'">Sosyal yardımlar</button>
-            <button class="btn-orange" onclick="window.open('https://bordro.pages.dev/enf.html', '_blank')">Enflasyon verileri</button>
+            <button class="btn-orange" onclick="location.href='enf.html'">Enflasyon verileri</button>
         </div>
     </div>
 
     <script>
+        // PWA (Mobil Uygulama) Kayıt Kodu
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('PWA Hazır'))
-                    .catch(err => console.log('PWA Hatası:', err));
+                    .then(reg => console.log('Uygulama başarıyla kaydedildi.'))
+                    .catch(err => console.log('Kayıt hatası:', err));
             });
         }
     </script>
