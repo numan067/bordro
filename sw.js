@@ -1,7 +1,6 @@
-// Önbellek adını her güncellemede değiştirmek (v1, v2...) tarayıcının yeni dosyaları çekmesini sağlar.
-const CACHE_NAME = 'maas-hesap-v4';
+const CACHE_NAME = 'maas-hesap-v5';
 
-// Uygulamanın hafızasına alınacak tüm dosyalar
+// Tüm yerel sayfaları listeye ekledik
 const assets = [
   './',
   './index.html',
@@ -13,18 +12,15 @@ const assets = [
   './sozlesme.html'
 ];
 
-// 1. Kurulum: Dosyaları tarayıcı hafızasına (Cache) yükle
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('Dosyalar önbelleğe alınıyor...');
       return cache.addAll(assets);
     })
   );
-  self.skipWaiting(); // Yeni versiyonun hemen aktif olmasını sağlar
+  self.skipWaiting();
 });
 
-// 2. Aktivasyon: Eski önbellekleri temizle
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -36,12 +32,10 @@ self.addEventListener('activate', event => {
   );
 });
 
-// 3. Veri Getirme (Fetch): ERR_FAILED hatasını önleyen strateji
 self.addEventListener('fetch', event => {
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // İnternet varsa dosyayı getir ve önbelleği güncelle
         if (event.request.method === 'GET') {
           let responseClone = response.clone();
           caches.open(CACHE_NAME).then(cache => {
@@ -51,11 +45,10 @@ self.addEventListener('fetch', event => {
         return response;
       })
       .catch(() => {
-        // İnternet yoksa veya bağlantı koptuysa hafızadaki (Cache) dosyayı göster
         return caches.match(event.request).then(cachedResponse => {
-          return cachedResponse || new Response("Sayfa şu an çevrimdışı.", {
+          return cachedResponse || new Response("İnternet bağlantısı gerekli.", {
             status: 404,
-            statusText: "Offline Mode"
+            statusText: "Offline"
           });
         });
       })
