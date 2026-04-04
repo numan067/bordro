@@ -1,6 +1,4 @@
-const CACHE_NAME = 'maas-hesap-v5';
-
-// Tüm yerel sayfaları listeye ekledik
+const CACHE_NAME = 'maas-hesap-v6';
 const assets = [
   './',
   './index.html',
@@ -9,48 +7,33 @@ const assets = [
   './tes.html',
   './sosyal.html',
   './enf.html',
-  './sozlesme.html'
+  './sozlesme.html',
+  './icon.png'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(assets);
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(assets))
   );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys.filter(key => key !== CACHE_NAME)
-            .map(key => caches.delete(key))
-      );
-    })
+    caches.keys().then(keys => Promise.all(
+      keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+    ))
   );
 });
 
+// Reklam banner'ının görünmesini sağlayan kritik fetch ayarı
 self.addEventListener('fetch', event => {
+  // Eğer istek bir görsel ise veya dış bir URL (coinpayu) ise direkt internetten çek
+  if (event.request.url.includes('coinpayu.com')) {
+    return event.respondWith(fetch(event.request));
+  }
+
   event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        if (event.request.method === 'GET') {
-          let responseClone = response.clone();
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, responseClone);
-          });
-        }
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request).then(cachedResponse => {
-          return cachedResponse || new Response("İnternet bağlantısı gerekli.", {
-            status: 404,
-            statusText: "Offline"
-          });
-        });
-      })
+    fetch(event.request).catch(() => caches.match(event.request))
   );
 });
