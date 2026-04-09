@@ -12,13 +12,13 @@
         .top-options select { width: 48%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; background-color: #fff; cursor: pointer; }
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .input-group { display: flex; flex-direction: column; }
-        .input-group label { margin-bottom: 6px; font-weight: 600; color: #444; font-size: 13px; }
+        .input-group label { margin-bottom: 6px; font-weight: 600; color: #444; font-size: 12px; }
         .input-group input { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; background-color: #fafafa; }
         .output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; border-top: 2px solid #eee; padding-top: 20px; }
         .output-group { background: #f9f9f9; padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #eee; }
         .output-label { font-size: 11px; color: #888; margin-bottom: 4px; text-transform: uppercase; }
-        .output-value { font-size: 16px; font-weight: bold; color: #2c3e50; }
-        .net-maas-box { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); color: #fff; padding: 20px; border-radius: 12px; text-align: center; margin-top: 25px; }
+        .output-value { font-size: 15px; font-weight: bold; color: #2c3e50; }
+        .net-maas-box { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); color: #fff; padding: 20px; border-radius: 12px; text-align: center; margin-top: 25px; box-shadow: 0 4px 15px rgba(106, 27, 154, 0.3); }
         .net-maas-value { font-size: 34px; font-weight: 800; }
         .bottom-buttons { display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 25px; gap: 10px; }
         .bottom-buttons button { flex: 1; min-width: 140px; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
@@ -37,11 +37,12 @@
                 <option value="10">Ekim</option><option value="11">Kasım</option><option value="12">Aralık</option>
             </select>
             <select id="tax-rate" onchange="hesapla()">
-                <option value="0.15">Vergi Dilimi: 15%</option>
-                <option value="0.20">Vergi Dilimi: 20%</option>
-                <option value="0.27">Vergi Dilimi: 27%</option>
+                <option value="0.15">Vergi Dilimi: %15</option>
+                <option value="0.20">Vergi Dilimi: %20</option>
+                <option value="0.27">Vergi Dilimi: %27</option>
             </select>
         </div>
+        
         <div class="input-grid">
             <div class="input-group"><label>Çalışma saat ücreti:</label><input type="number" id="saat-ucreti" step="0.01" oninput="hesapla()"></div>
             <div class="input-group"><label>Çalışma gün saati:</label><input type="number" id="calisma-gun-saati" oninput="hesapla()"></div>
@@ -51,17 +52,23 @@
             <div class="input-group"><label>Dini bayram (saat):</label><input type="number" id="dini-bayram" value="0" oninput="hesapla()"></div>
             <div class="input-group"><label>Resmi tatil FM (saat):</label><input type="number" id="resmi-tatil" value="0" oninput="hesapla()"></div>
             <div class="input-group"><label>Yol ücreti (brüt):</label><input type="number" id="yol-ucreti" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Net BES Kesintisi:</label><input type="number" id="bes-kesintisi" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Vakıf Kesintisi (%):</label><input type="number" id="vakif-kesintisi-yuzde" value="0" oninput="hesapla()"></div>
         </div>
+
         <div class="output-grid">
+            <div class="output-group"><div class="output-label">Vergi İstisnası (GV+DV)</div><div id="vergi-istisnasi" class="output-value">0,00</div></div>
             <div class="output-group"><div class="output-label">Sendika Kesintisi</div><div id="sendika-kesinti" class="output-value">0,00</div></div>
-            <div class="output-group"><div class="output-label">Vergi İstisnası</div><div id="vergi-istisnasi" class="output-value">0,00</div></div>
+            <div class="output-group"><div class="output-label">Vakıf Kesinti Tutarı</div><div id="vakif-tutar" class="output-value">0,00</div></div>
             <div class="output-group"><div class="output-label">Toplam Brüt</div><div id="toplam-brut" class="output-value">0,00</div></div>
             <div class="output-group"><div class="output-label">Net İkramiye</div><div id="net-ikramiye" class="output-value">0,00</div></div>
         </div>
+
         <div class="net-maas-box">
             <div class="net-maas-label">Ödenecek Net Maaş</div>
             <div class="net-maas-value" id="net-maas">0,00 TL</div>
         </div>
+
         <div class="bottom-buttons">
             <button class="btn-default" onclick="location.href='index.html'">Ana Sayfa</button>
             <button class="btn-default" onclick="location.href='sosyal.html'">Sosyal Haklar</button>
@@ -69,14 +76,13 @@
     </div>
 
     <script>
-        // 2026 Tahmini Aylık Vergi İstisnası ve Çalışma Saatleri
         const ayVerileri = {
-            1: { saat: 225, istisna: 3200 }, 2: { saat: 202.5, istisna: 3200 },
-            3: { saat: 225, istisna: 3450 }, 4: { saat: 217.5, istisna: 3800 },
-            5: { saat: 225, istisna: 4200 }, 6: { saat: 210, istisna: 4500 },
-            7: { saat: 225, istisna: 4800 }, 8: { saat: 225, istisna: 5100 },
-            9: { saat: 217.5, istisna: 5400 }, 10: { saat: 225, istisna: 5700 },
-            11: { saat: 210, istisna: 6000 }, 12: { saat: 225, istisna: 6300 }
+            1: { saat: 225, gv: 4211.33, dv: 250.70 }, 2: { saat: 202.5, gv: 4211.33, dv: 250.70 },
+            3: { saat: 225, gv: 4211.33, dv: 250.70 }, 4: { saat: 217.5, gv: 4211.33, dv: 250.70 },
+            5: { saat: 225, gv: 4211.33, dv: 250.70 }, 6: { saat: 210, gv: 4211.33, dv: 250.70 },
+            7: { saat: 225, gv: 4537.75, dv: 250.70 }, 8: { saat: 225, gv: 5615.10, dv: 250.70 },
+            9: { saat: 217.5, gv: 5615.10, dv: 250.70 }, 10: { saat: 225, gv: 5615.10, dv: 250.70 },
+            11: { saat: 210, gv: 5615.10, dv: 250.70 }, 12: { saat: 225, gv: 5615.10, dv: 250.70 }
         };
 
         function ayDegisti() {
@@ -94,36 +100,39 @@
             const db = parseFloat(document.getElementById('dini-bayram').value) || 0;
             const rtfm = parseFloat(document.getElementById('resmi-tatil').value) || 0;
             const yol = parseFloat(document.getElementById('yol-ucreti').value) || 0;
+            const besNet = parseFloat(document.getElementById('bes-kesintisi').value) || 0;
+            const vakifYuzde = parseFloat(document.getElementById('vakif-kesintisi-yuzde').value) || 0;
             const vergiOrani = parseFloat(document.getElementById('tax-rate').value);
             const secilenAy = document.getElementById('month').value;
             
-            // 2026 Vergi İstisnası (Ay bazlı dinamik)
-            const istisna = ayVerileri[secilenAy].istisna;
+            const toplamIstisna = ayVerileri[secilenAy].gv + ayVerileri[secilenAy].dv;
 
-            // Brüt Hesap: Gece zammı 30 TL
+            // Brüt Hesap (Gece Zammı 30 TL)
             let brut = (saatUcreti * gunSaati) + (fm * saatUcreti * 2) + (gece * 30) + 
                        (ub * saatUcreti * 2) + (db * saatUcreti * 2) + (rtfm * saatUcreti * 2) + yol;
 
-            // Kesintiler
             const sgk = brut * 0.14;
-            const sendika = saatUcreti * 1.5; // Sendika aidatı: 1.5 saatlik ücret
-            const vergiMatrahi = brut - sgk - sendika;
+            const sendika = saatUcreti * 1.5; 
+            const vakifTutar = brut * (vakifYuzde / 100);
             
-            let gelirVergisi = (vergiMatrahi * vergiOrani) - istisna;
+            const vergiMatrahi = brut - sgk - sendika;
+            let gelirVergisi = (vergiMatrahi * vergiOrani) - ayVerileri[secilenAy].gv;
             if (gelirVergisi < 0) gelirVergisi = 0;
 
-            const netMaas = brut - sgk - gelirVergisi - sendika;
+            // Net Maaş: Brüt - SGK - Gelir Vergisi - Sendika - Vakıf - BES Net
+            const netMaas = brut - sgk - gelirVergisi - sendika - vakifTutar - besNet;
 
-            // Net İkramiye Hesabı (30 günlük ikramiyenin o aya düşen net payı)
             const brutIkramiye = (saatUcreti * 7.5 * 30) / 12; 
             const netIkramiye = brutIkramiye * (1 - vergiOrani - 0.14);
 
-            // Çıktılar
-            document.getElementById('toplam-brut').innerText = brut.toLocaleString('tr-TR', {minimumFractionDigits: 2});
-            document.getElementById('vergi-istisnasi').innerText = istisna.toLocaleString('tr-TR', {minimumFractionDigits: 2});
-            document.getElementById('sendika-kesinti').innerText = sendika.toLocaleString('tr-TR', {minimumFractionDigits: 2});
-            document.getElementById('net-ikramiye').innerText = netIkramiye.toLocaleString('tr-TR', {minimumFractionDigits: 2});
-            document.getElementById('net-maas').innerText = netMaas.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " TL";
+            const format = (val) => val.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            document.getElementById('toplam-brut').innerText = format(brut);
+            document.getElementById('vergi-istisnasi').innerText = format(toplamIstisna);
+            document.getElementById('sendika-kesinti').innerText = format(sendika);
+            document.getElementById('vakif-tutar').innerText = format(vakifTutar);
+            document.getElementById('net-ikramiye').innerText = format(netIkramiye);
+            document.getElementById('net-maas').innerText = format(netMaas) + " TL";
         }
         
         window.onload = ayDegisti;
