@@ -3,33 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sosyal Yardımlar 2025-2026</title>
+    <title>Sosyal Yardımlar 2026</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .container { background-color: #ffffff; padding: 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 800px; }
+        .container { background-color: #ffffff; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
         
-        h2 { text-align: center; color: #6a1b9a; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; margin-bottom: 20px; font-size: 20px; text-transform: uppercase; }
+        h2 { text-align: center; color: #6a1b9a; border-bottom: 2px solid #6a1b9a; padding-bottom: 8px; margin-bottom: 15px; font-size: 18px; text-transform: uppercase; }
         
-        .table-wrapper { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; min-width: 550px; }
-        th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #eee; }
+        /* Kart Sistemi: Yan yana kaydırmayı bitirir */
+        .card-container { display: flex; flex-direction: column; gap: 8px; }
         
-        th { background-color: #f8f9fa; color: #6a1b9a; font-weight: bold; text-transform: uppercase; font-size: 11px; }
+        .card { background: #fdfdfd; border: 1px solid #eee; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; }
+        .card-header { font-weight: bold; color: #2c3e50; font-size: 14px; margin-bottom: 5px; border-bottom: 1px solid #f0f0f0; padding-bottom: 3px; }
         
-        .yil-2025 { color: #555; font-weight: 500; }
-        .yil-2026 { color: #6a1b9a; font-weight: bold; background-color: #f3e5f5; }
+        .card-body { display: flex; justify-content: space-between; align-items: center; }
         
-        .baslik { font-weight: 600; color: #2c3e50; }
+        .val-box { display: flex; flex-direction: column; flex: 1; }
+        .val-label { font-size: 10px; color: #888; text-transform: uppercase; }
+        .val-amount { font-size: 14px; font-weight: 600; }
         
-        .back-btn { display: block; width: 100%; padding: 12px; background: #6a1b9a; color: white; text-align: center; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 10px; font-size: 14px; box-sizing: border-box; transition: 0.3s; }
-        .back-btn:hover { background: #8e24aa; }
-        
-        #alt-alan { margin-top: 25px; text-align: center; width: 100%; }
-        #alt-alan img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .val-2025 { color: #555; }
+        .val-2026 { color: #6a1b9a; text-align: right; }
+        .val-2026 .val-amount { font-size: 16px; font-weight: 800; }
 
-        @media (max-width: 480px) {
-            th, td { padding: 8px 5px; font-size: 12px; }
-            h2 { font-size: 18px; }
+        .back-btn { display: block; width: 100%; padding: 12px; background: #6a1b9a; color: white; text-align: center; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px; font-size: 14px; box-sizing: border-box; }
+        
+        #alt-alan { margin-top: 15px; text-align: center; }
+        #alt-alan img { max-width: 100%; height: auto; border-radius: 6px; }
+
+        /* Küçük ekranlar için yazı boyutu ayarı */
+        @media (max-width: 380px) {
+            .card-header { font-size: 13px; }
+            .val-amount { font-size: 13px; }
+            .val-2026 .val-amount { font-size: 14px; }
         }
     </style>
 </head>
@@ -37,35 +43,72 @@
     <div class="container">
         <h2>SOSYAL YARDIMLAR</h2>
 
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>YARDIM KALEMİ</th>
-                        <th>2025 TUTARI</th>
-                        <th>2026 TUTARI</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td class="baslik">Servis Ücreti (Brüt)</td><td class="yil-2025">1.559,30 TL</td><td class="yil-2026">2.500 TL</td></tr>
-                    <tr><td class="baslik">Ramazan Bayramı</td><td class="yil-2025">7.507,76 TL</td><td class="yil-2026">10.000 TL</td></tr>
-                    <tr><td class="baslik">Kurban Bayramı</td><td class="yil-2025">7.507,76 TL</td><td class="yil-2026">13.000 TL</td></tr>
-                    <tr><td class="baslik">Yakacak Yardımı</td><td class="yil-2025">11.550,40 TL</td><td class="yil-2026">19.000 TL</td></tr>
-                    <tr><td class="baslik">Yıllık İzin Ücreti</td><td class="yil-2025">3.248,55 TL</td><td class="yil-2026">5.000 TL</td></tr>
-                    <tr><td class="baslik">Anaokulu ve İlkokul</td><td class="yil-2025">3.166,25 TL</td><td class="yil-2026">5.000 TL</td></tr>
-                    <tr><td class="baslik">Ortaöğretim (Ortaokul)</td><td class="yil-2025">3.788,53 TL</td><td class="yil-2026">6.000 TL</td></tr>
-                    <tr><td class="baslik">Eğitim (Lise)</td><td class="yil-2025">6.385,93 TL</td><td class="yil-2026">10.000 TL</td></tr>
-                    <tr><td class="baslik">Eğitim (Üniversite)</td><td class="yil-2025">10.536,85 TL</td><td class="yil-2026">16.000 TL</td></tr>
-                    <tr><td class="baslik">Gece Vardiyası (Saat)</td><td class="yil-2025">22,81 TL</td><td class="yil-2026">30 TL</td></tr>
-                    <tr><td class="baslik">Evlenme Yardımı</td><td class="yil-2025">4.200,00 TL</td><td class="yil-2026">8.000 TL</td></tr>
-                    <tr><td class="baslik">Doğum Yardımı</td><td class="yil-2025">4.200,00 TL</td><td class="yil-2026">8.000 TL</td></tr>
-                    <tr><td class="baslik">Ölüm Yardımı (Kendi)</td><td class="yil-2025">2.875,00 TL</td><td class="yil-2026">10.000 TL</td></tr>
-                    <tr><td class="baslik">Ölüm Yardımı (Yakını)</td><td class="yil-2025">2.875,00 TL</td><td class="yil-2026">5.000 TL</td></tr>
-                </tbody>
-            </table>
+        <div class="card-container">
+            <div class="card">
+                <div class="card-header">Servis Ücreti (Brüt)</div>
+                <div class="card-body">
+                    <div class="val-box"><span class="val-label">2025</span><span class="val-amount val-2025">1.559,30 TL</span></div>
+                    <div class="val-box val-2026"><span class="val-label">2026</span><span class="val-amount">2.500 TL</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Ramazan & Kurban Bayramı (Her Biri)</div>
+                <div class="card-body">
+                    <div class="val-box"><span class="val-label">2025</span><span class="val-amount val-2025">7.507,76 TL</span></div>
+                    <div class="val-box val-2026"><span class="val-label">2026</span><span class="val-amount">R:10k / K:13k</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Yakacak Yardımı</div>
+                <div class="card-body">
+                    <div class="val-box"><span class="val-label">2025</span><span class="val-amount val-2025">11.550,40 TL</span></div>
+                    <div class="val-box val-2026"><span class="val-label">2026</span><span class="val-amount">19.000 TL</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Eğitim (Anaokulu - İlk - Orta)</div>
+                <div class="card-body">
+                    <div class="val-box"><span class="val-label">2025 (Ort)</span><span class="val-amount val-2025">3.400 TL</span></div>
+                    <div class="val-box val-2026"><span class="val-label">2026</span><span class="val-amount">5.000 - 6.000 TL</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Eğitim (Lise - Üniversite)</div>
+                <div class="card-body">
+                    <div class="val-box"><span class="val-label">2025 (Ort)</span><span class="val-amount val-2025">8.400 TL</span></div>
+                    <div class="val-box val-2026"><span class="val-label">2026</span><span class="val-amount">10.000 - 16.000 TL</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Evlenme & Doğum Yardımı</div>
+                <div class="card-body">
+                    <div class="val-box"><span class="val-label">2025</span><span class="val-amount val-2025">4.200,00 TL</span></div>
+                    <div class="val-box val-2026"><span class="val-label">2026</span><span class="val-amount">8.000 TL</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Ölüm Yardımı (Kendi / Yakını)</div>
+                <div class="card-body">
+                    <div class="val-box"><span class="val-label">2025</span><span class="val-amount val-2025">2.875,00 TL</span></div>
+                    <div class="val-box val-2026"><span class="val-label">2026</span><span class="val-amount">10.000 / 5.000 TL</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="val-box"><span class="val-label">Gece Zammı (Saat)</span><span class="val-amount val-2025">22,81 TL</span></div>
+                    <div class="val-box val-2026"><span class="val-label">2026</span><span class="val-amount">30 TL</span></div>
+                </div>
+            </div>
         </div>
 
-        <a href="index.html" class="back-btn">← Hesaplama Sayfasına Dön</a>
+        <a href="index.html" class="back-btn">← ANA SAYFAYA DÖN</a>
 
         <div id="alt-alan">
             <a href="https://www.coinpayu.com/?r=numanozdemir" target="_blank">
