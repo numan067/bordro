@@ -3,36 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2026 Maaş Hesaplama</title>
+    <title>2026 Maaş Hesaplama - Final</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; margin: 0; padding: 15px; box-sizing: border-box; }
-        .container { background-color: #ffffff; padding: 20px 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
-        h2 { text-align: center; color: #2c3e50; margin-bottom: 20px; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; font-size: 20px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; margin: 0; padding: 10px; box-sizing: border-box; }
+        .container { background-color: #ffffff; padding: 15px 20px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 100%; max-width: 550px; }
+        h2 { text-align: center; color: #2c3e50; margin-bottom: 12px; border-bottom: 2px solid #6a1b9a; padding-bottom: 8px; font-size: 16px; }
         
-        /* Seçenekler Alanı */
-        .top-options { display: flex; gap: 10px; margin-bottom: 20px; }
+        /* Üst Ayar Bölümü */
+        .top-options { display: flex; gap: 8px; margin-bottom: 12px; }
         .option-group { flex: 1; display: flex; flex-direction: column; }
-        .option-group label { font-size: 11px; font-weight: bold; color: #666; margin-bottom: 4px; text-transform: uppercase; }
-        .option-group select { padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; background-color: #fff; cursor: pointer; }
+        .option-group label { font-size: 9px; font-weight: bold; color: #777; margin-bottom: 2px; text-transform: uppercase; }
+        .option-group select { padding: 6px; border: 1px solid #ddd; border-radius: 6px; font-size: 12px; background-color: #fff; cursor: pointer; }
 
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        /* Giriş Alanları */
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
         .input-group { display: flex; flex-direction: column; }
-        .input-group label { margin-bottom: 4px; font-weight: 600; color: #555; font-size: 11.5px; }
-        .input-group input { padding: 9px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; background-color: #fafafa; }
+        .input-group label { margin-bottom: 2px; font-weight: 600; color: #555; font-size: 9.5px; }
+        .input-group input { padding: 7px; border: 1px solid #ccc; border-radius: 5px; font-size: 12px; background-color: #fafafa; }
         
-        .output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
-        .output-group { background: #f9f9f9; padding: 8px; border-radius: 8px; text-align: center; border: 1px solid #eee; }
-        .output-label { font-size: 10px; color: #888; margin-bottom: 2px; text-transform: uppercase; }
-        .output-value { font-size: 14px; font-weight: bold; color: #2c3e50; }
+        /* Çıktı Özetleri */
+        .output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
+        .output-group { background: #f9f9f9; padding: 6px; border-radius: 6px; text-align: center; border: 1px solid #eee; }
+        .output-label { font-size: 8px; color: #888; margin-bottom: 1px; text-transform: uppercase; }
+        .output-value { font-size: 11.5px; font-weight: bold; color: #2c3e50; }
         
-        .net-maas-box { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); color: #fff; padding: 15px; border-radius: 12px; text-align: center; margin-top: 20px; }
-        .net-maas-label { font-size: 14px; margin-bottom: 4px; opacity: 0.9; }
-        .net-maas-value { font-size: 30px; font-weight: 800; }
+        /* Net Maaş Kutusu */
+        .net-maas-box { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); color: #fff; padding: 12px; border-radius: 10px; text-align: center; margin-top: 12px; }
+        .net-maas-label { font-size: 11px; margin-bottom: 2px; opacity: 0.9; }
+        .net-maas-value { font-size: 26px; font-weight: 800; }
         
-        .bottom-buttons { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; }
-        .bottom-buttons button { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; }
+        /* Butonlar */
+        .bottom-buttons { display: flex; justify-content: space-between; margin-top: 12px; gap: 8px; }
+        .bottom-buttons button { flex: 1; padding: 9px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 11px; transition: 0.2s; }
         .btn-default { background-color: #ecf0f1; color: #34495e; }
-        @media (max-width: 500px) { .input-grid, .output-grid { grid-template-columns: 1fr; } }
+        .btn-default:active { background-color: #d5dbdb; }
+
+        @media (max-width: 480px) { .input-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -42,7 +48,7 @@
         <div class="top-options">
             <div class="option-group">
                 <label>Dönem (Ay)</label>
-                <select id="month" onchange="hesapla()">
+                <select id="month" onchange="ayAyariYap()">
                     <option value="1">Ocak</option><option value="2" selected>Şubat</option><option value="3">Mart</option>
                     <option value="4">Nisan</option><option value="5">Mayıs</option><option value="6">Haziran</option>
                     <option value="7">Temmuz</option><option value="8">Ağustos</option><option value="9">Eylül</option>
@@ -52,30 +58,30 @@
             <div class="option-group">
                 <label>Vergi Dilimi</label>
                 <select id="tax-rate" onchange="hesapla()">
-                    <option value="0.15">%15</option>
-                    <option value="0.20">%20</option>
-                    <option value="0.27">%27</option>
-                    <option value="0.35">%35</option>
+                    <option value="0.15">15</option><option value="0.20">20</option>
+                    <option value="0.27">27</option><option value="0.35">35</option>
                 </select>
             </div>
         </div>
         
         <div class="input-grid">
             <div class="input-group"><label>Saat Ücreti:</label><input type="number" id="saat-ucreti" step="0.01" value="380.71" oninput="hesapla()"></div>
-            <div class="input-group"><label>Çalışma Gün Saati:</label><input type="number" id="calisma-gun-saati" value="210" oninput="hesapla()"></div>
-            <div class="input-group"><label>Fazla Mesai (Saat):</label><input type="number" id="fazla-mesai-saati" value="16" oninput="hesapla()"></div>
-            <div class="input-group"><label>Gece Zammı (Saat):</label><input type="number" id="gece-zammi" value="60" oninput="hesapla()"></div>
+            <div class="input-group"><label>Normal Çalışma (Sa):</label><input type="number" id="calisma-gun-saati" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Gece Zammı (Sa):</label><input type="number" id="gece-zammi" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>FM %100 (Sa):</label><input type="number" id="fm-100" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Ulusal %100 (Sa):</label><input type="number" id="ulusal-100" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Dini %150 (Sa):</label><input type="number" id="dini-150" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>R.Tatil %200 (Sa):</label><input type="number" id="resmi-200" value="0" oninput="hesapla()"></div>
             <div class="input-group"><label>Net BES (TL):</label><input type="number" id="bes-kesintisi" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Vakıf Kesintisi (%):</label><input type="number" id="vakif-yuzde" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Bayram Mesaisi (Saat):</label><input type="number" id="bayram-saati" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Net Vakıf (TL):</label><input type="number" id="vakif-net" value="0" oninput="hesapla()"></div>
             <div class="input-group"><label>Yol Ücreti (Brüt):</label><input type="number" id="yol-ucreti" value="0" oninput="hesapla()"></div>
         </div>
 
         <div class="output-grid">
-            <div class="output-group"><div class="output-label">Toplam Brüt</div><div id="toplam-brut" class="output-value">0,00</div></div>
-            <div class="output-group"><div class="output-label">Sendika Kesinti</div><div id="sendika-kesinti" class="output-value">0,00</div></div>
-            <div class="output-group"><div class="output-label">Vakıf Tutar</div><div id="vakif-tutar" class="output-value">0,00</div></div>
             <div class="output-group"><div class="output-label">Vergi İstisnası</div><div id="vergi-istisnasi" class="output-value">0,00</div></div>
+            <div class="output-group"><div class="output-label">Sendika Kesinti</div><div id="sendika-kesinti" class="output-value">0,00</div></div>
+            <div class="output-group"><div class="output-label">İkramiye (Net)</div><div id="net-ikramiye" class="output-value">0,00</div></div>
+            <div class="output-group"><div class="output-label">Damga Vergisi</div><div id="damga-v" class="output-value">0,00</div></div>
         </div>
 
         <div class="net-maas-box">
@@ -91,57 +97,68 @@
 
     <script>
         const ayVerileri = {
-            1: { gv: 4211.33, dv: 250.70 }, 2: { gv: 4211.33, dv: 250.70 },
-            3: { gv: 4211.33, dv: 250.70 }, 4: { gv: 4211.33, dv: 250.70 },
-            5: { gv: 4211.33, dv: 250.70 }, 6: { gv: 4211.33, dv: 250.70 },
-            7: { gv: 4537.75, dv: 250.70 }, 8: { gv: 5615.10, dv: 250.70 },
-            9: { gv: 5615.10, dv: 250.70 }, 10: { gv: 5615.10, dv: 250.70 },
-            11: { gv: 5615.10, dv: 250.70 }, 12: { gv: 5615.10, dv: 250.70 }
+            1: { gun: 31, gv: 4211.33, dv: 250.70 }, 2: { gun: 28, gv: 4211.33, dv: 250.70 },
+            3: { gun: 31, gv: 4211.33, dv: 250.70 }, 4: { gun: 30, gv: 4211.33, dv: 250.70 },
+            5: { gun: 31, gv: 4211.33, dv: 250.70 }, 6: { gun: 30, gv: 4211.33, dv: 250.70 },
+            7: { gun: 31, gv: 4537.75, dv: 250.70 }, 8: { gun: 31, gv: 5615.10, dv: 250.70 },
+            9: { gun: 30, gv: 5615.10, dv: 250.70 }, 10: { gun: 31, gv: 5615.10, dv: 250.70 },
+            11: { gun: 30, gv: 5615.10, dv: 250.70 }, 12: { gun: 31, gv: 5615.10, dv: 250.70 }
         };
 
+        function ayAyariYap() {
+            const ay = document.getElementById('month').value;
+            document.getElementById('calisma-gun-saati').value = ayVerileri[ay].gun * 7.5;
+            hesapla();
+        }
+
         function hesapla() {
-            const saatUcreti = parseFloat(document.getElementById('saat-ucreti').value) || 0;
-            const gunSaati = parseFloat(document.getElementById('calisma-gun-saati').value) || 0;
-            const fm = parseFloat(document.getElementById('fazla-mesai-saati').value) || 0;
-            const gece = parseFloat(document.getElementById('gece-zammi').value) || 0;
-            const bayram = parseFloat(document.getElementById('bayram-saati').value) || 0;
+            const su = parseFloat(document.getElementById('saat-ucreti').value) || 0;
+            const gs = parseFloat(document.getElementById('calisma-gun-saati').value) || 0;
+            const gz = parseFloat(document.getElementById('gece-zammi').value) || 0;
+            const fm100 = parseFloat(document.getElementById('fm-100').value) || 0;
+            const ul100 = parseFloat(document.getElementById('ulusal-100').value) || 0;
+            const di150 = parseFloat(document.getElementById('dini-150').value) || 0;
+            const re200 = parseFloat(document.getElementById('resmi-200').value) || 0;
             const yol = parseFloat(document.getElementById('yol-ucreti').value) || 0;
-            const besNet = parseFloat(document.getElementById('bes-kesintisi').value) || 0;
-            const vakifYuzde = parseFloat(document.getElementById('vakif-yuzde').value) || 0;
-            const vergiOrani = parseFloat(document.getElementById('tax-rate').value);
-            const secilenAy = document.getElementById('month').value;
+            const bes = parseFloat(document.getElementById('bes-kesintisi').value) || 0;
+            const vakif = parseFloat(document.getElementById('vakif-net').value) || 0;
+            const vo = parseFloat(document.getElementById('tax-rate').value);
+            const ay = document.getElementById('month').value;
             
-            const istisnaGV = ayVerileri[secilenAy].gv;
-            const istisnaDV = ayVerileri[secilenAy].dv;
+            // Brüt Hesaplama
+            const mesaiBrut = ((fm100 + ul100) * su * 2) + (di150 * su * 2.5) + (re200 * su * 3);
+            const normalBrut = (su * gs) + (gz * 22.81) + yol;
+            let brut = normalBrut + mesaiBrut;
 
-            // Brüt: Gece zammı bordrodaki gibi 22.81 TL
-            let brut = (saatUcreti * gunSaati) + (fm * saatUcreti * 2) + (gece * 22.81) + 
-                       (bayram * saatUcreti * 2) + yol;
-
+            // Yasal Kesintiler
             const sgk = brut * 0.14;
             const issizlik = brut * 0.01;
-            const sendika = saatUcreti * 7.00; // Bordro uyumlu (7 saat)
-            const vakifTutar = brut * (vakifYuzde / 100);
+            const sendika = su * 7.00; 
             
-            const vergiMatrahi = brut - sgk - issizlik - sendika;
-            let gelirVergisi = (vergiMatrahi * vergiOrani) - istisnaGV;
-            if (gelirVergisi < 0) gelirVergisi = 0;
+            // Vergi Hesaplama
+            const matrah = brut - sgk - issizlik - sendika;
+            let gv = (matrah * vo) - ayVerileri[ay].gv;
+            if (gv < 0) gv = 0;
 
-            const damgaVergisi = (brut * 0.00759) - istisnaDV;
-            const dvNet = damgaVergisi < 0 ? 0 : damgaVergisi;
+            let dv = (brut * 0.00759) - ayVerileri[ay].dv;
+            if (dv < 0) dv = 0;
 
-            const netMaas = brut - sgk - issizlik - gelirVergisi - dvNet - sendika - vakifTutar - besNet;
+            // Net Maaş
+            const net = brut - sgk - issizlik - gv - dv - sendika - vakif - bes;
+            
+            // İkramiye (Tahmini Net)
+            const ikramiyeNet = ((su * 7.5 * 30) / 12) * (1 - vo - 0.15);
 
             const f = (n) => n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-            document.getElementById('toplam-brut').innerText = f(brut);
             document.getElementById('sendika-kesinti').innerText = f(sendika);
-            document.getElementById('vakif-tutar').innerText = f(vakifTutar);
-            document.getElementById('vergi-istisnasi').innerText = f(istisnaGV + istisnaDV);
-            document.getElementById('net-maas').innerText = f(netMaas) + " TL";
+            document.getElementById('vergi-istisnasi').innerText = f(ayVerileri[ay].gv + ayVerileri[ay].dv);
+            document.getElementById('net-ikramiye').innerText = f(ikramiyeNet);
+            document.getElementById('damga-v').innerText = f(dv);
+            document.getElementById('net-maas').innerText = f(net) + " TL";
         }
         
-        window.onload = hesapla;
+        window.onload = ayAyariYap;
     </script>
 </body>
 </html>
