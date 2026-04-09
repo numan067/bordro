@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Maaş Hesapla 2026</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 10px; }
+        .container { background-color: #fff; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 550px; margin: auto; }
+        h2 { text-align: center; color: #6a1b9a; border-bottom: 2px solid #6a1b9a; padding-bottom: 8px; margin-bottom: 15px; }
+        
+        .section-title { font-weight: bold; color: #4a148c; background: #f3e5f5; padding: 8px; border-radius: 5px; margin: 15px 0 10px 0; font-size: 14px; }
+        
+        .input-group { margin-bottom: 12px; }
+        label { display: block; font-size: 12px; color: #555; margin-bottom: 4px; font-weight: 600; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        .result-panel { background: #6a1b9a; color: white; padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px; position: sticky; bottom: 10px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); }
+        .res-label { font-size: 14px; opacity: 0.9; }
+        .res-value { font-size: 28px; font-weight: 800; margin-top: 5px; }
+
+        .back-btn { display: block; width: 100%; padding: 12px; background: #eee; color: #333; text-align: center; text-decoration: none; border-radius: 8px; margin-top: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>MAAŞ HESAPLA (2026)</h2>
+
+    <div class="section-title">TEMEL BİLGİLER</div>
+    <div class="grid">
+        <div class="input-group">
+            <label>Güncel Saat Ücreti:</label>
+            <input type="number" id="saat-ucreti" placeholder="0.00" oninput="hesapla()">
+        </div>
+        <div class="input-group">
+            <label>Vergi Dilimi:</label>
+            <select id="vergi-dilimi" onchange="hesapla()">
+                <option value="0.15">%15</option>
+                <option value="0.20">%20</option>
+                <option value="0.27">%27</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="section-title">ÇALIŞMA SAATLERİ</div>
+    <div class="input-group">
+        <label>Normal Çalışma (Saat):</label>
+        <input type="number" id="norm-saat" value="225" oninput="hesapla()">
+    </div>
+    <div class="grid">
+        <div class="input-group"><label>Fazla Mesai (%100):</label><input type="number" id="fm" value="0" oninput="hesapla()"></div>
+        <div class="input-group"><label>Gece Zammı (Saat):</label><input type="number" id="gece-saat" value="0" oninput="hesapla()"></div>
+        <div class="input-group"><label>Ulusal Bayram (Saat):</label><input type="number" id="ub" value="0" oninput="hesapla()"></div>
+        <div class="input-group"><label>Dini Bayram (Saat):</label><input type="number" id="db" value="0" oninput="hesapla()"></div>
+        <div class="input-group"><label>R. Tatil FM (Saat):</label><input type="number" id="rtfm" value="0" oninput="hesapla()"></div>
+    </div>
+
+    <div class="section-title">EK ÖDEMELER & YARDIMLAR</div>
+    <div class="grid">
+        <div class="input-group"><label>Yol Ücreti (Brüt):</label><input type="number" id="yol" value="0" oninput="hesapla()"></div>
+        <div class="input-group"><label>Servis Yardımı (Brüt):</label><input type="number" id="servis" value="0" oninput="hesapla()"></div>
+        <div class="input-group"><label>Yakacak Yardımı:</label><input type="number" id="yakacak" value="0" oninput="hesapla()"></div>
+        <div class="input-group"><label>Diğer Sosyal Hak:</label><input type="number" id="diger" value="0" oninput="hesapla()"></div>
+    </div>
+
+    <div class="result-panel">
+        <div class="res-label">TAHMİNİ NET MAAŞ</div>
+        <div class="res-value" id="net-sonuc">0,00 TL</div>
+        <p style="font-size: 10px; margin-top: 10px; opacity: 0.8;">* %14 SGK ve seçilen vergi dilimi düşülmüştür. Bireysel emeklilik (BES) dahil değildir.</p>
+    </div>
+
+    <a href="index.html" class="back-btn">← ANA SAYFAYA DÖN</a>
+</div>
+
+<script>
+    function hesapla() {
+        const saatUcreti = parseFloat(document.getElementById('saat-ucreti').value) || 0;
+        const vergi = parseFloat(document.getElementById('vergi-dilimi').value);
+        
+        // Saatler
+        const norm = parseFloat(document.getElementById('norm-saat').value) || 0;
+        const fm = parseFloat(document.getElementById('fm').value) || 0;
+        const gece = parseFloat(document.getElementById('gece-saat').value) || 0;
+        const ub = parseFloat(document.getElementById('ub').value) || 0;
+        const db = parseFloat(document.getElementById('db').value) || 0;
+        const rtfm = parseFloat(document.getElementById('rtfm').value) || 0;
+
+        // Yardımlar
+        const yol = parseFloat(document.getElementById('yol').value) || 0;
+        const servis = parseFloat(document.getElementById('servis').value) || 0;
+        const yakacak = parseFloat(document.getElementById('yakacak').value) || 0;
+        const diger = parseFloat(document.getElementById('diger').value) || 0;
+
+        // Brüt Hesaplama (Mesailer x2 üzerinden hesaplanır)
+        let toplamBrut = (norm * saatUcreti);
+        toplamBrut += (fm * saatUcreti * 2);
+        toplamBrut += (gece * 30); // 2026 Gece Zammı Saatlik 30 TL
+        toplamBrut += (ub * saatUcreti * 2);
+        toplamBrut += (db * saatUcreti * 2);
+        toplamBrut += (rtfm * saatUcreti * 2);
+        toplamBrut += (yol + servis + yakacak + diger);
+
+        // Brüt -> Net Dönüşümü (%14 SGK + Seçilen Vergi)
+        const netCarpan = (1 - vergi) * 0.86;
+        const netMaas = toplamBrut * netCarpan;
+
+        document.getElementById('net-sonuc').innerText = netMaas.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL";
+    }
+</script>
+
+</body>
+</html>
