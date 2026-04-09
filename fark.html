@@ -5,114 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Maaş Farkı Hesapla - 2026</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .container { background-color: #ffffff; padding: 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
-        h2 { text-align: center; color: #2c3e50; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; margin-bottom: 20px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 10px; }
+        .container { background-color: #fff; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
+        h2 { text-align: center; color: #6a1b9a; font-size: 20px; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; margin-top: 5px; }
         
-        .input-group { margin-bottom: 15px; background: #f9f9f9; padding: 10px; border-radius: 8px; border: 1px solid #eee; }
-        .input-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #444; font-size: 13px; }
-        .input-group input, .input-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        /* Üstteki Ortak Alan */
+        .global-settings { background: #f3e5f5; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #ce93d8; }
+        .global-settings label { color: #4a148c; font-weight: bold; }
         
-        .month-section { border-left: 4px solid #6a1b9a; padding-left: 15px; margin-bottom: 25px; background: #fff; padding: 10px; border-radius: 0 8px 8px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .month-title { font-weight: bold; color: #6a1b9a; margin-bottom: 10px; font-size: 16px; border-bottom: 1px dashed #ddd; }
+        .month-card { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 15px; margin-bottom: 15px; border-left: 5px solid #6a1b9a; }
+        .month-title { font-weight: bold; color: #6a1b9a; margin-bottom: 12px; font-size: 15px; display: flex; justify-content: space-between; }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .input-row { margin-bottom: 10px; }
+        label { display: block; font-size: 11px; color: #666; margin-bottom: 3px; font-weight: 600; }
+        input, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
         
-        .result-box { background: #6a1b9a; color: white; padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px; }
-        .result-label { font-size: 14px; opacity: 0.9; }
-        .result-value { font-size: 28px; font-weight: 800; margin-top: 5px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        
+        .summary-box { background: #6a1b9a; color: white; padding: 15px; border-radius: 12px; text-align: center; position: sticky; bottom: 10px; box-shadow: 0 -4px 10px rgba(0,0,0,0.2); margin-top: 20px; }
+        .total-value { font-size: 26px; font-weight: 800; margin-top: 5px; }
 
-        .btn-calc { width: 100%; padding: 15px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .back-btn { display: block; width: 100%; padding: 12px; background: #ecf0f1; color: #34495e; text-align: center; text-decoration: none; border-radius: 8px; margin-top: 10px; font-size: 14px; box-sizing: border-box; }
+        .back-btn { display: block; width: 100%; padding: 12px; background: #eee; color: #333; text-align: center; text-decoration: none; border-radius: 8px; margin-top: 10px; font-weight: bold; font-size: 14px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Maaş Farkı Hesapla</h2>
 
-        <div class="input-group">
-            <label>Eski Saat Ücreti (Brüt):</label>
-            <input type="number" id="eski-saat" placeholder="Örn: 100" oninput="hesapla()">
-        </div>
-        <div class="input-group">
-            <label>Vergi Dilimi Seçiniz:</label>
-            <select id="vergi-orani" onchange="hesapla()">
-                <option value="0.15">15% (Ocak/Şubat Geneli)</option>
-                <option value="0.20">20%</option>
-                <option value="0.27">27%</option>
-            </select>
-        </div>
+<div class="container">
+    <h2>FARK HESAPLAYICI (2026)</h2>
 
-        <div class="month-section">
-            <div class="month-title">OCAK AYI</div>
-            <div class="grid">
-                <div class="input-group"><label>Norm. Çalışma (Saat):</label><input type="number" class="ocak-saat" value="225" oninput="hesapla()"></div>
-                <div class="input-group"><label>Mesai/Bayram (Saat):</label><input type="number" class="ocak-mesai" value="0" oninput="hesapla()"></div>
+    <div class="global-settings">
+        <div class="grid">
+            <div class="input-row">
+                <label>Eski Saat Ücreti:</label>
+                <input type="number" id="eski-saat" placeholder="0.00" oninput="hesapla()">
+            </div>
+            <div class="input-row">
+                <label>Ortak Vergi Dilimi:</label>
+                <select id="vergi-orani" onchange="hesapla()">
+                    <option value="0.15">%15 Vergi</option>
+                    <option value="0.20">%20 Vergi</option>
+                    <option value="0.27">%27 Vergi</option>
+                </select>
             </div>
         </div>
-
-        <div class="month-section">
-            <div class="month-title">ŞUBAT AYI</div>
-            <div class="grid">
-                <div class="input-group"><label>Norm. Çalışma (Saat):</label><input type="number" class="subat-saat" value="225" oninput="hesapla()"></div>
-                <div class="input-group"><label>Mesai/Bayram (Saat):</label><input type="number" class="subat-mesai" value="0" oninput="hesapla()"></div>
-            </div>
-        </div>
-
-        <div class="month-section">
-            <div class="month-title">MART AYI</div>
-            <div class="grid">
-                <div class="input-group"><label>Norm. Çalışma (Saat):</label><input type="number" class="mart-saat" value="225" oninput="hesapla()"></div>
-                <div class="input-group"><label>Mesai/Bayram (Saat):</label><input type="number" class="mart-mesai" value="0" oninput="hesapla()"></div>
-            </div>
-        </div>
-
-        <div class="month-section" style="border-left-color: #f39c12;">
-            <div class="month-title" style="color: #f39c12;">İKRANİYE FARKI (1 Adet)</div>
-            <div class="input-group"><label>İkramiye Gün Sayısı:</label><input type="number" id="ikramiye-gun" value="30" oninput="hesapla()"></div>
-        </div>
-
-        <div class="result-box">
-            <div class="result-label">Tahmini Toplam Net Fark (Yol/BES Hariç)</div>
-            <div class="result-value" id="toplam-fark">0,00 TL</div>
-        </div>
-
-        <a href="index.html" class="back-btn">← Ana Sayfaya Dön</a>
     </div>
 
-    <script>
-        function hesapla() {
-            const eskiSaat = parseFloat(document.getElementById('eski-saat').value) || 0;
-            const yeniSaat = eskiSaat * 1.16; // %16 zam
-            const fark = yeniSaat - eskiSaat;
-            const vergi = parseFloat(document.getElementById('vergi-orani').value);
-            const netCarpan = (1 - vergi) * 0.86; // Gelir vergisi + %14 SGK kesintisi (Kabaca netleştirme)
+    <div id="aylar-listesi">
+        </div>
 
-            // Saatleri çek
-            const aylar = [
-                { s: '.ocak-saat', m: '.ocak-mesai' },
-                { s: '.subat-saat', m: '.subat-mesai' },
-                { s: '.mart-saat', m: '.mart-mesai' }
-            ];
+    <div class="month-card" style="border-left-color: #ff9800; background: #fffcf5;">
+        <div class="month-title" style="color: #e65100;">İKRANİYE FARKI</div>
+        <div class="input-row">
+            <label>İkramiye Gün Sayısı (Örn: 30):</label>
+            <input type="number" id="ikr-gun" value="30" oninput="hesapla()">
+        </div>
+    </div>
 
-            let toplamBrutFark = 0;
+    <div class="summary-box">
+        <div style="font-size: 12px; opacity: 0.9;">TÜM AYLAR TOPLAM NET FARK</div>
+        <div class="total-value" id="toplam-fark">0,00 TL</div>
+    </div>
 
-            aylar.forEach(ay => {
-                const norm = parseFloat(document.querySelector(ay.s).value) || 0;
-                const mesai = parseFloat(document.querySelector(ay.m).value) || 0;
-                
-                // Normal çalışma farkı + Mesai farkı (Mesai genelde %100 zamlıdır, bu yüzden fark x2)
-                toplamBrutFark += (norm * fark) + (mesai * fark * 2);
-            });
+    <a href="index.html" class="back-btn">← ANA SAYFAYA DÖN</a>
+</div>
 
-            // İkramiye Farkı Hesapla (Günlük ücret üzerinden: Saat ücreti x 7.5)
-            const ikramiyeGun = parseFloat(document.getElementById('ikramiye-gun').value) || 0;
-            toplamBrutFark += (ikramiyeGun * 7.5 * fark);
+<script>
+    const aylar = ["OCAK", "ŞUBAT", "MART"];
+    const liste = document.getElementById('aylar-listesi');
 
-            const toplamNetFark = toplamBrutFark * netCarpan;
+    // Ay kartlarını oluştur (Senin paylaştığın görseldeki tüm kalemler dahil)
+    aylar.forEach(ay => {
+        liste.innerHTML += `
+        <div class="month-card">
+            <div class="month-title">${ay} AYI VERİLERİ</div>
+            <div class="input-row">
+                <label>Normal Çalışma (Saat):</label>
+                <input type="number" class="norm-saat" value="225" oninput="hesapla()">
+            </div>
+            <div class="grid">
+                <div class="input-row"><label>Fazla Mesai:</label><input type="number" class="fm" value="0" oninput="hesapla()"></div>
+                <div class="input-row"><label>Gece Zammı (Saat):</label><input type="number" class="gece" value="0" oninput="hesapla()"></div>
+                <div class="input-row"><label>Ulusal Bayram:</label><input type="number" class="ub" value="0" oninput="hesapla()"></div>
+                <div class="input-row"><label>Dini Bayram:</label><input type="number" class="db" value="0" oninput="hesapla()"></div>
+                <div class="input-row"><label>Resmi Tatil FM:</label><input type="number" class="rtfm" value="0" oninput="hesapla()"></div>
+                <div class="input-row"><label>Yol Ücreti Farkı:</label><input type="number" class="yol" value="0" oninput="hesapla()"></div>
+            </div>
+        </div>`;
+    });
 
-            document.getElementById('toplam-fark').innerText = toplamNetFark.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL";
-        }
-    </script>
+    function hesapla() {
+        const eskiSaat = parseFloat(document.getElementById('eski-saat').value) || 0;
+        const fark = eskiSaat * 0.16; // %16 zam farkı
+        const vergi = parseFloat(document.getElementById('vergi-orani').value);
+        const netCarpan = (1 - vergi) * 0.86; // Vergi + %14 SGK kesintisi
+
+        let toplamBrutFark = 0;
+
+        document.querySelectorAll('.month-card').forEach(card => {
+            const norm = parseFloat(card.querySelector('.norm-saat')?.value) || 0;
+            const fm = parseFloat(card.querySelector('.fm')?.value) || 0;
+            const gece = parseFloat(card.querySelector('.gece')?.value) || 0;
+            const ub = parseFloat(card.querySelector('.ub')?.value) || 0;
+            const db = parseFloat(card.querySelector('.db')?.value) || 0;
+            const rtfm = parseFloat(card.querySelector('.rtfm')?.value) || 0;
+            const yol = parseFloat(card.querySelector('.yol')?.value) || 0;
+
+            // Hesaplama Formülleri
+            toplamBrutFark += (norm * fark);
+            toplamBrutFark += (fm * fark * 2); // Mesai %100 fark
+            toplamBrutFark += (gece * (30 - 22.81)); // Gece zammı sabit fark
+            toplamBrutFark += (ub * fark * 2);
+            toplamBrutFark += (db * fark * 2);
+            toplamBrutFark += (rtfm * fark * 2);
+            toplamBrutFark += yol; // Yol farkı direkt eklenir
+        });
+
+        // İkramiye
+        const ikrGun = parseFloat(document.getElementById('ikr-gun').value) || 0;
+        toplamBrutFark += (ikrGun * 7.5 * fark);
+
+        const toplamNet = toplamBrutFark * netCarpan;
+        document.getElementById('toplam-fark').innerText = toplamNet.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL";
+    }
+</script>
+
 </body>
 </html>
