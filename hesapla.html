@@ -59,7 +59,7 @@
         </div>
         
         <div class="input-grid">
-            <div class="input-group"><label>Saat Ücreti:</label><input type="number" id="saat-ucreti" step="0.01" value="380.71" oninput="hesapla()"></div>
+            <div class="input-group"><label>Saat Ücreti:</label><input type="number" id="saat-ucreti" step="0.01" value="0" oninput="hesapla()"></div>
             <div class="input-group"><label>Aylık Çalışma Saati:</label><input type="number" id="calisma-gun-saati" value="0" oninput="hesapla()"></div>
             <div class="input-group"><label>Gece Zammı (Sa):</label><input type="number" id="gece-zammi" value="0" oninput="hesapla()"></div>
             <div class="input-group"><label>Fazla Mesai (Sa):</label><input type="number" id="fm-100" value="0" oninput="hesapla()"></div>
@@ -75,7 +75,7 @@
             <div class="output-group"><div class="output-label">Vergi İstisnası</div><div id="vergi-istisnasi" class="output-value">0,00</div></div>
             <div class="output-group"><div class="output-label">Sendika Kesintisi</div><div id="sendika-kesinti" class="output-value">0,00</div></div>
             <div class="output-group"><div class="output-label">Vakıf Net Tutar</div><div id="vakif-net-tutar" class="output-value">0,00</div></div>
-            <div class="output-group"><div class="output-label">İkramiye (Net)</div><div id="net-ikramiye" class="output-value">0,00</div></div>
+            <div class="output-group"><div class="output-label">30 Günlük Net İkramiye</div><div id="net-ikramiye" class="output-value">0,00</div></div>
         </div>
 
         <div class="net-maas-box">
@@ -119,15 +119,12 @@
             const vo = parseFloat(document.getElementById('tax-rate').value);
             const ay = document.getElementById('month').value;
             
-            // Vakıf Net Tutar Hesaplama (Formül: su * gs / 100 * v_yuzde)
             const vakifNetTutar = (su * gs / 100) * v_yuzde;
 
-            // Brüt Kazançlar
             const mesaiBrut = ((fm + ul) * su * 2) + (di * su * 2.5) + (re * su * 3);
             const normalBrut = (su * gs) + (gz * 22.81) + yol;
             let brut = normalBrut + mesaiBrut;
 
-            // Kesintiler
             const sgk = brut * 0.14;
             const issizlik = brut * 0.01;
             const sendika = su * 7.00; 
@@ -141,14 +138,13 @@
 
             const net = brut - sgk - issizlik - gv - dv - sendika - vakifNetTutar - bes;
             
-            // İkramiye Net Hesaplama (Tam Uyumluluk İçin)
-            // Brüt İkramiye: su * 7.5 * 30 / 12 (Aylık pay)
-            const ikrBrut = (su * 7.5 * 30) / 12;
-            const ikrSgk = ikrBrut * 0.15; // SGK + İşsizlik
-            const ikrMatrah = ikrBrut - ikrSgk;
+            const ikrBrut = su * 30 * 7.5;
+            const ikrSgk = ikrBrut * 0.14;
+            const ikrIssizlik = ikrBrut * 0.01;
+            const ikrMatrah = ikrBrut - ikrSgk - ikrIssizlik;
             const ikrGv = ikrMatrah * vo;
             const ikrDv = ikrBrut * 0.00759;
-            const ikramiyeNet = ikrBrut - ikrSgk - ikrGv - ikrDv;
+            const ikramiyeNet = ikrBrut - ikrSgk - ikrIssizlik - ikrGv - ikrDv;
 
             const f = (n) => n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
