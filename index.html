@@ -1,112 +1,36 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bordro ve Sosyal Haklar 2026</title>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .container { background-color: #ffffff; padding: 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        
-        h2 { text-align: center; color: #2c3e50; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; margin-bottom: 20px; font-size: 22px; }
-        
-        /* Menü Butonları Genel */
-        .menu-card {
-            display: flex;
-            align-items: center;
-            padding: 18px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .menu-card:active { transform: scale(0.98); }
-
-        .icon { font-size: 24px; margin-right: 15px; }
-        .info { flex: 1; }
-        .title { display: block; font-weight: bold; font-size: 16px; margin-bottom: 3px; }
-        .desc { display: block; font-size: 12px; opacity: 0.8; }
-
-        /* Renk Temaları */
-        .btn-salary { background-color: #6a1b9a; color: white; }
-        .btn-social { background-color: #8e24aa; color: white; }
-        
-        /* İSTEDİĞİN: Açık Yeşil Fark Hesapla Butonu */
-        .btn-fark { 
-            background-color: #d4edda; 
-            color: #155724; 
-            border: 2px solid #c3e6cb;
-            margin-top: 5px;
-        }
-
-        /* Enflasyon Paneli */
-        .stats-panel {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 20px;
-            border: 1px solid #eee;
-        }
-        .stats-title { font-weight: bold; font-size: 14px; color: #666; margin-bottom: 10px; display: block; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
-        .stat-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; }
-        .stat-label { color: #555; }
-        .stat-value { font-weight: bold; color: #2c3e50; }
-
-        .footer { text-align: center; margin-top: 25px; font-size: 11px; color: #999; }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h2>2026 Bordro Araçları</h2>
-
-    <a href="hesapla.html" class="menu-card btn-salary">
-        <span class="icon">💰</span>
-        <div class="info">
-            <span class="title">Maaş Hesapla</span>
-            <span class="desc">Güncel saat ücreti ile net maaşını gör.</span>
-        </div>
-    </a>
-
-    <a href="sosyal.html" class="menu-card btn-social">
-        <span class="icon">🎁</span>
-        <div class="info">
-            <span class="title">Sosyal Yardımlar</span>
-            <span class="desc">2025 - 2026 Karşılaştırmalı sosyal haklar.</span>
-        </div>
-    </a>
-
-    <div class="stats-panel">
-        <span class="stats-title">Güncel Veriler (Tahmini)</span>
-        <div class="stat-row">
-            <span class="stat-label">Ocak Enflasyonu:</span>
-            <span class="stat-value">%6,70</span>
-        </div>
-        <div class="stat-row">
-            <span class="stat-label">Şubat Enflasyonu:</span>
-            <span class="stat-value">%4,53</span>
-        </div>
-        <div class="stat-row">
-            <span class="stat-label">Mart Enflasyonu:</span>
-            <span class="stat-value">%3,16</span>
-        </div>
-    </div>
-
-    <a href="fark.html" class="menu-card btn-fark">
-        <span class="icon">📈</span>
-        <div class="info">
-            <span class="title">Maaş Farkı Hesapla</span>
-            <span class="desc">Ocak-Mart arası geriye dönük farklarını gör.</span>
-        </div>
-    </a>
-
-    <div class="footer">
-        © 2026 Numan Özdemir - Tüm Hakları Saklıdır.<br>
-        Veriler bilgilendirme amaçlıdır.
+<div class="card">
+    <h3>2026 Enflasyon Verileri</h3>
+    <ul id="inflation-list" style="list-style: none; padding: 0; font-size: 14px;">
+        <li>Ocak: <strong>%4,50</strong></li>
+        <li>Şubat: <strong>%3,20</strong></li>
+        <li>Mart: <strong>%2,80</strong></li>
+    </ul>
+    <hr style="border: 0; border-top: 1px solid #eee;">
+    <div style="text-align: right; padding: 10px; background: #fffde7; border-radius: 8px;">
+        <span style="font-size: 12px; color: #555;">TOPLAM BİLEŞİK ENFLASYON:</span><br>
+        <strong style="font-size: 20px; color: #e67e22;" id="compound-inflation">%10,88</strong>
     </div>
 </div>
 
-</body>
-</html>
+<div class="card" style="margin-top: 20px; border-left: 5px solid #3498db; background: #f0f8ff;">
+    <h4 style="margin-top: 0; color: #2c3e50;">💡 Görüş ve Önerileriniz</h4>
+    <p style="font-size: 13px; color: #555;">Hesaplamalarla ilgili bir hata mı fark ettiniz veya yeni bir özellik mi eklemek istiyorsunuz?</p>
+    <button onclick="location.href='tes.html'" style="width: 100%; padding: 10px; background-color: #3498db; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+        Geri Bildirim Gönder
+    </button>
+</div>
+
+<script>
+    // Dinamik hesaplama istersen bu mantığı kullanabilirsin:
+    // (1.0450 * 1.0320 * 1.0280) - 1 = 0.1088... (%10,88)
+    function bilesikHesapla() {
+        const oranlar = [4.50, 3.20, 2.80]; // Aylık enflasyonlar
+        let sonuc = 1;
+        oranlar.forEach(oran => {
+            sonuc *= (1 + (oran / 100));
+        });
+        const final = ((sonuc - 1) * 100).toFixed(2);
+        document.getElementById('compound-inflation').innerText = '%' + final.replace('.', ',');
+    }
+    // Veriler değiştikçe bu fonksiyonu çağırabilirsin.
+</script>
