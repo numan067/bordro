@@ -2,131 +2,117 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Maaş Farkı Hesapla - 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maaş Farkı Hesaplama</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 10px; }
-        .container { background-color: #fff; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
-        h2 { text-align: center; color: #6a1b9a; font-size: 20px; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; margin-top: 5px; }
-        
-        /* Üstteki Ortak Alan */
-        .global-settings { background: #f3e5f5; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #ce93d8; }
-        .global-settings label { color: #4a148c; font-weight: bold; }
-        
-        .month-card { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 15px; margin-bottom: 15px; border-left: 5px solid #6a1b9a; }
-        .month-title { font-weight: bold; color: #6a1b9a; margin-bottom: 12px; font-size: 15px; display: flex; justify-content: space-between; }
-        
-        .input-row { margin-bottom: 10px; }
-        label { display: block; font-size: 11px; color: #666; margin-bottom: 3px; font-weight: 600; }
-        input, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
-        
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        
-        .summary-box { background: #6a1b9a; color: white; padding: 15px; border-radius: 12px; text-align: center; position: sticky; bottom: 10px; box-shadow: 0 -4px 10px rgba(0,0,0,0.2); margin-top: 20px; }
-        .total-value { font-size: 26px; font-weight: 800; margin-top: 5px; }
-
-        .back-btn { display: block; width: 100%; padding: 12px; background: #eee; color: #333; text-align: center; text-decoration: none; border-radius: 8px; margin-top: 10px; font-weight: bold; font-size: 14px; }
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .fark-card { border-radius: 15px; overflow: hidden; }
+        .result-box { background: #e9ecef; border-radius: 10px; padding: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>FARK HESAPLAYICI (2026)</h2>
-
-    <div class="global-settings">
-        <div class="grid">
-            <div class="input-row">
-                <label>Eski Saat Ücreti:</label>
-                <input type="number" id="eski-saat" placeholder="0.00" oninput="hesapla()">
+<div class="container py-4">
+    <div class="card fark-card shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h4 class="mb-0">Maaş Farkı Hesaplama (2026)</h4>
+        </div>
+        <div class="card-body">
+            
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label class="form-label">Gece Mesai Saati</label>
+                    <input type="number" id="geceSaati" class="form-control" placeholder="Toplam saat giriniz" oninput="hesaplaFark()">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Diğer Kalemler Toplam Farkı</label>
+                    <input type="number" id="digerFarklar" class="form-control" placeholder="Yeni - Eski Brüt" oninput="hesaplaFark()">
+                </div>
             </div>
-            <div class="input-row">
-                <label>Ortak Vergi Dilimi:</label>
-                <select id="vergi-orani" onchange="hesapla()">
-                    <option value="0.15">%15 Vergi</option>
-                    <option value="0.20">%20 Vergi</option>
-                    <option value="0.27">%27 Vergi</option>
-                </select>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Açıklama</th>
+                            <th>Yeni Birim</th>
+                            <th>Eski Birim</th>
+                            <th class="text-end">Hesaplanan Fark</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Gece Zammı Farkı</td>
+                            <td>30,00 ₺</td>
+                            <td>22,81 ₺</td>
+                            <td class="text-end text-success" id="lblGeceFarki">0,00 ₺</td>
+                        </tr>
+                        <tr>
+                            <td>Yol Ücreti Farkı</td>
+                            <td>2.500,00 ₺</td>
+                            <td>1.559,30 ₺</td>
+                            <td class="text-end text-success" id="lblYolFarki">940,70 ₺</td>
+                        </tr>
+                        <tr class="table-info">
+                            <td>Bayram Parası Farkı</td>
+                            <td colspan="2" class="text-center">Sabit Ödeme</td>
+                            <td class="text-end fw-bold">2.492,74 ₺</td>
+                        </tr>
+                        <tr>
+                            <td>İkramiye Farkı</td>
+                            <td colspan="2" class="text-muted text-center small">Maaş Farkı Üzerinden</td>
+                            <td class="text-end text-success" id="lblIkramiyeFarki">0,00 ₺</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-dark">
+                            <th colspan="3">TOPLAM BRÜT FARK</th>
+                            <th class="text-end" id="lblToplamFark">3.433,44 ₺</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="alert alert-warning mt-3 small">
+                * Yol ücreti ve Bayram parası farkı otomatik olarak toplama eklenmiştir. "İkramiye" yazımı güncellenmiştir.
+            </div>
+            
+            <div class="text-center mt-3">
+                <a href="index.html" class="btn btn-secondary btn-sm">Ana Sayfaya Dön</a>
             </div>
         </div>
     </div>
-
-    <div id="aylar-listesi">
-        </div>
-
-    <div class="month-card" style="border-left-color: #ff9800; background: #fffcf5;">
-        <div class="month-title" style="color: #e65100;">İKRANİYE FARKI</div>
-        <div class="input-row">
-            <label>İkramiye Gün Sayısı (Örn: 30):</label>
-            <input type="number" id="ikr-gun" value="30" oninput="hesapla()">
-        </div>
-    </div>
-
-    <div class="summary-box">
-        <div style="font-size: 12px; opacity: 0.9;">TÜM AYLAR TOPLAM NET FARK</div>
-        <div class="total-value" id="toplam-fark">0,00 TL</div>
-    </div>
-
-    <a href="index.html" class="back-btn">← ANA SAYFAYA DÖN</a>
 </div>
 
 <script>
-    const aylar = ["OCAK", "ŞUBAT", "MART"];
-    const liste = document.getElementById('aylar-listesi');
+function hesaplaFark() {
+    // Sabit Değerler
+    const yolFarki = 2500 - 1559.30; // 940.70
+    const bayramParasiFarki = 2492.74;
+    
+    // Kullanıcı Girişleri
+    const geceSaati = parseFloat(document.getElementById('geceSaati').value) || 0;
+    const digerFarklarInput = parseFloat(document.getElementById('digerFarklar').value) || 0;
 
-    // Ay kartlarını oluştur (Senin paylaştığın görseldeki tüm kalemler dahil)
-    aylar.forEach(ay => {
-        liste.innerHTML += `
-        <div class="month-card">
-            <div class="month-title">${ay} AYI VERİLERİ</div>
-            <div class="input-row">
-                <label>Normal Çalışma (Saat):</label>
-                <input type="number" class="norm-saat" value="225" oninput="hesapla()">
-            </div>
-            <div class="grid">
-                <div class="input-row"><label>Fazla Mesai:</label><input type="number" class="fm" value="0" oninput="hesapla()"></div>
-                <div class="input-row"><label>Gece Zammı (Saat):</label><input type="number" class="gece" value="0" oninput="hesapla()"></div>
-                <div class="input-row"><label>Ulusal Bayram:</label><input type="number" class="ub" value="0" oninput="hesapla()"></div>
-                <div class="input-row"><label>Dini Bayram:</label><input type="number" class="db" value="0" oninput="hesapla()"></div>
-                <div class="input-row"><label>Resmi Tatil FM:</label><input type="number" class="rtfm" value="0" oninput="hesapla()"></div>
-                <div class="input-row"><label>Yol Ücreti Farkı:</label><input type="number" class="yol" value="0" oninput="hesapla()"></div>
-            </div>
-        </div>`;
-    });
+    // Dinamik Hesaplamalar
+    const geceFarki = geceSaati * (30 - 22.81);
+    
+    // Toplam Hesaplama (Yol + Bayram zaten sabit fark olarak var)
+    const toplamFark = geceFarki + yolFarki + bayramParasiFarki + digerFarklarInput;
 
-    function hesapla() {
-        const eskiSaat = parseFloat(document.getElementById('eski-saat').value) || 0;
-        const fark = eskiSaat * 0.16; // %16 zam farkı
-        const vergi = parseFloat(document.getElementById('vergi-orani').value);
-        const netCarpan = (1 - vergi) * 0.86; // Vergi + %14 SGK kesintisi
+    // Arayüzü Güncelle
+    document.getElementById('lblGeceFarki').innerText = geceFarki.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+    document.getElementById('lblYolFarki').innerText = yolFarki.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+    document.getElementById('lblToplamFark').innerText = toplamFark.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+    
+    // Not: İkramiye farkı genellikle maaş farkına göre değiştiği için 
+    // "Diğer Farklar" kutusuna yazdığın tutarın içinde kabul edilebilir 
+    // veya ayrıca bir input eklenebilir.
+}
 
-        let toplamBrutFark = 0;
-
-        document.querySelectorAll('.month-card').forEach(card => {
-            const norm = parseFloat(card.querySelector('.norm-saat')?.value) || 0;
-            const fm = parseFloat(card.querySelector('.fm')?.value) || 0;
-            const gece = parseFloat(card.querySelector('.gece')?.value) || 0;
-            const ub = parseFloat(card.querySelector('.ub')?.value) || 0;
-            const db = parseFloat(card.querySelector('.db')?.value) || 0;
-            const rtfm = parseFloat(card.querySelector('.rtfm')?.value) || 0;
-            const yol = parseFloat(card.querySelector('.yol')?.value) || 0;
-
-            // Hesaplama Formülleri
-            toplamBrutFark += (norm * fark);
-            toplamBrutFark += (fm * fark * 2); // Mesai %100 fark
-            toplamBrutFark += (gece * (30 - 22.81)); // Gece zammı sabit fark
-            toplamBrutFark += (ub * fark * 2);
-            toplamBrutFark += (db * fark * 2);
-            toplamBrutFark += (rtfm * fark * 2);
-            toplamBrutFark += yol; // Yol farkı direkt eklenir
-        });
-
-        // İkramiye
-        const ikrGun = parseFloat(document.getElementById('ikr-gun').value) || 0;
-        toplamBrutFark += (ikrGun * 7.5 * fark);
-
-        const toplamNet = toplamBrutFark * netCarpan;
-        document.getElementById('toplam-fark').innerText = toplamNet.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL";
-    }
+// Sayfa açıldığında ilk hesaplamayı yap (Sabitleri göstermek için)
+window.onload = hesaplaFark;
 </script>
 
 </body>
