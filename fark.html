@@ -6,24 +6,23 @@
     <title>Maaş Farkı Hesaplama Sistemi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f0f2f5; font-size: 0.82rem; }
-        .header-box { background: #1a237e; color: white; padding: 15px; border-radius: 0 0 20px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .card { border-radius: 12px; border: none; }
-        .table input { text-align: center; padding: 2px; font-size: 0.85rem; border: 1px solid #ced4da; border-radius: 4px; }
-        .table input:focus { border-color: #3f51b5; outline: none; box-shadow: 0 0 5px rgba(63,81,181,0.3); }
-        .zam-badge { background: #e8f5e9; color: #2e7d32; font-weight: bold; border: 1px solid #c8e6c9; }
-        .tax-select { border: 2px solid #ffca28; font-weight: bold; }
-        .ay-kolon { background-color: #f8f9fa; font-weight: bold; width: 70px; }
-        .net-fark-hucre { color: #d32f2f; font-weight: bold; text-align: right; }
+        body { background-color: #f0f2f5; font-size: 0.85rem; }
+        .header-box { background: #1a237e; color: white; padding: 15px; border-radius: 0 0 20px 20px; }
+        .card { border-radius: 12px; border: none; margin-bottom: 15px; }
+        .table input { text-align: center; padding: 2px; font-size: 0.85rem; border: 1px solid #ced4da; border-radius: 4px; width: 100%; }
+        .gun-input { background-color: #fff9db; font-weight: bold; width: 50px !important; }
+        .saat-otomatik { background-color: #e9ecef; font-weight: bold; width: 70px !important; }
+        .net-fark-hucre { color: #d32f2f; font-weight: bold; text-align: right; min-width: 100px; }
+        .tax-select { border: 2px solid #ffca28; font-weight: bold; width: 100px; }
     </style>
 </head>
 <body>
 
-<div class="header-box mb-3">
+<div class="header-box mb-3 shadow">
     <div class="container-fluid d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Maaş Farkı Hesaplama Sistemi</h5>
-        <div class="d-flex align-items-center bg-white p-2 rounded shadow-sm">
-            <span class="me-2 text-dark fw-bold">Vergi Dilimi:</span>
+        <h6 class="mb-0 text-uppercase ls-1">Maaş Farkı Çizelgesi (2026)</h6>
+        <div class="d-flex align-items-center bg-white p-1 rounded">
+            <span class="me-2 text-dark small fw-bold">Vergi:</span>
             <select id="vergiDilimi" class="form-select form-select-sm tax-select" onchange="hesapla()">
                 <option value="0.15">%15</option>
                 <option value="0.20">%20</option>
@@ -36,18 +35,18 @@
 
 <div class="container-fluid">
     <div class="card shadow-sm p-3 mb-3">
-        <div class="row align-items-center">
+        <div class="row g-2 align-items-center">
             <div class="col-6 col-md-3">
-                <label class="form-label fw-bold">Eski Saat Ücreti:</label>
-                <input type="number" id="eskiSaat" class="form-control" placeholder="100.00" oninput="hesapla()">
+                <label class="small fw-bold">Eski Saat Ücreti:</label>
+                <input type="number" id="eskiUcret" class="form-control form-control-sm" placeholder="0.00" oninput="hesapla()">
             </div>
             <div class="col-6 col-md-3">
-                <label class="form-label fw-bold">Yeni Saat Ücreti (%16):</label>
-                <div id="yeniSaatGoster" class="form-control zam-badge text-center">0.00 ₺</div>
+                <label class="small fw-bold">Yeni (%16 Zamlı):</label>
+                <div id="yeniUcretGoster" class="form-control form-control-sm bg-light fw-bold text-success">0,00 ₺</div>
             </div>
-            <div class="col-12 col-md-6 mt-2 mt-md-0">
-                <div class="alert alert-info py-2 mb-0 small">
-                    <strong>Bilgi:</strong> Hesaplama, (Yeni Ücret - Eski Ücret) farkı üzerinden yapılmaktadır.
+            <div class="col-12 col-md-6">
+                <div class="alert alert-secondary py-1 px-2 mb-0 mt-2 mt-md-0 small">
+                    Fark Hesabı: (Yeni Ücret - Eski Ücret) üzerinden yapılır.
                 </div>
             </div>
         </div>
@@ -55,46 +54,27 @@
 
     <div class="card shadow-sm overflow-hidden">
         <div class="table-responsive">
-            <table class="table table-sm table-bordered align-middle mb-0 text-center">
-                <thead class="table-dark">
+            <table class="table table-sm table-bordered align-middle mb-0">
+                <thead class="table-dark text-center">
                     <tr>
-                        <th>AY</th>
-                        <th>N.Mesai (S)</th>
+                        <th style="width: 80px;">AY</th>
+                        <th>Gün</th>
+                        <th>N.Saat (7.5)</th>
+                        <th>%50 M.</th>
+                        <th>%100 M.</th>
                         <th>Gece (S)</th>
-                        <th>Ulusal B. (S)</th>
-                        <th>Dini B. (S)</th>
-                        <th>U.Fazla M. (S)</th>
-                        <th>Yol Farkı</th>
                         <th>İkramiye</th>
                         <th>Bayram P.</th>
-                        <th class="table-primary text-dark">AYLIK NET FARK</th>
+                        <th>Yol</th>
+                        <th>NET FARK</th>
                     </tr>
                 </thead>
                 <tbody id="farkTableBody">
-                    <script>
-                        const aylar = ["OCAK", "ŞUBAT", "MART"];
-                        aylar.forEach(ay => {
-                            document.write(`
-                                <tr data-ay="${ay}">
-                                    <td class="ay-kolon">${ay}</td>
-                                    <td><input type="number" class="w-100 n-mesai" oninput="hesapla()"></td>
-                                    <td><input type="number" class="w-100 g-saat" oninput="hesapla()"></td>
-                                    <td><input type="number" class="w-100 u-bayram" oninput="hesapla()"></td>
-                                    <td><input type="number" class="w-100 d-bayram" oninput="hesapla()"></td>
-                                    <td><input type="number" class="w-100 u-fazla" oninput="hesapla()"></td>
-                                    <td><input type="checkbox" class="form-check-input yol-check" checked onchange="hesapla()"></td>
-                                    <td><input type="number" class="w-100 i-fark" oninput="hesapla()"></td>
-                                    <td><input type="number" class="w-100 b-fark" oninput="hesapla()"></td>
-                                    <td class="net-fark-hucre">0,00 ₺</td>
-                                </tr>
-                            `);
-                        });
-                    </script>
-                </tbody>
+                    </tbody>
                 <tfoot class="table-secondary fw-bold">
                     <tr>
-                        <td colspan="9" class="text-end">TOPLAM ALINACAK NET FARK:</td>
-                        <td id="genelToplam" class="text-end fs-6 text-primary">0,00 ₺</td>
+                        <td colspan="9" class="text-end text-uppercase">Genel Toplam Net Alacak:</td>
+                        <td id="genelToplam" class="text-end text-danger fs-6">0,00 ₺</td>
                     </tr>
                 </tfoot>
             </table>
@@ -103,56 +83,81 @@
 </div>
 
 <script>
-function hesapla() {
-    // Ücret farklarını belirle
-    const eskiUcret = parseFloat(document.getElementById('eskiSaat').value) || 0;
-    const yeniUcret = eskiUcret * 1.16; // %16 zam
-    const farkUcret = yeniUcret - eskiUcret; // Saatlik Brüt Fark
+const ayVerileri = [
+    { ad: "OCAK", gun: 31 },
+    { ad: "ŞUBAT", gun: 28 },
+    { ad: "MART", gun: 31 }
+];
 
-    document.getElementById('yeniSaatGoster').innerText = yeniUcret.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+const tbody = document.getElementById('farkTableBody');
 
-    const vergiOrani = parseFloat(document.getElementById('vergiDilimi').value);
-    const damgaVergisi = 0.00759;
-    const rows = document.querySelectorAll("#farkTableBody tr");
-    let toplamNetGenel = 0;
+// Tabloyu Oluştur
+ayVerileri.forEach(ay => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td class="fw-bold text-center bg-light">${ay.ad}</td>
+        <td><input type="number" class="gun-input" value="${ay.gun}" oninput="gunGuncelle(this)"></td>
+        <td><input type="number" class="saat-otomatik" value="${(ay.gun * 7.5).toFixed(1)}" oninput="hesapla()"></td>
+        <td><input type="number" class="m50-saat" placeholder="Saat" oninput="hesapla()"></td>
+        <td><input type="number" class="m100-saat" placeholder="Saat" oninput="hesapla()"></td>
+        <td><input type="number" class="gece-saat" placeholder="Saat" oninput="hesapla()"></td>
+        <td><input type="number" class="i-fark" placeholder="Brüt" oninput="hesapla()"></td>
+        <td><input type="number" class="b-para-fark" placeholder="Brüt" oninput="hesapla()"></td>
+        <td class="text-center"><input type="checkbox" class="yol-check" checked onchange="hesapla()"></td>
+        <td class="net-fark-hucre">0,00 ₺</td>
+    `;
+    tbody.appendChild(tr);
+});
 
-    rows.forEach(row => {
-        // Input değerlerini al
-        const nMesai = parseFloat(row.querySelector(".n-mesai").value) || 0;
-        const gSaat = parseFloat(row.querySelector(".g-saat").value) || 0;
-        const uBayram = parseFloat(row.querySelector(".u-bayram").value) || 0;
-        const dBayram = parseFloat(row.querySelector(".d-bayram").value) || 0;
-        const uFazla = parseFloat(row.querySelector(".u-fazla").value) || 0;
-        const iFark = parseFloat(row.querySelector(".i-fark").value) || 0;
-        const bFark = parseFloat(row.querySelector(".b-fark").value) || 0;
-        const yolVarMi = row.querySelector(".yol-check").checked;
-
-        // BRÜT HESAPLAMA MANTIĞI
-        // Mesailer fark ücreti üzerinden çarpanlarla hesaplanır
-        const mesaiBrut = (nMesai * farkUcret * 1.5);
-        const geceBrut = (gSaat * 7.19); // Gece zammı sabit farkın
-        const uBayramBrut = (uBayram * farkUcret * 2.0);
-        const dBayramBrut = (dBayram * farkUcret * 2.0);
-        const uFazlaBrut = (uFazla * farkUcret * 1.5);
-        const yolBrut = yolVarMi ? 940.70 : 0; // Yol farkı sabit
-
-        // Toplam Brüt Fark
-        const toplamSatirBrut = mesaiBrut + geceBrut + uBayramBrut + dBayramBrut + uFazlaBrut + iFark + bFark + yolBrut;
-
-        // NET'E ÇEVİRME
-        // (Brüt * (1 - (Gelir Vergisi + Damga Vergisi)))
-        const satirNet = toplamSatirBrut * (1 - (vergiOrani + damgaVergisi));
-
-        // Hücreyi Güncelle
-        row.querySelector(".net-fark-hucre").innerText = satirNet.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
-        toplamNetGenel += satirNet;
-    });
-
-    // Alt Toplamı Güncelle
-    document.getElementById('genelToplam').innerText = toplamNetGenel.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+// Gün değişince saati otomatik güncelle (Gün x 7.5)
+function gunGuncelle(el) {
+    const gun = parseFloat(el.value) || 0;
+    const saatInput = el.closest('tr').querySelector('.saat-otomatik');
+    saatInput.value = (gun * 7.5).toFixed(1);
+    hesapla();
 }
 
-// Sayfa yüklendiğinde hesaplamayı başlat
+function hesapla() {
+    const eski = parseFloat(document.getElementById('eskiUcret').value) || 0;
+    const yeni = eski * 1.16;
+    const fark = yeni - eski;
+    
+    document.getElementById('yeniUcretGoster').innerText = yeni.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+
+    const vergi = parseFloat(document.getElementById('vergiDilimi').value);
+    const damga = 0.00759;
+    const kesinti = 1 - (vergi + damga);
+
+    let toplamGenel = 0;
+
+    document.querySelectorAll('#farkTableBody tr').forEach(row => {
+        // Normal çalışma saati üzerinden fark (Normal mesai matrahı gibi)
+        const nSaat = parseFloat(row.querySelector('.saat-otomatik').value) || 0;
+        const nFarkBrut = nSaat * fark;
+
+        // Mesai farkları (Çarpanlı)
+        const m50 = (parseFloat(row.querySelector('.m50-saat').value) || 0) * fark * 1.5;
+        const m100 = (parseFloat(row.querySelector('.m100-saat').value) || 0) * fark * 2.0;
+        
+        // Sabit kalem farkları
+        const gece = (parseFloat(row.querySelector('.gece-saat').value) || 0) * 7.19;
+        const yol = row.querySelector('.yol-check').checked ? 940.70 : 0;
+        
+        // Brüt olarak girilen farklar
+        const ikramiye = parseFloat(row.querySelector('.i-fark').value) || 0;
+        const bPara = parseFloat(row.querySelector('.b-para-fark').value) || 0;
+
+        const toplamBrut = nFarkBrut + m50 + m100 + gece + yol + ikramiye + bPara;
+        const netFark = toplamBrut * kesinti;
+
+        row.querySelector('.net-fark-hucre').innerText = netFark.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+        toplamGenel += netFark;
+    });
+
+    document.getElementById('genelToplam').innerText = toplamGenel.toLocaleString('tr-TR', {minimumFractionDigits: 2}) + " ₺";
+}
+
+// İlk hesaplama
 window.onload = hesapla;
 </script>
 
