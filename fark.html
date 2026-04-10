@@ -2,90 +2,165 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2026 Maaş ve Fark Takibi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bordro Fark Hesaplama</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; margin: 0; padding: 10px; box-sizing: border-box; }
-        .container { background-color: #ffffff; padding: 15px 20px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
-        h2 { text-align: center; color: #2c3e50; margin-bottom: 12px; border-bottom: 2px solid #6a1b9a; padding-bottom: 8px; font-size: 16px; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f9; margin: 0; padding: 15px; color: #333; }
+        .container { max-width: 650px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
         
-        .top-options { display: flex; gap: 8px; margin-bottom: 12px; background: #f9f2ff; padding: 10px; border-radius: 8px; }
-        .option-group { flex: 1; display: flex; flex-direction: column; }
-        .option-group label { font-size: 9px; font-weight: bold; color: #6a1b9a; margin-bottom: 2px; text-transform: uppercase; }
-        .option-group select, .option-group input { padding: 6px; border: 1px solid #ddd; border-radius: 6px; font-size: 12px; background-color: #fff; }
+        .header-inputs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #eef2f7; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .header-inputs label { font-size: 11px; font-weight: bold; display: block; margin-bottom: 5px; color: #555; }
+        .header-inputs input, .header-inputs select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
 
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 12px; }
-        .input-group { display: flex; flex-direction: column; }
-        .input-group label { margin-bottom: 2px; font-weight: 600; color: #555; font-size: 9.5px; }
-        .input-group input { padding: 7px; border: 1px solid #ccc; border-radius: 5px; font-size: 12px; }
+        .month-card { border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin-bottom: 15px; background: #fff; position: relative; }
+        .month-title { font-weight: bold; color: #3498db; margin-bottom: 10px; text-transform: uppercase; font-size: 14px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .input-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .input-group label { font-size: 10px; color: #666; display: block; }
+        .input-group input, .input-group select { width: 100%; padding: 5px; border: 1px solid #eee; border-radius: 4px; font-size: 12px; }
+
+        .result-section { background: #2c3e50; color: white; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; }
+        .result-item { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; border-bottom: 1px solid #444; padding-bottom: 5px; }
+        .total-fark { font-size: 24px; font-weight: bold; color: #2ecc71; margin-top: 10px; }
         
-        .summary-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10.5px; text-align: left; }
-        .summary-table th { color: #888; padding: 5px; border-bottom: 1px solid #eee; text-transform: uppercase; font-size: 8.5px; }
-        .summary-table td { padding: 8px 5px; border-bottom: 1px solid #f9f9f9; font-weight: 600; color: #2c3e50; }
-        .yol-select { padding: 2px; font-size: 10px; border-radius: 4px; border: 1px solid #ccc; }
-
-        .net-maas-box { background: linear-gradient(135deg, #1a237e 0%, #283593 100%); color: #fff; padding: 15px; border-radius: 10px; text-align: center; margin-top: 15px; }
-        .net-maas-label { font-size: 11px; margin-bottom: 2px; opacity: 0.9; text-transform: uppercase; }
-        .net-maas-value { font-size: 24px; font-weight: 800; }
-        
-        .bottom-buttons { display: flex; justify-content: space-between; margin-top: 12px; gap: 8px; }
-        .bottom-buttons button { flex: 1; padding: 9px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 11px; background-color: #ecf0f1; color: #34495e; }
-
-        @media (max-width: 480px) { .input-grid { grid-template-columns: 1fr; } }
+        .highlight { color: #e74c3c; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Maaş Farkı ve Toplam Alacak</h2>
-        
-        <div class="top-options">
-            <div class="option-group">
-                <label>Saat Ücreti Farkı:</label>
-                <input type="number" id="saat-ucreti" step="0.01" value="0" oninput="hesapla()">
-            </div>
-            <div class="option-group">
-                <label>Vergi Dilimi (%)</label>
-                <select id="tax-rate" onchange="hesapla()">
-                    <option value="0.15">15</option><option value="0.20">20</option>
-                    <option value="0.27">27</option><option value="0.35">35</option>
-                </select>
-            </div>
-            <div class="option-group">
-                <label>Yol Farkı (Brüt)</label>
-                <input type="number" id="yol-brut-fark" value="0" oninput="hesapla()">
-            </div>
+
+<div class="container">
+    <h2>Fark Bordrosu (Ocak-Mart)</h2>
+
+    <div class="header-inputs">
+        <div>
+            <label>Eski Saat Ücreti</label>
+            <input type="number" id="eski_su" value="380.71" step="0.01" oninput="hesapla()">
         </div>
-        
+        <div>
+            <label>Yeni Saat Ücreti</label>
+            <input type="number" id="yeni_su" value="0" step="0.01" oninput="hesapla()">
+        </div>
+        <div>
+            <label>Vergi Dilimi (%)</label>
+            <select id="vergi_dilimi" onchange="hesapla()">
+                <option value="0.15">15</option>
+                <option value="0.20">20</option>
+                <option value="0.27">27</option>
+                <option value="0.35">35</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="month-card">
+        <div class="month-title">Ocak Ayı Kalemleri</div>
         <div class="input-grid">
-            <div class="input-group"><label>Toplam Fazla Mesai (Sa):</label><input type="number" id="fm-100" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Ulusal Bayram (Sa):</label><input type="number" id="ulusal-100" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Dini Bayram (Sa):</label><input type="number" id="dini-150" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Resmi Tatil FM (Sa):</label><input type="number" id="resmi-200" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Vakıf Kesintisi %:</label><input type="number" id="vakif-yuzde" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Aylık Gece Zammı (Sa):</label><input type="number" id="gece-zammi" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Aylık Çalışma</label><input type="number" id="h1_cs" value="232.5" oninput="hesapla()"></div>
+            <div class="input-group"><label>Fazla Mesai</label><input type="number" id="h1_fm" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Ulusal Bayram</label><input type="number" id="h1_ub" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Dini Bayram</label><input type="number" id="h1_db" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Resmi Tatil FM</label><input type="number" id="h1_rfm" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Yol Yardımı</label><select id="h1_yol" onchange="hesapla()"><option value="0">Yok</option><option value="1">Var (711 TL)</option></select></div>
         </div>
+    </div>
 
-        <table class="summary-table">
-            <thead>
-                <tr>
-                    <th>Dönem</th>
-                    <th>Yol?</th>
-                    <th>Net Maaş Farkı</th>
-                    <th>Net İkramiye Farkı</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>OCAK</td><td><select id="yol-1" class="yol-select" onchange="hesapla()"><option value="0">Yok</option><option value="1">Var</option></select></td><td id="row1-m">0,00</td><td id="row1-i">0,00</td></tr>
-                <tr><td>ŞUBAT</td><td><select id="yol-2" class="yol-select" onchange="hesapla()"><option value="0">Yok</option><option value="1">Var</option></select></td><td id="row2-m">0,00</td><td id="row2-i">0,00</td></tr>
-                <tr><td>MART</td><td><select id="yol-3" class="yol-select" onchange="hesapla()"><option value="0">Yok</option><option value="1">Var</option></select></td><td id="row3-m">0,00</td><td id="row3-i">0,00</td></tr>
-            </tbody>
-        </table>
-
-        <div class="net-maas-box">
-            <div class="net-maas-label">Toplam Net Alacak (3 Aylık)</div>
-            <div class="net-maas-value" id="toplam-alacak">0,00 TL</div>
+    <div class="month-card">
+        <div class="month-title">Şubat Ayı Kalemleri</div>
+        <div class="input-grid">
+            <div class="input-group"><label>Aylık Çalışma</label><input type="number" id="h2_cs" value="210" oninput="hesapla()"></div>
+            <div class="input-group"><label>Fazla Mesai</label><input type="number" id="h2_fm" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Ulusal Bayram</label><input type="number" id="h2_ub" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Dini Bayram</label><input type="number" id="h2_db" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Resmi Tatil FM</label><input type="number" id="h2_rfm" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Yol Yardımı</label><select id="h2_yol" onchange="hesapla()"><option value="0">Yok</option><option value="1">Var (711 TL)</option></select></div>
         </div>
+    </div>
 
-        <div class="bottom-buttons">
-            <button onclick="location.href='index.html'">Ana Sayfa</button>
-            <button onclick
+    <div class="month-card">
+        <div class="month-title">Mart Ayı Kalemleri</div>
+        <div class="input-grid">
+            <div class="input-group"><label>Aylık Çalışma</label><input type="number" id="h3_cs" value="232.5" oninput="hesapla()"></div>
+            <div class="input-group"><label>Fazla Mesai</label><input type="number" id="h3_fm" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Ulusal Bayram</label><input type="number" id="h3_ub" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Dini Bayram</label><input type="number" id="h3_db" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Resmi Tatil FM</label><input type="number" id="h3_rfm" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Yol Yardımı</label><select id="h3_yol" onchange="hesapla()"><option value="0">Yok</option><option value="1">Var (711 TL)</option></select></div>
+        </div>
+    </div>
+
+    <div class="result-section">
+        <div class="result-item"><span>Ocak Net Fark:</span><span id="res_1">0,00 TL</span></div>
+        <div class="result-item"><span>Şubat Net Fark:</span><span id="res_2">0,00 TL</span></div>
+        <div class="result-item"><span>Mart Net Fark:</span><span id="res_3">0,00 TL</span></div>
+        <div class="result-item"><span style="color:#f1c40f">İkramiye Farkı (225 Sa):</span><span id="res_ikr" style="color:#f1c40f">0,00 TL</span></div>
+        <div class="total-label">TOPLAM NET FARK</div>
+        <div class="total-fark" id="toplam_fark">0,00 TL</div>
+    </div>
+</div>
+
+<script>
+function hesapla() {
+    const eskiSU = parseFloat(document.getElementById('eski_su').value) || 0;
+    const yeniSU = parseFloat(document.getElementById('yeni_su').value) || 0;
+    const suFark = yeniSU - eskiSU;
+    const vo = parseFloat(document.getElementById('vergi_dilimi').value);
+    
+    if (suFark <= 0) {
+        // Fark yoksa sıfırla
+        ["res_1","res_2","res_3","res_ikr","toplam_fark"].forEach(id => document.getElementById(id).innerText = "0,00 TL");
+        return;
+    }
+
+    let toplamNet = 0;
+    const format = (n) => n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " TL";
+
+    // İKRAMİYE FARKI HESABI (225 Saat üzerinden Net)
+    const ikrBrut = suFark * 225;
+    const ikrSgk = ikrBrut * 0.15;
+    const ikrMatrah = ikrBrut - ikrSgk;
+    const ikrGv = ikrMatrah * vo;
+    const ikrDv = ikrBrut * 0.00759;
+    const ikrNet = ikrBrut - ikrSgk - ikrGv - ikrDv;
+    document.getElementById('res_ikr').innerText = format(ikrNet);
+
+    // AYLIK HESAPLAMALAR
+    for(let i=1; i<=3; i++) {
+        const cs = parseFloat(document.getElementById(`h${i}_cs`).value) || 0;
+        const fm = parseFloat(document.getElementById(`h${i}_fm`).value) || 0;
+        const ub = parseFloat(document.getElementById(`h${i}_ub`).value) || 0;
+        const db = parseFloat(document.getElementById(`h${i}_db`).value) || 0;
+        const rfm = parseFloat(document.getElementById(`h${i}_rfm`).value) || 0;
+        const yolVar = document.getElementById(`h${i}_yol`).value == "1";
+        
+        // Brüt Fark Kalemleri
+        const normalFark = cs * suFark;
+        const fmFark = (fm + ub) * suFark * 2;
+        const dbFark = db * suFark * 2.5;
+        const rfmFark = rfm * suFark * 3;
+        const yolFark = yolVar ? 711.13 : 0; // Sabit yol farkı varsayımı (güncellenebilir)
+
+        const brutFark = normalFark + fmFark + dbFark + rfmFark + yolFark;
+
+        // Kesintiler
+        const sgkFark = brutFark * 0.15;
+        const sendikaFark = suFark * 7; // Senin istediğin sendika formülü
+        
+        const matrahFark = brutFark - sgkFark - sendikaFark;
+        const gvFark = matrahFark * vo;
+        const dvFark = brutFark * 0.00759;
+
+        const netFark = brutFark - sgkFark - gvFark - dvFark - sendikaFark;
+        
+        document.getElementById(`res_${i}`).innerText = format(netFark);
+        toplamNet += netFark;
+    }
+
+    toplamNet += ikrNet;
+    document.getElementById('toplam_fark').innerText = format(toplamNet);
+}
+
+// Sayfa açıldığında otomatik bir kez çalıştır
+window.onload = hesapla;
+</script>
+
+</body>
+</html>
