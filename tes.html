@@ -3,77 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Görüş ve Öneri - 2026 Maaş Hesaplama</title>
+    <title>Görüş ve Öneriler</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; margin: 0; padding: 20px; box-sizing: border-box; }
-        .container { background-color: #ffffff; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        
-        /* Ana Tema Moru */
-        h2 { text-align: center; color: #2c3e50; margin-bottom: 15px; border-bottom: 2px solid #6a1b9a; padding-bottom: 10px; }
-        p { text-align: center; color: #666; font-size: 14px; margin-bottom: 25px; line-height: 1.5; }
-
-        .input-group { display: flex; flex-direction: column; margin-bottom: 15px; }
-        .input-group label { margin-bottom: 6px; font-weight: 600; color: #444; font-size: 13px; }
-        .input-group input, .input-group textarea { padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; background-color: #fafafa; transition: all 0.3s; font-family: inherit; }
-        .input-group input:focus, .input-group textarea:focus { border-color: #6a1b9a; outline: none; background-color: #fff; box-shadow: 0 0 8px rgba(106, 27, 154, 0.1); }
-        
-        textarea { resize: vertical; min-height: 120px; }
-
-        /* Buton Stili (Ana sayfa ile uyumlu) */
-        .submit-btn { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); color: #fff; padding: 14px; border: none; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: 600; width: 100%; margin-top: 10px; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 4px 15px rgba(106, 27, 154, 0.3); }
-        .submit-btn:hover { opacity: 0.9; transform: translateY(-2px); }
-        
-        .back-link { display: block; text-align: center; margin-top: 20px; color: #8e24aa; text-decoration: none; font-size: 13px; font-weight: 600; }
-        .back-link:hover { text-decoration: underline; }
-
-        /* Başarı Mesajı (Gizli) */
-        #success-msg { display: none; background-color: #d4edda; color: #155724; padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 20px; font-size: 14px; border: 1px solid #c3e6cb; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .form-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 90%; max-width: 400px; }
+        h2 { color: #2c3e50; margin-top: 0; text-align: center; }
+        textarea { width: 100%; height: 120px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; resize: none; font-family: inherit; margin-bottom: 15px; }
+        .btn-submit { width: 100%; padding: 12px; background: #27ae60; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .btn-back { display: block; text-align: center; margin-top: 15px; color: #7f8c8d; text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div id="success-msg">Mesajınız başarıyla iletildi! Teşekkür ederiz.</div>
-        
-        <h2>Görüş ve Öneri</h2>
-        <p>Hesaplama motoru hakkında her türlü görüş, hata bildirimi veya teşekkür mesajınızı aşağıdan iletebilirsiniz.</p>
 
-        <form id="contactForm">
-            <div class="input-group">
-                <label>Adınız Soyadınız (İsteğe Bağlı):</label>
-                <input type="text" id="name" placeholder="Örn: Ahmet Yılmaz">
-            </div>
-            
-            <div class="input-group">
-                <label>E-posta Adresiniz:</label>
-                <input type="email" id="email" placeholder="iletisim@adresiniz.com" required>
-            </div>
+<div class="form-container">
+    <h2>Görüş ve Öneri</h2>
+    <p style="font-size: 13px; color: #666; text-align: center;">Fikirleriniz benim için değerli. Lütfen aşağıya yazın.</p>
+    
+    <form action="#">
+        <textarea placeholder="Mesajınızı buraya yazın..."></textarea>
+        <button type="button" class="btn-submit" onclick="alert('Teşekkürler! Öneriniz kaydedildi. (Simüle edildi)')">Gönder</button>
+    </form>
+    
+    <a href="index.html" class="btn-back">← Ana Sayfaya Dön</a>
+</div>
 
-            <div class="input-group">
-                <label>Mesajınız:</label>
-                <textarea id="message" placeholder="Önerilerinizi buraya yazabilirsiniz..." required></textarea>
-            </div>
-
-            <button type="submit" class="submit-btn">Gönder</button>
-        </form>
-
-        <a href="index.html" class="back-link">← Hesaplama Sayfasına Dön</a>
-    </div>
-
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Burada normalde bir API'ye gönderim yapılır. 
-            // Şimdilik sadece görsel bir geri bildirim veriyoruz:
-            document.getElementById('contactForm').style.display = 'none';
-            document.querySelector('p').style.display = 'none';
-            document.getElementById('success-msg').style.display = 'block';
-            
-            // 3 saniye sonra ana sayfaya yönlendir (opsiyonel)
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 3000);
-        });
-    </script>
 </body>
 </html>
