@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Maaş Hesaplama</title>
+    <title>Maaş Hesaplama 2026</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 15px; display: flex; justify-content: center; }
         .container { width: 100%; max-width: 480px; }
         
-        /*  */
-        .profile-card { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 25px; }
-        .profile-card h1 { margin: 0; font-size: 20px; letter-spacing: 1px; text-transform: uppercase; }
-        .profile-card p { margin: 8px 0 0; opacity: 0.7; font-size: 12px; letter-spacing: 2px; }
+        /* Üst Başlık - Maaş Hesaplama 2026 */
+        .header-card { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .header-card h1 { margin: 0; font-size: 22px; letter-spacing: 1px; font-weight: 800; }
+        .header-card p { margin: 8px 0 0; opacity: 0.7; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
 
         /* Menü Izgarası */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
         .menu-item { background: white; border-radius: 18px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; transition: all 0.2s ease; }
         .menu-item:active { transform: scale(0.95); background: #f1f5f9; }
+        
+        /* Fark Hesaplama butonunun tam genişlik kaplaması için */
+        .full-width { grid-column: span 2; }
+        
         .menu-item .icon { font-size: 28px; }
         .menu-item span { font-weight: 700; font-size: 13px; color: #334155; text-align: center; }
 
-        /* Enflasyon Bölümü */
+        /* Enflasyon Kartı */
         .card { background: white; border-radius: 18px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; margin-bottom: 20px; }
         .card h3 { margin: 0 0 15px; font-size: 15px; color: #1e293b; display: flex; align-items: center; gap: 8px; }
         
@@ -28,12 +32,12 @@
         .inf-list li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f8fafc; font-size: 14px; color: #475569; }
         .inf-list li:last-child { border-bottom: none; }
         
-        /* Bileşik Enflasyon Kutusu */
+        /* Bileşik Toplam Kutusu */
         .compound-box { margin-top: 15px; background: #fffbeb; border: 1px dashed #fbbf24; border-radius: 12px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
         .compound-label { font-size: 11px; font-weight: 800; color: #92400e; text-transform: uppercase; }
         .compound-value { font-size: 17px; font-weight: 900; color: #b45309; }
 
-        /* Görüş Öneri */
+        /* Görüş Öneri Aksiyon Kartı */
         .action-card { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; text-decoration: none; display: block; }
         .action-card span { color: #0369a1; font-weight: 700; font-size: 13px; }
     </style>
@@ -41,8 +45,8 @@
 <body>
 
 <div class="container">
-    <div class="profile-card">
-        <h1>TEKNİK ANALİZ SİSTEMİ</h1>
+    <div class="header-card">
+        <h1>MAAŞ HESAPLAMA 2026</h1>
         <p>PERSONEL VERİ YÖNETİMİ</p>
     </div>
 
@@ -51,30 +55,28 @@
             <span class="icon">💰</span>
             <span>Maaş Hesaplama</span>
         </a>
+        
         <a href="sosyal.html" class="menu-item">
             <span class="icon">📝</span>
             <span>Sosyal Haklar</span>
         </a>
-        <a href="#enflasyon" class="menu-item">
-            <span class="icon">📊</span>
-            <span>Enflasyon</span>
-        </a>
-        <a href="fark.html" class="menu-item">
+        
+        <a href="fark.html" class="menu-item full-width">
             <span class="icon">⚖️</span>
             <span>Fark Hesaplama</span>
         </a>
     </div>
 
-    <div class="card" id="enflasyon">
+    <div class="card">
         <h3>📈 2026 Enflasyon Verileri</h3>
         <ul class="inf-list">
-            <li><span>Ocak 2026</span> <strong>%4,50</strong></li>
-            <li><span>Şubat 2026</span> <strong>%3,20</strong></li>
-            <li><span>Mart 2026</span> <strong>%2,80</strong></li>
+            <li><span>Ocak 2026</span> <strong>%4,84</strong></li>
+            <li><span>Şubat 2026</span> <strong>%2,96</strong></li>
+            <li><span>Mart 2026</span> <strong>%1,94</strong></li>
         </ul>
         <div class="compound-box">
-            <span class="compound-label">3 Aylık Toplam (Bileşik)</span>
-            <span class="compound-value">%10,88</span>
+            <span class="compound-label">3 AYLIK TOPLAM (BİLEŞİK)</span>
+            <span class="compound-value">%10,04</span>
         </div>
     </div>
 
@@ -83,7 +85,7 @@
     </a>
 
     <div style="text-align: center; margin-top: 30px; font-size: 10px; color: #94a3b8; letter-spacing: 1px;">
-        V 2.5.0 • © 2026 ANALİZ SİSTEMİ
+        V 2.6.5 • © 2026 ANALİZ SİSTEMİ
     </div>
 </div>
 
