@@ -12,6 +12,9 @@
         .header-inputs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #eef2f7; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
         .header-inputs label { font-size: 11px; font-weight: bold; display: block; margin-bottom: 5px; color: #555; }
         .header-inputs input, .header-inputs select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        
+        /* Yeni saat ücreti kutusunun kilitli olduğunu belli eden stil */
+        #yeni_su { background-color: #e9ecef; cursor: not-allowed; font-weight: bold; color: #2c3e50; }
 
         .month-card { border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin-bottom: 15px; background: #fff; }
         .month-title { font-weight: bold; color: #3498db; margin-bottom: 10px; text-transform: uppercase; font-size: 14px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
@@ -26,7 +29,6 @@
         .nav-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
         .btn { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; font-size: 14px; }
         .btn-home { background-color: #34495e; color: white; }
-        .btn-secondary { background-color: #ecf0f1; color: #2c3e50; }
     </style>
 </head>
 <body>
@@ -37,11 +39,11 @@
     <div class="header-inputs">
         <div>
             <label>Eski Saat Ücreti</label>
-            <input type="number" id="eski_su" value="380.71" step="0.01" oninput="yeniSaatGuncelle()">
+            <input type="number" id="eski_su" value="380.71" step="0.01" oninput="yeniSaatHesapla()">
         </div>
         <div>
-            <label>Yeni Saat Ücreti</label>
-            <input type="number" id="yeni_su" value="0" step="0.01" oninput="hesapla()">
+            <label>Yeni Saat Ücreti (%16)</label>
+            <input type="number" id="yeni_su" readonly>
         </div>
         <div>
             <label>Vergi Dilimi (%)</label>
@@ -102,16 +104,15 @@
 
     <div class="nav-buttons">
         <button class="btn btn-home" onclick="location.href='index.html'">ANA SAYFA</button>
-        <button class="btn btn-secondary" onclick="location.href='sosyal.html'">Sosyal Haklar</button>
     </div>
 </div>
 
 <script>
-function yeniSaatGuncelle() {
+function yeniSaatHesapla() {
     const eskiSU = parseFloat(document.getElementById('eski_su').value) || 0;
-    // Otomatik hesaplama mantığı (Örn: Eski ücret girilince yeniyi şimdilik aynısı yapar veya boş bırakır)
-    // Sen istediğinde yeniyi manuel girersin.
-    document.getElementById('yeni_su').value = eskiSU; 
+    // %16 zamlı hesaplama: eski * 1.16
+    const yeniSU = eskiSU * 1.16;
+    document.getElementById('yeni_su').value = yeniSU.toFixed(2);
     hesapla();
 }
 
@@ -127,7 +128,7 @@ function hesapla() {
 
     // İkramiye Farkı (225 Saat)
     const ikrBrut = suFark * 225;
-    const ikrNet = ikrBrut * (1 - 0.15 - vo - 0.00759); // SGK, Vergi, Damga
+    const ikrNet = ikrBrut * (1 - 0.15 - vo - 0.00759);
     document.getElementById('res_ikr').innerText = format(ikrNet > 0 ? ikrNet : 0);
 
     for(let i=1; i<=3; i++) {
@@ -138,8 +139,11 @@ function hesapla() {
         const rfm = parseFloat(document.getElementById(`h${i}_rfm`).value) || 0;
         const yolVar = document.getElementById(`h${i}_yol`).value == "1";
         
+        // Brüt Fark (Her ay için yol farkını 711,13 TL olarak ekliyoruz)
         const brutFark = (cs * suFark) + ((fm + ub) * suFark * 2) + (db * suFark * 2.5) + (rfm * suFark * 3) + (yolVar ? 711.13 : 0);
         const sendikaFark = suFark * 7;
+        
+        // Net fark hesabı (SGK, Sendika, Vergi, Damga)
         const netFark = (brutFark - (brutFark * 0.15) - sendikaFark) * (1 - vo) - (brutFark * 0.00759);
         
         const gosterilecekNet = netFark > 0 ? netFark : 0;
@@ -151,7 +155,8 @@ function hesapla() {
     document.getElementById('toplam_fark').innerText = format(finalToplam);
 }
 
-window.onload = hesapla;
+// Sayfa yüklendiğinde varsayılan eski ücret üzerinden bir kez hesaplasın
+window.onload = yeniSaatHesapla;
 </script>
 </body>
 </html>
