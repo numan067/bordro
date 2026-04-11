@@ -9,30 +9,38 @@
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 15px; display: flex; justify-content: center; }
         .container { width: 100%; max-width: 480px; }
         
+        /* Başlık Paneli */
         .header-card { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 25px; }
-        .header-card h1 { margin: 0; font-size: 22px; font-weight: 800; }
-        .header-card p { margin: 8px 0 0; opacity: 0.7; font-size: 11px; text-transform: uppercase; }
+        .header-card h1 { margin: 0; font-size: 22px; letter-spacing: 1px; font-weight: 800; }
+        .header-card p { margin: 8px 0 0; opacity: 0.7; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
 
+        /* Menü Izgarası */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .menu-item { background: white; border-radius: 18px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; transition: all 0.2s ease; }
+        .menu-item:active { transform: scale(0.95); background: #f1f5f9; }
         .full-width { grid-column: span 2; }
         .menu-item .icon { font-size: 28px; }
         .menu-item span { font-weight: 700; font-size: 13px; color: #334155; }
 
-        /* Yeni Sade Duyuru Kutusu */
-        .simple-announcement { background: #fff1f0; border: 1px solid #ffa39e; border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: center; }
+        /* Sade Duyuru Kutusu */
+        .simple-announcement { background: #fff1f0; border: 1px solid #ffa39e; border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         #duyuru-icerik { font-size: 13px; color: #cf1322; font-weight: 600; line-height: 1.4; }
 
+        /* Enflasyon Kartı */
         .card { background: white; border-radius: 18px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; margin-bottom: 20px; }
-        .card h3 { margin: 0 0 15px; font-size: 15px; color: #1e293b; }
+        .card h3 { margin: 0 0 15px; font-size: 15px; color: #1e293b; display: flex; align-items: center; gap: 8px; }
         .inf-list { list-style: none; padding: 0; margin: 0; }
-        .inf-list li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f8fafc; font-size: 14px; }
+        .inf-list li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f8fafc; font-size: 14px; color: #475569; }
+        .inf-list li:last-child { border-bottom: none; }
         
+        /* Bileşik Hesaplama Alanı */
         .compound-box { margin-top: 15px; background: #fffbeb; border: 1px dashed #fbbf24; border-radius: 12px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .compound-label { font-size: 11px; font-weight: 800; color: #92400e; }
+        .compound-label { font-size: 11px; font-weight: 800; color: #92400e; text-transform: uppercase; }
         .compound-value { font-size: 17px; font-weight: 900; color: #b45309; }
 
-        .action-card { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 15px; padding: 15px; text-align: center; text-decoration: none; display: block; }
+        /* Geri Bildirim Butonu */
+        .action-card { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 15px; padding: 15px; text-align: center; text-decoration: none; display: block; transition: background 0.2s; }
+        .action-card:active { background: #e0f2fe; }
         .action-card span { color: #0369a1; font-weight: 700; font-size: 13px; }
     </style>
 </head>
@@ -60,7 +68,7 @@
     </div>
 
     <div class="simple-announcement">
-        <div id="duyuru-icerik">Duyurular yükleniyor...</div>
+        <div id="duyuru-icerik">Güncel bilgiler yükleniyor...</div>
     </div>
 
     <div class="card">
@@ -80,8 +88,8 @@
         <span>💡 Görüş ve Önerilerinizi Bildirin</span>
     </a>
 
-    <div style="text-align: center; margin-top: 25px; font-size: 10px; color: #94a3b8;">
-        V 2.8.5 • ANALİZ SİSTEMİ
+    <div style="text-align: center; margin-top: 30px; font-size: 10px; color: #94a3b8; letter-spacing: 1px;">
+        V 2.9.0 • ANALİZ SİSTEMİ
     </div>
 </div>
 
@@ -89,24 +97,31 @@
     async function duyurulariGetir() {
         const icerik = document.getElementById('duyuru-icerik');
         try {
-            // Önce 'Duyuru.html' (Büyük D) dosyasını dener
-            let res = await fetch('Duyuru.html', { cache: 'no-store' });
+            // Önbelleği (cache) kırmak için her istekte benzersiz bir v= parametresi ekler
+            const v = Date.now(); 
             
-            // Eğer bulamazsa 'duyuru.html' (Küçük d) dosyasını dener
+            // Önce 'Duyuru.html' deniyoruz
+            let res = await fetch(`Duyuru.html?v=${v}`, { cache: 'no-store' });
+            
+            // Bulamazsak 'duyuru.html' deniyoruz
             if (!res.ok) {
-                res = await fetch('duyuru.html', { cache: 'no-store' });
+                res = await fetch(`duyuru.html?v=${v}`, { cache: 'no-store' });
             }
 
             if (res.ok) {
                 const text = await res.text();
-                icerik.innerHTML = text;
+                // Eğer dosya boş değilse içeriği bas, boşsa varsayılan mesajı yaz
+                icerik.innerHTML = text.trim() !== "" ? text : "Sistem verileri günceldir.";
             } else {
-                icerik.innerText = "Sistem aktif.";
+                icerik.innerText = "Sistem aktif, veri bekleniyor.";
             }
         } catch (e) {
-            icerik.innerText = "Duyurular şu an güncellenemiyor.";
+            console.error("Duyuru hatası:", e);
+            icerik.innerText = "Bağlantı kontrol ediliyor...";
         }
     }
+
+    // Sayfa yüklendiğinde çalıştır
     window.onload = duyurulariGetir;
 </script>
 
