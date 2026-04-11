@@ -8,26 +8,31 @@
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 15px; display: flex; justify-content: center; }
         .container { width: 100%; max-width: 480px; }
+        
         .header-card { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 25px; }
-        .header-card h1 { margin: 0; font-size: 22px; letter-spacing: 1px; font-weight: 800; }
-        .header-card p { margin: 8px 0 0; opacity: 0.7; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+        .header-card h1 { margin: 0; font-size: 22px; font-weight: 800; }
+        .header-card p { margin: 8px 0 0; opacity: 0.7; font-size: 11px; text-transform: uppercase; }
+
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .menu-item { background: white; border-radius: 18px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; transition: all 0.2s ease; }
-        .menu-item:active { transform: scale(0.95); background: #f1f5f9; }
         .full-width { grid-column: span 2; }
         .menu-item .icon { font-size: 28px; }
         .menu-item span { font-weight: 700; font-size: 13px; color: #334155; }
-        .announcement-card { background: #fff; border-radius: 18px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-left: 5px solid #e74c3c; margin-bottom: 20px; }
-        .announcement-card h3 { margin: 0 0 10px; font-size: 15px; color: #e74c3c; }
-        #duyuru-icerik { font-size: 13px; color: #475569; line-height: 1.5; }
+
+        /* Yeni Sade Duyuru Kutusu */
+        .simple-announcement { background: #fff1f0; border: 1px solid #ffa39e; border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: center; }
+        #duyuru-icerik { font-size: 13px; color: #cf1322; font-weight: 600; line-height: 1.4; }
+
         .card { background: white; border-radius: 18px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; margin-bottom: 20px; }
         .card h3 { margin: 0 0 15px; font-size: 15px; color: #1e293b; }
         .inf-list { list-style: none; padding: 0; margin: 0; }
         .inf-list li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f8fafc; font-size: 14px; }
+        
         .compound-box { margin-top: 15px; background: #fffbeb; border: 1px dashed #fbbf24; border-radius: 12px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
         .compound-label { font-size: 11px; font-weight: 800; color: #92400e; }
         .compound-value { font-size: 17px; font-weight: 900; color: #b45309; }
-        .action-card { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; text-decoration: none; display: block; margin-bottom: 20px;}
+
+        .action-card { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 15px; padding: 15px; text-align: center; text-decoration: none; display: block; }
         .action-card span { color: #0369a1; font-weight: 700; font-size: 13px; }
     </style>
 </head>
@@ -54,8 +59,7 @@
         </a>
     </div>
 
-    <div class="announcement-card">
-        <h3>📢 Duyuru Panosu</h3>
+    <div class="simple-announcement">
         <div id="duyuru-icerik">Duyurular yükleniyor...</div>
     </div>
 
@@ -76,24 +80,31 @@
         <span>💡 Görüş ve Önerilerinizi Bildirin</span>
     </a>
 
-    <div style="text-align: center; font-size: 10px; color: #94a3b8;">
-        V 2.7.2 • ANALİZ SİSTEMİ
+    <div style="text-align: center; margin-top: 25px; font-size: 10px; color: #94a3b8;">
+        V 2.8.5 • ANALİZ SİSTEMİ
     </div>
 </div>
 
 <script>
     async function duyurulariGetir() {
+        const icerik = document.getElementById('duyuru-icerik');
         try {
-            const res = await fetch('duyuru.html', { cache: 'no-store' });
+            // Önce 'Duyuru.html' (Büyük D) dosyasını dener
+            let res = await fetch('Duyuru.html', { cache: 'no-store' });
+            
+            // Eğer bulamazsa 'duyuru.html' (Küçük d) dosyasını dener
+            if (!res.ok) {
+                res = await fetch('duyuru.html', { cache: 'no-store' });
+            }
+
             if (res.ok) {
                 const text = await res.text();
-                // ÖNEMLİ: Gelen metni temizleyerek basarız
-                document.getElementById('duyuru-icerik').innerHTML = text;
+                icerik.innerHTML = text;
             } else {
-                document.getElementById('duyuru-icerik').innerText = "Henüz yeni bir duyuru yok.";
+                icerik.innerText = "Sistem aktif.";
             }
         } catch (e) {
-            document.getElementById('duyuru-icerik').innerText = "Duyurular şu an çekilemiyor.";
+            icerik.innerText = "Duyurular şu an güncellenemiyor.";
         }
     }
     window.onload = duyurulariGetir;
