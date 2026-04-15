@@ -15,7 +15,7 @@
         .header-card h1 { margin: 0; font-size: 22px; letter-spacing: 1px; font-weight: 800; }
         .header-card p { margin: 8px 0 0; opacity: 0.7; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Ana Menü */
+        /* Ana Menü Izgarası */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .menu-item { background: white; border-radius: 18px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; transition: all 0.2s ease; }
         .menu-item:active { transform: scale(0.95); background: #f1f5f9; }
@@ -23,7 +23,7 @@
         .menu-item .icon { font-size: 28px; }
         .menu-item span { font-weight: 700; font-size: 13px; color: #334155; }
 
-        /* DUYURU PANOSU (Geniş Tasarım) */
+        /* GENİŞ DUYURU PANOSU */
         .announcement-card { background: #fff; border-radius: 18px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-left: 5px solid #e74c3c; margin-bottom: 20px; }
         .announcement-card h3 { margin: 0 0 10px; font-size: 15px; color: #e74c3c; display: flex; align-items: center; gap: 8px; }
         #duyuru-icerik { font-size: 13px; color: #475569; line-height: 1.6; }
@@ -41,8 +41,7 @@
         .compound-value { font-size: 17px; font-weight: 900; color: #b45309; }
 
         /* Görüş Bildir Butonu */
-        .action-card { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 15px; padding: 15px; text-align: center; text-decoration: none; display: block; margin-bottom: 20px; transition: background 0.2s; }
-        .action-card:active { background: #e0f2fe; }
+        .action-card { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 15px; padding: 15px; text-align: center; text-decoration: none; display: block; margin-bottom: 20px; }
         .action-card span { color: #0369a1; font-weight: 700; font-size: 13px; }
     </style>
 </head>
@@ -51,7 +50,7 @@
 <div class="container">
     <div class="header-card">
         <h1>MAAŞ HESAPLAMA 2026</h1>
-        <p>PERSONEL VERİ YÖNETİMİ</p>
+        <p>PERSONEL VERİ SİSTEMİ</p>
     </div>
 
     <div class="menu-grid">
@@ -71,7 +70,7 @@
 
     <div class="announcement-card">
         <h3>📢 Duyuru Panosu</h3>
-        <div id="duyuru-icerik">Veriler güncelleniyor...</div>
+        <div id="duyuru-icerik">Veriler yükleniyor...</div>
     </div>
 
     <div class="card">
@@ -92,7 +91,7 @@
     </a>
 
     <div style="text-align: center; font-size: 10px; color: #94a3b8; letter-spacing: 1px; margin-top: 20px;">
-        V 3.2.0 • ANALİZ SİSTEMİ
+        V 3.3.0 • ANALİZ PANELİ
     </div>
 </div>
 
@@ -100,28 +99,27 @@
     async function duyurulariGetir() {
         const icerik = document.getElementById('duyuru-icerik');
         try {
-            // Cache kırmak için benzersiz versiyon numarası
+            // Önbellek kırma için saniye bilgisi ekler
             const v = Date.now(); 
             let res = await fetch(`duyuru.html?v=${v}`, { cache: 'no-store' });
             
-            // Büyük harf ihtimaline karşı kontrol
             if (!res.ok) {
                 res = await fetch(`Duyuru.html?v=${v}`, { cache: 'no-store' });
             }
 
             if (res.ok) {
                 const text = await res.text();
-                // Eğer yanlışlıkla index.html çekilirse (iç içe geçme) engelle
-                if (text.includes("<html")) {
-                    icerik.innerText = "Güncel duyuru bulunmamaktadır.";
+                // KORUMA: Eğer duyuru dosyası hatalıysa (sayfanın kendisini çekiyorsa) durdur
+                if (text.includes("MAAŞ HESAPLAMA 2026")) {
+                    icerik.innerText = "Sistem verileri şu an günceldir.";
                 } else {
                     icerik.innerHTML = text;
                 }
             } else {
-                icerik.innerText = "Sistem aktif, veriler güncel.";
+                icerik.innerText = "Sistem aktif, yeni veri bekleniyor.";
             }
         } catch (e) {
-            icerik.innerText = "Bağlantı başarılı, veri bekleniyor.";
+            icerik.innerText = "Bağlantı sağlandı.";
         }
     }
     window.onload = duyurulariGetir;
