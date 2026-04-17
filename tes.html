@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Görüş ve Öneriler</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 15px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 480px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 10px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 500px; }
         
-        .header-card { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 25px; }
-        .header-card h1 { margin: 0; font-size: 20px; font-weight: 800; }
+        .header-card { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .header-card h1 { margin: 0; font-size: 18px; font-weight: 800; }
         
-        .back-btn { display: inline-block; margin-bottom: 15px; text-decoration: none; color: #64748b; font-size: 14px; font-weight: 600; }
+        .back-btn { display: inline-block; margin-bottom: 10px; text-decoration: none; color: #64748b; font-size: 14px; font-weight: 600; }
         
-        .card { background: white; border-radius: 18px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; }
-        .info-text { font-size: 14px; color: #475569; line-height: 1.6; margin-bottom: 20px; text-align: center; }
+        .card { background: white; border-radius: 18px; padding: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; overflow: hidden; }
+        
+        /* Formun telefon ekranına tam sığması için */
+        iframe { width: 100%; height: 700px; border: none; }
+
+        .info-footer { text-align: center; margin-top: 15px; font-size: 11px; color: #94a3b8; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -27,28 +31,12 @@
     </div>
 
     <div class="card">
-        <p class="info-text">
-            Sistem hakkındaki düşüncelerinizi, hata bildirimlerinizi veya yeni özellik önerilerinizi aşağıdan paylaşabilirsiniz.
-        </p>
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScU7C79_829_2Yy5zLp8v8z9_829_2Yy5zLp8v8z9_829_2Yy/viewform?embedded=true">Yükleniyor...</iframe>
+    </div>
 
-        <div id="disqus_thread"></div>
-        <script>
-            var disqus_config = function () {
-                this.page.url = "https://numan067.github.io/bordro/tes.html"; 
-                this.page.identifier = "bordro_tes_sayfasi"; 
-            };
-            (function() { 
-                var d = document, s = d.createElement('script');
-                s.src = 'https://bordro-pages-dev.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        </script>
-        <noscript>Yorumları görmek için lütfen JavaScript'i etkinleştirin.</noscript>
-        </div>
-
-    <div style="text-align: center; margin-top: 20px; font-size: 11px; color: #94a3b8;">
-        N.Özdemir Altyapısı ile Korunmaktadır
+    <div class="info-footer">
+        Mesajlarınız anonim olarak iletilir.<br>
+        Üyelik veya giriş yapma zorunluluğu yoktur.
     </div>
 </div>
 
