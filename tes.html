@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Görüş ve Öneriler</title>
+    <title>Görüşler</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 10px; display: flex; justify-content: center; }
         .container { width: 100%; max-width: 500px; }
-        
-        /* Üst Başlık Kartı */
         .header-card { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .header-card h1 { margin: 0; font-size: 18px; font-weight: 800; }
-        
-        /* Geri Dön Butonu */
         .back-btn { display: inline-block; margin-bottom: 10px; text-decoration: none; color: #64748b; font-size: 14px; font-weight: 600; }
+        .card { background: white; border-radius: 18px; padding: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; overflow: hidden; margin-bottom: 15px; }
         
-        /* Mesaj Alanı Kartı */
-        .card { background: white; border-radius: 18px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; min-height: 300px; }
+        /* Formun gereksiz kısımlarını gizlemek için yükseklik ayarı */
+        iframe { width: 100%; border: none; }
+        .form-frame { height: 480px; margin-top: -10px; } /* Formu biraz yukarı kaydırdık */
+        .list-frame { height: 400px; border-top: 1px solid #f1f5f9; }
+        
+        h3 { font-size: 15px; color: #1e293b; margin: 15px; }
     </style>
 </head>
 <body>
@@ -25,19 +25,19 @@
     <a href="index.html" class="back-btn">← Ana Sayfaya Dön</a>
     
     <div class="header-card">
-        <h1>Görüş ve Öneriler</h1>
+        <h1 style="margin:0; font-size:18px;">Görüş ve Öneriler</h1>
     </div>
 
     <div class="card">
-        <script src="https://utteranc.es/client.js"
-                repo="numan067/bordro" 
-                issue-term="pathname"
-                label="ziyaretçi-mesajı"
-                theme="github-light"
-                crossorigin="anonymous"
-                async>
-        </script>
+        <h3>✍️ Mesaj Bırakın</h3>
+        <iframe class="form-frame" src="https://docs.google.com/forms/d/e/1FAIpQLScRhNnQJDqN_2oW9grq-_xDKVL0soNwNy1voCP3jBX6pnngiQ/viewform?embedded=true">Yükleniyor…</iframe>
     </div>
+
+    <div class="card">
+        <h3>💬 Gönderilenler</h3>
+        <iframe class="list-frame" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTuR56Y8EAEjFCFGJKdXq0KAg6SQIz-ZJhSzRnnRmVwamtdzWlRV9ALbUGXMW7CaKAUchwUhTVWLWUI/pubhtml?gid=1694101446&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    </div>
+
 </div>
 
 </body>
