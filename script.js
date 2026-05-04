@@ -1,7 +1,6 @@
 /**
- * 2026 Maaş Hesaplama Sistemi
- * Güncelleme: Gece Zammı Brüt 30 TL olarak ayarlandı.
- * Hazırlayan: Numan Özdemir
+ * OYKA Kağıt Ambalaj 2026 Maaş Hesaplama Sistemi
+ * Güncelleme: Gece Zammı Çarpanı 22.81 -> 30.00 olarak revize edildi.
  */
 
 const ayVerileri = {
@@ -15,13 +14,11 @@ const ayVerileri = {
 
 function ayAyariYap() {
     const ay = document.getElementById('month').value;
-    // Aylık çalışma saatini gün sayısına göre otomatik ayarla (Gün * 7.5)
     document.getElementById('calisma-gun-saati').value = ayVerileri[ay].gun * 7.5;
     hesapla();
 }
 
 function hesapla() {
-    // Giriş verilerini al
     const su = parseFloat(document.getElementById('saat-ucreti').value) || 0;
     const gs = parseFloat(document.getElementById('calisma-gun-saati').value) || 0;
     const gz = parseFloat(document.getElementById('gece-zammi').value) || 0;
@@ -35,60 +32,58 @@ function hesapla() {
     const vo = parseFloat(document.getElementById('tax-rate').value);
     const ay = document.getElementById('month').value;
     
-    // 1. BRÜT KALEMLERİ HESAPLAMA
-    // Mesailer (Saat Ücreti üzerinden katlanarak)
+    // --- KAZANÇLAR (Bordroya Uygun) ---
+    const anaMaasBrut = su * gs;
     const mesaiBrut = ((fm + ul) * su * 2) + (di * su * 2.5) + (re * su * 3);
     
-    // Gece Zammı (Brüt 30 TL sabit çarpan)
-    const geceZammiBrut = gz * 30;
+    // YENİ GECE ZAMMI HESABI (Bordrodaki Brüt Mantığı)
+    const geceZammiBrut = gz * 30; 
     
-    // Toplam Brüt Kazanç
-    const normalBrut = (su * gs) + geceZammiBrut + yol;
-    let brut = normalBrut + mesaiBrut;
+    // Toplam Kazanç (Bordrodaki "Kazanç Toplamı")
+    let kazancToplami = anaMaasBrut + mesaiBrut + geceZammiBrut + yol;
 
-    // 2. YASAL KESİNTİLER (SGK ve İşsizlik)
-    const sgk = brut * 0.14;
-    const issizlik = brut * 0.01;
-    const sendika = su * 7.00; // Sendika kesintisi: Saat Ücreti x 7
+    // --- YASAL KESİNTİLER ---
+    const sgk = kazancToplami * 0.14;
+    const issizlik = kazancToplami * 0.01;
     
-    // 3. VERGİ HESAPLAMA
-    // Gelir Vergisi Matrahı
-    const matrah = brut - sgk - issizlik - sendika;
+    // Sendika Kesintisi (Bordrodaki Oyka_Sendika (7,00) mantığı: Saat Ücreti x 7)
+    const sendika = su * 7.00; 
     
-    // Gelir Vergisi (İstisna tutarı düşülür)
-    let gv = (matrah * vo) - ayVerileri[ay].gv;
+    // --- VERGİ HESABI ---
+    const gvMatrahi = kazancToplami - sgk - issizlik - sendika;
+    
+    // Gelir Vergisi (İstisna dahil)
+    let gv = (gvMatrahi * vo) - ayVerileri[ay].gv;
     if (gv < 0) gv = 0;
 
-    // Damga Vergisi (İstisna tutarı düşülür)
-    let dv = (brut * 0.00759) - ayVerileri[ay].dv;
+    // Damga Vergisi (İstisna dahil)
+    let dv = (kazancToplami * 0.00759) - ayVerileri[ay].dv;
     if (dv < 0) dv = 0;
 
-    // 4. ÖZEL KESİNTİLER
-    // Vakıf Kesintisi (Brüt Maaş üzerinden yüzde hesabı)
-    const vakifNetTutar = (su * gs / 100) * v_yuzde;
+    // --- ÖZEL KESİNTİLER ---
+    const vakifNetTutar = (anaMaasBrut / 100) * v_yuzde;
+    // Toplam Kesinti (Yasal + Özel)
+    const toplamKesinti = sgk + issizlik + sendika + gv + dv + vakifNetTutar + bes;
 
-    // 5. NET MAAŞ SONUCU
-    const net = brut - sgk - issizlik - gv - dv - sendika - vakifNetTutar - bes;
+    // --- NET ÖDENEN ---
+    const netMaas = kazancToplami - toplamKesinti;
     
-    // 6. İKRAMİYE HESAPLAMA (30 Günlük Sabit İkramiye)
+    // --- İKRAMİYE (30 Günlük) ---
     const ikrBrut = su * 30 * 7.5;
     const ikrSgk = ikrBrut * 0.14;
     const ikrIssizlik = ikrBrut * 0.01;
-    const ikrMatrah = ikrBrut - ikrSgk - ikrIssizlik;
-    const ikrGv = ikrMatrah * vo;
+    const ikrGv = (ikrBrut - ikrSgk - ikrIssizlik) * vo;
     const ikrDv = ikrBrut * 0.00759;
     const ikramiyeNet = ikrBrut - ikrSgk - ikrIssizlik - ikrGv - ikrDv;
 
-    // Formatlama Fonksiyonu (Binlik ayracı ve 2 ondalık)
+    // Formatlama
     const f = (n) => n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-    // Sonuçları HTML'e Yazdır
     document.getElementById('sendika-kesinti').innerText = f(sendika);
     document.getElementById('vergi-istisnasi').innerText = f(ayVerileri[ay].gv + ayVerileri[ay].dv);
     document.getElementById('vakif-net-tutar').innerText = f(vakifNetTutar);
     document.getElementById('net-ikramiye').innerText = f(ikramiyeNet);
-    document.getElementById('net-maas').innerText = f(net) + " TL";
+    document.getElementById('net-maas').innerText = f(netMaas) + " TL";
 }
 
-// Sayfa ilk açıldığında çalıştır
 window.onload = ayAyariYap;
