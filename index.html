@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bordro Hesaplama 2026</title>
+    <title>Bordro ve Enflasyon Takip</title>
     <style>
         :root {
             --primary: #1e293b;
@@ -76,12 +76,18 @@
         .total-label .sub { color: #b45309; font-size: 11px; font-weight: 600; }
         .total-value { color: #854d0e; font-weight: 900; font-size: 22px; }
 
-        /* Butonlar */
+        /* Ana Menü Butonları */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
         .btn {
             display: block;
             width: 100%;
             padding: 16px;
-            margin-bottom: 12px;
             border-radius: 15px;
             text-align: center;
             text-decoration: none;
@@ -91,10 +97,12 @@
             box-sizing: border-box;
         }
 
-        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(30, 41, 59, 0.2); }
-        .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+        .btn-blue { background: #2563eb; color: white; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2); }
+        .btn-green { background: #10b981; color: white; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2); }
+        .btn-purple { background: #8b5cf6; color: white; box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2); }
+        .btn-outline { border: 2px solid #64748b; color: #64748b; background: transparent; margin-top: 10px; }
         
-        .footer { text-align: center; color: #94a3b8; font-size: 12px; margin-top: 20px; }
+        .footer { text-align: center; color: #94a3b8; font-size: 12px; margin-top: 30px; }
     </style>
 </head>
 <body>
@@ -121,23 +129,20 @@
         </div>
     </div>
 
-    <a href="bordro.html" class="btn btn-primary">Bordro Hesapla</a>
-    <a href="duyuru.html" class="btn btn-outline">Duyuru Panosu</a>
-    <a href="tes.html" class="btn btn-outline">Görüş ve Öneriler</a>
+    <div class="btn-group">
+        <a href="maas.html" class="btn btn-blue">Maaş Hesaplama</a>
+        <a href="sosyal.html" class="btn btn-green">Sosyal Haklar</a>
+        <a href="fark.html" class="btn btn-purple">Fark Hesaplama</a>
+        
+        <a href="duyuru.html" class="btn btn-outline">Duyuru Panosu</a>
+        <a href="tes.html" class="btn btn-outline">Görüş ve Öneriler</a>
+    </div>
 
     <div class="footer">
         © 2026 Numan Özdemir - Bordro Sistemleri
     </div>
 
 </div>
-
-<script>
-    // İleride otomatik hesaplama eklemek istersen bu diziyi kullanabilirsin
-    const enflasyon2026 = [4.84, 2.96, 1.94, 4.18];
-    
-    // Küçük bir kontrol: Tablodaki "İkramiye" gibi kelimelerin 
-    // doğru yazıldığından emin oluyoruz (Bordro sayfası için geçerli).
-</script>
 
 </body>
 </html>
