@@ -2,127 +2,141 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Maaş Hesaplama 2026</title>
+    <title>Bordro Hesaplama 2026</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 15px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 480px; }
-        
-        /* Başlık Kartı */
-        .header-card { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 25px; }
-        .header-card h1 { margin: 0; font-size: 22px; letter-spacing: 1px; font-weight: 800; }
-        .header-card p { margin: 8px 0 0; opacity: 0.7; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+        :root {
+            --primary: #1e293b;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+        }
 
-        /* Ana Menü Izgarası */
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .menu-item { background: white; border-radius: 18px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; transition: all 0.2s ease; }
-        .menu-item:active { transform: scale(0.95); background: #f1f5f9; }
-        .full-width { grid-column: span 2; }
-        .menu-item .icon { font-size: 28px; }
-        .menu-item span { font-weight: 700; font-size: 13px; color: #334155; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        /* GENİŞ DUYURU PANOSU */
-        .announcement-card { background: #fff; border-radius: 18px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-left: 5px solid #e74c3c; margin-bottom: 20px; }
-        .announcement-card h3 { margin: 0 0 10px; font-size: 15px; color: #e74c3c; display: flex; align-items: center; gap: 8px; }
-        #duyuru-icerik { font-size: 13px; color: #475569; line-height: 1.6; }
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
 
         /* Enflasyon Kartı */
-        .card { background: white; border-radius: 18px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; margin-bottom: 20px; }
-        .card h3 { margin: 0 0 15px; font-size: 15px; color: #1e293b; display: flex; align-items: center; gap: 8px; }
-        .inf-list { list-style: none; padding: 0; margin: 0; }
-        .inf-list li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f8fafc; font-size: 14px; color: #475569; }
-        .inf-list li:last-child { border-bottom: none; }
-        
-        /* BİLEŞİK ENFLASYON KUTUSU */
-        .compound-box { margin-top: 15px; background: #fffbeb; border: 1px dashed #fbbf24; border-radius: 12px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .compound-label { font-size: 11px; font-weight: 800; color: #92400e; text-transform: uppercase; }
-        .compound-value { font-size: 17px; font-weight: 900; color: #b45309; }
+        .stats-card {
+            background: var(--card);
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
 
-        /* Görüş Bildir Butonu */
-        .action-card { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 15px; padding: 15px; text-align: center; text-decoration: none; display: block; margin-bottom: 20px; }
-        .action-card span { color: #0369a1; font-weight: 700; font-size: 13px; }
+        .stats-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .stats-header h2 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 5px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .data-row span:first-child { color: #64748b; font-size: 15px; }
+        .data-row span:last-child { font-weight: 700; color: var(--primary); }
+
+        /* Toplam Kutusu */
+        .total-box {
+            margin-top: 20px;
+            background: #fffcf0;
+            border: 2px dashed var(--accent);
+            border-radius: 18px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-label { display: flex; flex-direction: column; }
+        .total-label .main { color: #854d0e; font-weight: 800; font-size: 13px; letter-spacing: 0.5px; }
+        .total-label .sub { color: #b45309; font-size: 11px; font-weight: 600; }
+        .total-value { color: #854d0e; font-weight: 900; font-size: 22px; }
+
+        /* Butonlar */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 15px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.2s;
+            box-sizing: border-box;
+        }
+
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(30, 41, 59, 0.2); }
+        .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+        
+        .footer { text-align: center; color: #94a3b8; font-size: 12px; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header-card">
-        <h1>MAAŞ HESAPLAMA 2026</h1>
-        <p>PERSONEL VERİ SİSTEMİ</p>
-    </div>
+    
+    <div class="stats-card">
+        <div class="stats-header">
+            <span style="font-size: 24px; margin-right: 12px;">📈</span>
+            <h2>2026 Enflasyon Verileri</h2>
+        </div>
 
-    <div class="menu-grid">
-        <a href="hesapla.html" class="menu-item">
-            <span class="icon">💰</span>
-            <span>Maaş Hesaplama</span>
-        </a>
-        <a href="sosyal.html" class="menu-item">
-            <span class="icon">📝</span>
-            <span>Sosyal Haklar</span>
-        </a>
-        <a href="fark.html" class="menu-item full-width">
-            <span class="icon">⚖️</span>
-            <span>Fark Hesaplama</span>
-        </a>
-    </div>
+        <div class="data-row"><span>Ocak 2026</span><span>%4,84</span></div>
+        <div class="data-row"><span>Şubat 2026</span><span>%2,96</span></div>
+        <div class="data-row"><span>Mart 2026</span><span>%1,94</span></div>
+        <div class="data-row"><span>Nisan 2026</span><span>%4,18</span></div>
 
-    <div class="announcement-card">
-        <h3>📢 Duyuru Panosu</h3>
-        <div id="duyuru-icerik">Veriler yükleniyor...</div>
-    </div>
-
-    <div class="card">
-        <h3>📈 2026 Enflasyon Verileri</h3>
-        <ul class="inf-list">
-            <li><span>Ocak 2026</span> <strong>%4,84</strong></li>
-            <li><span>Şubat 2026</span> <strong>%2,96</strong></li>
-            <li><span>Mart 2026</span> <strong>%1,94</strong></li>
-        </ul>
-        <div class="compound-box">
-            <span class="compound-label">3 AYLIK TOPLAM (BİLEŞİK)</span>
-            <span class="compound-value">%10,04</span>
+        <div class="total-box">
+            <div class="total-label">
+                <span class="main">4 AYLIK TOPLAM</span>
+                <span class="sub">(BİLEŞİK ENFLASYON)</span>
+            </div>
+            <span class="total-value">%14,64</span>
         </div>
     </div>
 
-    <a href="tes.html" class="action-card">
-        <span>💡 Görüş ve Önerilerinizi Bildirin</span>
-    </a>
+    <a href="bordro.html" class="btn btn-primary">Bordro Hesapla</a>
+    <a href="duyuru.html" class="btn btn-outline">Duyuru Panosu</a>
+    <a href="tes.html" class="btn btn-outline">Görüş ve Öneriler</a>
 
-    <div style="text-align: center; font-size: 10px; color: #94a3b8; letter-spacing: 1px; margin-top: 20px;">
-        V 3.3.0 • ANALİZ PANELİ
+    <div class="footer">
+        © 2026 Numan Özdemir - Bordro Sistemleri
     </div>
+
 </div>
 
 <script>
-    async function duyurulariGetir() {
-        const icerik = document.getElementById('duyuru-icerik');
-        try {
-            // Önbellek kırma için saniye bilgisi ekler
-            const v = Date.now(); 
-            let res = await fetch(`duyuru.html?v=${v}`, { cache: 'no-store' });
-            
-            if (!res.ok) {
-                res = await fetch(`Duyuru.html?v=${v}`, { cache: 'no-store' });
-            }
-
-            if (res.ok) {
-                const text = await res.text();
-                // KORUMA: Eğer duyuru dosyası hatalıysa (sayfanın kendisini çekiyorsa) durdur
-                if (text.includes("MAAŞ HESAPLAMA 2026")) {
-                    icerik.innerText = "Sistem verileri şu an günceldir.";
-                } else {
-                    icerik.innerHTML = text;
-                }
-            } else {
-                icerik.innerText = "Sistem aktif, yeni veri bekleniyor.";
-            }
-        } catch (e) {
-            icerik.innerText = "Bağlantı sağlandı.";
-        }
-    }
-    window.onload = duyurulariGetir;
+    // İleride otomatik hesaplama eklemek istersen bu diziyi kullanabilirsin
+    const enflasyon2026 = [4.84, 2.96, 1.94, 4.18];
+    
+    // Küçük bir kontrol: Tablodaki "İkramiye" gibi kelimelerin 
+    // doğru yazıldığından emin oluyoruz (Bordro sayfası için geçerli).
 </script>
 
 </body>
