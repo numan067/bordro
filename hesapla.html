@@ -122,7 +122,9 @@
             const vakifNetTutar = (su * gs / 100) * v_yuzde;
 
             const mesaiBrut = ((fm + ul) * su * 2) + (di * su * 2.5) + (re * su * 3);
-            const normalBrut = (su * gs) + (gz * 22.81) + yol;
+            
+            // GÜNCELLEME: Gece zammı çarpanı 30 olarak değiştirildi.
+            const normalBrut = (su * gs) + (gz * 30) + yol;
             let brut = normalBrut + mesaiBrut;
 
             const sgk = brut * 0.14;
