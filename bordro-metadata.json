@@ -1,0 +1,10 @@
+{
+  "versiyon": 1,
+  "guncelleme_notu": "Yeni vergi dilimleri eklendi",
+  "parametreler": {
+    "gelir_vergisi_oranlari": [15, 20, 27, 35],
+    "asgari_ucret": 17002.12,
+    "damga_vergisi_orani": 0.00759,
+    "enflasyon_orani": 71.6
+  }
+}
