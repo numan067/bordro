@@ -2,168 +2,205 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2026 Ücret Hesaplama</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maaş ve Bordro Hesaplama</title>
     <style>
-        :root {
-            --primary: #1e293b;
-            --accent: #f59e0b;
-            --bg: #f1f5f9;
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 500px;
-        }
-
-        /* Ana Başlık */
-        .main-title {
-            text-align: center;
-            color: var(--primary);
-            font-size: 24px;
-            font-weight: 800;
-            margin: 20px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Buton Grubu */
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .btn {
-            display: block;
-            padding: 18px;
-            border-radius: 15px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 16px;
-            color: white;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .btn-maas { background: #2563eb; }
-        .btn-fark { background: #8b5cf6; }
-        .btn-sosyal { background: #10b981; }
-        .btn:active { transform: scale(0.98); }
-
-        /* Duyuru Panosu (Fotoğraf) */
-        .duyuru-container {
-            width: 100%;
-            margin-bottom: 25px;
-            line-height: 0;
-        }
-
-        .duyuru-img {
-            width: 100%;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        /* Enflasyon Kartı */
-        .stats-card {
-            background: white;
-            border-radius: 25px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .stats-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 10px;
-        }
-
-        .stats-header h2 {
-            margin: 0;
-            color: var(--primary);
-            font-size: 17px;
-        }
-
-        .data-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #f8fafc;
-        }
-
-        .data-row span:first-child { color: #64748b; }
-        .data-row span:last-child { font-weight: 700; color: var(--primary); }
-
-        .total-box {
-            margin-top: 15px;
-            background: #fffcf0;
-            border: 2px dashed var(--accent);
-            border-radius: 15px;
-            padding: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .total-val { color: #854d0e; font-weight: 900; font-size: 20px; }
-        
-        .footer { text-align: center; color: #94a3b8; font-size: 11px; margin-top: 25px; }
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f6f9; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        button:hover { background-color: #0056b3; }
+        .result-box { margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .section-title { margin-top: 30px; border-bottom: 2px solid #007bff; padding-bottom: 5px; }
+        .summary-row { background-color: #d1ecf1; font-weight: bold; color: #0c5460; }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <h2>Bordro Hesaplama Motoru</h2>
     
-    <h1 class="main-title">2026 ÜCRET HESAPLAMA</h1>
-
-    <div class="btn-group">
-        <a href="hesapla.html" class="btn btn-maas">Maaş Hesaplama</a>
-        <a href="fark.html" class="btn btn-fark">Fark Hesaplama</a>
-        <a href="sosyal.html" class="btn btn-sosyal">Sosyal Haklar</a>
+    <!-- Hesaplama Giriş Alanları -->
+    <div class="form-group">
+        <label>Brüt Temel Maaş (TL):</label>
+        <input type="number" id="brutMaas" value="0">
+    </div>
+    <div class="form-group">
+        <label>Ay Gün Sayısı:</label>
+        <input type="number" id="gunSayisi" value="30">
+    </div>
+    <div class="form-group">
+        <label>Gece Vardiyası Saati:</label>
+        <input type="number" id="geceSaati" value="0">
+    </div>
+    <div class="form-group">
+        <label>Gece Saatlik Ücreti (TL):</label>
+        <input type="number" id="geceSaatUcreti" value="0">
+    </div>
+    <div class="form-group">
+        <label>Fazla Mesai Saati (%200):</label>
+        <input type="number" id="fazlaMesai" value="0">
+    </div>
+    <div class="form-group">
+        <label>Ulusal Bayram Saati (%200):</label>
+        <input type="number" id="ulusalBayram" value="0">
+    </div>
+    <div class="form-group">
+        <label>Dini Bayram Saati (%350):</label>
+        <input type="number" id="diniBayram" value="0">
+    </div>
+    <div class="form-group">
+        <label>Resmi Tatil Fazla Mesai Saati (%300):</label>
+        <input type="number" id="resmiTatilMesai" value="0">
+    </div>
+    <div class="form-group">
+        <label>Vakıf Yüzdesi (%):</label>
+        <input type="number" id="vakifYuzdesi" value="0">
+    </div>
+    <div class="form-group">
+        <label>BES Net Kesinti (TL):</label>
+        <input type="number" id="besNet" value="0">
+    </div>
+    <div class="form-group">
+        <label>Vergi Dilimi Oranı (%):</label>
+        <select id="vergiOrani">
+            <option value="0.15">15%</option>
+            <option value="0.20">20%</option>
+            <option value="0.27">27%</option>
+        </select>
     </div>
 
-    <div class="duyuru-container">
-        <img src="duyuru.jpg" alt="Duyuru" class="duyuru-img">
+    <button onclick="hesapla()">Hesapla</button>
+
+    <div class="result-box">
+        <h4>Hesaplama Sonucu</h4>
+        <p>Net Ele Geçen Maaş: <strong id="netMaasSonuc">0.00</strong> TL</p>
     </div>
 
-    <div class="stats-card">
-        <div class="stats-header">
-            <span style="margin-right: 8px;">📊</span>
-            <h2>2026 Enflasyon Verileri</h2>
-        </div>
+    <!-- ENFLASYON VERİLERİ TABLOSU -->
+    <h3 class="section-title">2026 Yılı Dönemsel Enflasyon Verileri</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Dönem / Ay</th>
+                <th>Aylık Enflasyon Oranı (TÜİK)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 1. DÖNEM (OCAK - HAZİRAN) -->
+            <tr>
+                <td>Ocak 2026</td>
+                <td>%4.84</td>
+            </tr>
+            <tr>
+                <td>Şubat 2026</td>
+                <td>%2.96</td>
+            </tr>
+            <tr>
+                <td>Mart 2026</td>
+                <td>%1.94</td>
+            </tr>
+            <tr>
+                <td>Nisan 2026</td>
+                <td>%4.18</td>
+            </tr>
+            <tr>
+                <td>Mayıs 2026</td>
+                <td>%1.71</td>
+            </tr>
+            <tr>
+                <td>Haziran 2026</td>
+                <td>%0.99</td>
+            </tr>
+            <!-- 1. DÖNEM KÜMÜLATİF BİLEŞİK TOPLAM -->
+            <tr class="summary-row">
+                <td>1. Altı Aylık Bileşik Enflasyon (Ocak-Haziran)</td>
+                <td>%17.76</td>
+            </tr>
 
-        <div class="data-row"><span>Ocak 2026</span><span>%4,84</span></div>
-        <div class="data-row"><span>Şubat 2026</span><span>%2,96</span></div>
-        <div class="data-row"><span>Mart 2026</span><span>%1,94</span></div>
-        <div class="data-row"><span>Nisan 2026</span><span>%4,18</span></div>
-       <div class="data-row"><span>Mayıs 2026</span><span>%1,71</span></div>
-       <div class="data-row"><span>Haziran 2026</span><span>%0,99</span></div>
-        <div class="total-box">
-            <span style="color: #854d0e; font-weight: 700; font-size: 13px;">6 AYLIK BİLEŞİK TOPLAM</span>
-            <span class="total-val">%17,76</span>
-        </div>
-    </div>
-
-    <div class="footer">
-        © 2026 Numan Özdemir - Bordro Sistemleri<br>
-        <a href="tes.html" style="color: #94a3b8; text-decoration: none; margin-top: 5px; display: inline-block;">Görüş ve Önerileriniz</a>
-    </div>
-
+            <!-- 2. DÖNEM (TEMMUZ - AĞUSTOS) -->
+            <tr>
+                <td>Temmuz 2026</td>
+                <td>%1.78</td>
+            </tr>
+            <tr>
+                <td>Ağustos 2026</td>
+                <td>%1.84</td>
+            </tr>
+            <!-- 2. DÖNEM KÜMÜLATİF BİLEŞİK TOPLAM -->
+            <tr class="summary-row">
+                <td>2. Dönem Bileşik Enflasyon (Temmuz-Ağustos)</td>
+                <td>%3.65</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
+<script>
+function hesapla() {
+    // 1. Girdileri Al
+    const brutTemelMaas = parseFloat(document.getElementById('brutMaas').value) || 0;
+    const ayGunSayisi = parseFloat(document.getElementById('gunSayisi').value) || 30;
+    const geceSaati = parseFloat(document.getElementById('geceSaati').value) || 0;
+    const geceSaatlikUcreti = parseFloat(document.getElementById('geceSaatUcreti').value) || 0;
+    
+    const fazlaMesaiSaati = parseFloat(document.getElementById('fazlaMesai').value) || 0;
+    const ulusalBayramSaati = parseFloat(document.getElementById('ulusalBayram').value) || 0;
+    const diniBayramSaati = parseFloat(document.getElementById('diniBayram').value) || 0;
+    const resmiTatilMesaiSaati = parseFloat(document.getElementById('resmiTatilMesai').value) || 0;
+    
+    const vakifYuzdesi = parseFloat(document.getElementById('vakifYuzdesi').value) || 0;
+    const besNet = parseFloat(document.getElementById('besNet').value) || 0;
+    const vergiOrani = parseFloat(document.getElementById('vergiOrani').value) || 0.15;
+
+    // 2. Katsayılar
+    const aylikCalismaSaati = ayGunSayisi * 7.5;
+    const saatlikUcret = brutTemelMaas / aylikCalismaSaati;
+
+    // 3. Brüt Kalemler
+    const calismaBrutu = aylikCalismaSaati * saatlikUcret;
+    const fazlaMesaiBrutu = fazlaMesaiSaati * 2 * saatlikUcret;
+    const ulusalBayramBrutu = ulusalBayramSaati * 2 * saatlikUcret;
+    const diniBayramBrutu = diniBayramSaati * 3.5 * saatlikUcret;
+    const resmiTatilBrutu = resmiTatilMesaiSaati * 3 * saatlikUcret;
+    const geceVardiyasiBrutu = geceSaati * geceSaatlikUcreti;
+    const ikramiyeBrutu = saatlikUcret * 225;
+    const besBrut = besNet / (1 - 0.00759);
+
+    // 4. Şahsi Kesintiler
+    const sendikaKesintisi = saatlikUcret * 7;
+    const vakifKesintisi = calismaBrutu * vakifYuzdesi / 100;
+
+    // 5. Havuz (Toplam Brüt)
+    const toplamBrut = brutTemelMaas + calismaBrutu + fazlaMesaiBrutu + ulusalBayramBrutu + diniBayramBrutu + resmiTatilBrutu + geceVardiyasiBrutu + ikramiyeBrutu + besBrut;
+
+    // 6. Yasal Kesintiler ve Vergiler
+    const sgkKesintisi = toplamBrut * 0.14;
+    const issizlikKesintisi = toplamBrut * 0.01;
+    const gelirVergisiMatrahı = toplamBrut - (sgkKesintisi + issizlikKesintisi);
+    
+    const brutGelirVergisi = gelirVergisiMatrahı * vergiOrani;
+    const brutDamgaVergisi = toplamBrut * 0.00759;
+
+    // 7. Muafiyet Düşümü
+    let odenecekGelirVergisi = brutGelirVergisi - 2805.26;
+    if (odenecekGelirVergisi < 0) odenecekGelirVergisi = 0;
+
+    let odenecekDamgaVergisi = brutDamgaVergisi - 167.00;
+    if (odenecekDamgaVergisi < 0) odenecekDamgaVergisi = 0;
+
+    // 8. Final Net Maaş
+    const netMaas = toplamBrut - sgkKesintisi - issizlikKesintisi - odenecekGelirVergisi - odenecekDamgaVergisi - sendikaKesintisi - vakifKesintisi - besNet;
+
+    // Sonucu Ekrana Bas
+    document.getElementById('netMaasSonuc').innerText = netMaas.toFixed(2);
+}
+</script>
 
 </body>
 </html>
