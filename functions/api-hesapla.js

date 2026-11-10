@@ -1,0 +1,58 @@
+export async function onRequestPost(context) {
+  try {
+    const input = await context.request.json();
+    const su = parseFloat(input.saatUcreti) || 0;
+    const gs = parseFloat(input.calismaGunSaati) || 232.5;
+    const gz = parseFloat(input.geceZammi) || 0;
+    const ay = input.ay || "1";
+
+    // 2026 Aylık Vergi/İstisna Verileri
+    const ayVerileri = {
+        1: { gun: 31, gv: 4211.33, dv: 250.70 }, 2: { gun: 28, gv: 4211.33, dv: 250.70 },
+        3: { gun: 31, gv: 4211.33, dv: 250.70 }, 4: { gun: 30, gv: 4211.33, dv: 250.70 },
+        5: { gun: 31, gv: 4211.33, dv: 250.70 }, 6: { gun: 30, gv: 4211.33, dv: 250.70 },
+        7: { gun: 31, gv: 4537.75, dv: 250.70 }, 8: { gun: 31, gv: 5615.10, dv: 250.70 },
+        9: { gun: 30, gv: 5615.10, dv: 250.70 }, 10: { gun: 31, gv: 5615.10, dv: 250.70 },
+        11: { gun: 30, gv: 5615.10, dv: 250.70 }, 12: { gun: 31, gv: 5615.10, dv: 250.70 }
+    };
+
+    const anaMaasBrut = su * gs;
+    const geceZammiBrut = gz * 30; 
+    let kazancToplami = anaMaasBrut + geceZammiBrut;
+
+    const sgk = kazancToplami * 0.14;
+    const issizlik = kazancToplami * 0.01;
+    const sendika = su * 7.00; 
+    
+    const gvMatrahi = kazancToplami - sgk - issizlik - sendika;
+    const vo = 0.15; // Vergi Oranı
+    
+    let gv = (gvMatrahi * vo) - (ayVerileri[ay]?.gv || 4211.33);
+    if (gv < 0) gv = 0;
+
+    let dv = (kazancToplami * 0.00759) - (ayVerileri[ay]?.dv || 250.70);
+    if (dv < 0) dv = 0;
+
+    const toplamKesinti = sgk + issizlik + sendika + gv + dv;
+    const netMaas = kazancToplami - toplamKesinti;
+    
+    const ikrBrut = su * 30 * 7.5;
+    const ikrSgk = ikrBrut * 0.14;
+    const ikrIssizlik = ikrBrut * 0.01;
+    const ikrGv = (ikrBrut - ikrSgk - ikrIssizlik) * vo;
+    const ikrDv = ikrBrut * 0.00759;
+    const ikramiyeNet = ikrBrut - ikrSgk - ikrIssizlik - ikrGv - ikrDv;
+
+    const f = (n) => n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    return new Response(JSON.stringify({
+      netMaas: f(netMaas),
+      sendika: f(sendika),
+      netIkramiye: f(ikramiyeNet)
+    }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+  }
+}
