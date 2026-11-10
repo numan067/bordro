@@ -4,9 +4,16 @@ export async function onRequestPost(context) {
     const su = parseFloat(input.saatUcreti) || 0;
     const gs = parseFloat(input.calismaGunSaati) || 232.5;
     const gz = parseFloat(input.geceZammi) || 0;
+    const fm = parseFloat(input.fm100) || 0;
+    const ul = parseFloat(input.ulusal100) || 0;
+    const di = parseFloat(input.dini150) || 0;
+    const re = parseFloat(input.resmi200) || 0;
+    const yol = parseFloat(input.yolUcreti) || 0;
+    const bes = parseFloat(input.besKesintisi) || 0;
+    const v_yuzde = parseFloat(input.vakifYuzde) || 0;
+    const vo = parseFloat(input.taxRate) || 0.15;
     const ay = input.ay || "1";
 
-    // 2026 Aylık Vergi/İstisna Verileri
     const ayVerileri = {
         1: { gun: 31, gv: 4211.33, dv: 250.70 }, 2: { gun: 28, gv: 4211.33, dv: 250.70 },
         3: { gun: 31, gv: 4211.33, dv: 250.70 }, 4: { gun: 30, gv: 4211.33, dv: 250.70 },
@@ -17,15 +24,15 @@ export async function onRequestPost(context) {
     };
 
     const anaMaasBrut = su * gs;
+    const mesaiBrut = ((fm + ul) * su * 2) + (di * su * 2.5) + (re * su * 3);
     const geceZammiBrut = gz * 30; 
-    let kazancToplami = anaMaasBrut + geceZammiBrut;
+    let kazancToplami = anaMaasBrut + mesaiBrut + geceZammiBrut + yol;
 
     const sgk = kazancToplami * 0.14;
     const issizlik = kazancToplami * 0.01;
     const sendika = su * 7.00; 
     
     const gvMatrahi = kazancToplami - sgk - issizlik - sendika;
-    const vo = 0.15; // Vergi Oranı
     
     let gv = (gvMatrahi * vo) - (ayVerileri[ay]?.gv || 4211.33);
     if (gv < 0) gv = 0;
@@ -33,7 +40,8 @@ export async function onRequestPost(context) {
     let dv = (kazancToplami * 0.00759) - (ayVerileri[ay]?.dv || 250.70);
     if (dv < 0) dv = 0;
 
-    const toplamKesinti = sgk + issizlik + sendika + gv + dv;
+    const vakifNetTutar = (anaMaasBrut / 100) * v_yuzde;
+    const toplamKesinti = sgk + issizlik + sendika + gv + dv + vakifNetTutar + bes;
     const netMaas = kazancToplami - toplamKesinti;
     
     const ikrBrut = su * 30 * 7.5;
@@ -46,9 +54,10 @@ export async function onRequestPost(context) {
     const f = (n) => n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
     return new Response(JSON.stringify({
-      netMaas: f(netMaas),
-      sendika: f(sendika),
-      netIkramiye: f(ikramiyeNet)
+      netMaas: f(netMaas) + " TL",
+      sendika: f(sendika) + " TL",
+      netIkramiye: f(ikramiyeNet) + " TL",
+      vakifNet: f(vakifNetTutar) + " TL"
     }), {
       headers: { 'Content-Type': 'application/json' }
     });
