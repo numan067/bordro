@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bordro | Yönetim Paneli</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#172033;background:#f3f5f9}body{margin:0;padding:24px}.card{max-width:760px;margin:6vh auto;background:white;padding:28px;border-radius:18px;box-shadow:0 12px 40px #10182718}h1{margin-top:0;color:#101827}p{color:#596579;line-height:1.55}label{display:block;font-weight:650;margin:14px 0 6px}input,textarea{box-sizing:border-box;width:100%;padding:12px;border:1px solid #cbd2df;border-radius:8px;font:inherit}textarea{min-height:360px;font-family:ui-monospace,monospace;font-size:13px}button{border:0;border-radius:8px;padding:12px 18px;font:inherit;font-weight:700;color:white;background:#5b21b6;cursor:pointer;margin-top:14px}button:disabled{opacity:.6}#editor{display:none}.status{margin-top:12px;white-space:pre-wrap}.hint{font-size:13px}.back{display:inline-block;margin-top:20px;color:#5b21b6}
+</style>
+</head>
+<body><main class="card">
+<h1>Bordro içerik yönetimi</h1><p>Burada kaydettiğiniz sosyal yardım ve enflasyon verileri hem bordro.pages.dev sitesinde hem de BordroApp uygulamasında yayınlanır. Giriş bilgileri Cloudflare'da saklanır; uygulama koduna eklenmez.</p>
+<form id="login-form"><label for="username">Kullanıcı adı</label><input id="username" autocomplete="username" required><label for="password">Parola</label><input id="password" type="password" autocomplete="current-password" required><button type="submit">Giriş yap</button></form>
+<section id="editor"><label for="content-json">Yayınlanacak veriler (JSON)</label><textarea id="content-json" spellcheck="false"></textarea><p class="hint">Sosyal yardımlar `socialBenefits` alanında; aylar ve toplam oran `inflation` alanında düzenlenir. JSON biçimini koruyun.</p><button id="save-button" type="button">Kaydet ve yayınla</button><button id="logout-button" type="button" style="background:#475569;margin-left:8px">Oturumu kapat</button></section>
+<div class="status" id="status" role="status"></div><a class="back" href="/">← Bordro sayfasına dön</a>
+</main><script src="/admin-client.js"></script></body></html>

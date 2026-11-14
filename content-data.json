@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "socialBenefits": [
+    { "name": "Servis Ücreti", "year2025": "1.559,30", "year2026": "2.500" },
+    { "name": "Ram. Bayramı", "year2025": "7.507,76", "year2026": "10.000" },
+    { "name": "Kur. Bayramı", "year2025": "7.507,76", "year2026": "13.000" },
+    { "name": "Yakacak Yard.", "year2025": "11.550,40", "year2026": "19.000" },
+    { "name": "Yıllık İzin", "year2025": "3.248,55", "year2026": "5.000" },
+    { "name": "Ana-İlkokul", "year2025": "3.166,25", "year2026": "5.000" },
+    { "name": "Ortaöğretim", "year2025": "3.788,53", "year2026": "6.000" },
+    { "name": "Lise", "year2025": "6.385,93", "year2026": "10.000" },
+    { "name": "Üniversite", "year2025": "10.536,85", "year2026": "16.000" },
+    { "name": "Evlenme", "year2025": "4.200,00", "year2026": "8.000" },
+    { "name": "Doğum", "year2025": "4.200,00", "year2026": "8.000" },
+    { "name": "Ölüm (Kendi)", "year2025": "2.875,00", "year2026": "10.000" },
+    { "name": "Ölüm (Yakın)", "year2025": "2.875,00", "year2026": "5.000" },
+    { "name": "Gece Zammı", "year2025": "22,81", "year2026": "30" }
+  ],
+  "inflation": {
+    "year": 2026,
+    "monthly": [
+      { "month": "Ocak", "rate": 4.84 }, { "month": "Şubat", "rate": 2.96 },
+      { "month": "Mart", "rate": 1.94 }, { "month": "Nisan", "rate": 4.18 },
+      { "month": "Mayıs", "rate": 1.71 }, { "month": "Haziran", "rate": 0.99 },
+      { "month": "Temmuz", "rate": 1.78 }, { "month": "Ağustos", "rate": 1.84 },
+      { "month": "Eylül", "rate": 1.84 }, { "month": "Ekim", "rate": 2.58 },
+      { "month": "Kasım", "rate": 0 }, { "month": "Aralık", "rate": 0 }
+    ],
+    "totalRate": 14.64
+  }
+}
