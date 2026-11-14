@@ -19,12 +19,18 @@ const DEFAULT_CONTENT = {
   inflation: {
     year: 2026,
     monthly: [
-      { month: "Ocak", rate: 4.84 }, { month: "Şubat", rate: 2.96 },
-      { month: "Mart", rate: 1.94 }, { month: "Nisan", rate: 4.18 },
-      { month: "Mayıs", rate: 1.71 }, { month: "Haziran", rate: 0.99 },
-      { month: "Temmuz", rate: 1.78 }, { month: "Ağustos", rate: 1.84 },
-      { month: "Eylül", rate: 1.84 }, { month: "Ekim", rate: 2.58 },
-      { month: "Kasım", rate: 0 }, { month: "Aralık", rate: 0 }
+      { month: "Ocak", rate: 4.84 },
+      { month: "Şubat", rate: 2.96 },
+      { month: "Mart", rate: 1.94 },
+      { month: "Nisan", rate: 4.18 },
+      { month: "Mayıs", rate: 1.71 },
+      { month: "Haziran", rate: 0.99 },
+      { month: "Temmuz", rate: 1.78 },
+      { month: "Ağustos", rate: 1.84 },
+      { month: "Eylül", rate: 1.84 },
+      { month: "Ekim", rate: 2.58 },
+      { month: "Kasım", rate: 0 },
+      { month: "Aralık", rate: 0 }
     ],
     totalRate: 14.64
   }
@@ -40,34 +46,20 @@ export function corsHeaders() {
   };
 }
 
-export function cacheHeaders() {
-  return {
-    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
-    "Pragma": "no-cache",
-    "Expires": "0",
-    "CDN-Cache-Control": "no-store",
-    "Cloudflare-CDN-Cache-Control": "no-store"
-  };
-}
-
 export function jsonResponse(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { "Content-Type": "application/json; charset=utf-8", ...corsHeaders(), ...cacheHeaders() }
+    headers: { "Content-Type": "application/json; charset=utf-8", ...corsHeaders() }
   });
 }
 
 export function handleOptions() {
-  return new Response(null, { status: 204, headers: { ...corsHeaders(), ...cacheHeaders() } });
+  return new Response(null, { status: 204, headers: corsHeaders() });
 }
 
 export async function readContent(env) {
   const stored = await env.BORDRO_CONTENT.get("content", "json");
-  const content = stored || DEFAULT_CONTENT;
-  return {
-    ...content,
-    updatedAt: new Date().toISOString()
-  };
+  return stored || DEFAULT_CONTENT;
 }
 
 export function validateContent(value) {
