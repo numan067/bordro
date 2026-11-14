@@ -40,20 +40,34 @@ export function corsHeaders() {
   };
 }
 
+export function cacheHeaders() {
+  return {
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Expires": "0",
+    "CDN-Cache-Control": "no-store",
+    "Cloudflare-CDN-Cache-Control": "no-store"
+  };
+}
+
 export function jsonResponse(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { "Content-Type": "application/json; charset=utf-8", ...corsHeaders() }
+    headers: { "Content-Type": "application/json; charset=utf-8", ...corsHeaders(), ...cacheHeaders() }
   });
 }
 
 export function handleOptions() {
-  return new Response(null, { status: 204, headers: corsHeaders() });
+  return new Response(null, { status: 204, headers: { ...corsHeaders(), ...cacheHeaders() } });
 }
 
 export async function readContent(env) {
   const stored = await env.BORDRO_CONTENT.get("content", "json");
-  return stored || DEFAULT_CONTENT;
+  const content = stored || DEFAULT_CONTENT;
+  return {
+    ...content,
+    updatedAt: new Date().toISOString()
+  };
 }
 
 export function validateContent(value) {
