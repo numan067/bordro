@@ -7,7 +7,7 @@
 </style>
 </head>
 <body><main class="card">
-<h1>Bordro içerik yönetimi</h1><p>Burada kaydettiğiniz sosyal yardım ve enflasyon verileri hem bordro.pages.dev sitesinde hem de BordroApp uygulamasında yayınlanır. Giriş bilgileri Cloudflare'da saklanır; uygulama koduna eklenmez.</p>
+<h1>Bordro içerik yönetim paneli</h1>
 <form id="login-form"><label for="username">Kullanıcı adı</label><input id="username" autocomplete="username" required><label for="password">Parola</label><input id="password" type="password" autocomplete="current-password" required><button type="submit">Giriş yap</button></form>
 <section id="editor"><label for="content-json">Yayınlanacak veriler (JSON)</label><textarea id="content-json" spellcheck="false"></textarea><p class="hint">Sosyal yardımlar `socialBenefits` alanında; aylar ve toplam oran `inflation` alanında düzenlenir. JSON biçimini koruyun.</p><button id="save-button" type="button">Kaydet ve yayınla</button><button id="logout-button" type="button" style="background:#475569;margin-left:8px">Oturumu kapat</button></section>
 <div class="status" id="status" role="status"></div><a class="back" href="/">← Bordro sayfasına dön</a>
