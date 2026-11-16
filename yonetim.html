@@ -123,4 +123,193 @@
         <form id="yonetimForm">
             <!-- DUYURU PANOSU VE FOTOĞRAF DÜZENLEME -->
             <h3>Duyuru Panosu ve Görsel Düzenleme</h3>
-            <div class="form-group" style="margin-top: 15
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="duyuruInput">Duyuru Metni:</label>
+                <textarea id="duyuruInput" rows="3" placeholder="Ana sayfada görünecek duyuruyu yazın..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="duyuruFotoInput">Duyuru Fotoğrafı URL'si:</label>
+                <input type="text" id="duyuruFotoInput" placeholder="Fotoğraf linkini buraya yapıştırın (Örn: https://...)">
+            </div>
+
+            <!-- SOSYAL YARDIMLAR -->
+            <h3>Sosyal Yardımlar Düzenleme</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Yardım Adı</th>
+                        <th>2025 Değeri</th>
+                        <th>2026 Değeri</th>
+                    </tr>
+                </thead>
+                <tbody id="sosyalYardimlarBody"></tbody>
+            </table>
+
+            <!-- ENFLASYON -->
+            <h3>Aylık TÜFE (%) Düzenleme</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ay</th>
+                        <th>Aylık TÜFE (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="enflasyonBody"></tbody>
+            </table>
+
+            <button type="submit">Değişiklikleri Kaydet</button>
+        </form>
+    </div>
+
+    <!-- Firebase ve Kontrol Scripti -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+      import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
+        authDomain: "bordroapp.firebaseapp.com",
+        projectId: "bordroapp",
+        storageBucket: "bordroapp.firebasestorage.app",
+        messagingSenderId: "495208822576",
+        appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
+        measurementId: "G-6ZRKG9HG9J"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      const sosyalKeys = [
+          { id: "servis", adi: "Servis Ücreti" },
+          { id: "ram_bayrami", adi: "Ram. Bayramı" },
+          { id: "kur_bayrami", adi: "Kur. Bayramı" },
+          { id: "yakacak", adi: "Yakacak Yard." },
+          { id: "yillik_izin", adi: "Yıllık İzin" },
+          { id: "ana_ilkokul", adi: "Ana-İlkokul" },
+          { id: "ortaogretim", adi: "Ortaöğretim" },
+          { id: "lise", adi: "Lise" },
+          { id: "universite", adi: "Üniversite" },
+          { id: "evlenme", adi: "Evlenme" },
+          { id: "dogum", adi: "Doğum" },
+          { id: "olum_kendi", adi: "Ölüm (Kendi)" },
+          { id: "olum_yakin", adi: "Ölüm (Yakın)" },
+          { id: "gece_zammi", adi: "Gece Zammı Ü." }
+      ];
+
+      const aylar = [
+          "Ocak 2026", "Şubat 2026", "Mart 2026", "Nisan 2026", 
+          "Mayıs 2026", "Haziran 2026", "Temmuz 2026", "Ağustos 2026", 
+          "Eylül 2026", "Ekim 2026", "Kasım 2026", "Aralık 2026"
+      ];
+
+      // Güçlendirilmiş Giriş Kontrolü (İndeks/Sorgu takılmalarını önler)
+      document.getElementById("loginForm").addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const kAdi = document.getElementById("kullaniciAdi").value.trim();
+          const sifre = document.getElementById("parola").value.trim();
+
+          try {
+              const q = query(collection(db, "admins"), where("kullaniciAdi", "==", kAdi));
+              const querySnapshot = await getDocs(q);
+
+              let girisBasarili = false;
+              querySnapshot.forEach((docSnap) => {
+                  if (docSnap.data().sifre === sifre) {
+                      girisBasarili = true;
+                  }
+              });
+
+              if (girisBasarili) {
+                  document.getElementById("loginSection").style.display = "none";
+                  document.getElementById("panelSection").style.display = "block";
+                  verileriYukle();
+              } else {
+                  alert("Kullanıcı adı veya parola hatalı!");
+              }
+          } catch (error) {
+              console.error("Giriş hatası:", error);
+              alert("Bağlantı hatası: " + error.message);
+          }
+      });
+
+      // Firebase'den verileri çekip kutucuklara doldurma
+      async function verileriYukle() {
+          const sosyalBody = document.getElementById("sosyalYardimlarBody");
+          const enfBody = document.getElementById("enflasyonBody");
+          const duyuruInput = document.getElementById("duyuruInput");
+          const duyuruFotoInput = document.getElementById("duyuruFotoInput");
+
+          const docRef = doc(db, "ayarlar", "veriler");
+          const docSnap = await getDoc(docRef);
+          let data = docSnap.exists() ? docSnap.data() : {};
+
+          duyuruInput.value = data.duyuru || "";
+          duyuruFotoInput.value = data.duyuruFoto || "";
+
+          let sosyalData = data.sosyal || {};
+          let enfData = data.enflasyon || {};
+
+          sosyalBody.innerHTML = "";
+          sosyalKeys.forEach(item => {
+              let val2025 = sosyalData[item.id] ? sosyalData[item.id]._2025 || "" : "";
+              let val2026 = sosyalData[item.id] ? sosyalData[item.id]._2026 || "" : "";
+
+              sosyalBody.innerHTML += `
+                  <tr>
+                      <td>${item.adi}</td>
+                      <td><input type="text" data-type="sosyal" data-id="${item.id}" data-yil="2025" value="${val2025}"></td>
+                      <td><input type="text" data-type="sosyal" data-id="${item.id}" data-yil="2026" value="${val2026}"></td>
+                  </tr>
+              `;
+          });
+
+          enfBody.innerHTML = "";
+          aylar.forEach((ay, index) => {
+              let ayVal = enfData[index] !== undefined ? enfData[index] : "";
+              enfBody.innerHTML += `
+                  <tr>
+                      <td>${ay}</td>
+                      <td><input type="text" data-type="enf" data-index="${index}" value="${ayVal}"></td>
+                  </tr>
+              `;
+          });
+      }
+
+      // Değişiklikleri Kaydetme
+      document.getElementById("yonetimForm").addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          let yeniDuyuru = document.getElementById("duyuruInput").value;
+          let yeniDuyuruFoto = document.getElementById("duyuruFotoInput").value;
+          let sosyalObj = {};
+          let enfObj = {};
+
+          document.querySelectorAll("#panelSection input[data-type]").forEach(input => {
+              let type = input.getAttribute("data-type");
+              if (type === "sosyal") {
+                  let id = input.getAttribute("data-id");
+                  let yil = input.getAttribute("data-yil");
+                  if (!sosyalObj[id]) sosyalObj[id] = {};
+                  sosyalObj[id]["_" + yil] = input.value;
+              } else if (type === "enf") {
+                  let index = input.getAttribute("data-index");
+                  enfObj[index] = input.value;
+              }
+          });
+
+          try {
+              await setDoc(doc(db, "ayarlar", "veriler"), {
+                  duyuru: yeniDuyuru,
+                  duyuruFoto: yeniDuyuruFoto,
+                  sosyal: sosyalObj,
+                  enflasyon: enfObj
+              });
+              alert("Değişiklikler başarıyla kaydedildi!");
+          } catch (error) {
+              console.error("Kayıt hatası:", error);
+              alert("Hata oluştu: " + error.message);
+          }
+      });
+    </script>
+</body>
+</html>
