@@ -8,24 +8,25 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 20px;
         }
-        .login-container {
+        .login-container, .panel-container {
             background: white;
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
+            max-width: 900px;
+            margin: 20px auto;
         }
-        h2 {
-            margin-bottom: 20px;
+        .login-container {
+            max-width: 400px;
+            margin-top: 100px;
+        }
+        h2, h3 {
             color: #333;
-            font-size: 22px;
+            border-bottom: 2px solid #5d3ebc;
+            padding-bottom: 8px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -35,7 +36,7 @@
             margin-bottom: 5px;
             color: #666;
         }
-        input {
+        input[type="text"], input[type="password"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
@@ -44,7 +45,7 @@
         }
         button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #5d3ebc;
             color: white;
             border: none;
@@ -56,6 +57,20 @@
         button:hover {
             background-color: #4b319d;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #5d3ebc;
+            color: white;
+        }
         .back-link {
             display: block;
             margin-top: 15px;
@@ -64,12 +79,18 @@
             text-decoration: none;
             font-size: 14px;
         }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
 
-    <div class="login-container">
-        <h2>Bordro içerik yönetim paneli</h2>
+    <!-- GİRİŞ EKRANI -->
+    <div id="loginSection" class="login-container">
+        <h2>Bordro Yönetim Paneli</h2>
         <form id="loginForm">
             <div class="form-group">
                 <label for="kullaniciAdi">Kullanıcı adı</label>
@@ -79,17 +100,55 @@
                 <label for="parola">Parola</label>
                 <input type="password" id="parola" required>
             </div>
-            <button type="submit" id="girisBtn">Giriş yap</button>
+            <button type="submit">Giriş yap</button>
         </form>
         <a href="index.html" class="back-link">← Bordro sayfasına dön</a>
     </div>
 
-    <!-- Firebase ve Giriş Kontrol Scripti -->
+    <!-- PANEL EKRANI (Başta Gizlidir, Giriş Yapınca Açılır) -->
+    <div id="panelSection" class="panel-container" style="display: none;">
+        <div class="top-bar">
+            <h2>İçerik Yönetim Paneli</h2>
+            <a href="index.html" class="back-link">← Ana Sayfa</a>
+        </div>
+
+        <form id="yonetimForm">
+            <h3>Sosyal Yardımlar Düzenleme</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Yardım Adı</th>
+                        <th>2025 Değeri</th>
+                        <th>2026 Değeri</th>
+                    </tr>
+                </thead>
+                <tbody id="sosyalYardimlarBody">
+                    <!-- Dinamik doldurulacak -->
+                </tbody>
+            </table>
+
+            <h3>Aylık TÜFE (%) Düzenleme</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ay</th>
+                        <th>Aylık TÜFE (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="enflasyonBody">
+                    <!-- Dinamik doldurulacak -->
+                </tbody>
+            </table>
+
+            <button type="submit">Değişiklikleri Kaydet</button>
+        </form>
+    </div>
+
+    <!-- Firebase ve Kontrol Scripti -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-      import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+      import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-      // Sizin Firebase Proje Yapılandırmanız
       const firebaseConfig = {
         apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
         authDomain: "bordroapp.firebaseapp.com",
@@ -100,41 +159,125 @@
         measurementId: "G-6ZRKG9HG9J"
       };
 
-      // Firebase başlatma
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
-      // Form gönderildiğinde çalışacak kod
-      const form = document.getElementById("loginForm");
-      if (form) {
-        form.addEventListener("submit", async (e) => {
+      const sosyalKeys = [
+          { id: "servis", adi: "Servis Ücreti" },
+          { id: "ram_bayrami", adi: "Ram. Bayramı" },
+          { id: "kur_bayrami", adi: "Kur. Bayramı" },
+          { id: "yakacak", adi: "Yakacak Yard." },
+          { id: "yillik_izin", adi: "Yıllık İzin" },
+          { id: "ana_ilkokul", adi: "Ana-İlkokul" },
+          { id: "ortaogretim", adi: "Ortaöğretim" },
+          { id: "lise", adi: "Lise" },
+          { id: "universite", adi: "Üniversite" },
+          { id: "evlenme", adi: "Evlenme" },
+          { id: "dogum", adi: "Doğum" },
+          { id: "olum_kendi", adi: "Ölüm (Kendi)" },
+          { id: "olum_yakin", adi: "Ölüm (Yakın)" },
+          { id: "gece_zammi", adi: "Gece Zammı Ü." }
+      ];
+
+      const aylar = [
+          "Ocak 2026", "Şubat 2026", "Mart 2026", "Nisan 2026", 
+          "Mayıs 2026", "Haziran 2026", "Temmuz 2026", "Ağustos 2026", 
+          "Eylül 2026", "Ekim 2026", "Kasım 2026", "Aralık 2026"
+      ];
+
+      // Giriş yapma kontrolü
+      document.getElementById("loginForm").addEventListener("submit", async (e) => {
           e.preventDefault();
-          
           const kAdi = document.getElementById("kullaniciAdi").value.trim();
           const sifre = document.getElementById("parola").value.trim();
 
           try {
-            // Doğrudan Firebase Firestore 'admins' koleksiyonunda eşleşen kullanıcıyı arıyoruz
-            const q = query(
-              collection(db, "admins"), 
-              where("kullaniciAdi", "==", kAdi), 
-              where("sifre", "==", sifre)
-            );
-            
-            const querySnapshot = await getDocs(q);
+              const q = query(collection(db, "admins"), where("kullaniciAdi", "==", kAdi), where("sifre", "==", sifre));
+              const querySnapshot = await getDocs(q);
 
-            if (!querySnapshot.empty) {
-              alert("Giriş başarılı!");
-              window.location.href = "panel.html"; // Başarılı girişte yönlendirilecek sayfa
-            } else {
-              alert("Kullanıcı adı veya parola hatalı!");
-            }
+              if (!querySnapshot.empty) {
+                  // Giriş başarılıysa giriş ekranını gizle, paneli göster
+                  document.getElementById("loginSection").style.display = "none";
+                  document.getElementById("panelSection").style.display = "block";
+                  verileriYukle();
+              } else {
+                  alert("Kullanıcı adı veya parola hatalı!");
+              }
           } catch (error) {
-            console.error("Giriş hatası:", error);
-            alert("Bağlantı hatası: " + error.message);
+              console.error("Giriş hatası:", error);
+              alert("Bağlantı hatası: " + error.message);
           }
-        });
+      });
+
+      // Firebase'den verileri çekip kutucuklara doldurma
+      async function verileriYukle() {
+          const sosyalBody = document.getElementById("sosyalYardimlarBody");
+          const enfBody = document.getElementById("enflasyonBody");
+
+          const docRef = doc(db, "ayarlar", "veriler");
+          const docSnap = await getDoc(docRef);
+          let data = docSnap.exists() ? docSnap.data() : {};
+
+          let sosyalData = data.sosyal || {};
+          let enfData = data.enflasyon || {};
+
+          sosyalBody.innerHTML = "";
+          sosyalKeys.forEach(item => {
+              let val2025 = sosyalData[item.id] ? sosyalData[item.id]._2025 || "" : "";
+              let val2026 = sosyalData[item.id] ? sosyalData[item.id]._2026 || "" : "";
+
+              sosyalBody.innerHTML += `
+                  <tr>
+                      <td>${item.adi}</td>
+                      <td><input type="text" data-type="sosyal" data-id="${item.id}" data-yil="2025" value="${val2025}"></td>
+                      <td><input type="text" data-type="sosyal" data-id="${item.id}" data-yil="2026" value="${val2026}"></td>
+                  </tr>
+              `;
+          });
+
+          enfBody.innerHTML = "";
+          aylar.forEach((ay, index) => {
+              let ayVal = enfData[index] !== undefined ? enfData[index] : "";
+              enfBody.innerHTML += `
+                  <tr>
+                      <td>${ay}</td>
+                      <td><input type="text" data-type="enf" data-index="${index}" value="${ayVal}"></td>
+                  </tr>
+              `;
+          });
       }
+
+      // Değişiklikleri Kaydetme
+      document.getElementById("yonetimForm").addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          let sosyalObj = {};
+          let enfObj = {};
+
+          document.querySelectorAll("#panelSection input").forEach(input => {
+              let type = input.getAttribute("data-type");
+              if (type === "sosyal") {
+                  let id = input.getAttribute("data-id");
+                  let yil = input.getAttribute("data-yil");
+                  if (!sosyalObj[id]) sosyalObj[id] = {};
+                  sosyalObj[id]["_" + yil] = input.value;
+              } else if (type === "enf") {
+                  let index = input.getAttribute("data-index");
+                  enfObj[index] = input.value;
+              }
+          });
+
+          try {
+              await setDoc(doc(db, "ayarlar", "veriler"), {
+                  sosyal: sosyalObj,
+                  enflasyon: enfObj
+              });
+              alert("Değişiklikler başarıyla kaydedildi!");
+          } catch (error) {
+              console.error("Kayıt hatası:", error);
+              alert("Hata oluştu: " + error.message);
+          }
+      });
     </script>
 </body>
 </html>
