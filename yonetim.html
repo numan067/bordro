@@ -3,296 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bordro İçerik Yönetim Paneli</title>
+    <title>Maaş Hesaplama Portalı</title>
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #f59e0b;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             margin: 0;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-        .login-container, .panel-container {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            max-width: 900px;
-            margin: 20px auto;
-        }
-        .login-container {
-            max-width: 400px;
-            margin-top: 100px;
-        }
-        h2, h3 {
-            color: #2d3748;
-            border-bottom: 2px solid #5d3ebc;
-            padding-bottom: 8px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #4a5568;
-            font-weight: 600;
-        }
-        input[type="text"], input[type="password"], textarea {
+
+        .portal-card {
+            background: var(--card-bg);
             width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e0;
-            border-radius: 8px;
+            max-width: 480px;
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            text-align: center;
             box-sizing: border-box;
-            font-family: inherit;
+            position: relative;
         }
-        textarea {
-            resize: vertical;
+
+        .portal-header h1 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0 0 25px 0;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #4f46e5, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #5d3ebc;
+
+        .menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .menu-btn {
+            background: linear-gradient(135deg, #5d3ebc 0%, #7c3aed 100%);
             color: white;
             border: none;
-            border-radius: 8px;
+            padding: 16px 20px;
             font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.2s;
-        }
-        button:hover {
-            background-color: #4b319d;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        th, td {
-            border: 1px solid #e2e8f0;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #5d3ebc;
-            color: white;
-        }
-        .back-link {
-            display: block;
-            margin-top: 15px;
-            text-align: center;
-            color: #5d3ebc;
-            text-decoration: none;
-            font-size: 14px;
             font-weight: 600;
-        }
-        .top-bar {
+            border-radius: 14px;
+            cursor: pointer;
+            text-decoration: none;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(93, 62, 188, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(93, 62, 188, 0.35);
+            background: linear-gradient(135deg, #4b319d 0%, #6d28d9 100%);
+        }
+
+        /* Duyuru Panosu Premium Tasarım */
+        .announcement-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 10px;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .announcement-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #d97706;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .announcement-text {
+            font-size: 15px;
+            color: #78350f;
+            font-weight: 500;
+            line-height: 1.5;
+            margin: 0;
+            word-break: break-word;
+        }
+
+        .announcement-image-container {
+            margin-top: 12px;
+            display: none;
+        }
+
+        .announcement-image-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .admin-link {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .admin-link:hover {
+            color: var(--primary);
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <!-- GİRİŞ EKRANI -->
-    <div id="loginSection" class="login-container">
-        <h2>Yönetim Paneli Giriş</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="kullaniciAdi">Kullanıcı adı</label>
-                <input type="text" id="kullaniciAdi" required>
-            </div>
-            <div class="form-group">
-                <label for="parola">Parola</label>
-                <input type="password" id="parola" required>
-            </div>
-            <button type="submit">Giriş yap</button>
-        </form>
-        <a href="index.html" class="back-link">← Ana Sayfaya Dön</a>
-    </div>
-
-    <!-- PANEL EKRANI -->
-    <div id="panelSection" class="panel-container" style="display: none;">
-        <div class="top-bar">
-            <h2>İçerik Yönetim Paneli</h2>
-            <a href="index.html" class="back-link" style="margin-top:0;">← Ana Sayfa</a>
+    <div class="portal-card">
+        <div class="portal-header">
+            <h1>Maaş Hesaplama Portalı</h1>
         </div>
 
-        <form id="yonetimForm">
-            <!-- DUYURU PANOSU DÜZENLEME -->
-            <h3>Duyuru Panosu Düzenleme</h3>
-            <div class="form-group" style="margin-top: 15px;">
-                <label for="duyuruInput">Duyuru Metni:</label>
-                <textarea id="duyuruInput" rows="3" placeholder="Ana sayfada görünecek duyuruyu yazın..."></textarea>
+        <div class="menu-grid">
+            <a href="hesapla.html" class="menu-btn">Maaş Hesaplama</a>
+            <a href="fark.html" class="menu-btn">Fark Hesaplama</a>
+            <a href="sosyal.html" class="menu-btn">Sosyal Haklar</a>
+            <a href="enf.html" class="menu-btn">Enflasyon Takibi</a>
+        </div>
+
+        <!-- Duyuru Panosu -->
+        <div class="announcement-box">
+            <div class="announcement-title">
+                📢 Duyuru Panosu
             </div>
+            <p id="duyuruIcerik" class="announcement-text">Yükleniyor...</p>
+            <div id="duyuruFotoContainer" class="announcement-image-container">
+                <img id="duyuruFoto" src="" alt="Duyuru Görseli">
+            </div>
+        </div>
 
-            <!-- SOSYAL YARDIMLAR -->
-            <h3>Sosyal Yardımlar Düzenleme</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Yardım Adı</th>
-                        <th>2025 Değeri</th>
-                        <th>2026 Değeri</th>
-                    </tr>
-                </thead>
-                <tbody id="sosyalYardimlarBody"></tbody>
-            </table>
-
-            <!-- ENFLASYON -->
-            <h3>Aylık TÜFE (%) Düzenleme</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Ay</th>
-                        <th>Aylık TÜFE (%)</th>
-                    </tr>
-                </thead>
-                <tbody id="enflasyonBody"></tbody>
-            </table>
-
-            <button type="submit">Değişiklikleri Kaydet</button>
-        </form>
+        <a href="yonetim.html" class="admin-link">Yönetim Paneli Girişi</a>
     </div>
 
+    <!-- Firebase Duyuru ve Fotoğraf Çekme Scripti -->
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-      import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
-        authDomain: "bordroapp.firebaseapp.com",
-        projectId: "bordroapp",
-        storageBucket: "bordroapp.firebasestorage.app",
-        messagingSenderId: "495208822576",
-        appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
-        measurementId: "G-6ZRKG9HG9J"
-      };
+        const firebaseConfig = {
+          apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
+          authDomain: "bordroapp.firebaseapp.com",
+          projectId: "bordroapp",
+          storageBucket: "bordroapp.firebasestorage.app",
+          messagingSenderId: "495208822576",
+          appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
+          measurementId: "G-6ZRKG9HG9J"
+        };
 
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-      const sosyalKeys = [
-          { id: "servis", adi: "Servis Ücreti" },
-          { id: "ram_bayrami", adi: "Ram. Bayramı" },
-          { id: "kur_bayrami", adi: "Kur. Bayramı" },
-          { id: "yakacak", adi: "Yakacak Yard." },
-          { id: "yillik_izin", adi: "Yıllık İzin" },
-          { id: "ana_ilkokul", adi: "Ana-İlkokul" },
-          { id: "ortaogretim", adi: "Ortaöğretim" },
-          { id: "lise", adi: "Lise" },
-          { id: "universite", adi: "Üniversite" },
-          { id: "evlenme", adi: "Evlenme" },
-          { id: "dogum", adi: "Doğum" },
-          { id: "olum_kendi", adi: "Ölüm (Kendi)" },
-          { id: "olum_yakin", adi: "Ölüm (Yakın)" },
-          { id: "gece_zammi", adi: "Gece Zammı Ü." }
-      ];
+        async function duyuruyuGetir() {
+            try {
+                const docRef = doc(db, "ayarlar", "veriler");
+                const docSnap = await getDoc(docRef);
+                const duyuruElement = document.getElementById("duyuruIcerik");
+                const fotoContainer = document.getElementById("duyuruFotoContainer");
+                const fotoImg = document.getElementById("duyuruFoto");
 
-      const aylar = [
-          "Ocak 2026", "Şubat 2026", "Mart 2026", "Nisan 2026", 
-          "Mayıs 2026", "Haziran 2026", "Temmuz 2026", "Ağustos 2026", 
-          "Eylül 2026", "Ekim 2026", "Kasım 2026", "Aralık 2026"
-      ];
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    
+                    if (data.duyuru) {
+                        duyuruElement.textContent = data.duyuru;
+                    } else {
+                        duyuruElement.textContent = "Şu an aktif bir duyuru bulunmuyor.";
+                    }
 
-      document.getElementById("loginForm").addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const kAdi = document.getElementById("kullaniciAdi").value.trim();
-          const sifre = document.getElementById("parola").value.trim();
+                    if (data.duyuruFoto && data.duyuruFoto.trim() !== "") {
+                        fotoImg.src = data.duyuruFoto;
+                        fotoContainer.style.display = "block";
+                    } else {
+                        fotoContainer.style.display = "none";
+                    }
+                } else {
+                    duyuruElement.textContent = "Şu an aktif bir duyuru bulunmuyor.";
+                }
+            } catch (error) {
+                console.error("Duyuru çekilemedi:", error);
+                document.getElementById("duyuruIcerik").textContent = "Duyurular yüklenirken bir hata oluştu.";
+            }
+        }
 
-          try {
-              const q = query(collection(db, "admins"), where("kullaniciAdi", "==", kAdi), where("sifre", "==", sifre));
-              const querySnapshot = await getDocs(q);
-
-              if (!querySnapshot.empty) {
-                  document.getElementById("loginSection").style.display = "none";
-                  document.getElementById("panelSection").style.display = "block";
-                  verileriYukle();
-              } else {
-                  alert("Kullanıcı adı veya parola hatalı!");
-              }
-          } catch (error) {
-              console.error("Giriş hatası:", error);
-              alert("Bağlantı hatası: " + error.message);
-          }
-      });
-
-      async function verileriYukle() {
-          const sosyalBody = document.getElementById("sosyalYardimlarBody");
-          const enfBody = document.getElementById("enflasyonBody");
-          const duyuruInput = document.getElementById("duyuruInput");
-
-          const docRef = doc(db, "ayarlar", "veriler");
-          const docSnap = await getDoc(docRef);
-          let data = docSnap.exists() ? docSnap.data() : {};
-
-          // Duyuruyu doldur
-          duyuruInput.value = data.duyuru || "";
-
-          let sosyalData = data.sosyal || {};
-          let enfData = data.enflasyon || {};
-
-          sosyalBody.innerHTML = "";
-          sosyalKeys.forEach(item => {
-              let val2025 = sosyalData[item.id] ? sosyalData[item.id]._2025 || "" : "";
-              let val2026 = sosyalData[item.id] ? sosyalData[item.id]._2026 || "" : "";
-
-              sosyalBody.innerHTML += `
-                  <tr>
-                      <td>${item.adi}</td>
-                      <td><input type="text" data-type="sosyal" data-id="${item.id}" data-yil="2025" value="${val2025}"></td>
-                      <td><input type="text" data-type="sosyal" data-id="${item.id}" data-yil="2026" value="${val2026}"></td>
-                  </tr>
-              `;
-          });
-
-          enfBody.innerHTML = "";
-          aylar.forEach((ay, index) => {
-              let ayVal = enfData[index] !== undefined ? enfData[index] : "";
-              enfBody.innerHTML += `
-                  <tr>
-                      <td>${ay}</td>
-                      <td><input type="text" data-type="enf" data-index="${index}" value="${ayVal}"></td>
-                  </tr>
-              `;
-          });
-      }
-
-      document.getElementById("yonetimForm").addEventListener("submit", async (e) => {
-          e.preventDefault();
-
-          let yeniDuyuru = document.getElementById("duyuruInput").value;
-          let sosyalObj = {};
-          let enfObj = {};
-
-          document.querySelectorAll("#panelSection input[data-type]").forEach(input => {
-              let type = input.getAttribute("data-type");
-              if (type === "sosyal") {
-                  let id = input.getAttribute("data-id");
-                  let yil = input.getAttribute("data-yil");
-                  if (!sosyalObj[id]) sosyalObj[id] = {};
-                  sosyalObj[id]["_" + yil] = input.value;
-              } else if (type === "enf") {
-                  let index = input.getAttribute("data-index");
-                  enfObj[index] = input.value;
-              }
-          });
-
-          try {
-              // Mevcut verilerin üzerine yazarken duyuruyu da ekliyoruz
-              await setDoc(doc(db, "ayarlar", "veriler"), {
-                  duyuru: yeniDuyuru,
-                  sosyal: sosyalObj,
-                  enflasyon: enfObj
-              });
-              alert("Değişiklikler başarıyla kaydedildi!");
-          } catch (error) {
-              console.error("Kayıt hatası:", error);
-              alert("Hata oluştu: " + error.message);
-          }
-      });
+        duyuruyuGetir();
     </script>
 </body>
 </html>
