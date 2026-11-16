@@ -10,10 +10,11 @@
             background-color: #f4f4f9;
             margin: 0;
             padding: 20px;
+            padding-bottom: 90px; /* Alt barın içeriği kapatmaması için boşluk */
         }
         .login-container, .panel-container {
             background: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 16px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
             max-width: 900px;
@@ -37,7 +38,7 @@
             color: #4a5568;
             font-weight: 600;
         }
-        input[type="text"], input[type="password"], textarea {
+        input[type="text"], input[type="password"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #cbd5e0;
@@ -45,10 +46,14 @@
             box-sizing: border-box;
             font-family: inherit;
         }
-        textarea {
-            resize: vertical;
+        .row {
+            display: flex;
+            gap: 15px;
         }
-        button {
+        .row .form-group {
+            flex: 1;
+        }
+        button.save-btn {
             width: 100%;
             padding: 12px;
             background-color: #5d3ebc;
@@ -58,10 +63,10 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 15px;
             transition: background 0.2s;
         }
-        button:hover {
+        button.save-btn:hover {
             background-color: #4b319d;
         }
         table {
@@ -92,6 +97,49 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        /* Sekme Bölümleri */
+        .panel-section {
+            display: none;
+        }
+        .panel-section.active {
+            display: block;
+        }
+
+        /* Sabit Alt Bar (Navigation Bar) */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+            display: none; /* Giriş yapınca açılacak */
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+        .bottom-btn {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #718096;
+            cursor: pointer;
+            gap: 4px;
+            flex: 1;
+            transition: color 0.2s;
+        }
+        .bottom-btn.active {
+            color: #5d3ebc;
+        }
+        .bottom-btn span {
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
@@ -108,12 +156,12 @@
                 <label for="parola">Parola</label>
                 <input type="password" id="parola" required>
             </div>
-            <button type="submit">Giriş yap</button>
+            <button type="submit" class="save-btn">Giriş yap</button>
         </form>
         <a href="index.html" class="back-link">← Ana Sayfaya Dön</a>
     </div>
 
-    <!-- PANEL EKRANI (Başta Gizlidir, Giriş Yapınca Açılır) -->
+    <!-- PANEL EKRANI -->
     <div id="panelSection" class="panel-container" style="display: none;">
         <div class="top-bar">
             <h2>İçerik Yönetim Paneli</h2>
@@ -121,44 +169,85 @@
         </div>
 
         <form id="yonetimForm">
-            <!-- DUYURU PANOSU VE FOTOĞRAF DÜZENLEME -->
-            <h3>Duyuru Panosu ve Görsel Düzenleme</h3>
-            <div class="form-group" style="margin-top: 15px;">
-                <label for="duyuruInput">Duyuru Metni:</label>
-                <textarea id="duyuruInput" rows="3" placeholder="Ana sayfada görünecek duyuruyu yazın..."></textarea>
+            
+            <!-- BÖLÜM 1: DUYURU VE GÖRSEL -->
+            <div id="secDuyuru" class="panel-section active">
+                <h3>Duyuru Panosu (3 Satır) ve Görsel</h3>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label for="duyuru1">1. Satır Duyuru:</label>
+                    <input type="text" id="duyuru1" placeholder="Birinci satır duyuru metni...">
+                </div>
+                <div class="form-group">
+                    <label for="duyuru2">2. Satır Duyuru:</label>
+                    <input type="text" id="duyuru2" placeholder="İkinci satır duyuru metni...">
+                </div>
+                <div class="form-group">
+                    <label for="duyuru3">3. Satır Duyuru:</label>
+                    <input type="text" id="duyuru3" placeholder="Üçüncü satır duyuru metni...">
+                </div>
+                <div class="form-group">
+                    <label for="duyuruFotoInput">Duyuru Fotoğrafı URL'si:</label>
+                    <input type="text" id="duyuruFotoInput" placeholder="Fotoğraf linkini buraya yapıştırın (Örn: https://...)">
+                </div>
+                <button type="submit" class="save-btn">Değişiklikleri Kaydet</button>
             </div>
-            <div class="form-group">
-                <label for="duyuruFotoInput">Duyuru Fotoğrafı URL'si:</label>
-                <input type="text" id="duyuruFotoInput" placeholder="Fotoğraf linkini buraya yapıştırın (Örn: https://...)">
+
+            <!-- BÖLÜM 2: SOSYAL YARDIMLAR -->
+            <div id="secSosyal" class="panel-section">
+                <h3>Sosyal Yardımlar ve Başlık Düzenleme</h3>
+                <div class="row" style="margin-top: 15px;">
+                    <div class="form-group">
+                        <label for="yil1Input">1. Sütun Başlığı:</label>
+                        <input type="text" id="yil1Input" value="2025">
+                    </div>
+                    <div class="form-group">
+                        <label for="yil2Input">2. Sütun Başlığı:</label>
+                        <input type="text" id="yil2Input" value="2026">
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Yardım Adı</th>
+                            <th>1. Sütun Değeri</th>
+                            <th>2. Sütun Değeri</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sosyalYardimlarBody"></tbody>
+                </table>
+                <button type="submit" class="save-btn">Değişiklikleri Kaydet</button>
             </div>
 
-            <!-- SOSYAL YARDIMLAR -->
-            <h3>Sosyal Yardımlar Düzenleme</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Yardım Adı</th>
-                        <th>2025 Değeri</th>
-                        <th>2026 Değeri</th>
-                    </tr>
-                </thead>
-                <tbody id="sosyalYardimlarBody"></tbody>
-            </table>
+            <!-- BÖLÜM 3: ENFLASYON -->
+            <div id="secEnf" class="panel-section">
+                <h3>Aylık TÜFE (%) Düzenleme</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ay</th>
+                            <th>Aylık TÜFE (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="enflasyonBody"></tbody>
+                </table>
+                <button type="submit" class="save-btn">Değişiklikleri Kaydet</button>
+            </div>
 
-            <!-- ENFLASYON -->
-            <h3>Aylık TÜFE (%) Düzenleme</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Ay</th>
-                        <th>Aylık TÜFE (%)</th>
-                    </tr>
-                </thead>
-                <tbody id="enflasyonBody"></tbody>
-            </table>
-
-            <button type="submit">Değişiklikleri Kaydet</button>
         </form>
+    </div>
+
+    <!-- SABİT ALT NAVİGASYON BARI -->
+    <div class="bottom-bar" id="bottomNav">
+        <button type="button" class="bottom-btn active" onclick="bolumGecis('secDuyuru', this)">
+            <span>📢</span> Duyuru
+        </button>
+        <button type="button" class="bottom-btn" onclick="bolumGecis('secSosyal', this)">
+            <span>💰</span> Sosyal Haklar
+        </button>
+        <button type="button" class="bottom-btn" onclick="bolumGecis('secEnf', this)">
+            <span>📈</span> Enflasyon
+        </button>
     </div>
 
     <!-- Firebase ve Kontrol Scripti -->
@@ -202,7 +291,15 @@
           "Eylül 2026", "Ekim 2026", "Kasım 2026", "Aralık 2026"
       ];
 
-      // Güçlendirilmiş Giriş Kontrolü (İndeks/Sorgu takılmalarını önler)
+      // Bölümler arası geçiş fonksiyonu
+      window.bolumGecis = function(secId, btn) {
+          document.querySelectorAll('.panel-section').forEach(el => el.classList.remove('active'));
+          document.getElementById(secId).classList.add('active');
+          document.querySelectorAll('.bottom-btn').forEach(el => el.classList.remove('active'));
+          btn.classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
       document.getElementById("loginForm").addEventListener("submit", async (e) => {
           e.preventDefault();
           const kAdi = document.getElementById("kullaniciAdi").value.trim();
@@ -222,6 +319,7 @@
               if (girisBasarili) {
                   document.getElementById("loginSection").style.display = "none";
                   document.getElementById("panelSection").style.display = "block";
+                  document.getElementById("bottomNav").style.display = "flex"; // Alt barı göster
                   verileriYukle();
               } else {
                   alert("Kullanıcı adı veya parola hatalı!");
@@ -232,33 +330,40 @@
           }
       });
 
-      // Firebase'den verileri çekip kutucuklara doldurma
       async function verileriYukle() {
           const sosyalBody = document.getElementById("sosyalYardimlarBody");
           const enfBody = document.getElementById("enflasyonBody");
-          const duyuruInput = document.getElementById("duyuruInput");
+          const duyuru1 = document.getElementById("duyuru1");
+          const duyuru2 = document.getElementById("duyuru2");
+          const duyuru3 = document.getElementById("duyuru3");
           const duyuruFotoInput = document.getElementById("duyuruFotoInput");
+          const yil1Input = document.getElementById("yil1Input");
+          const yil2Input = document.getElementById("yil2Input");
 
           const docRef = doc(db, "ayarlar", "veriler");
           const docSnap = await getDoc(docRef);
           let data = docSnap.exists() ? docSnap.data() : {};
 
-          duyuruInput.value = data.duyuru || "";
+          duyuru1.value = data.duyuru1 || "";
+          duyuru2.value = data.duyuru2 || "";
+          duyuru3.value = data.duyuru3 || "";
           duyuruFotoInput.value = data.duyuruFoto || "";
+          yil1Input.value = data.yil1 || "2025";
+          yil2Input.value = data.yil2 || "2026";
 
           let sosyalData = data.sosyal || {};
           let enfData = data.enflasyon || {};
 
           sosyalBody.innerHTML = "";
           sosyalKeys.forEach(item => {
-              let val2025 = sosyalData[item.id] ? sosyalData[item.id]._2025 || "" : "";
-              let val2026 = sosyalData[item.id] ? sosyalData[item.id]._2026 || "" : "";
+              let val1 = sosyalData[item.id] ? sosyalData[item.id]._yil1 || "" : "";
+              let val2 = sosyalData[item.id] ? sosyalData[item.id]._yil2 || "" : "";
 
               sosyalBody.innerHTML += `
                   <tr>
                       <td>${item.adi}</td>
-                      <td><input type="text" data-type="sosyal" data-id="${item.id}" data-yil="2025" value="${val2025}"></td>
-                      <td><input type="text" data-type="sosyal" data-id="${item.id}" data-yil="2026" value="${val2026}"></td>
+                      <td><input type="text" data-type="sosyal" data-id="${item.id}" data-yil="yil1" value="${val1}"></td>
+                      <td><input type="text" data-type="sosyal" data-id="${item.id}" data-yil="yil2" value="${val2}"></td>
                   </tr>
               `;
           });
@@ -275,12 +380,16 @@
           });
       }
 
-      // Değişiklikleri Kaydetme
       document.getElementById("yonetimForm").addEventListener("submit", async (e) => {
           e.preventDefault();
 
-          let yeniDuyuru = document.getElementById("duyuruInput").value;
+          let d1 = document.getElementById("duyuru1").value;
+          let d2 = document.getElementById("duyuru2").value;
+          let d3 = document.getElementById("duyuru3").value;
           let yeniDuyuruFoto = document.getElementById("duyuruFotoInput").value;
+          let yil1 = document.getElementById("yil1Input").value;
+          let yil2 = document.getElementById("yil2Input").value;
+
           let sosyalObj = {};
           let enfObj = {};
 
@@ -299,8 +408,12 @@
 
           try {
               await setDoc(doc(db, "ayarlar", "veriler"), {
-                  duyuru: yeniDuyuru,
+                  duyuru1: d1,
+                  duyuru2: d2,
+                  duyuru3: d3,
                   duyuruFoto: yeniDuyuruFoto,
+                  yil1: yil1,
+                  yil2: yil2,
                   sosyal: sosyalObj,
                   enflasyon: enfObj
               });
