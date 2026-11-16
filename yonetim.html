@@ -6,7 +6,7 @@
     <title>Bordro İçerik Yönetim Paneli</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f4f9;
             margin: 0;
             padding: 20px;
@@ -14,8 +14,8 @@
         .login-container, .panel-container {
             background: white;
             padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
             max-width: 900px;
             margin: 20px auto;
         }
@@ -24,7 +24,7 @@
             margin-top: 100px;
         }
         h2, h3 {
-            color: #333;
+            color: #2d3748;
             border-bottom: 2px solid #5d3ebc;
             padding-bottom: 8px;
         }
@@ -34,14 +34,19 @@
         label {
             display: block;
             margin-bottom: 5px;
-            color: #666;
+            color: #4a5568;
+            font-weight: 600;
         }
-        input[type="text"], input[type="password"] {
+        input[type="text"], input[type="password"], textarea {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
             box-sizing: border-box;
+            font-family: inherit;
+        }
+        textarea {
+            resize: vertical;
         }
         button {
             width: 100%;
@@ -49,10 +54,12 @@
             background-color: #5d3ebc;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
+            transition: background 0.2s;
         }
         button:hover {
             background-color: #4b319d;
@@ -63,7 +70,7 @@
             margin-top: 15px;
         }
         th, td {
-            border: 1px solid #ddd;
+            border: 1px solid #e2e8f0;
             padding: 10px;
             text-align: left;
         }
@@ -78,6 +85,7 @@
             color: #5d3ebc;
             text-decoration: none;
             font-size: 14px;
+            font-weight: 600;
         }
         .top-bar {
             display: flex;
@@ -90,7 +98,7 @@
 
     <!-- GİRİŞ EKRANI -->
     <div id="loginSection" class="login-container">
-        <h2>Bordro Yönetim Paneli</h2>
+        <h2>Yönetim Paneli Giriş</h2>
         <form id="loginForm">
             <div class="form-group">
                 <label for="kullaniciAdi">Kullanıcı adı</label>
@@ -102,17 +110,25 @@
             </div>
             <button type="submit">Giriş yap</button>
         </form>
-        <a href="index.html" class="back-link">← Bordro sayfasına dön</a>
+        <a href="index.html" class="back-link">← Ana Sayfaya Dön</a>
     </div>
 
-    <!-- PANEL EKRANI (Başta Gizlidir, Giriş Yapınca Açılır) -->
+    <!-- PANEL EKRANI -->
     <div id="panelSection" class="panel-container" style="display: none;">
         <div class="top-bar">
             <h2>İçerik Yönetim Paneli</h2>
-            <a href="index.html" class="back-link">← Ana Sayfa</a>
+            <a href="index.html" class="back-link" style="margin-top:0;">← Ana Sayfa</a>
         </div>
 
         <form id="yonetimForm">
+            <!-- DUYURU PANOSU DÜZENLEME -->
+            <h3>Duyuru Panosu Düzenleme</h3>
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="duyuruInput">Duyuru Metni:</label>
+                <textarea id="duyuruInput" rows="3" placeholder="Ana sayfada görünecek duyuruyu yazın..."></textarea>
+            </div>
+
+            <!-- SOSYAL YARDIMLAR -->
             <h3>Sosyal Yardımlar Düzenleme</h3>
             <table>
                 <thead>
@@ -122,11 +138,10 @@
                         <th>2026 Değeri</th>
                     </tr>
                 </thead>
-                <tbody id="sosyalYardimlarBody">
-                    <!-- Dinamik doldurulacak -->
-                </tbody>
+                <tbody id="sosyalYardimlarBody"></tbody>
             </table>
 
+            <!-- ENFLASYON -->
             <h3>Aylık TÜFE (%) Düzenleme</h3>
             <table>
                 <thead>
@@ -135,16 +150,13 @@
                         <th>Aylık TÜFE (%)</th>
                     </tr>
                 </thead>
-                <tbody id="enflasyonBody">
-                    <!-- Dinamik doldurulacak -->
-                </tbody>
+                <tbody id="enflasyonBody"></tbody>
             </table>
 
             <button type="submit">Değişiklikleri Kaydet</button>
         </form>
     </div>
 
-    <!-- Firebase ve Kontrol Scripti -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
       import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -185,7 +197,6 @@
           "Eylül 2026", "Ekim 2026", "Kasım 2026", "Aralık 2026"
       ];
 
-      // Giriş yapma kontrolü (Yönlendirme yapmaz, aynı sayfada paneli açar)
       document.getElementById("loginForm").addEventListener("submit", async (e) => {
           e.preventDefault();
           const kAdi = document.getElementById("kullaniciAdi").value.trim();
@@ -196,7 +207,6 @@
               const querySnapshot = await getDocs(q);
 
               if (!querySnapshot.empty) {
-                  // Giriş başarılı: Giriş kutusunu gizle, yönetim paneli kutularını göster
                   document.getElementById("loginSection").style.display = "none";
                   document.getElementById("panelSection").style.display = "block";
                   verileriYukle();
@@ -209,14 +219,17 @@
           }
       });
 
-      // Firebase'den verileri çekip kutucuklara doldurma
       async function verileriYukle() {
           const sosyalBody = document.getElementById("sosyalYardimlarBody");
           const enfBody = document.getElementById("enflasyonBody");
+          const duyuruInput = document.getElementById("duyuruInput");
 
           const docRef = doc(db, "ayarlar", "veriler");
           const docSnap = await getDoc(docRef);
           let data = docSnap.exists() ? docSnap.data() : {};
+
+          // Duyuruyu doldur
+          duyuruInput.value = data.duyuru || "";
 
           let sosyalData = data.sosyal || {};
           let enfData = data.enflasyon || {};
@@ -247,14 +260,14 @@
           });
       }
 
-      // Değişiklikleri Kaydetme
       document.getElementById("yonetimForm").addEventListener("submit", async (e) => {
           e.preventDefault();
 
+          let yeniDuyuru = document.getElementById("duyuruInput").value;
           let sosyalObj = {};
           let enfObj = {};
 
-          document.querySelectorAll("#panelSection input").forEach(input => {
+          document.querySelectorAll("#panelSection input[data-type]").forEach(input => {
               let type = input.getAttribute("data-type");
               if (type === "sosyal") {
                   let id = input.getAttribute("data-id");
@@ -268,7 +281,9 @@
           });
 
           try {
+              // Mevcut verilerin üzerine yazarken duyuruyu da ekliyoruz
               await setDoc(doc(db, "ayarlar", "veriler"), {
+                  duyuru: yeniDuyuru,
                   sosyal: sosyalObj,
                   enflasyon: enfObj
               });
