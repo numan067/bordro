@@ -3,41 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enflasyon Takibi</title>
+    <title>Enflasyon Takibi ve Hesaplama</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f4f9;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
         }
         .container {
-            max-width: 650px;
+            max-width: 600px;
             margin: 0 auto;
             background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
         h2 {
-            color: #333;
+            color: #2d3748;
             text-align: center;
             border-bottom: 2px solid #d97706;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
+            margin-top: 0;
+            font-size: 20px;
+        }
+        .calc-card {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .calc-card h3 {
+            margin-top: 0;
+            color: #b45309;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            color: #78350f;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .calc-btn {
+            background-color: #d97706;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .calc-btn:hover {
+            background-color: #b45309;
+        }
+        .result-box {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #78350f;
+            background: #fef3c7;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
+            line-height: 1.5;
+        }
+        /* Kompakt ve Kaydırmalı Tablo Alanı */
+        .table-container {
+            max-height: 230px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            font-size: 13px;
         }
         th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 8px 10px;
             text-align: center;
         }
         th {
             background-color: #d97706;
             color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
         td:first-child {
             text-align: left;
@@ -45,34 +113,51 @@
         .back-btn {
             display: block;
             text-align: center;
-            background-color: #d97706;
+            background-color: #4a5568;
             color: white;
             text-decoration: none;
-            padding: 12px;
+            padding: 10px;
             border-radius: 6px;
-            margin-top: 20px;
+            margin-top: 15px;
             font-weight: bold;
+            font-size: 14px;
         }
         .back-btn:hover {
-            background-color: #b45309;
+            background-color: #2d3748;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>ENFLASYON TAKİBİ</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Ay</th>
-                    <th>Aylık TÜFE (%)</th>
-                    <th>Birikimli (%)</th>
-                </tr>
-            </thead>
-            <tbody id="enfBody">
-                <!-- Firebase'den dinamik olarak yüklenecek -->
-            </tbody>
-        </table>
+        <h2>ENFLASYON TAKİBİ VE HESAPLAMA</h2>
+
+        <!-- İkinci 6 Aylık Hesaplama Bölümü -->
+        <div class="calc-card">
+            <h3>İkinci 6 Aylık Saat Ücreti Hesaplama</h3>
+            <div class="form-group">
+                <label for="saatUcreti">Mevcut Saat Ücreti (TL):</label>
+                <input type="number" id="saatUcreti" step="0.01" placeholder="Örn: 150.00">
+            </div>
+            <button type="button" class="calc-btn" id="hesaplaBtn">Hesapla</button>
+            <div id="sonucBox" class="result-box"></div>
+        </div>
+
+        <!-- Kompakt Enflasyon Tablosu -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ay</th>
+                        <th>Aylık TÜFE (%)</th>
+                        <th>Birikimli (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="enfBody">
+                    <!-- Firebase'den dinamik yüklenecek -->
+                </tbody>
+            </table>
+        </div>
+
         <a href="index.html" class="back-btn">ANA SAYFAYA DÖN</a>
     </div>
 
@@ -99,6 +184,8 @@
             "Eylül 2026", "Ekim 2026", "Kasım 2026", "Aralık 2026"
         ];
 
+        let globalIkinci6AyOran = 0;
+
         async function enfVerileriniCek() {
             const tbody = document.getElementById("enfBody");
             try {
@@ -109,6 +196,10 @@
                 tbody.innerHTML = "";
                 let birikimli = 1;
                 let basladi = false;
+
+                // Temmuz - Aralık (İkinci 6 Ay) birleşik enflasyon hesaplaması
+                let ikinci6AyBirikimli = 1;
+                let basladi6 = false;
 
                 aylar.forEach((ay, index) => {
                     let valStr = enfData[index];
@@ -127,6 +218,16 @@
                         }
                         let birikimliVal = (birikimli - 1) * 100;
                         birikimliGosterim = birikimliVal.toFixed(2).replace(".", ",");
+
+                        // Temmuz (index 6) ile Aralık (index 11) arası ikinci 6 ay
+                        if (index >= 6 && index <= 11) {
+                            if (!basladi6) {
+                                ikinci6AyBirikimli = 1 + (aylikVal / 100);
+                                basladi6 = true;
+                            } else {
+                                ikinci6AyBirikimli = ikinci6AyBirikimli * (1 + (aylikVal / 100));
+                            }
+                        }
                     }
 
                     tbody.innerHTML += `
@@ -137,10 +238,35 @@
                         </tr>
                     `;
                 });
+
+                globalIkinci6AyOran = basladi6 ? (ikinci6AyBirikimli - 1) * 100 : 0;
             } catch (e) {
                 console.error("Veri çekme hatası:", e);
             }
         }
+
+        document.getElementById("hesaplaBtn").addEventListener("click", () => {
+            const mevcutSaatUcretiInput = document.getElementById("saatUcreti").value;
+            const sonucBox = document.getElementById("sonucBox");
+
+            if (!mevcutSaatUcretiInput || isNaN(mevcutSaatUcretiInput)) {
+                alert("Lütfen geçerli bir mevcut saat ücreti girin!");
+                return;
+            }
+
+            let mevcutUcret = parseFloat(mevcutSaatUcretiInput);
+            // Birleşik enflasyona +2 puan ekleniyor
+            let toplamArtisOrani = globalIkinci6AyOran + 2;
+            let yeniUcret = mevcutUcret * (1 + (toplamArtisOrani / 100));
+
+            sonucBox.style.display = "block";
+            sonucBox.innerHTML = `
+                <strong>Temmuz - Aralık Birleşik Enflasyon:</strong> %${globalIkinci6AyOran.toFixed(2).replace(".", ",")}<br>
+                <strong>Not:</strong> Hesaplamaya +2 koyulmuştur.<br>
+                <strong>Toplam Artış Oranı:</strong> %${toplamArtisOrani.toFixed(2).replace(".", ",")}<br>
+                <strong>Yeni Saat Ücreti:</strong> <strong>${yeniUcret.toFixed(2).replace(".", ",")} TL</strong>
+            `;
+        });
 
         enfVerileriniCek();
     </script>
