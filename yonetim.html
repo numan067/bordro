@@ -1,77 +1,46 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bordro İçerik Yönetim Paneli</title>
-</head>
-<body>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    <!-- Giriş Formu Tasarımınız -->
-    <div class="login-container">
-        <h2>Bordro içerik yönetim paneli</h2>
-        <form>
-            <div>
-                <label for="kullaniciAdi">Kullanıcı adı</label>
-                <input type="text" id="kullaniciAdi" required>
-            </div>
-            <div>
-                <label for="parola">Parola</label>
-                <input type="password" id="parola" required>
-            </div>
-            <button type="submit" id="girisBtn">Giriş yap</button>
-        </form>
-    </div>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
+    authDomain: "bordroapp.firebaseapp.com",
+    projectId: "bordroapp",
+    storageBucket: "bordroapp.firebasestorage.app",
+    messagingSenderId: "495208822576",
+    appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
+    measurementId: "G-6ZRKG9HG9J"
+  };
 
-    <!-- Firebase Bağlantı ve Giriş Kontrol Scripti -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-      import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-      // Sizin Firebase Proje Yapılandırmanız
-      const firebaseConfig = {
-        apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
-        authDomain: "bordroapp.firebaseapp.com",
-        projectId: "bordroapp",
-        storageBucket: "bordroapp.firebasestorage.app",
-        messagingSenderId: "495208822576",
-        appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
-        measurementId: "G-6ZRKG9HG9J"
-      };
+  const form = document.querySelector("form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const kAdi = document.getElementById("kullaniciAdi").value.trim();
+    const sifre = document.getElementById("parola").value.trim();
 
-      // Firebase başlatma
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
+    try {
+      const q = query(
+        collection(db, "admins"), 
+        where("kullaniciAdi", "==", kAdi), 
+        where("sifre", "==", sifre)
+      );
+      
+      const querySnapshot = await getDocs(q);
 
-      // Form gönderildiğinde (Giriş yap butonuna basıldığında) çalışacak kod
-      const form = document.querySelector("form");
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        
-        const kAdi = document.getElementById("kullaniciAdi").value.trim();
-        const sifre = document.getElementById("parola").value.trim();
-
-        try {
-          // Firestore 'admins' koleksiyonunda eşleşen kullanıcıyı arıyoruz
-          const q = query(
-            collection(db, "admins"), 
-            where("kullaniciAdi", "==", kAdi), 
-            where("sifre", "==", sifre)
-          );
-          
-          const querySnapshot = await getDocs(q);
-
-          if (!querySnapshot.empty) {
-            alert("Giriş başarılı!");
-            window.location.href = "panel.html"; // Başarılı girişte yönlendirilecek sayfa
-          } else {
-            alert("Kullanıcı adı veya parola hatalı!");
-          }
-        } catch (error) {
-          console.error("Giriş hatası:", error);
-          alert("Bağlantı sırasında bir hata oluştu.");
-        }
-      });
-    </script>
-</body>
-</html>
+      if (!querySnapshot.empty) {
+        alert("Giriş başarılı!");
+        window.location.href = "panel.html";
+      } else {
+        alert("Kullanıcı adı veya parola hatalı!");
+      }
+    } catch (error) {
+      console.error("Giriş hatası:", error);
+      // Hatanın ne olduğunu ekranda direkt görebilmemiz için:
+      alert("Hata oluştu: " + error.message);
+    }
+  });
+</script>
