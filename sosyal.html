@@ -1,4 +1,137 @@
 <!DOCTYPE html>
-<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sosyal Yardımlar 2026</title>
-<style>body{font-family:system-ui,Arial;background:#f4f7f6;margin:0;padding:12px;display:flex;justify-content:center;color:#263445}.container{background:#fff;padding:16px;border-radius:12px;width:100%;max-width:650px;box-shadow:0 5px 20px #0001}h2{text-align:center;color:#6a1b9a;font-size:20px;border-bottom:2px solid #6a1b9a;padding-bottom:10px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:9px 5px;border-bottom:1px solid #eee;text-align:center;font-size:13px;overflow-wrap:anywhere}th{background:#6a1b9a;color:#fff}.col-name{text-align:left;font-weight:600}.col-2025{color:#777;background:#fafafa}.col-2026{color:#6a1b9a;font-weight:bold;background:#f3e5f5}.back-btn{display:block;margin-top:18px;padding:12px;background:#6a1b9a;color:#fff;text-align:center;text-decoration:none;border-radius:7px;font-weight:bold}</style></head>
-<body><main class="container"><h2>SOSYAL YARDIMLAR</h2><table><thead><tr><th>YARDIM ADI</th><th>2025</th><th>2026</th></tr></thead><tbody data-social-benefits><tr><td class="col-name">Veriler yükleniyor…</td><td></td><td></td></tr></tbody></table><a class="back-btn" href="/">ANA SAYFAYA DÖN</a></main><script src="/shared-content.js"></script></body></html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sosyal Yardımlar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+            border-bottom: 2px solid #5d3ebc;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #5d3ebc;
+            color: white;
+        }
+        .back-btn {
+            display: block;
+            text-align: center;
+            background-color: #5d3ebc;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .back-btn:hover {
+            background-color: #4b319d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>SOSYAL YARDIMLAR</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>YARDIM ADI</th>
+                    <th>2025</th>
+                    <th>2026</th>
+                </tr>
+            </thead>
+            <tbody id="sosyalBody">
+                <!-- Firebase'den dinamik olarak yüklenecek -->
+            </tbody>
+        </table>
+        <a href="index.html" class="back-btn">ANA SAYFAYA DÖN</a>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
+          authDomain: "bordroapp.firebaseapp.com",
+          projectId: "bordroapp",
+          storageBucket: "bordroapp.firebasestorage.app",
+          messagingSenderId: "495208822576",
+          appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
+          measurementId: "G-6ZRKG9HG9J"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const sosyalKeys = [
+            { id: "servis", adi: "Servis Ücreti" },
+            { id: "ram_bayrami", adi: "Ram. Bayramı" },
+            { id: "kur_bayrami", adi: "Kur. Bayramı" },
+            { id: "yakacak", adi: "Yakacak Yard." },
+            { id: "yillik_izin", adi: "Yıllık İzin" },
+            { id: "ana_ilkokul", adi: "Ana-İlkokul" },
+            { id: "ortaogretim", adi: "Ortaöğretim" },
+            { id: "lise", adi: "Lise" },
+            { id: "universite", adi: "Üniversite" },
+            { id: "evlenme", adi: "Evlenme" },
+            { id: "dogum", adi: "Doğum" },
+            { id: "olum_kendi", adi: "Ölüm (Kendi)" },
+            { id: "olum_yakin", adi: "Ölüm (Yakın)" },
+            { id: "gece_zammi", adi: "Gece Zammı Ü." }
+        ];
+
+        async function sosyalVerileriCek() {
+            const tbody = document.getElementById("sosyalBody");
+            try {
+                const docRef = doc(db, "ayarlar", "veriler");
+                const docSnap = await getDoc(docRef);
+                let data = docSnap.exists() ? docSnap.data().sosyal || {} : {};
+
+                tbody.innerHTML = "";
+                sosyalKeys.forEach(item => {
+                    let v2025 = data[item.id] ? data[item.id]._2025 || "-" : "-";
+                    let v2026 = data[item.id] ? data[item.id]._2026 || "-" : "-";
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${item.adi}</td>
+                            <td>${v2025}</td>
+                            <td>${v2026}</td>
+                        </tr>
+                    `;
+                });
+            } catch (e) {
+                console.error("Veri çekme hatası:", e);
+            }
+        }
+
+        sosyalVerileriCek();
+    </script>
+</body>
+</html>
