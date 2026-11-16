@@ -1,14 +1,77 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bordro | Yönetim Paneli</title>
-<style>
-:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#172033;background:#f3f5f9}body{margin:0;padding:24px}.card{max-width:760px;margin:6vh auto;background:white;padding:28px;border-radius:18px;box-shadow:0 12px 40px #10182718}h1{margin-top:0;color:#101827}p{color:#596579;line-height:1.55}label{display:block;font-weight:650;margin:14px 0 6px}input,textarea{box-sizing:border-box;width:100%;padding:12px;border:1px solid #cbd2df;border-radius:8px;font:inherit}textarea{min-height:360px;font-family:ui-monospace,monospace;font-size:13px}button{border:0;border-radius:8px;padding:12px 18px;font:inherit;font-weight:700;color:white;background:#5b21b6;cursor:pointer;margin-top:14px}button:disabled{opacity:.6}#editor{display:none}.status{margin-top:12px;white-space:pre-wrap}.hint{font-size:13px}.back{display:inline-block;margin-top:20px;color:#5b21b6}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bordro İçerik Yönetim Paneli</title>
 </head>
-<body><main class="card">
-<h1>Bordro içerik yönetim paneli</h1>
-<form id="login-form"><label for="username">Kullanıcı adı</label><input id="username" autocomplete="username" required><label for="password">Parola</label><input id="password" type="password" autocomplete="current-password" required><button type="submit">Giriş yap</button></form>
-<section id="editor"><label for="content-json">Yayınlanacak veriler (JSON)</label><textarea id="content-json" spellcheck="false"></textarea><p class="hint">Sosyal yardımlar `socialBenefits` alanında; aylar ve toplam oran `inflation` alanında düzenlenir. JSON biçimini koruyun.</p><button id="save-button" type="button">Kaydet ve yayınla</button><button id="logout-button" type="button" style="background:#475569;margin-left:8px">Oturumu kapat</button></section>
-<div class="status" id="status" role="status"></div><a class="back" href="/">← Bordro sayfasına dön</a>
-</main><script src="/admin-client.js"></script></body></html>
+<body>
+
+    <!-- Giriş Formu Tasarımınız -->
+    <div class="login-container">
+        <h2>Bordro içerik yönetim paneli</h2>
+        <form>
+            <div>
+                <label for="kullaniciAdi">Kullanıcı adı</label>
+                <input type="text" id="kullaniciAdi" required>
+            </div>
+            <div>
+                <label for="parola">Parola</label>
+                <input type="password" id="parola" required>
+            </div>
+            <button type="submit" id="girisBtn">Giriş yap</button>
+        </form>
+    </div>
+
+    <!-- Firebase Bağlantı ve Giriş Kontrol Scripti -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+      import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+      // Sizin Firebase Proje Yapılandırmanız
+      const firebaseConfig = {
+        apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
+        authDomain: "bordroapp.firebaseapp.com",
+        projectId: "bordroapp",
+        storageBucket: "bordroapp.firebasestorage.app",
+        messagingSenderId: "495208822576",
+        appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
+        measurementId: "G-6ZRKG9HG9J"
+      };
+
+      // Firebase başlatma
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // Form gönderildiğinde (Giriş yap butonuna basıldığında) çalışacak kod
+      const form = document.querySelector("form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        const kAdi = document.getElementById("kullaniciAdi").value.trim();
+        const sifre = document.getElementById("parola").value.trim();
+
+        try {
+          // Firestore 'admins' koleksiyonunda eşleşen kullanıcıyı arıyoruz
+          const q = query(
+            collection(db, "admins"), 
+            where("kullaniciAdi", "==", kAdi), 
+            where("sifre", "==", sifre)
+          );
+          
+          const querySnapshot = await getDocs(q);
+
+          if (!querySnapshot.empty) {
+            alert("Giriş başarılı!");
+            window.location.href = "panel.html"; // Başarılı girişte yönlendirilecek sayfa
+          } else {
+            alert("Kullanıcı adı veya parola hatalı!");
+          }
+        } catch (error) {
+          console.error("Giriş hatası:", error);
+          alert("Bağlantı sırasında bir hata oluştu.");
+        }
+      });
+    </script>
+</body>
+</html>
