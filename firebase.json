@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "bordro",
     "public": ".",
     "ignore": [
       "firebase.json",
