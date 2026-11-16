@@ -185,7 +185,7 @@
           "Eylül 2026", "Ekim 2026", "Kasım 2026", "Aralık 2026"
       ];
 
-      // Giriş yapma kontrolü
+      // Giriş yapma kontrolü (Yönlendirme yapmaz, aynı sayfada paneli açar)
       document.getElementById("loginForm").addEventListener("submit", async (e) => {
           e.preventDefault();
           const kAdi = document.getElementById("kullaniciAdi").value.trim();
@@ -196,7 +196,7 @@
               const querySnapshot = await getDocs(q);
 
               if (!querySnapshot.empty) {
-                  // Giriş başarılıysa giriş ekranını gizle, paneli göster
+                  // Giriş başarılı: Giriş kutusunu gizle, yönetim paneli kutularını göster
                   document.getElementById("loginSection").style.display = "none";
                   document.getElementById("panelSection").style.display = "block";
                   verileriYukle();
