@@ -1,3 +1,195 @@
 <!DOCTYPE html>
-<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Maaş Hesaplama Portalı</title><meta name="description" content="Bordro ve maaş hesaplama portalı"><style>*{box-sizing:border-box}body{font-family:system-ui,Arial;background:#f0f2f5;color:#2c3e50;line-height:1.5;padding:15px 10px 30px;margin:0}.container{max-width:600px;margin:auto;background:white;padding:20px;border-radius:12px;box-shadow:0 4px 16px #0001}.main-header{text-align:center;padding-bottom:12px;margin-bottom:15px;border-bottom:1px solid #f1f5f9}.main-header h1{font-size:13px;font-weight:500;color:#94a3b8;letter-spacing:.5px;text-transform:uppercase}.button-group{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}.nav-btn{display:block;text-align:center;background:#2563eb;color:#fff;padding:12px 16px;border-radius:8px;text-decoration:none;font-weight:600}.announcement-card{background:#f8fafc;border:1px solid #e2e8f0;margin-bottom:20px;border-radius:8px;padding:14px;text-align:center}.announcement-img{max-width:100%;height:auto;border-radius:6px}.section-title{margin:12px 0 8px;color:#475569;font-size:14px;border-bottom:2px solid #2563eb;padding-bottom:5px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #e2e8f0;padding:7px;text-align:left}th{background:#f1f5f9;color:#64748b}tr:last-child{font-weight:700}@media(max-width:480px){.container{padding:15px}}</style></head>
-<body><main class="container"><header class="main-header"><h1>Maaş Hesaplama Portalı</h1></header><nav class="button-group"><a href="hesapla.html" class="nav-btn">Maaş Hesaplama</a><a href="fark.html" class="nav-btn">Fark Hesaplama</a><a href="sosyal.html" class="nav-btn">Sosyal Haklar</a><a href="enf.html" class="nav-btn">Enflasyon Takibi</a></nav><section class="announcement-card"><h3>Duyuru Panosu</h3><img src="duyuru.jpg" alt="Duyuru Görseli" class="announcement-img"></section><section><h3 class="section-title">Dönemsel Enflasyon Verileri</h3><table><thead><tr><th>Dönem / Ay</th><th>Aylık Enflasyon Oranı</th></tr></thead><tbody data-home-inflation><tr><td colspan="2">Veriler yükleniyor…</td></tr></tbody></table></section><a href="yonetim.html" style="display:block;text-align:center;margin-top:18px;color:#64748b;font-size:13px">Yönetici girişi</a></main><script src="/shared-content.js"></script></body></html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maaş Hesaplama Portalı</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #f59e0b;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .portal-card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 480px;
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .portal-header h1 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0 0 25px 0;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #4f46e5, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .menu-btn {
+            background: linear-gradient(135deg, #5d3ebc 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(93, 62, 188, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(93, 62, 188, 0.35);
+            background: linear-gradient(135deg, #4b319d 0%, #6d28d9 100%);
+        }
+
+        /* Duyuru Panosu Premium Tasarım */
+        .announcement-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 10px;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .announcement-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #d97706;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .announcement-text {
+            font-size: 15px;
+            color: #78350f;
+            font-weight: 500;
+            line-height: 1.5;
+            margin: 0;
+            word-break: break-word;
+        }
+
+        .admin-link {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .admin-link:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="portal-card">
+        <div class="portal-header">
+            <h1>Maaş Hesaplama Portalı</h1>
+        </div>
+
+        <div class="menu-grid">
+            <a href="maas.html" class="menu-btn">Maaş Hesaplama</a>
+            <a href="fark.html" class="menu-btn">Fark Hesaplama</a>
+            <a href="sosyal.html" class="menu-btn">Sosyal Haklar</a>
+            <a href="enf.html" class="menu-btn">Enflasyon Takibi</a>
+        </div>
+
+        <!-- Duyuru Panosu -->
+        <div class="announcement-box">
+            <div class="announcement-title">
+                📢 Duyuru Panosu
+            </div>
+            <p id="duyuruIcerik" class="announcement-text">Yükleniyor...</p>
+        </div>
+
+        <a href="yonetim.html" class="admin-link">Yönetim Paneli Girişi</a>
+    </div>
+
+    <!-- Firebase Duyuru Çekme Scripti -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
+          authDomain: "bordroapp.firebaseapp.com",
+          projectId: "bordroapp",
+          storageBucket: "bordroapp.firebasestorage.app",
+          messagingSenderId: "495208822576",
+          appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
+          measurementId: "G-6ZRKG9HG9J"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function duyuruyuGetir() {
+            try {
+                const docRef = doc(db, "ayarlar", "veriler");
+                const docSnap = await getDoc(docRef);
+                const duyuruElement = document.getElementById("duyuruIcerik");
+
+                if (docSnap.exists() && docSnap.data().duyuru) {
+                    duyuruElement.textContent = docSnap.data().duyuru;
+                } else {
+                    duyuruElement.textContent = "Şu an aktif bir duyuru bulunmuyor.";
+                }
+            } catch (error) {
+                console.error("Duyuru çekilemedi:", error);
+                document.getElementById("duyuruIcerik").textContent = "Duyurular yüklenirken bir hata oluştu.";
+            }
+        }
+
+        duyuruyuGetir();
+    </script>
+</body>
+</html>
