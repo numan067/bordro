@@ -3,13 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enflasyon Takibi ve Hesaplama</title>
+    <title>Maaş Hesaplama Portalı</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <style>
+        :root {
+            --primary: #5d3ebc;
+            --primary-dark: #4b319d;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             margin: 0;
-            padding: 15px;
+            padding-top: 70px;
+            padding-bottom: 90px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .top-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 55px;
+            background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            display: flex; align-items: center; padding: 0 15px; z-index: 2000;
+            box-sizing: border-box; border-bottom: 1px solid #e2e8f0;
+        }
+        .top-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .top-logo { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #5d3ebc; }
+        .top-title {
+            font-size: 15px; font-weight: 700; color: var(--text-main);
+            text-transform: uppercase; letter-spacing: -0.3px;
+            background: linear-gradient(90deg, #5d3ebc, #9333ea);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .container {
             max-width: 600px;
@@ -25,7 +52,7 @@
             border-bottom: 2px solid #d97706;
             padding-bottom: 8px;
             margin-top: 0;
-            font-size: 20px;
+            font-size: 18px;
         }
         .calc-card {
             background: #fffbeb;
@@ -83,7 +110,6 @@
             display: none;
             line-height: 1.5;
         }
-        /* Kompakt ve Kaydırmalı Tablo Alanı */
         .table-container {
             max-height: 230px;
             overflow-y: auto;
@@ -110,28 +136,31 @@
         td:first-child {
             text-align: left;
         }
-        .back-btn {
-            display: block;
-            text-align: center;
-            background-color: #4a5568;
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 15px;
-            font-weight: bold;
-            font-size: 14px;
+        .bottom-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.08); display: flex; justify-content: space-around;
+            padding: 8px 0; z-index: 1000; box-sizing: border-box; border-top: 1px solid #e2e8f0;
         }
-        .back-btn:hover {
-            background-color: #2d3748;
+        .bottom-btn {
+            background: none; border: none; display: flex; flex-direction: column; align-items: center;
+            font-size: 11px; font-weight: 600; color: #64748b; text-decoration: none; cursor: pointer; gap: 3px; flex: 1; transition: color 0.2s;
         }
+        .bottom-btn.active, .bottom-btn:hover { color: #5d3ebc; }
+        .bottom-btn span { font-size: 18px; }
     </style>
 </head>
 <body>
+
+    <header class="top-navbar">
+        <a href="index.html" class="top-brand">
+            <img src="logo.png" alt="Logo" class="top-logo" onerror="this.src='logo.jpg'">
+            <span class="top-title">Maaş Hesaplama Portalı</span>
+        </a>
+    </header>
+
     <div class="container">
         <h2>ENFLASYON TAKİBİ VE HESAPLAMA</h2>
 
-        <!-- İkinci 6 Aylık Hesaplama Bölümü -->
         <div class="calc-card">
             <h3>İkinci 6 Aylık Saat Ücreti Hesaplama</h3>
             <div class="form-group">
@@ -142,7 +171,6 @@
             <div id="sonucBox" class="result-box"></div>
         </div>
 
-        <!-- Kompakt Enflasyon Tablosu -->
         <div class="table-container">
             <table>
                 <thead>
@@ -153,13 +181,19 @@
                     </tr>
                 </thead>
                 <tbody id="enfBody">
-                    <!-- Firebase'den dinamik yüklenecek -->
+                    <tr><td colspan="3" style="text-align:center;">Yükleniyor...</td></tr>
                 </tbody>
             </table>
         </div>
-
-        <a href="index.html" class="back-btn">ANA SAYFAYA DÖN</a>
     </div>
+
+    <nav class="bottom-bar">
+        <a href="index.html" class="bottom-btn"><span>🏠</span> Ana Sayfa</a>
+        <a href="hesapla.html" class="bottom-btn"><span>🧮</span> Maaş</a>
+        <a href="fark.html" class="bottom-btn"><span>⚖️</span> Fark</a>
+        <a href="sosyal.html" class="bottom-btn"><span>📋</span> Sosyal</a>
+        <a href="enf.html" class="bottom-btn active"><span>📈</span> Enflasyon</a>
+    </nav>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -196,8 +230,6 @@
                 tbody.innerHTML = "";
                 let birikimli = 1;
                 let basladi = false;
-
-                // Temmuz - Aralık (İkinci 6 Ay) birleşik enflasyon hesaplaması
                 let ikinci6AyBirikimli = 1;
                 let basladi6 = false;
 
@@ -219,7 +251,6 @@
                         let birikimliVal = (birikimli - 1) * 100;
                         birikimliGosterim = birikimliVal.toFixed(2).replace(".", ",");
 
-                        // Temmuz (index 6) ile Aralık (index 11) arası ikinci 6 ay
                         if (index >= 6 && index <= 11) {
                             if (!basladi6) {
                                 ikinci6AyBirikimli = 1 + (aylikVal / 100);
@@ -255,7 +286,6 @@
             }
 
             let mevcutUcret = parseFloat(mevcutSaatUcretiInput);
-            // Birleşik enflasyona +2 puan ekleniyor
             let toplamArtisOrani = globalIkinci6AyOran + 2;
             let yeniUcret = mevcutUcret * (1 + (toplamArtisOrani / 100));
 
