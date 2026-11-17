@@ -3,46 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bordro Fark Hesaplama</title>
+    <title>Maaş Hesaplama Portalı</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f9; margin: 0; padding: 15px; color: #333; }
-        .container { max-width: 650px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        :root {
+            --primary: #5d3ebc;
+            --primary-dark: #4b319d;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg-gradient); color: var(--text-main); margin: 0; padding-top: 70px; padding-bottom: 90px; padding-left: 15px; padding-right: 15px; }
+        .top-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: 55px;
+            background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            display: flex; align-items: center; padding: 0 15px; z-index: 2000;
+            box-sizing: border-box; border-bottom: 1px solid #e2e8f0;
+        }
+        .top-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .top-logo { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #5d3ebc; }
+        .top-title {
+            font-size: 15px; font-weight: 700; color: var(--text-main);
+            text-transform: uppercase; letter-spacing: -0.3px;
+            background: linear-gradient(90deg, #5d3ebc, #9333ea);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .container { max-width: 650px; margin: auto; background: white; padding: 20px; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+        h2 { text-align: center; color: #2c3e50; border-bottom: 2px solid #5d3ebc; padding-bottom: 10px; font-size: 18px; }
         
-        .header-inputs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #eef2f7; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .header-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #eef2f7; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
         .header-inputs label { font-size: 11px; font-weight: bold; display: block; margin-bottom: 5px; color: #555; }
         .header-inputs input, .header-inputs select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
         
         #yeni_su { background-color: #e9ecef; cursor: not-allowed; font-weight: bold; color: #2c3e50; }
 
-        .month-card { border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin-bottom: 15px; background: #fff; }
-        .month-title { font-weight: bold; color: #3498db; margin-bottom: 10px; text-transform: uppercase; font-size: 14px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .month-card { border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin-bottom: 15px; background: #fff; position: relative; }
+        .month-title { font-weight: bold; color: #5d3ebc; margin-bottom: 10px; text-transform: uppercase; font-size: 14px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         .input-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .input-group label { font-size: 10px; color: #666; display: block; }
         .input-group input, .input-group select { width: 100%; padding: 5px; border: 1px solid #eee; border-radius: 4px; font-size: 12px; }
 
+        .btn-add-month { background-color: #27ae60; color: white; padding: 10px; border: none; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 15px; font-size: 14px; }
+        .btn-add-month:hover { background-color: #219653; }
+        .btn-remove { position: absolute; top: 12px; right: 15px; background: #e74c3c; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer; font-size: 11px; }
+
         .result-section { background: #2c3e50; color: white; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; }
-        .result-item { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; border-bottom: 1px solid #444; padding-bottom: 5px; }
+        .result-item { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; border-bottom: 1px solid #444; padding-bottom: 5px; }
         .total-fark { font-size: 24px; font-weight: bold; color: #2ecc71; margin-top: 10px; }
-        
-        .nav-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-        .btn { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; font-size: 14px; }
-        .btn-home { background-color: #34495e; color: white; }
+
+        .bottom-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.08); display: flex; justify-content: space-around;
+            padding: 8px 0; z-index: 1000; box-sizing: border-box; border-top: 1px solid #e2e8f0;
+        }
+        .bottom-btn {
+            background: none; border: none; display: flex; flex-direction: column; align-items: center;
+            font-size: 11px; font-weight: 600; color: #64748b; text-decoration: none; cursor: pointer; gap: 3px; flex: 1; transition: color 0.2s;
+        }
+        .bottom-btn.active, .bottom-btn:hover { color: #5d3ebc; }
+        .bottom-btn span { font-size: 18px; }
     </style>
 </head>
 <body>
 
+<header class="top-navbar">
+    <a href="index.html" class="top-brand">
+        <img src="logo.png" alt="Logo" class="top-logo" onerror="this.src='logo.jpg'">
+        <span class="top-title">Maaş Hesaplama Portalı</span>
+    </a>
+</header>
+
 <div class="container">
-    <h2>Fark Bordrosu (Ocak-Mart)</h2>
+    <h2>Fark Hesaplaması</h2>
 
     <div class="header-inputs">
         <div>
             <label>Eski Saat Ücreti</label>
             <input type="number" id="eski_su" placeholder="Giriniz..." step="0.01" oninput="yeniSaatHesapla()">
-        </div>
-        <div>
-            <label>Yeni Saat Ücreti (%16)</label>
-            <input type="number" id="yeni_su" readonly>
         </div>
         <div>
             <label>Vergi Dilimi (%)</label>
@@ -54,62 +92,67 @@
             </select>
         </div>
     </div>
+    
+    <!-- Gizli Yeni Saat Ücreti Input (Hesaplamalar için baz alınır) -->
+    <input type="hidden" id="yeni_su">
 
-    <div class="month-card">
-        <div class="month-title">Ocak Ayı Kalemleri</div>
-        <div class="input-grid">
-            <div class="input-group"><label>Çalışma (Sa)</label><input type="number" id="h1_cs" value="232.5" oninput="hesapla()"></div>
-            <div class="input-group"><label>Fazla Mesai</label><input type="number" id="h1_fm" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Gece Zammı (Sa)</label><input type="number" id="h1_gz" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>U. Bayram</label><input type="number" id="h1_ub" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>D. Bayram</label><input type="number" id="h1_db" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>R. Tatil FM</label><input type="number" id="h1_rfm" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Yol Yardımı</label><select id="h1_yol" onchange="hesapla()"><option value="0">Yok</option><option value="1">Var</option></select></div>
-        </div>
-    </div>
+    <div id="aylarListesi"></div>
 
-    <div class="month-card">
-        <div class="month-title">Şubat Ayı Kalemleri</div>
-        <div class="input-grid">
-            <div class="input-group"><label>Çalışma (Sa)</label><input type="number" id="h2_cs" value="210" oninput="hesapla()"></div>
-            <div class="input-group"><label>Fazla Mesai</label><input type="number" id="h2_fm" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Gece Zammı (Sa)</label><input type="number" id="h2_gz" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>U. Bayram</label><input type="number" id="h2_ub" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>D. Bayram</label><input type="number" id="h2_db" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>R. Tatil FM</label><input type="number" id="h2_rfm" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Yol Yardımı</label><select id="h2_yol" onchange="hesapla()"><option value="0">Yok</option><option value="1">Var</option></select></div>
-        </div>
-    </div>
-
-    <div class="month-card">
-        <div class="month-title">Mart Ayı Kalemleri</div>
-        <div class="input-grid">
-            <div class="input-group"><label>Çalışma (Sa)</label><input type="number" id="h3_cs" value="232.5" oninput="hesapla()"></div>
-            <div class="input-group"><label>Fazla Mesai</label><input type="number" id="h3_fm" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Gece Zammı (Sa)</label><input type="number" id="h3_gz" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>U. Bayram</label><input type="number" id="h3_ub" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>D. Bayram</label><input type="number" id="h3_db" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>R. Tatil FM</label><input type="number" id="h3_rfm" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Yol Yardımı</label><select id="h3_yol" onchange="hesapla()"><option value="0">Yok</option><option value="1">Var</option></select></div>
-        </div>
-    </div>
+    <button class="btn-add-month" onclick="ayEkle()">+ Ay Ekle</button>
 
     <div class="result-section">
-        <div class="result-item"><span>Ocak Net Fark:</span><span id="res_1">0,00 TL</span></div>
-        <div class="result-item"><span>Şubat Net Fark:</span><span id="res_2">0,00 TL</span></div>
-        <div class="result-item"><span>Mart Net Fark:</span><span id="res_3">0,00 TL</span></div>
+        <div id="dinamik Sonuclar"></div>
         <div class="result-item"><span>İkramiye Farkı:</span><span id="res_ikr">0,00 TL</span></div>
         <div class="result-item"><span style="color:#2ecc71">Bayram Farkı (Sabit):</span><span>2.492,24 TL</span></div>
         <div class="total-label">TOPLAM NET FARK</div>
         <div class="total-fark" id="toplam_fark">0,00 TL</div>
     </div>
-
-    <div class="nav-buttons">
-        <button class="btn btn-home" onclick="location.href='index.html'">ANA SAYFA</button>
-    </div>
 </div>
 
+<nav class="bottom-bar">
+    <a href="index.html" class="bottom-btn"><span>🏠</span> Ana Sayfa</a>
+    <a href="hesapla.html" class="bottom-btn"><span>🧮</span> Maaş</a>
+    <a href="fark.html" class="bottom-btn active"><span>⚖️</span> Fark</a>
+    <a href="sosyal.html" class="bottom-btn"><span>📋</span> Sosyal</a>
+    <a href="enf.html" class="bottom-btn"><span>📈</span> Enflasyon</a>
+</nav>
+
 <script>
+let aySayaci = 0;
+
+function ayEkle(varsayilanCs = 225, varsayilanFm = 0, varsayilanGz = 0, varsayilanUb = 0, varsayilanDb = 0, varsayilanRfm = 0, varsayilanYol = 0) {
+    aySayaci++;
+    const id = aySayaci;
+    const container = document.getElementById('aylarListesi');
+    
+    const card = document.createElement('div');
+    card.className = 'month-card';
+    card.id = `ay_card_${id}`;
+    card.innerHTML = `
+        <div class="month-title">${id}. Ay Kalemleri</div>
+        ${id > 1 ? `<button class="btn-remove" onclick="aySil(${id})">Sil</button>` : ''}
+        <div class="input-grid">
+            <div class="input-group"><label>Çalışma (Sa)</label><input type="number" id="h${id}_cs" value="${varsayilanCs}" oninput="hesapla()"></div>
+            <div class="input-group"><label>Fazla Mesai</label><input type="number" id="h${id}_fm" value="${varsayilanFm}" oninput="hesapla()"></div>
+            <div class="input-group"><label>Gece Zammı (Sa)</label><input type="number" id="h${id}_gz" value="${varsayilanGz}" oninput="hesapla()"></div>
+            <div class="input-group"><label>U. Bayram</label><input type="number" id="h${id}_ub" value="${varsayilanUb}" oninput="hesapla()"></div>
+            <div class="input-group"><label>D. Bayram</label><input type="number" id="h${id}_db" value="${varsayilanDb}" oninput="hesapla()"></div>
+            <div class="input-group"><label>R. Tatil FM</label><input type="number" id="h${id}_rfm" value="${varsayilanRfm}" oninput="hesapla()"></div>
+            <div class="input-group"><label>Yol Yardımı</label><select id="h${id}_yol" onchange="hesapla()"><option value="0" ${varsayilanYol==0?'selected':''}>Yok</option><option value="1" ${varsayilanYol==1?'selected':''}>Var</option></select></div>
+        </div>
+    `;
+    container.appendChild(card);
+    hesapla();
+}
+
+function aySil(id) {
+    const el = document.getElementById(`ay_card_${id}`);
+    if(el) {
+        el.remove();
+        hesapla();
+    }
+}
+
 function yeniSaatHesapla() {
     const eskiSU = parseFloat(document.getElementById('eski_su').value) || 0;
     const yeniSU = eskiSU * 1.16;
@@ -123,13 +166,15 @@ function hesapla() {
     
     if(eskiSU === 0) {
         document.getElementById('toplam_fark').innerText = "0,00 TL";
+        document.getElementById('res_ikr').innerText = "0,00 TL";
+        document.getElementById('dinamik Sonuclar').innerHTML = "";
         return;
     }
 
     const suFark = yeniSU - eskiSU;
     const vo = parseFloat(document.getElementById('vergi_dilimi').value);
     const sabitBayramFarki = 2492.24;
-    const geceZammiBirimFark = 7.19; // (30 - 22.81)
+    const geceZammiBirimFark = 7.19; 
     
     let toplamNet = 0;
     const format = (n) => n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " TL";
@@ -139,7 +184,14 @@ function hesapla() {
     const ikrNet = ikrBrut * (1 - 0.15 - vo - 0.00759);
     document.getElementById('res_ikr').innerText = format(ikrNet > 0 ? ikrNet : 0);
 
-    for(let i=1; i<=3; i++) {
+    const cards = document.querySelectorAll('.month-card');
+    let dinamikHtml = "";
+
+    cards.forEach(card => {
+        const idMatch = card.id.match(/ay_card_(\d+)/);
+        if(!idMatch) return;
+        const i = idMatch[1];
+
         const cs = parseFloat(document.getElementById(`h${i}_cs`).value) || 0;
         const fm = parseFloat(document.getElementById(`h${i}_fm`).value) || 0;
         const gz = parseFloat(document.getElementById(`h${i}_gz`).value) || 0;
@@ -148,7 +200,6 @@ function hesapla() {
         const rfm = parseFloat(document.getElementById(`h${i}_rfm`).value) || 0;
         const yolVar = document.getElementById(`h${i}_yol`).value == "1";
         
-        // Brüt Fark Hesaplama
         const normalFark = cs * suFark;
         const mesaiFark = ((fm + ub) * suFark * 2) + (db * suFark * 2.5) + (rfm * suFark * 3);
         const geceFark = gz * geceZammiBirimFark;
@@ -157,17 +208,25 @@ function hesapla() {
         const brutFark = normalFark + mesaiFark + geceFark + yolFark;
         const sendikaFark = suFark * 7;
         
-        // Net Fark (SGK %15, Sendika, Vergi, Damga %0.759)
         const netFark = (brutFark - (brutFark * 0.15) - sendikaFark) * (1 - vo) - (brutFark * 0.00759);
         
         const gosterilecekNet = netFark > 0 ? netFark : 0;
-        document.getElementById(`res_${i}`).innerText = format(gosterilecekNet);
+        dinamikHtml += `<div class="result-item"><span>${i}. Ay Net Fark:</span><span>${format(gosterilecekNet)}</span></div>`;
         toplamNet += gosterilecekNet;
-    }
+    });
+
+    document.getElementById('dinamik Sonuclar').innerHTML = dinamikHtml;
 
     const finalToplam = toplamNet + (ikrNet > 0 ? ikrNet : 0) + sabitBayramFarki;
     document.getElementById('toplam_fark').innerText = format(finalToplam);
 }
+
+// Sayfa açıldığında varsayılan olarak 3 ay ekle (Ocak, Şubat, Mart gibi)
+window.onload = function() {
+    ayEkle(232.5, 0, 0, 0, 0, 0, 0);
+    ayEkle(210, 0, 0, 0, 0, 0, 0);
+    ayEkle(232.5, 0, 0, 0, 0, 0, 0);
+};
 </script>
 </body>
 </html>
