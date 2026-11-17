@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maaş Hesaplama Portalı</title>
+    <!-- Sekme İkonu (Favicon) -->
+    <link rel="icon" type="image/png" href="logo.png">
+    
     <style>
         :root {
             --primary: #6366f1;
@@ -21,10 +24,27 @@
             color: var(--text-main);
             margin: 0;
             padding: 20px;
+            padding-bottom: 90px; /* Alt bar içeriği kapatmasın diye boşluk */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* Sol Üst Sabit Logo */
+        .top-left-logo {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: white;
+            z-index: 1000;
+            border: 2px solid #ffffff;
         }
 
         .portal-card {
@@ -55,15 +75,15 @@
             display: flex;
             flex-direction: column;
             gap: 14px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .menu-btn {
             background: linear-gradient(135deg, #5d3ebc 0%, #7c3aed 100%);
             color: white;
             border: none;
-            padding: 16px 20px;
-            font-size: 16px;
+            padding: 15px 20px;
+            font-size: 15px;
             font-weight: 600;
             border-radius: 14px;
             cursor: pointer;
@@ -81,13 +101,14 @@
             background: linear-gradient(135deg, #4b319d 0%, #6d28d9 100%);
         }
 
+        /* Duyuru Panosu */
         .announcement-box {
             background: #fffbeb;
             border: 1px solid #fde68a;
             border-radius: 16px;
-            padding: 20px;
+            padding: 18px;
             margin-top: 10px;
-            position: relative;
+            text-align: left;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
         }
 
@@ -102,25 +123,30 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            text-align: center;
         }
 
-        .announcement-text {
-            font-size: 15px;
+        .announcement-list {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 14px;
             color: #78350f;
             font-weight: 500;
             line-height: 1.5;
-            margin: 0;
-            word-break: break-word;
+        }
+
+        .announcement-list li {
+            margin-bottom: 5px;
         }
 
         .announcement-image-container {
-            margin-top: 15px;
+            margin-top: 12px;
             width: 100%;
-            max-height: 220px;
+            max-height: 200px;
             overflow: hidden;
-            border-radius: 12px;
+            border-radius: 10px;
             display: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         .announcement-image-container img {
@@ -132,7 +158,7 @@
 
         .admin-link {
             display: inline-block;
-            margin-top: 20px;
+            margin-top: 15px;
             font-size: 13px;
             color: var(--text-muted);
             text-decoration: none;
@@ -143,9 +169,49 @@
             color: var(--primary);
             text-decoration: underline;
         }
+
+        /* Sabit Alt Navigasyon Barı */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 1000;
+            box-sizing: border-box;
+            border-top: 1px solid #e2e8f0;
+        }
+        .bottom-btn {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            text-decoration: none;
+            cursor: pointer;
+            gap: 3px;
+            flex: 1;
+            transition: color 0.2s;
+        }
+        .bottom-btn.active, .bottom-btn:hover {
+            color: #5d3ebc;
+        }
+        .bottom-btn span {
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Sol Üst Sabit Logo -->
+    <img src="logo.png" alt="Logo" class="top-left-logo">
 
     <div class="portal-card">
         <div class="portal-header">
@@ -164,7 +230,9 @@
             <div class="announcement-title">
                 📢 Duyuru Panosu
             </div>
-            <p id="duyuruIcerik" class="announcement-text">Yükleniyor...</p>
+            <ul id="duyuruListesi" class="announcement-list">
+                <li>Yükleniyor...</li>
+            </ul>
             <div id="duyuruFotoContainer" class="announcement-image-container">
                 <img id="duyuruFoto" src="" alt="Duyuru Görseli">
             </div>
@@ -173,7 +241,26 @@
         <a href="yonetim.html" class="admin-link">Yönetim Paneli Girişi</a>
     </div>
 
-    <!-- Firebase Duyuru ve Fotoğraf Çekme Scripti (Hata Korumalı) -->
+    <!-- Sabit Alt Navigasyon Barı -->
+    <div class="bottom-bar">
+        <a href="index.html" class="bottom-btn active">
+            <span>🏠</span> Ana Sayfa
+        </a>
+        <a href="hesapla.html" class="bottom-btn">
+            <span>🧮</span> Maaş
+        </a>
+        <a href="fark.html" class="bottom-btn">
+            <span>⚖️</span> Fark
+        </a>
+        <a href="sosyal.html" class="bottom-btn">
+            <span>📋</span> Sosyal
+        </a>
+        <a href="enf.html" class="bottom-btn">
+            <span>📈</span> Enflasyon
+        </a>
+    </div>
+
+    <!-- Firebase Duyuru ve Fotoğraf Çekme Scripti -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -195,17 +282,25 @@
             try {
                 const docRef = doc(db, "ayarlar", "veriler");
                 const docSnap = await getDoc(docRef);
-                const duyuruElement = document.getElementById("duyuruIcerik");
+                const listeEl = document.getElementById("duyuruListesi");
                 const fotoContainer = document.getElementById("duyuruFotoContainer");
                 const fotoImg = document.getElementById("duyuruFoto");
 
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    
-                    if (data.duyuru) {
-                        duyuruElement.textContent = data.duyuru;
+                    let satirlar = [];
+
+                    if (data.duyuru1 && data.duyuru1.trim() !== "") satirlar.push(data.duyuru1);
+                    if (data.duyuru2 && data.duyuru2.trim() !== "") satirlar.push(data.duyuru2);
+                    if (data.duyuru3 && data.duyuru3.trim() !== "") satirlar.push(data.duyuru3);
+
+                    if (satirlar.length > 0) {
+                        listeEl.innerHTML = "";
+                        satirlar.forEach(metin => {
+                            listeEl.innerHTML += `<li>${metin}</li>`;
+                        });
                     } else {
-                        duyuruElement.textContent = "Şu an aktif bir duyuru bulunmuyor.";
+                        listeEl.innerHTML = `<li>Şu an aktif bir duyuru bulunmuyor.</li>`;
                     }
 
                     if (data.duyuruFoto && data.duyuruFoto.trim() !== "") {
@@ -215,11 +310,11 @@
                         fotoContainer.style.display = "none";
                     }
                 } else {
-                    duyuruElement.textContent = "Şu an aktif bir duyuru bulunmuyor.";
+                    listeEl.innerHTML = `<li>Şu an aktif bir duyuru bulunmuyor.</li>`;
                 }
             } catch (error) {
                 console.error("Duyuru çekilemedi:", error);
-                document.getElementById("duyuruIcerik").textContent = "Duyurular yüklenemedi.";
+                document.getElementById("duyuruListesi").innerHTML = `<li>Duyurular yüklenirken hata oluştu.</li>`;
             }
         }
 
