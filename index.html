@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maaş Hesaplama Portalı</title>
-    <!-- Sekme İkonu (Favicon) - Uzantı .jpg ise 'logo.jpg' yapabilirsiniz -->
+    <!-- Sekme İkonu (Favicon) -->
     <link rel="icon" type="image/png" href="logo.png">
     
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --accent: #f59e0b;
+            --primary: #5d3ebc;
+            --primary-dark: #4b319d;
             --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             --card-bg: #ffffff;
             --text-main: #1e293b;
@@ -23,8 +22,10 @@
             background: var(--bg-gradient);
             color: var(--text-main);
             margin: 0;
-            padding: 15px;
+            padding-top: 70px; /* Üst bar içeriği kapatmasın diye boşluk */
             padding-bottom: 90px; /* Alt bar içeriği kapatmasın diye boşluk */
+            padding-left: 15px;
+            padding-right: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -32,58 +33,65 @@
             box-sizing: border-box;
         }
 
-        /* Sol Üst Sabit Logo */
-        .top-left-logo {
+        /* Sabit Üst Bar */
+        .top-navbar {
             position: fixed;
-            top: 12px;
-            left: 12px;
-            width: 38px;
-            height: 38px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 55px;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            z-index: 2000;
+            box-sizing: border-box;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .top-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .top-logo {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             object-fit: cover;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
-            background: white;
-            z-index: 2000;
-            border: 2px solid #ffffff;
+            border: 2px solid #5d3ebc;
+        }
+
+        .top-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: -0.3px;
+            background: linear-gradient(90deg, #5d3ebc, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .portal-card {
             background: var(--card-bg);
             width: 100%;
-            max-width: 520px;
-            padding: 30px 20px;
-            border-radius: 24px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        /* Sekme Görünürlük Yönetimi */
-        .page-view {
-            display: none;
-        }
-        .page-view.active {
-            display: block;
-        }
-
-        .portal-header h1 {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--text-main);
-            margin: 0 0 20px 0;
-            letter-spacing: -0.5px;
-            text-transform: uppercase;
+            max-width: 480px;
+            padding: 25px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
             text-align: center;
-            background: linear-gradient(90deg, #4f46e5, #9333ea);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            box-sizing: border-box;
         }
 
         .menu-grid {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .menu-btn {
@@ -93,34 +101,35 @@
             padding: 14px 18px;
             font-size: 15px;
             font-weight: 600;
-            border-radius: 14px;
+            border-radius: 12px;
             cursor: pointer;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(93, 62, 188, 0.25);
+            box-shadow: 0 4px 12px rgba(93, 62, 188, 0.2);
             transition: all 0.3s ease;
         }
 
         .menu-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(93, 62, 188, 0.35);
+            box-shadow: 0 6px 16px rgba(93, 62, 188, 0.3);
+            background: linear-gradient(135deg, #4b319d 0%, #6d28d9 100%);
         }
 
         /* Duyuru Panosu */
         .announcement-box {
             background: #fffbeb;
             border: 1px solid #fde68a;
-            border-radius: 16px;
-            padding: 18px;
+            border-radius: 14px;
+            padding: 15px;
             margin-top: 10px;
             text-align: left;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
 
         .announcement-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: #d97706;
             text-transform: uppercase;
@@ -135,19 +144,19 @@
 
         .announcement-list {
             margin: 0;
-            padding-left: 20px;
-            font-size: 14px;
+            padding-left: 18px;
+            font-size: 13px;
             color: #78350f;
             font-weight: 500;
             line-height: 1.5;
         }
 
         .announcement-list li {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .announcement-image-container {
-            margin-top: 12px;
+            margin-top: 10px;
             width: 100%;
             max-height: 180px;
             overflow: hidden;
@@ -163,80 +172,17 @@
         }
 
         .admin-link {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
+            display: inline-block;
+            margin-top: 18px;
             font-size: 13px;
             color: var(--text-muted);
             text-decoration: none;
+            transition: color 0.2s;
         }
 
         .admin-link:hover {
             color: var(--primary);
             text-decoration: underline;
-        }
-
-        /* Ortak Tablo ve Form Stilleri */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            font-size: 13px;
-        }
-        th, td {
-            border: 1px solid #e2e8f0;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #5d3ebc;
-            color: white;
-        }
-        .table-container {
-            max-height: 250px;
-            overflow-y: auto;
-            border-radius: 8px;
-            margin-top: 10px;
-        }
-        .form-group {
-            margin-bottom: 12px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: #4a5568;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 9px;
-            border: 1px solid #cbd5e0;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        .action-btn {
-            background: #5d3ebc;
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .action-btn:hover {
-            background: #4b319d;
-        }
-        .calc-result {
-            margin-top: 10px;
-            padding: 10px;
-            background: #edf2f7;
-            border-radius: 8px;
-            font-size: 13px;
-            display: none;
         }
 
         /* Sabit Alt Navigasyon Barı */
@@ -251,6 +197,7 @@
             justify-content: space-around;
             padding: 8px 0;
             z-index: 1000;
+            box-sizing: border-box;
             border-top: 1px solid #e2e8f0;
         }
         .bottom-btn {
@@ -262,6 +209,7 @@
             font-size: 11px;
             font-weight: 600;
             color: #64748b;
+            text-decoration: none;
             cursor: pointer;
             gap: 3px;
             flex: 1;
@@ -277,125 +225,58 @@
 </head>
 <body>
 
-    <!-- Sol Üst Sabit Logo -->
-    <img src="logo.png" alt="Logo" class="top-left-logo" onerror="this.src='logo.jpg'">
+    <!-- Sabit Üst Bar (Logo + Başlık) -->
+    <header class="top-navbar">
+        <a href="index.html" class="top-brand">
+            <img src="logo.png" alt="Logo" class="top-logo" onerror="this.src='logo.jpg'">
+            <span class="top-title">Maaş Hesaplama Portalı</span>
+        </a>
+    </header>
 
     <div class="portal-card">
-
-        <!-- 1. ANA SAYFA GÖRÜNÜMÜ -->
-        <div id="view-anasayfa" class="page-view active">
-            <div class="portal-header">
-                <h1>Maaş Hesaplama Portalı</h1>
-            </div>
-
-            <div class="menu-grid">
-                <button class="menu-btn" onclick="sayfaDegis('view-hesapla', this)">Maaş Hesaplama</button>
-                <button class="menu-btn" onclick="sayfaDegis('view-fark', this)">Fark Hesaplama</button>
-                <button class="menu-btn" onclick="sayfaDegis('view-sosyal', this)">Sosyal Haklar</button>
-                <button class="menu-btn" onclick="sayfaDegis('view-enf', this)">Enflasyon Takibi</button>
-            </div>
-
-            <div class="announcement-box">
-                <div class="announcement-title">📢 Duyuru Panosu</div>
-                <ul id="duyuruListesi" class="announcement-list">
-                    <li>Yükleniyor...</li>
-                </ul>
-                <div id="duyuruFotoContainer" class="announcement-image-container">
-                    <img id="duyuruFoto" src="" alt="Duyuru Görseli">
-                </div>
-            </div>
-
-            <a href="yonetim.html" class="admin-link">Yönetim Paneli Girişi</a>
+        <div class="menu-grid">
+            <a href="hesapla.html" class="menu-btn">Maaş Hesaplama</a>
+            <a href="fark.html" class="menu-btn">Fark Hesaplama</a>
+            <a href="sosyal.html" class="menu-btn">Sosyal Haklar</a>
+            <a href="enf.html" class="menu-btn">Enflasyon Takibi</a>
         </div>
 
-        <!-- 2. MAAŞ HESAPLAMA GÖRÜNÜMÜ -->
-        <div id="view-hesapla" class="page-view">
-            <div class="portal-header"><h1>Maaş Hesaplama</h1></div>
-            <div class="form-group">
-                <label>Çalışılan Gün / Parametreler:</label>
-                <input type="text" id="maasInput" placeholder="Değerleri girin...">
+        <!-- Duyuru Panosu -->
+        <div class="announcement-box">
+            <div class="announcement-title">
+                📢 Duyuru Panosu
             </div>
-            <button class="action-btn" onclick="alert('Hesaplama yapıldı!')">Hesapla</button>
-            <div id="maasSonuc" class="calc-result"></div>
-        </div>
-
-        <!-- 3. FARK HESAPLAMA GÖRÜNÜMÜ -->
-        <div id="view-fark" class="page-view">
-            <div class="portal-header"><h1>Fark Hesaplama</h1></div>
-            <div class="form-group">
-                <label>Fark Parametreleri:</label>
-                <input type="text" id="farkInput" placeholder="Değerleri girin...">
-            </div>
-            <button class="action-btn" onclick="alert('Fark hesaplandı!')">Farkı Hesapla</button>
-        </div>
-
-        <!-- 4. SOSYAL HAKLAR GÖRÜNÜMÜ -->
-        <div id="view-sosyal" class="page-view">
-            <div class="portal-header"><h1 id="sosyalBaslik">Sosyal Haklar</h1></div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>YARDIM ADI</th>
-                            <th id="thYil1">Yıl 1</th>
-                            <th id="thYil2">Yıl 2</th>
-                        </tr>
-                    </thead>
-                    <tbody id="sosyalBody">
-                        <tr><td colspan="3" style="text-align:center;">Yükleniyor...</td></tr>
-                    </tbody>
-                </table>
+            <ul id="duyuruListesi" class="announcement-list">
+                <li>Yükleniyor...</li>
+            </ul>
+            <div id="duyuruFotoContainer" class="announcement-image-container">
+                <img id="duyuruFoto" src="" alt="Duyuru Görseli">
             </div>
         </div>
 
-        <!-- 5. ENFLASYON TAKİBİ GÖRÜNÜMÜ -->
-        <div id="view-enf" class="page-view">
-            <div class="portal-header"><h1>Enflasyon Takibi</h1></div>
-            <div class="form-group">
-                <label>Mevcut Saat Ücreti (TL):</label>
-                <input type="number" id="saatUcreti" step="0.01" placeholder="Örn: 150.00">
-            </div>
-            <button type="button" class="action-btn" id="hesaplaEnfBtn">Saat Ücreti Hesapla (+2 Ekli)</button>
-            <div id="sonucBox" class="calc-result"></div>
-
-            <div class="table-container" style="margin-top: 15px;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Ay</th>
-                            <th>Aylık TÜFE (%)</th>
-                            <th>Birikimli (%)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="enfBody">
-                        <tr><td colspan="3" style="text-align:center;">Yükleniyor...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+        <a href="yonetim.html" class="admin-link">Yönetim Paneli Girişi</a>
     </div>
 
     <!-- Sabit Alt Navigasyon Barı -->
-    <div class="bottom-bar">
-        <button class="bottom-btn active" onclick="sayfaDegis('view-anasayfa', this)">
+    <nav class="bottom-bar">
+        <a href="index.html" class="bottom-btn active">
             <span>🏠</span> Ana Sayfa
-        </button>
-        <button class="bottom-btn" onclick="sayfaDegis('view-hesapla', this)">
+        </a>
+        <a href="hesapla.html" class="bottom-btn">
             <span>🧮</span> Maaş
-        </button>
-        <button class="bottom-btn" onclick="sayfaDegis('view-fark', this)">
+        </a>
+        <a href="fark.html" class="bottom-btn">
             <span>⚖️</span> Fark
-        </button>
-        <button class="bottom-btn" onclick="sayfaDegis('view-sosyal', this)">
+        </a>
+        <a href="sosyal.html" class="bottom-btn">
             <span>📋</span> Sosyal
-        </button>
-        <button class="bottom-btn" onclick="sayfaDegis('view-enf', this)">
+        </a>
+        <a href="enf.html" class="bottom-btn">
             <span>📈</span> Enflasyon
-        </button>
-    </div>
+        </a>
+    </nav>
 
-    <!-- Firebase ve Uygulama Mantığı -->
+    <!-- Firebase Duyuru ve Fotoğraf Çekme Scripti -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -413,171 +294,47 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const sosyalKeys = [
-            { id: "servis", adi: "Servis Ücreti" },
-            { id: "ram_bayrami", adi: "Ram. Bayramı" },
-            { id: "kur_bayrami", adi: "Kur. Bayramı" },
-            { id: "yakacak", adi: "Yakacak Yard." },
-            { id: "yillik_izin", adi: "Yıllık İzin" },
-            { id: "ana_ilkokul", adi: "Ana-İlkokul" },
-            { id: "ortaogretim", adi: "Ortaöğretim" },
-            { id: "lise", adi: "Lise" },
-            { id: "universite", adi: "Üniversite" },
-            { id: "evlenme", adi: "Evlenme" },
-            { id: "dogum", adi: "Doğum" },
-            { id: "olum_kendi", adi: "Ölüm (Kendi)" },
-            { id: "olum_yakin", adi: "Ölüm (Yakın)" },
-            { id: "gece_zammi", adi: "Gece Zammı Ü." }
-        ];
-
-        const aylar = [
-            "Ocak 2026", "Şubat 2026", "Mart 2026", "Nisan 2026", 
-            "Mayıs 2026", "Haziran 2026", "Temmuz 2026", "Ağustos 2026", 
-            "Eylül 2026", "Ekim 2026", "Kasım 2026", "Aralık 2026"
-        ];
-
-        let globalIkinci6AyOran = 0;
-
-        // Sayfa / Sekme Değiştirme Fonksiyonu
-        window.sayfaDegis = function(viewId, btnElement) {
-            document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
-
-            document.querySelectorAll('.bottom-btn').forEach(el => el.classList.remove('active'));
-            if(btnElement) {
-                btnElement.classList.add('active');
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Firebase Verilerini Yükleme
-        async function verileriYukle() {
+        async function duyuruyuGetir() {
             try {
                 const docRef = doc(db, "ayarlar", "veriler");
                 const docSnap = await getDoc(docRef);
-
-                if (!docSnap.exists()) return;
-                const data = docSnap.data();
-
-                // 1. Duyuru Panosu
                 const listeEl = document.getElementById("duyuruListesi");
                 const fotoContainer = document.getElementById("duyuruFotoContainer");
                 const fotoImg = document.getElementById("duyuruFoto");
-                let satirlar = [];
 
-                if (data.duyuru1 && data.duyuru1.trim() !== "") satirlar.push(data.duyuru1);
-                if (data.duyuru2 && data.duyuru2.trim() !== "") satirlar.push(data.duyuru2);
-                if (data.duyuru3 && data.duyuru3.trim() !== "") satirlar.push(data.duyuru3);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    let satirlar = [];
 
-                if (satirlar.length > 0) {
-                    listeEl.innerHTML = "";
-                    satirlar.forEach(metin => {
-                        listeEl.innerHTML += `<li>${metin}</li>`;
-                    });
+                    if (data.duyuru1 && data.duyuru1.trim() !== "") satirlar.push(data.duyuru1);
+                    if (data.duyuru2 && data.duyuru2.trim() !== "") satirlar.push(data.duyuru2);
+                    if (data.duyuru3 && data.duyuru3.trim() !== "") satirlar.push(data.duyuru3);
+
+                    if (satirlar.length > 0) {
+                        listeEl.innerHTML = "";
+                        satirlar.forEach(metin => {
+                            listeEl.innerHTML += `<li>${metin}</li>`;
+                        });
+                    } else {
+                        listeEl.innerHTML = `<li>Şu an aktif bir duyuru bulunmuyor.</li>`;
+                    }
+
+                    if (data.duyuruFoto && data.duyuruFoto.trim() !== "") {
+                        fotoImg.src = data.duyuruFoto;
+                        fotoContainer.style.display = "block";
+                    } else {
+                        fotoContainer.style.display = "none";
+                    }
                 } else {
                     listeEl.innerHTML = `<li>Şu an aktif bir duyuru bulunmuyor.</li>`;
                 }
-
-                if (data.duyuruFoto && data.duyuruFoto.trim() !== "") {
-                    fotoImg.src = data.duyuruFoto;
-                    fotoContainer.style.display = "block";
-                } else {
-                    fotoContainer.style.display = "none";
-                }
-
-                // 2. Sosyal Haklar Tablosu
-                const sosyalBody = document.getElementById("sosyalBody");
-                const thYil1 = document.getElementById("thYil1");
-                const thYil2 = document.getElementById("thYil2");
-                thYil1.textContent = data.yil1 || "2025";
-                thYil2.textContent = data.yil2 || "2026";
-
-                let sosyalData = data.sosyal || {};
-                sosyalBody.innerHTML = "";
-                sosyalKeys.forEach(item => {
-                    let v1 = sosyalData[item.id] ? sosyalData[item.id]._yil1 || "-" : "-";
-                    let v2 = sosyalData[item.id] ? sosyalData[item.id]._yil2 || "-" : "-";
-                    sosyalBody.innerHTML += `
-                        <tr>
-                            <td>${item.adi}</td>
-                            <td>${v1}</td>
-                            <td>${v2}</td>
-                        </tr>
-                    `;
-                });
-
-                // 3. Enflasyon Tablosu & Hesaplama
-                const enfBody = document.getElementById("enfBody");
-                let enfData = data.enflasyon || {};
-                enfBody.innerHTML = "";
-                let birikimli = 1, basladi = false;
-                let ikinci6AyBirikimli = 1, basladi6 = false;
-
-                aylar.forEach((ay, index) => {
-                    let valStr = enfData[index];
-                    let aylikVal = (valStr !== undefined && valStr !== "") ? parseFloat(valStr.toString().replace(",", ".")) : NaN;
-                    let aylikGosterim = "-", birikimliGosterim = "-";
-
-                    if (!isNaN(aylikVal)) {
-                        aylikGosterim = aylikVal.toFixed(2).replace(".", ",");
-                        if (!basladi) {
-                            birikimli = 1 + (aylikVal / 100);
-                            basladi = true;
-                        } else {
-                            birikimli = birikimli * (1 + (aylikVal / 100));
-                        }
-                        let birikimliVal = (birikimli - 1) * 100;
-                        birikimliGosterim = birikimliVal.toFixed(2).replace(".", ",");
-
-                        if (index >= 6 && index <= 11) {
-                            if (!basladi6) {
-                                ikinci6AyBirikimli = 1 + (aylikVal / 100);
-                                basladi6 = true;
-                            } else {
-                                ikinci6AyBirikimli = ikinci6AyBirikimli * (1 + (aylikVal / 100));
-                            }
-                        }
-                    }
-
-                    enfBody.innerHTML += `
-                        <tr>
-                            <td>${ay}</td>
-                            <td>${aylikGosterim}</td>
-                            <td>${birikimliGosterim}</td>
-                        </tr>
-                    `;
-                });
-
-                globalIkinci6AyOran = basladi6 ? (ikinci6AyBirikimli - 1) * 100 : 0;
-
             } catch (error) {
-                console.error("Veri yüklenirken hata:", error);
+                console.error("Duyuru çekilemedi:", error);
+                document.getElementById("duyuruListesi").innerHTML = `<li>Duyurular yüklenirken hata oluştu.</li>`;
             }
         }
 
-        document.getElementById("hesaplaEnfBtn").addEventListener("click", () => {
-            const mevcutSaatUcretiInput = document.getElementById("saatUcreti").value;
-            const sonucBox = document.getElementById("sonucBox");
-
-            if (!mevcutSaatUcretiInput || isNaN(mevcutSaatUcretiInput)) {
-                alert("Lütfen geçerli bir mevcut saat ücreti girin!");
-                return;
-            }
-
-            let mevcutUcret = parseFloat(mevcutSaatUcretiInput);
-            let toplamArtisOrani = globalIkinci6AyOran + 2;
-            let yeniUcret = mevcutUcret * (1 + (toplamArtisOrani / 100));
-
-            sonucBox.style.display = "block";
-            sonucBox.innerHTML = `
-                <strong>Temmuz - Aralık Birleşik Enflasyon:</strong> %${globalIkinci6AyOran.toFixed(2).replace(".", ",")}<br>
-                <strong>Not:</strong> Hesaplamaya +2 koyulmuştur.<br>
-                <strong>Toplam Artış Oranı:</strong> %${toplamArtisOrani.toFixed(2).replace(".", ",")}<br>
-                <strong>Yeni Saat Ücreti:</strong> <strong>${yeniUcret.toFixed(2).replace(".", ",")} TL</strong>
-            `;
-        });
-
-        verileriYukle();
+        duyuruyuGetir();
     </script>
 </body>
 </html>
