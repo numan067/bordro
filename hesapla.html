@@ -19,8 +19,8 @@
             background: var(--bg-gradient); 
             color: var(--text-main);
             margin: 0; 
-            padding-top: 70px; 
-            padding-bottom: 90px; 
+            padding-top: 65px; 
+            padding-bottom: 85px; 
             padding-left: 10px; 
             padding-right: 10px; 
             box-sizing: border-box; 
@@ -77,7 +77,7 @@
         .bottom-btn.active, .bottom-btn:hover { color: #5d3ebc; }
         .bottom-btn span { font-size: 18px; }
 
-        @media (max-width: 480px) { .input-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 480px) { .input-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
@@ -96,7 +96,7 @@
             <div class="option-group">
                 <label>Dönem (Ay)</label>
                 <select id="month" onchange="ayAyariYap()">
-                    <option value="1">Ocak</option><option value="2" selected>Şubat</option><option value="3">Mart</option>
+                    <option value="1">Ocak</option><option value="2">Şubat</option><option value="3">Mart</option>
                     <option value="4">Nisan</option><option value="5">Mayıs</option><option value="6">Haziran</option>
                     <option value="7">Temmuz</option><option value="8">Ağustos</option><option value="9">Eylül</option>
                     <option value="10">Ekim</option><option value="11">Kasım</option><option value="12">Aralık</option>
@@ -115,14 +115,13 @@
             <div class="input-group"><label>Saat Ücreti:</label><input type="number" id="saat-ucreti" step="0.01" value="0" oninput="hesapla()"></div>
             <div class="input-group"><label>Aylık Çalışma Saati:</label><input type="number" id="calisma-gun-saati" value="0" oninput="hesapla()"></div>
             
-            <!-- İstendiği Gibi Yan Yana Gruplar -->
             <div class="input-group"><label>Gece Zammı (Sa):</label><input type="number" id="gece-zammi" value="0" oninput="hesapla()"></div>
             <div class="input-group"><label>Fazla Mesai (Sa):</label><input type="number" id="fm-100" value="0" oninput="hesapla()"></div>
             
             <div class="input-group"><label>Ulusal Bayram (Sa):</label><input type="number" id="ulusal-100" value="0" oninput="hesapla()"></div>
             <div class="input-group"><label>Dini Bayram (Sa):</label><input type="number" id="dini-150" value="0" oninput="hesapla()"></div>
             
-            <div class="input-group"><label>Resmi Tatil Fazla Mesai (Sa):</label><input type="number" id="resmi-200" value="0" oninput="hesapla()"></div>
+            <div class="input-group"><label>Resmi Tatil FM (Sa):</label><input type="number" id="resmi-200" value="0" oninput="hesapla()"></div>
             <div class="input-group"><label>Yol Ücreti (Brüt):</label><input type="number" id="yol-ucreti" value="0" oninput="hesapla()"></div>
             
             <div class="input-group"><label>Net BES Kesintisi (TL):</label><input type="number" id="bes-kesintisi" value="0" oninput="hesapla()"></div>
@@ -133,7 +132,7 @@
             <div class="output-group"><div class="output-label">Vergi İstisnası</div><div id="vergi-istisnasi" class="output-value">0,00</div></div>
             <div class="output-group"><div class="output-label">Sendika Kesintisi</div><div id="sendika-kesinti" class="output-value">0,00</div></div>
             <div class="output-group"><div class="output-label">Vakıf Net Tutar</div><div id="vakif-net-tutar" class="output-value">0,00</div></div>
-            <div class="output-group"><div class="output-label">30 Günlük Net İkramiye</div><div id="net-ikramiye" class="output-value">0,00</div></div>
+            <div class="output-group"><div class="output-label">İkramiye Tutarı</div><div id="net-ikramiye" class="output-value">0,00</div></div>
         </div>
 
         <div class="net-maas-box">
@@ -159,6 +158,22 @@
             9: { gun: 30, gv: 5615.10, dv: 250.70 }, 10: { gun: 31, gv: 5615.10, dv: 250.70 },
             11: { gun: 30, gv: 5615.10, dv: 250.70 }, 12: { gun: 31, gv: 5615.10, dv: 250.70 }
         };
+
+        function otomatikAyAyarla() {
+            const simdi = new Date();
+            let yil = simdi.getFullYear();
+            let ay = simdi.getMonth() + 1; // 1 - 12
+            let gun = simdi.getDate();
+
+            // Ayın 5'i veya öncesi ise bir önceki aya git
+            if (gun <= 5) {
+                ay -= 1;
+                if (ay < 1) {
+                    ay = 12;
+                }
+            }
+            document.getElementById('month').value = ay;
+        }
 
         function ayAyariYap() {
             const ay = document.getElementById('month').value;
@@ -215,7 +230,10 @@
             document.getElementById('net-maas').innerText = f(net) + " TL";
         }
         
-        window.onload = ayAyariYap;
+        window.onload = function() {
+            otomatikAyAyarla();
+            ayAyariYap();
+        };
     </script>
 </body>
 </html>
