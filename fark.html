@@ -14,7 +14,17 @@
             --text-main: #1e293b;
             --text-muted: #64748b;
         }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg-gradient); color: var(--text-main); margin: 0; padding-top: 70px; padding-bottom: 90px; padding-left: 15px; padding-right: 15px; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            margin: 0;
+            padding-top: 70px;
+            padding-bottom: 90px;
+            padding-left: 15px;
+            padding-right: 15px;
+            box-sizing: border-box;
+        }
         .top-navbar {
             position: fixed; top: 0; left: 0; width: 100%; height: 55px;
             background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
@@ -29,28 +39,230 @@
             background: linear-gradient(90deg, #5d3ebc, #9333ea);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .container { max-width: 650px; margin: auto; background: white; padding: 20px; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
-        h2 { text-align: center; color: #2c3e50; border-bottom: 2px solid #5d3ebc; padding-bottom: 10px; font-size: 18px; }
-        
-        .header-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #eef2f7; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
-        .header-inputs label { font-size: 11px; font-weight: bold; display: block; margin-bottom: 5px; color: #555; }
-        .header-inputs input, .header-inputs select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        
-        #yeni_su { background-color: #e9ecef; cursor: not-allowed; font-weight: bold; color: #2c3e50; }
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #5d3ebc;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
 
-        .month-card { border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin-bottom: 15px; background: #fff; position: relative; }
-        .month-title { font-weight: bold; color: #5d3ebc; margin-bottom: 10px; text-transform: uppercase; font-size: 14px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .input-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .input-group label { font-size: 10px; color: #666; display: block; }
-        .input-group input, .input-group select { width: 100%; padding: 5px; border: 1px solid #eee; border-radius: 4px; font-size: 12px; }
+        /* Üst Sekme Butonları */
+        .mode-switch {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .mode-btn {
+            padding: 11px;
+            border: 2px solid #5d3ebc;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #5d3ebc;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .mode-btn.active {
+            background: linear-gradient(135deg, #5d3ebc 0%, #7c3aed 100%);
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(93, 62, 188, 0.25);
+        }
 
-        .btn-add-month { background-color: #27ae60; color: white; padding: 10px; border: none; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; margin-bottom: 15px; font-size: 14px; }
+        .section-panel { display: none; }
+        .section-panel.active { display: block; }
+
+        .header-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            background: #eef2f7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .header-inputs.single-col { grid-template-columns: 1fr; }
+        .header-inputs label {
+            font-size: 11px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .header-inputs input, .header-inputs select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 13px;
+        }
+
+        .month-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #fff;
+            position: relative;
+        }
+        .month-title {
+            font-weight: bold;
+            color: #5d3ebc;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 14px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .input-group label { font-size: 10px; color: #666; display: block; margin-bottom: 3px; }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #cbd5e0;
+            border-radius: 5px;
+            font-size: 12px;
+            box-sizing: border-box;
+            background: #fff;
+        }
+
+        .btn-add-month {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
         .btn-add-month:hover { background-color: #219653; }
-        .btn-remove { position: absolute; top: 12px; right: 15px; background: #e74c3c; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer; font-size: 11px; }
+        .btn-remove {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 8px;
+            cursor: pointer;
+            font-size: 11px;
+        }
 
-        .result-section { background: #2c3e50; color: white; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; }
-        .result-item { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; border-bottom: 1px solid #444; padding-bottom: 5px; }
-        .total-fark { font-size: 24px; font-weight: bold; color: #2ecc71; margin-top: 10px; }
+        .social-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px;
+            background: #f8fafc;
+            margin-bottom: 15px;
+        }
+        .social-box h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #334155;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 6px;
+        }
+        .child-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .child-row select {
+            flex: 1;
+            padding: 7px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 12px;
+            background: #fff;
+        }
+        .btn-child-add {
+            background: #5d3ebc;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 7px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-child-del {
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 7px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .social-status {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 6px;
+        }
+
+        .result-section {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 13px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+        }
+        .total-label {
+            font-size: 12px;
+            opacity: 0.85;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+        .total-fark {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2ecc71;
+            margin-top: 6px;
+        }
+        .tax-note-box {
+            margin-top: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: left;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: #f1f5f9;
+        }
 
         .bottom-bar {
             position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff;
@@ -63,6 +275,10 @@
         }
         .bottom-btn.active, .bottom-btn:hover { color: #5d3ebc; }
         .bottom-btn span { font-size: 18px; }
+
+        @media (max-width: 480px) {
+            .input-grid { grid-template-columns: 1fr 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -77,35 +293,80 @@
 <div class="container">
     <h2>Fark Hesaplaması</h2>
 
-    <div class="header-inputs">
-        <div>
-            <label>Eski Saat Ücreti</label>
-            <input type="number" id="eski_su" placeholder="Giriniz..." step="0.01" oninput="yeniSaatHesapla()">
+    <!-- Üst Geçiş Butonları -->
+    <div class="mode-switch">
+        <button type="button" id="btnModeFark" class="mode-btn active" onclick="modDegistir('fark')">Fark</button>
+        <button type="button" id="btnModeYillik" class="mode-btn" onclick="modDegistir('yillik')">Yıllık Ortalama</button>
+    </div>
+
+    <!-- 1. FARK HESAPLAMA PANELİ -->
+    <div id="panelFark" class="section-panel active">
+        <div class="header-inputs">
+            <div>
+                <label>Eski Saat Ücreti</label>
+                <input type="number" id="eski_su" placeholder="Giriniz..." step="0.01" oninput="yeniSaatHesapla()">
+            </div>
+            <div>
+                <label>Vergi Dilimi (%)</label>
+                <select id="vergi_dilimi" onchange="hesapla()">
+                    <option value="0.15">15</option>
+                    <option value="0.20">20</option>
+                    <option value="0.27">27</option>
+                    <option value="0.35">35</option>
+                </select>
+            </div>
         </div>
-        <div>
-            <label>Vergi Dilimi (%)</label>
-            <select id="vergi_dilimi" onchange="hesapla()">
-                <option value="0.15">15</option>
-                <option value="0.20">20</option>
-                <option value="0.27">27</option>
-                <option value="0.35">35</option>
-            </select>
+
+        <input type="hidden" id="yeni_su">
+
+        <div id="aylarListesi"></div>
+
+        <button type="button" class="btn-add-month" onclick="ayEkle()">+ Ay Ekle</button>
+
+        <div class="result-section">
+            <div id="dinamikSonuclar"></div>
+            <div class="result-item"><span>İkramiye Farkı:</span><span id="res_ikr">0,00 TL</span></div>
+            <div class="result-item"><span style="color:#2ecc71">Bayram Farkı (Sabit):</span><span>2.492,24 TL</span></div>
+            <div class="total-label">TOPLAM NET FARK</div>
+            <div class="total-fark" id="toplam_fark">0,00 TL</div>
         </div>
     </div>
-    
-    <!-- Gizli Yeni Saat Ücreti Input (Hesaplamalar için baz alınır) -->
-    <input type="hidden" id="yeni_su">
 
-    <div id="aylarListesi"></div>
+    <!-- 2. YILLIK ORTALAMA PANELİ -->
+    <div id="panelYillik" class="section-panel">
+        <div class="header-inputs single-col">
+            <div>
+                <label>Saat Ücreti (TL)</label>
+                <input type="number" id="yillik_saat_ucreti" placeholder="Örn: 200.00" step="0.01" oninput="yillikOrtalamaHesapla()">
+            </div>
+        </div>
 
-    <button class="btn-add-month" onclick="ayEkle()">+ Ay Ekle</button>
+        <div class="social-box">
+            <h3>Sosyal Yardım Seçenekleri (Senede 1 Defa)</h3>
+            <div class="input-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 10px;">
+                <div class="input-group">
+                    <label>Servis Ücreti</label>
+                    <select id="yillik_servis" onchange="yillikOrtalamaHesapla()">
+                        <option value="0">Yok</option>
+                        <option value="1">Var</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Çocuk Yardımı</label>
+                    <button type="button" class="btn-child-add" onclick="cocukEkle()">+ Çocuk Ekle</button>
+                </div>
+            </div>
+            <div id="cocukListesi"></div>
+            <div id="sosyalDurumNotu" class="social-status">Sosyal yardım verileri kontrol ediliyor...</div>
+        </div>
 
-    <div class="result-section">
-        <div id="dinamik Sonuclar"></div>
-        <div class="result-item"><span>İkramiye Farkı:</span><span id="res_ikr">0,00 TL</span></div>
-        <div class="result-item"><span style="color:#2ecc71">Bayram Farkı (Sabit):</span><span>2.492,24 TL</span></div>
-        <div class="total-label">TOPLAM NET FARK</div>
-        <div class="total-fark" id="toplam_fark">0,00 TL</div>
+        <div class="result-section">
+            <div class="total-label" style="margin-top:0;">ORTALAMA AYLIK MAAŞ</div>
+            <div class="total-fark" id="ortalama_aylik_maas">0,00 TL</div>
+            <div id="vergi_dilimi_aciklama" class="tax-note-box">
+                Saat ücreti girildiğinde 12 aylık vergi dilimi dağılımı burada gösterilecektir.
+            </div>
+        </div>
     </div>
 </div>
 
@@ -117,116 +378,383 @@
     <a href="enf.html" class="bottom-btn"><span>📈</span> Enflasyon</a>
 </nav>
 
-<script>
-let aySayaci = 0;
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-function ayEkle(varsayilanCs = 225, varsayilanFm = 0, varsayilanGz = 0, varsayilanUb = 0, varsayilanDb = 0, varsayilanRfm = 0, varsayilanYol = 0) {
-    aySayaci++;
-    const id = aySayaci;
-    const container = document.getElementById('aylarListesi');
-    
-    const card = document.createElement('div');
-    card.className = 'month-card';
-    card.id = `ay_card_${id}`;
-    card.innerHTML = `
-        <div class="month-title">${id}. Ay Kalemleri</div>
-        ${id > 1 ? `<button class="btn-remove" onclick="aySil(${id})">Sil</button>` : ''}
-        <div class="input-grid">
-            <div class="input-group"><label>Çalışma (Sa)</label><input type="number" id="h${id}_cs" value="${varsayilanCs}" oninput="hesapla()"></div>
-            <div class="input-group"><label>Fazla Mesai</label><input type="number" id="h${id}_fm" value="${varsayilanFm}" oninput="hesapla()"></div>
-            <div class="input-group"><label>Gece Zammı (Sa)</label><input type="number" id="h${id}_gz" value="${varsayilanGz}" oninput="hesapla()"></div>
-            <div class="input-group"><label>U. Bayram</label><input type="number" id="h${id}_ub" value="${varsayilanUb}" oninput="hesapla()"></div>
-            <div class="input-group"><label>D. Bayram</label><input type="number" id="h${id}_db" value="${varsayilanDb}" oninput="hesapla()"></div>
-            <div class="input-group"><label>R. Tatil FM</label><input type="number" id="h${id}_rfm" value="${varsayilanRfm}" oninput="hesapla()"></div>
-            <div class="input-group"><label>Yol Yardımı</label><select id="h${id}_yol" onchange="hesapla()"><option value="0" ${varsayilanYol==0?'selected':''}>Yok</option><option value="1" ${varsayilanYol==1?'selected':''}>Var</option></select></div>
-        </div>
-    `;
-    container.appendChild(card);
-    hesapla();
-}
+    const firebaseConfig = {
+        apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
+        authDomain: "bordroapp.firebaseapp.com",
+        projectId: "bordroapp",
+        storageBucket: "bordroapp.firebasestorage.app",
+        messagingSenderId: "495208822576",
+        appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
+        measurementId: "G-6ZRKG9HG9J"
+    };
 
-function aySil(id) {
-    const el = document.getElementById(`ay_card_${id}`);
-    if(el) {
-        el.remove();
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // hesapla.html ile birebir aynı aylık gün, GV ve DV istisnaları
+    const ayVerileri = {
+        1: { ad: "Ocak", gun: 31, gv: 4211.33, dv: 250.70 },
+        2: { ad: "Şubat", gun: 28, gv: 4211.33, dv: 250.70 },
+        3: { ad: "Mart", gun: 31, gv: 4211.33, dv: 250.70 },
+        4: { ad: "Nisan", gun: 30, gv: 4211.33, dv: 250.70 },
+        5: { ad: "Mayıs", gun: 31, gv: 4211.33, dv: 250.70 },
+        6: { ad: "Haziran", gun: 30, gv: 4211.33, dv: 250.70 },
+        7: { ad: "Temmuz", gun: 31, gv: 4537.75, dv: 250.70 },
+        8: { ad: "Ağustos", gun: 31, gv: 5615.10, dv: 250.70 },
+        9: { ad: "Eylül", gun: 30, gv: 5615.10, dv: 250.70 },
+        10: { ad: "Ekim", gun: 31, gv: 5615.10, dv: 250.70 },
+        11: { ad: "Kasım", gun: 30, gv: 5615.10, dv: 250.70 },
+        12: { ad: "Aralık", gun: 31, gv: 5615.10, dv: 250.70 }
+    };
+
+    // 2026 Gelir Vergisi Kümülatif Matrah Dilimleri
+    const vergiDilimleri = [
+        { limit: 158000, oran: 0.15, etiket: "%15" },
+        { limit: 330000, oran: 0.20, etiket: "%20" },
+        { limit: 1200000, oran: 0.27, etiket: "%27" },
+        { limit: Infinity, oran: 0.35, etiket: "%35" }
+    ];
+
+    let sosyalKayitlari = {};
+    let aySayaci = 0;
+    let cocukSayaci = 0;
+
+    function sayiParse(val) {
+        if (val === undefined || val === null) return 0;
+        const temiz = val.toString().replace(/\s+/g, "").replace(",", ".");
+        const num = parseFloat(temiz);
+        return isNaN(num) ? 0 : num;
+    }
+
+    function formatTL(n) {
+        return n.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL";
+    }
+
+    window.modDegistir = function(mod) {
+        const btnFark = document.getElementById("btnModeFark");
+        const btnYillik = document.getElementById("btnModeYillik");
+        const panelFark = document.getElementById("panelFark");
+        const panelYillik = document.getElementById("panelYillik");
+
+        if (mod === "yillik") {
+            btnYillik.classList.add("active");
+            btnFark.classList.remove("active");
+            panelYillik.classList.add("active");
+            panelFark.classList.remove("active");
+            yillikOrtalamaHesapla();
+        } else {
+            btnFark.classList.add("active");
+            btnYillik.classList.remove("active");
+            panelFark.classList.add("active");
+            panelYillik.classList.remove("active");
+        }
+    };
+
+    // --- FARK HESAPLAMA FONKSİYONLARI (Aynen korundu) ---
+    window.ayEkle = function(varsayilanCs = 225, varsayilanFm = 0, varsayilanGz = 0, varsayilanUb = 0, varsayilanDb = 0, varsayilanRfm = 0, varsayilanYol = 0) {
+        aySayaci++;
+        const id = aySayaci;
+        const container = document.getElementById("aylarListesi");
+
+        const card = document.createElement("div");
+        card.className = "month-card";
+        card.id = `ay_card_${id}`;
+        card.innerHTML = `
+            <div class="month-title">${id}. Ay Kalemleri</div>
+            ${id > 1 ? `<button type="button" class="btn-remove" onclick="aySil(${id})">Sil</button>` : ""}
+            <div class="input-grid">
+                <div class="input-group"><label>Çalışma (Sa)</label><input type="number" id="h${id}_cs" value="${varsayilanCs}" oninput="hesapla()"></div>
+                <div class="input-group"><label>Fazla Mesai</label><input type="number" id="h${id}_fm" value="${varsayilanFm}" oninput="hesapla()"></div>
+                <div class="input-group"><label>Gece Zammı (Sa)</label><input type="number" id="h${id}_gz" value="${varsayilanGz}" oninput="hesapla()"></div>
+                <div class="input-group"><label>U. Bayram</label><input type="number" id="h${id}_ub" value="${varsayilanUb}" oninput="hesapla()"></div>
+                <div class="input-group"><label>D. Bayram</label><input type="number" id="h${id}_db" value="${varsayilanDb}" oninput="hesapla()"></div>
+                <div class="input-group"><label>R. Tatil FM</label><input type="number" id="h${id}_rfm" value="${varsayilanRfm}" oninput="hesapla()"></div>
+                <div class="input-group"><label>Yol Yardımı</label><select id="h${id}_yol" onchange="hesapla()"><option value="0" ${varsayilanYol==0?"selected":""}>Yok</option><option value="1" ${varsayilanYol==1?"selected":""}>Var</option></select></div>
+            </div>
+        `;
+        container.appendChild(card);
         hesapla();
+    };
+
+    window.aySil = function(id) {
+        const el = document.getElementById(`ay_card_${id}`);
+        if (el) {
+            el.remove();
+            hesapla();
+        }
+    };
+
+    window.yeniSaatHesapla = function() {
+        const eskiSU = parseFloat(document.getElementById("eski_su").value) || 0;
+        const yeniSU = eskiSU * 1.16;
+        document.getElementById("yeni_su").value = yeniSU.toFixed(2);
+        hesapla();
+    };
+
+    window.hesapla = function() {
+        const eskiSU = parseFloat(document.getElementById("eski_su").value) || 0;
+        const yeniSU = parseFloat(document.getElementById("yeni_su").value) || 0;
+
+        if (eskiSU === 0) {
+            document.getElementById("toplam_fark").innerText = "0,00 TL";
+            document.getElementById("res_ikr").innerText = "0,00 TL";
+            document.getElementById("dinamikSonuclar").innerHTML = "";
+            return;
+        }
+
+        const suFark = yeniSU - eskiSU;
+        const vo = parseFloat(document.getElementById("vergi_dilimi").value);
+        const sabitBayramFarki = 2492.24;
+        const geceZammiBirimFark = 7.19;
+
+        let toplamNet = 0;
+        const ikrBrut = suFark * 225;
+        const ikrNet = ikrBrut * (1 - 0.15 - vo - 0.00759);
+        document.getElementById("res_ikr").innerText = formatTL(ikrNet > 0 ? ikrNet : 0);
+
+        const cards = document.querySelectorAll("#panelFark .month-card");
+        let dinamikHtml = "";
+
+        cards.forEach(card => {
+            const idMatch = card.id.match(/ay_card_(\d+)/);
+            if (!idMatch) return;
+            const i = idMatch[1];
+
+            const cs = parseFloat(document.getElementById(`h${i}_cs`).value) || 0;
+            const fm = parseFloat(document.getElementById(`h${i}_fm`).value) || 0;
+            const gz = parseFloat(document.getElementById(`h${i}_gz`).value) || 0;
+            const ub = parseFloat(document.getElementById(`h${i}_ub`).value) || 0;
+            const db = parseFloat(document.getElementById(`h${i}_db`).value) || 0;
+            const rfm = parseFloat(document.getElementById(`h${i}_rfm`).value) || 0;
+            const yolVar = document.getElementById(`h${i}_yol`).value == "1";
+
+            const normalFark = cs * suFark;
+            const mesaiFark = ((fm + ub) * suFark * 2) + (db * suFark * 2.5) + (rfm * suFark * 3);
+            const geceFark = gz * geceZammiBirimFark;
+            const yolFark = yolVar ? 711.13 : 0;
+
+            const brutFark = normalFark + mesaiFark + geceFark + yolFark;
+            const sendikaFark = suFark * 7;
+
+            const netFark = (brutFark - (brutFark * 0.15) - sendikaFark) * (1 - vo) - (brutFark * 0.00759);
+            const gosterilecekNet = netFark > 0 ? netFark : 0;
+
+            dinamikHtml += `<div class="result-item"><span>${i}. Ay Net Fark:</span><span>${formatTL(gosterilecekNet)}</span></div>`;
+            toplamNet += gosterilecekNet;
+        });
+
+        document.getElementById("dinamikSonuclar").innerHTML = dinamikHtml;
+
+        const finalToplam = toplamNet + (ikrNet > 0 ? ikrNet : 0) + sabitBayramFarki;
+        document.getElementById("toplam_fark").innerText = formatTL(finalToplam);
+    };
+
+    // --- YILLIK ORTALAMA FONKSİYONLARI ---
+    window.cocukEkle = function() {
+        cocukSayaci++;
+        const id = cocukSayaci;
+        const container = document.getElementById("cocukListesi");
+        const row = document.createElement("div");
+        row.className = "child-row";
+        row.id = `cocuk_row_${id}`;
+        row.innerHTML = `
+            <select id="cocuk_kademe_${id}" onchange="yillikOrtalamaHesapla()">
+                <option value="ana_ilkokul">Ana-İlkokul</option>
+                <option value="ortaogretim">Ortaöğretim</option>
+                <option value="lise">Lise</option>
+                <option value="universite">Üniversite</option>
+            </select>
+            <button type="button" class="btn-child-del" onclick="cocukSil(${id})">✕</button>
+        `;
+        container.appendChild(row);
+        yillikOrtalamaHesapla();
+    };
+
+    window.cocukSil = function(id) {
+        const el = document.getElementById(`cocuk_row_${id}`);
+        if (el) {
+            el.remove();
+            yillikOrtalamaHesapla();
+        }
+    };
+
+    function sosyalDegerAl(key) {
+        const kayit = sosyalKayitlari[key];
+        if (!kayit) return 0;
+        if (kayit._yil2 !== undefined && kayit._yil2 !== "") return sayiParse(kayit._yil2);
+        if (kayit._yil1 !== undefined && kayit._yil1 !== "") return sayiParse(kayit._yil1);
+        if (kayit._2026 !== undefined && kayit._2026 !== "") return sayiParse(kayit._2026);
+        if (kayit._2025 !== undefined && kayit._2025 !== "") return sayiParse(kayit._2025);
+        return 0;
     }
-}
 
-function yeniSaatHesapla() {
-    const eskiSU = parseFloat(document.getElementById('eski_su').value) || 0;
-    const yeniSU = eskiSU * 1.16;
-    document.getElementById('yeni_su').value = yeniSU.toFixed(2);
-    hesapla();
-}
-
-function hesapla() {
-    const eskiSU = parseFloat(document.getElementById('eski_su').value) || 0;
-    const yeniSU = parseFloat(document.getElementById('yeni_su').value) || 0;
-    
-    if(eskiSU === 0) {
-        document.getElementById('toplam_fark').innerText = "0,00 TL";
-        document.getElementById('res_ikr').innerText = "0,00 TL";
-        document.getElementById('dinamik Sonuclar').innerHTML = "";
-        return;
+    // Net tutarı SGK (%14), işsizlik (%1) ve damga vergisi (%0.00759) düşülmüş yapıdan brüt karşılığına çevirir
+    function nettenBruteCevir(netTutar, dilimOrani) {
+        if (netTutar <= 0) return 0;
+        const carpan = 0.85 * (1 - dilimOrani) - 0.00759;
+        return carpan > 0 ? netTutar / carpan : netTutar;
     }
 
-    const suFark = yeniSU - eskiSU;
-    const vo = parseFloat(document.getElementById('vergi_dilimi').value);
-    const sabitBayramFarki = 2492.24;
-    const geceZammiBirimFark = 7.19; 
-    
-    let toplamNet = 0;
-    const format = (n) => n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " TL";
+    function kumulatifVergiHesapla(matrahOnceki, matrahArtisi) {
+        if (matrahArtisi <= 0) {
+            return { vergi: 0, yeniMatrah: matrahOnceki, dilimler: [] };
+        }
 
-    // İkramiye Farkı (225 Saat)
-    const ikrBrut = suFark * 225;
-    const ikrNet = ikrBrut * (1 - 0.15 - vo - 0.00759);
-    document.getElementById('res_ikr').innerText = format(ikrNet > 0 ? ikrNet : 0);
+        let kalan = matrahArtisi;
+        let mevcut = matrahOnceki;
+        let toplamVergi = 0;
+        const kullanılanDilimler = [];
 
-    const cards = document.querySelectorAll('.month-card');
-    let dinamikHtml = "";
+        for (const dilim of vergiDilimleri) {
+            if (kalan <= 0) break;
+            if (mevcut >= dilim.limit) continue;
 
-    cards.forEach(card => {
-        const idMatch = card.id.match(/ay_card_(\d+)/);
-        if(!idMatch) return;
-        const i = idMatch[1];
+            const kapasite = dilim.limit - mevcut;
+            const dilimeGiren = Math.min(kalan, kapasite);
+            toplamVergi += dilimeGiren * dilim.oran;
+            mevcut += dilimeGiren;
+            kalan -= dilimeGiren;
+            kullanılanDilimler.push(dilim.etiket);
+        }
 
-        const cs = parseFloat(document.getElementById(`h${i}_cs`).value) || 0;
-        const fm = parseFloat(document.getElementById(`h${i}_fm`).value) || 0;
-        const gz = parseFloat(document.getElementById(`h${i}_gz`).value) || 0;
-        const ub = parseFloat(document.getElementById(`h${i}_ub`).value) || 0;
-        const db = parseFloat(document.getElementById(`h${i}_db`).value) || 0;
-        const rfm = parseFloat(document.getElementById(`h${i}_rfm`).value) || 0;
-        const yolVar = document.getElementById(`h${i}_yol`).value == "1";
-        
-        const normalFark = cs * suFark;
-        const mesaiFark = ((fm + ub) * suFark * 2) + (db * suFark * 2.5) + (rfm * suFark * 3);
-        const geceFark = gz * geceZammiBirimFark;
-        const yolFark = yolVar ? 711.13 : 0;
+        return {
+            vergi: toplamVergi,
+            yeniMatrah: mevcut,
+            dilimler: kullanılanDilimler
+        };
+    }
 
-        const brutFark = normalFark + mesaiFark + geceFark + yolFark;
-        const sendikaFark = suFark * 7;
-        
-        const netFark = (brutFark - (brutFark * 0.15) - sendikaFark) * (1 - vo) - (brutFark * 0.00759);
-        
-        const gosterilecekNet = netFark > 0 ? netFark : 0;
-        dinamikHtml += `<div class="result-item"><span>${i}. Ay Net Fark:</span><span>${format(gosterilecekNet)}</span></div>`;
-        toplamNet += gosterilecekNet;
-    });
+    window.yillikOrtalamaHesapla = function() {
+        const su = parseFloat(document.getElementById("yillik_saat_ucreti").value) || 0;
+        const ortalamaEl = document.getElementById("ortalama_aylik_maas");
+        const aciklamaEl = document.getElementById("vergi_dilimi_aciklama");
 
-    document.getElementById('dinamik Sonuclar').innerHTML = dinamikHtml;
+        if (su <= 0) {
+            ortalamaEl.innerText = "0,00 TL";
+            aciklamaEl.innerHTML = "Saat ücreti girildiğinde 12 aylık vergi dilimi dağılımı burada gösterilecektir.";
+            return;
+        }
 
-    const finalToplam = toplamNet + (ikrNet > 0 ? ikrNet : 0) + sabitBayramFarki;
-    document.getElementById('toplam_fark').innerText = format(finalToplam);
-}
+        const servisVar = document.getElementById("yillik_servis").value === "1";
+        const servisBrut = servisVar ? sosyalDegerAl("servis") : 0;
 
-// Sayfa açıldığında varsayılan olarak 3 ay ekle (Ocak, Şubat, Mart gibi)
-window.onload = function() {
-    ayEkle(232.5, 0, 0, 0, 0, 0, 0);
-    ayEkle(210, 0, 0, 0, 0, 0, 0);
-    ayEkle(232.5, 0, 0, 0, 0, 0, 0);
-};
+        // Senede 1 defa eklenecek net sosyal yardımlar (brüt karşılığına çevrilir)
+        const ramazanNet = sosyalDegerAl("ram_bayrami");
+        const kurbanNet = sosyalDegerAl("kur_bayrami");
+        const yakacakNet = sosyalDegerAl("yakacak");
+        const izinNet = sosyalDegerAl("yillik_izin");
+
+        // Çocuk yardımları
+        let cocukYardimBrutToplam = 0;
+        const cocukSelects = document.querySelectorAll("#cocukListesi select");
+        cocukSelects.forEach(sel => {
+            cocukYardimBrutToplam += sosyalDegerAl(sel.value);
+        });
+
+        let kumulatifMatrah = 0;
+        let yillikToplamNet = 0;
+        const dilimAylari = { "%15": [], "%20": [], "%27": [], "%35": [] };
+
+        for (let ay = 1; ay <= 12; ay++) {
+            const info = ayVerileri[ay];
+            const gs = info.gun * 7.5;
+            const sendika = su * 7.00;
+
+            // Temel aylık brüt + servis brütü + çocuk yardımı brütü
+            let brut = (su * gs) + servisBrut + cocukYardimBrutToplam;
+
+            // Nisan (4), Temmuz (7), Ekim (10) aylarında ikramiye eklenir
+            if (ay === 4 || ay === 7 || ay === 10) {
+                brut += su * 30 * 7.5;
+            }
+
+            // Sosyal yardımlar senede 1 defa hesaba katılır:
+            // Yakacak ve Yıllık İzin yıllık döngüde, Ramazan ve Kurban Bayramı ilgili dönemlerde brütlenir
+            let ekSosyalBrut = 0;
+            const tahminiDilim = kumulatifMatrah < 158000 ? 0.15 : (kumulatifMatrah < 330000 ? 0.20 : (kumulatifMatrah < 1200000 ? 0.27 : 0.35));
+
+            if (ay === 3) {
+                ekSosyalBrut += nettenBruteCevir(ramazanNet, tahminiDilim);
+            }
+            if (ay === 5) {
+                ekSosyalBrut += nettenBruteCevir(kurbanNet, tahminiDilim);
+            }
+            if (ay === 6) {
+                ekSosyalBrut += nettenBruteCevir(izinNet, tahminiDilim);
+            }
+            if (ay === 10) {
+                ekSosyalBrut += nettenBruteCevir(yakacakNet, tahminiDilim);
+            }
+
+            brut += ekSosyalBrut;
+
+            const sgk = brut * 0.14;
+            const issizlik = brut * 0.01;
+            const aylikMatrah = Math.max(0, brut - sgk - issizlik - sendika);
+
+            const gvSonuc = kumulatifVergiHesapla(kumulatifMatrah, aylikMatrah);
+            kumulatifMatrah = gvSonuc.yeniMatrah;
+
+            let gv = gvSonuc.vergi - info.gv;
+            if (gv < 0) gv = 0;
+
+            let dv = (brut * 0.00759) - info.dv;
+            if (dv < 0) dv = 0;
+
+            const netAy = brut - sgk - issizlik - gv - dv - sendika;
+            yillikToplamNet += netAy;
+
+            const aktifDilim = gvSonuc.dilimler.length > 0
+                ? gvSonuc.dilimler[gvSonuc.dilimler.length - 1]
+                : (kumulatifMatrah <= 158000 ? "%15" : (kumulatifMatrah <= 330000 ? "%20" : (kumulatifMatrah <= 1200000 ? "%27" : "%35")));
+
+            dilimAylari[aktifDilim].push(info.ad);
+        }
+
+        const ortalamaAylik = yillikToplamNet / 12;
+        ortalamaEl.innerText = formatTL(ortalamaAylik);
+
+        const satirlar = [];
+        for (const oran of ["%15", "%20", "%27", "%35"]) {
+            const ayListesi = dilimAylari[oran];
+            if (ayListesi.length > 0) {
+                satirlar.push(`<strong>${oran} Vergi Dilimi:</strong> ${ayListesi.join(", ")}`);
+            } else {
+                satirlar.push(`<strong>${oran} Vergi Dilimi:</strong> Bu yıl girilmedi`);
+            }
+        }
+
+        aciklamaEl.innerHTML = satirlar.join("<br>");
+    };
+
+    async function sosyalVerileriYukle() {
+        const durumEl = document.getElementById("sosyalDurumNotu");
+        try {
+            const docRef = doc(db, "ayarlar", "veriler");
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists() && docSnap.data().sosyal) {
+                sosyalKayitlari = docSnap.data().sosyal;
+                durumEl.innerText = "Sosyal yardım verileri yönetim panelinden yüklendi.";
+            } else {
+                durumEl.innerText = "Yönetim panelinde kayıtlı sosyal yardım verisi bulunamadı (0 olarak işlenir).";
+            }
+        } catch (err) {
+            console.error("Sosyal veri çekme hatası:", err);
+            durumEl.innerText = "Sosyal veriler alınırken bağlantı hatası oluştu.";
+        }
+        yillikOrtalamaHesapla();
+    }
+
+    window.onload = function() {
+        ayEkle(232.5, 0, 0, 0, 0, 0, 0);
+        ayEkle(210, 0, 0, 0, 0, 0, 0);
+        ayEkle(232.5, 0, 0, 0, 0, 0, 0);
+        sosyalVerileriYukle();
+    };
 </script>
 </body>
 </html>
