@@ -90,13 +90,67 @@
             box-shadow: 0 4px 12px rgba(93,62,188,0.22);
         }
         .primary-btn:hover { opacity: 0.96; }
+
+        .secondary-btn {
+            padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px;
+            background: #f8fafc; color: #1e293b; font-weight: 700; font-size: 12px; cursor: pointer;
+        }
+        .secondary-btn:hover { background: #e2e8f0; }
+
+        .danger-btn {
+            padding: 7px 11px; border: none; border-radius: 8px;
+            background: #dc2626; color: #ffffff; font-weight: 700; font-size: 11.5px; cursor: pointer;
+        }
+        .danger-btn:hover { background: #b91c1c; }
+
+        .link-row {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 8px; font-size: 12px;
+        }
+        .text-link {
+            background: none; border: none; padding: 0; color: var(--primary);
+            font-weight: 700; font-size: 12px; cursor: pointer; text-decoration: underline;
+        }
+
+        .forgot-box {
+            margin-top: 10px; padding: 11px; border: 1px solid #e2e8f0;
+            border-radius: 10px; background: #f8fafc; display: none;
+        }
+
+        .kvkk-check {
+            display: flex; align-items: flex-start; gap: 8px;
+            font-size: 11.5px; color: #334155; line-height: 1.4;
+            margin: 10px 0 12px 0; background: #f8fafc; padding: 8px 10px;
+            border-radius: 8px; border: 1px solid #e2e8f0;
+        }
+        .kvkk-check input { width: auto; margin-top: 2px; cursor: pointer; }
+
         .msg-box { margin-top: 8px; font-size: 12px; text-align: center; font-weight: 600; min-height: 16px; }
 
         .user-bar {
             display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
             gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0;
             padding: 8px 12px; border-radius: 10px; margin-bottom: 10px; font-size: 12px;
+            position: relative;
         }
+        .user-name-trigger {
+            cursor: pointer; font-weight: 800; color: #0f172a;
+            text-decoration: underline; text-decoration-style: dotted;
+            background: none; border: none; padding: 0; font-size: 12px;
+        }
+        .user-name-trigger:hover { color: var(--primary); }
+
+        .account-action-box {
+            width: 100%; margin-top: 6px; padding: 9px 11px;
+            border-radius: 9px; background: #fef2f2; border: 1px solid #fecaca;
+            display: none; flex-direction: column; gap: 8px;
+        }
+        .confirm-row {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 8px; flex-wrap: wrap; font-size: 11.5px; color: #7f1d1d; font-weight: 600;
+        }
+        .confirm-btns { display: flex; gap: 6px; }
+
         .controls-row {
             display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;
         }
@@ -141,164 +195,84 @@
         }
 
         .day-left {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            border-right: 1px solid #e2e8f0;
-            padding-right: 8px;
+            display: flex; flex-direction: column; align-items: flex-start;
+            justify-content: center; border-right: 1px solid #e2e8f0; padding-right: 8px;
         }
-        .day-card.tatil .day-left {
-            border-right-color: #fecaca;
-        }
-        .day-num {
-            font-size: 16px;
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -0.3px;
-        }
-        .day-date {
-            font-size: 9.5px;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-top: 2px;
-            line-height: 1.2;
-        }
-        .day-name {
-            font-size: 10px;
-            font-weight: 700;
-            color: #475569;
-            line-height: 1.2;
-        }
-        .day-card.tatil .day-date,
-        .day-card.tatil .day-name {
-            color: #b91c1c;
-        }
+        .day-card.tatil .day-left { border-right-color: #fecaca; }
+        .day-num { font-size: 16px; font-weight: 800; line-height: 1.1; letter-spacing: -0.3px; }
+        .day-date { font-size: 9.5px; font-weight: 600; color: var(--text-muted); margin-top: 2px; line-height: 1.2; }
+        .day-name { font-size: 10px; font-weight: 700; color: #475569; line-height: 1.2; }
+        .day-card.tatil .day-date, .day-card.tatil .day-name { color: #b91c1c; }
 
-        .day-right {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
+        .day-right { display: flex; flex-direction: column; gap: 6px; }
 
         .shifts-line {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 6px;
-            flex-wrap: wrap;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 6px; flex-wrap: wrap;
         }
-        .shift-choices {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .shift-choices { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         .shift-item {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
-            font-size: 10.5px;
-            font-weight: 700;
-            color: #334155;
-            padding: 2px 6px;
-            border-radius: 7px;
-            transition: background 0.12s ease;
+            display: inline-flex; flex-direction: column; align-items: center;
+            cursor: pointer; user-select: none; font-size: 10.5px; font-weight: 700;
+            color: #334155; padding: 2px 6px; border-radius: 7px; transition: background 0.12s ease;
         }
-        .shift-item.active {
-            background: var(--primary-soft);
-            color: var(--primary-dark);
-        }
+        .shift-item.active { background: var(--primary-soft); color: var(--primary-dark); }
         .shift-item input[type="radio"] {
-            margin: 3px 0 0 0;
-            accent-color: #0f172a;
-            width: 14px;
-            height: 14px;
-            cursor: pointer;
+            margin: 3px 0 0 0; accent-color: #0f172a; width: 14px; height: 14px; cursor: pointer;
         }
         .gece-tag {
-            font-size: 10px;
-            font-weight: 700;
-            background: #f1f5f9;
-            color: #334155;
-            padding: 3px 7px;
-            border-radius: 999px;
-            border: 1px solid #e2e8f0;
+            font-size: 10px; font-weight: 700; background: #f1f5f9; color: #334155;
+            padding: 3px 7px; border-radius: 999px; border: 1px solid #e2e8f0;
         }
 
         .bottom-line {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            flex-wrap: wrap;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 8px; flex-wrap: wrap;
         }
-        .hours-inputs-group {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .fmesai-wrap {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .fmesai-label {
-            font-size: 10.5px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-        .day-card.tatil .fmesai-label {
-            color: var(--danger-text);
-        }
+        .hours-inputs-group { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .fmesai-wrap { display: inline-flex; align-items: center; gap: 4px; }
+        .fmesai-label { font-size: 10.5px; font-weight: 700; color: #1e293b; }
+        .day-card.tatil .fmesai-label { color: var(--danger-text); }
         .fmesai-input {
-            width: 64px;
-            height: 24px;
-            padding: 2px 5px;
-            border: 1.5px solid #334155;
-            border-radius: 4px;
-            background: #ffffff;
-            color: #0f172a;
-            font-size: 11.5px;
-            font-weight: 700;
-            text-align: center;
-            box-sizing: border-box;
+            width: 64px; height: 24px; padding: 2px 5px; border: 1.5px solid #334155;
+            border-radius: 4px; background: #ffffff; color: #0f172a; font-size: 11.5px;
+            font-weight: 700; text-align: center; box-sizing: border-box;
         }
 
         .htatili-wrap {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            user-select: none;
-            padding: 2px 6px;
-            border-radius: 6px;
+            display: inline-flex; align-items: center; gap: 5px;
+            cursor: pointer; user-select: none; padding: 2px 6px; border-radius: 6px;
         }
-        .htatili-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-        .day-card.tatil .htatili-label {
-            color: #b91c1c;
-        }
+        .htatili-label { font-size: 11px; font-weight: 700; color: #1e293b; }
+        .day-card.tatil .htatili-label { color: #b91c1c; }
         .htatili-box {
-            width: 18px;
-            height: 18px;
-            margin: 0;
-            cursor: pointer;
-            accent-color: #dc2626;
-            outline: 1.5px solid #dc2626;
-            outline-offset: -1px;
+            width: 18px; height: 18px; margin: 0; cursor: pointer;
+            accent-color: #dc2626; outline: 1.5px solid #dc2626; outline-offset: -1px;
         }
 
         .save-bar {
             position: sticky; bottom: 58px; margin-top: 12px;
             background: rgba(255,255,255,0.96); padding: 8px 0 2px 0;
         }
+
+        .kvkk-footer {
+            margin-top: 14px; text-align: center; font-size: 11.5px; color: var(--text-muted);
+        }
+
+        /* KVKK Aydınlatma Penceresi */
+        .modal-backdrop {
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55);
+            display: none; align-items: center; justify-content: center;
+            padding: 14px; z-index: 3000; box-sizing: border-box;
+        }
+        .modal-card {
+            background: #ffffff; max-width: 520px; width: 100%; max-height: 82vh;
+            overflow-y: auto; border-radius: 16px; padding: 18px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); box-sizing: border-box;
+        }
+        .modal-card h3 { margin: 0 0 8px 0; font-size: 15px; color: #0f172a; }
+        .modal-card p, .modal-card li { font-size: 12px; color: #334155; line-height: 1.5; }
+        .modal-card ul { padding-left: 18px; margin: 6px 0 12px 0; }
 
         .bottom-bar {
             position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff;
@@ -340,38 +314,64 @@
             </div>
             <div class="auth-tabs">
                 <button type="button" id="tabGiris" class="auth-tab active" onclick="authSekme('giris')">Giriş Yap</button>
-                <button type="button" id="tabKayit" class="auth-tab" onclick="authSekme('kayit')">Yeni Hesap Oluştur</button>
+                <button type="button" id="tabKayit" class="auth-tab" onclick="authSekme('kayit')">E-posta ile Kayıt Ol</button>
             </div>
 
             <div id="formGiris">
                 <div class="form-group">
-                    <label>Kullanıcı Adı</label>
-                    <input type="text" id="loginUser" placeholder="Kullanıcı adınız">
+                    <label for="loginEmail">E-posta Adresi</label>
+                    <input type="email" id="loginEmail" placeholder="ornek@eposta.com">
                 </div>
                 <div class="form-group">
-                    <label>Şifre</label>
+                    <label for="loginPass">Şifre</label>
                     <input type="password" id="loginPass" placeholder="Şifreniz">
                 </div>
                 <button type="button" class="primary-btn" onclick="girisYap()">Giriş Yap</button>
+
+                <div class="link-row">
+                    <button type="button" class="text-link" onclick="sifremiUnuttumAc()">Şifremi Unuttum</button>
+                    <button type="button" class="text-link" onclick="kvkkModalAc()">KVKK Aydınlatma Metni</button>
+                </div>
+
+                <div id="forgotBox" class="forgot-box">
+                    <div class="form-group" style="margin-bottom:8px;">
+                        <label for="resetEmail">Şifre Sıfırlama Bağlantısı İçin E-posta</label>
+                        <input type="email" id="resetEmail" placeholder="Kayıtlı e-posta adresiniz">
+                    </div>
+                    <button type="button" class="secondary-btn" style="width:100%;" onclick="sifreSifirlamaGonder()">Şifre Sıfırlama Linki Gönder</button>
+                    <div id="resetMsg" class="msg-box"></div>
+                </div>
             </div>
 
             <div id="formKayit" style="display:none;">
                 <div class="form-group">
-                    <label>Ad Soyad</label>
+                    <label for="regName">Ad Soyad</label>
                     <input type="text" id="regName" placeholder="Adınız Soyadınız">
                 </div>
                 <div class="form-group">
-                    <label>Kullanıcı Adı</label>
-                    <input type="text" id="regUser" placeholder="Benzersiz kullanıcı adı">
+                    <label for="regEmail">E-posta Adresi</label>
+                    <input type="email" id="regEmail" placeholder="ornek@eposta.com">
                 </div>
                 <div class="form-group">
-                    <label>Şifre</label>
-                    <input type="password" id="regPass" placeholder="En az 4 karakter">
+                    <label for="regPass">Şifre</label>
+                    <input type="password" id="regPass" placeholder="En az 6 karakter">
                 </div>
-                <button type="button" class="primary-btn" onclick="hesapOlustur()">Hesabı Oluştur</button>
+
+                <label class="kvkk-check">
+                    <input type="checkbox" id="kvkkOnay">
+                    <span>
+                        <button type="button" class="text-link" onclick="kvkkModalAc()">KVKK Aydınlatma Metni</button>'ni okudum, kişisel verilerimin vardiya çizelgesi hizmetinin sunulması amacıyla işlenmesini kabul ediyorum.
+                    </span>
+                </label>
+
+                <button type="button" class="primary-btn" onclick="hesapOlustur()">E-posta ile Hesap Oluştur</button>
             </div>
 
             <div id="authMsg" class="msg-box"></div>
+
+            <div class="kvkk-footer">
+                <button type="button" class="text-link" onclick="kvkkModalAc()">KVKK ve Gizlilik Aydınlatma Metni</button>
+            </div>
         </div>
 
         <div id="vardiyaPanel" style="display:none;">
@@ -388,8 +388,27 @@
             </div>
 
             <div class="user-bar">
-                <div><strong>Kullanıcı:</strong> <span id="aktifKullaniciAdi">-</span></div>
+                <div>
+                    <strong>Hesap:</strong>
+                    <button type="button" id="aktifKullaniciAdi" class="user-name-trigger" onclick="hesapMenusuToggle()" title="Hesap işlemleri için tıklayın">-</button>
+                </div>
                 <div id="kayitDurumu" style="color:#64748b;">Hazır</div>
+
+                <div id="hesapSilPanel" class="account-action-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <span style="font-size:11.5px; color:#7f1d1d; font-weight:700;">Hesap Yönetimi</span>
+                        <button type="button" class="danger-btn" onclick="hesabiSilOnayAc()">Hesabımı Sil</button>
+                    </div>
+
+                    <div id="hesapSilOnayKutusu" style="display:none;" class="confirm-row">
+                        <span>Hesabınız ve tüm vardiya kayıtlarınız kalıcı olarak silinecek. Emin misiniz?</span>
+                        <div class="confirm-btns">
+                            <button type="button" class="danger-btn" onclick="hesabiKaliciSil()">Evet</button>
+                            <button type="button" class="secondary-btn" onclick="hesabiSilOnayKapat()">Hayır</button>
+                        </div>
+                    </div>
+                    <div id="accountMsg" class="msg-box" style="margin-top:0; text-align:left;"></div>
+                </div>
             </div>
 
             <div class="controls-row">
@@ -446,6 +465,25 @@
                 <button type="button" class="primary-btn" onclick="vardiyaKaydet()">Çizelgeyi Kaydet</button>
                 <div id="saveMsg" class="msg-box"></div>
             </div>
+
+            <div class="kvkk-footer">
+                <button type="button" class="text-link" onclick="kvkkModalAc()">KVKK Aydınlatma Metni</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- KVKK Aydınlatma Metni Modalı -->
+    <div id="kvkkModal" class="modal-backdrop" onclick="if(event.target === this) kvkkModalKapat()">
+        <div class="modal-card">
+            <h3>6698 Sayılı KVKK Kapsamında Aydınlatma Metni</h3>
+            <p>Kişisel Vardiya Çizelgesi özelliği kapsamında işlenen kişisel verilere ilişkin bilgilendirme aşağıdadır:</p>
+            <ul>
+                <li><strong>İşlenen Veriler:</strong> Ad soyad, e-posta adresi, kimlik doğrulama bilgileri ve kullanıcı tarafından girilen aylık vardiya, fazla mesai, eksik saat ve hafta tatili kayıtları.</li>
+                <li><strong>İşleme Amacı:</strong> Kişisel vardiya çizelgesinin oluşturulması, gece/mesai/çalışma saatlerinin hesaplanması ve kullanıcının kendi verilerine erişebilmesi.</li>
+                <li><strong>Saklama ve Aktarım:</strong> Veriler kimlik doğrulama ve bulut veritabanı altyapısı (Firebase Authentication ve Firestore) üzerinde saklanır.</li>
+                <li><strong>Haklarınız:</strong> KVKK madde 11 uyarınca verilerinize ilişkin bilgi talep etme ve hesabınız ile kayıtlarınızı silme hakkına sahipsiniz. Hesap menüsünden <strong>Hesabımı Sil</strong> seçeneği ile hesabınızı ve kayıtlarınızı silebilirsiniz.</li>
+            </ul>
+            <button type="button" class="primary-btn" onclick="kvkkModalKapat()">Kapat</button>
         </div>
     </div>
 
@@ -459,7 +497,18 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            sendPasswordResetEmail,
+            signOut,
+            deleteUser,
+            reauthenticateWithCredential,
+            EmailAuthProvider,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
@@ -472,23 +521,12 @@
         };
 
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
         const db = getFirestore(app);
 
         const gunAdlariTam = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
         let aktifKullanici = null;
         let mevcutAyVerisi = {};
-
-        function kullaniciDocId(kadi) {
-            return encodeURIComponent(kadi.trim().toLowerCase());
-        }
-
-        async function sifreHashle(sifre, kadi) {
-            const veri = new TextEncoder().encode(`${kadi.trim().toLowerCase()}:${sifre}`);
-            const digest = await crypto.subtle.digest("SHA-256", veri);
-            return Array.from(new Uint8Array(digest))
-                .map(b => b.toString(16).padStart(2, "0"))
-                .join("");
-        }
 
         function formatSaat(n) {
             return n.toLocaleString("tr-TR", { maximumFractionDigits: 2 });
@@ -515,6 +553,48 @@
             return { gece, gunMesai: m, netGunCalisma };
         }
 
+        window.kvkkModalAc = function() {
+            document.getElementById("kvkkModal").style.display = "flex";
+        };
+
+        window.kvkkModalKapat = function() {
+            document.getElementById("kvkkModal").style.display = "none";
+        };
+
+        window.sifremiUnuttumAc = function() {
+            const box = document.getElementById("forgotBox");
+            const visible = box.style.display === "block";
+            box.style.display = visible ? "none" : "block";
+            const girisEposta = document.getElementById("loginEmail").value.trim();
+            if (girisEposta && !document.getElementById("resetEmail").value.trim()) {
+                document.getElementById("resetEmail").value = girisEposta;
+            }
+            document.getElementById("resetMsg").innerText = "";
+        };
+
+        window.sifreSifirlamaGonder = async function() {
+            const email = document.getElementById("resetEmail").value.trim();
+            const resetMsg = document.getElementById("resetMsg");
+
+            if (!email) {
+                resetMsg.style.color = "#dc2626";
+                resetMsg.innerText = "Lütfen e-posta adresinizi girin.";
+                return;
+            }
+
+            try {
+                resetMsg.style.color = "#475569";
+                resetMsg.innerText = "Şifre sıfırlama bağlantısı gönderiliyor...";
+                await sendPasswordResetEmail(auth, email);
+                resetMsg.style.color = "#16a34a";
+                resetMsg.innerText = "Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.";
+            } catch (e) {
+                console.error(e);
+                resetMsg.style.color = "#dc2626";
+                resetMsg.innerText = "Bağlantı gönderilemedi. E-posta adresini kontrol edin.";
+            }
+        };
+
         window.authSekme = function(sekme) {
             document.getElementById("authMsg").innerText = "";
             if (sekme === "giris") {
@@ -527,112 +607,193 @@
                 document.getElementById("tabGiris").classList.remove("active");
                 document.getElementById("formKayit").style.display = "block";
                 document.getElementById("formGiris").style.display = "none";
+                document.getElementById("forgotBox").style.display = "none";
             }
         };
 
         window.hesapOlustur = async function() {
             const adSoyad = document.getElementById("regName").value.trim();
-            const kadi = document.getElementById("regUser").value.trim();
+            const email = document.getElementById("regEmail").value.trim();
             const sifre = document.getElementById("regPass").value;
+            const kvkkKabul = document.getElementById("kvkkOnay").checked;
             const msg = document.getElementById("authMsg");
 
-            if (!kadi || !sifre) {
+            if (!email || !sifre) {
                 msg.style.color = "#dc2626";
-                msg.innerText = "Kullanıcı adı ve şifre zorunludur.";
+                msg.innerText = "E-posta ve şifre zorunludur.";
                 return;
             }
-            if (sifre.length < 4) {
+            if (sifre.length < 6) {
                 msg.style.color = "#dc2626";
-                msg.innerText = "Şifre en az 4 karakter olmalıdır.";
+                msg.innerText = "Şifre en az 6 karakter olmalıdır.";
+                return;
+            }
+            if (!kvkkKabul) {
+                msg.style.color = "#dc2626";
+                msg.innerText = "Devam etmek için KVKK Aydınlatma Metni'ni onaylamalısınız.";
                 return;
             }
 
             try {
-                const ref = doc(db, "vardiya_kullanicilar", kullaniciDocId(kadi));
-                const snap = await getDoc(ref);
-                if (snap.exists()) {
-                    msg.style.color = "#dc2626";
-                    msg.innerText = "Bu kullanıcı adı zaten alınmış.";
-                    return;
-                }
+                msg.style.color = "#475569";
+                msg.innerText = "Hesap oluşturuluyor...";
+                const cred = await createUserWithEmailAndPassword(auth, email, sifre);
+                const user = cred.user;
+                const gorunenAd = adSoyad || email.split("@")[0];
 
-                const hash = await sifreHashle(sifre, kadi);
-                await setDoc(ref, {
-                    kullaniciAdi: kadi,
-                    adSoyad: adSoyad || kadi,
-                    sifreHash: hash,
+                await setDoc(doc(db, "vardiya_kullanicilar", user.uid), {
+                    uid: user.uid,
+                    email,
+                    adSoyad: gorunenAd,
+                    kvkkOnay: true,
+                    kvkkOnayTarihi: new Date().toISOString(),
                     vardiyalar: {},
                     olusturulma: new Date().toISOString()
                 });
 
                 msg.style.color = "#16a34a";
-                msg.innerText = "Hesap oluşturuldu! Giriş yapılıyor...";
-                await oturumAc(kadi, adSoyad || kadi, {});
+                msg.innerText = "Hesap oluşturuldu!";
             } catch (e) {
                 console.error(e);
                 msg.style.color = "#dc2626";
-                msg.innerText = "Hesap oluşturulurken hata oluştu.";
+                if (e.code === "auth/email-already-in-use") {
+                    msg.innerText = "Bu e-posta adresi zaten kayıtlı.";
+                } else if (e.code === "auth/invalid-email") {
+                    msg.innerText = "Geçerli bir e-posta adresi girin.";
+                } else {
+                    msg.innerText = "Hesap oluşturulurken hata oluştu.";
+                }
             }
         };
 
         window.girisYap = async function() {
-            const kadi = document.getElementById("loginUser").value.trim();
+            const email = document.getElementById("loginEmail").value.trim();
             const sifre = document.getElementById("loginPass").value;
             const msg = document.getElementById("authMsg");
 
-            if (!kadi || !sifre) {
+            if (!email || !sifre) {
                 msg.style.color = "#dc2626";
-                msg.innerText = "Kullanıcı adı ve şifre girin.";
+                msg.innerText = "E-posta ve şifre girin.";
                 return;
             }
 
             try {
-                const ref = doc(db, "vardiya_kullanicilar", kullaniciDocId(kadi));
-                const snap = await getDoc(ref);
-                if (!snap.exists()) {
-                    msg.style.color = "#dc2626";
-                    msg.innerText = "Kullanıcı bulunamadı.";
-                    return;
-                }
-
-                const data = snap.data();
-                const girilenHash = await sifreHashle(sifre, kadi);
-                const eslesme = data.sifreHash
-                    ? data.sifreHash === girilenHash
-                    : data.sifre === sifre;
-
-                if (!eslesme) {
-                    msg.style.color = "#dc2626";
-                    msg.innerText = "Şifre hatalı.";
-                    return;
-                }
-
-                await oturumAc(data.kullaniciAdi || kadi, data.adSoyad || kadi, data.vardiyalar || {});
+                msg.style.color = "#475569";
+                msg.innerText = "Giriş yapılıyor...";
+                await signInWithEmailAndPassword(auth, email, sifre);
+                msg.innerText = "";
             } catch (e) {
                 console.error(e);
                 msg.style.color = "#dc2626";
-                msg.innerText = "Giriş sırasında hata oluştu.";
+                msg.innerText = "E-posta veya şifre hatalı.";
             }
         };
 
-        async function oturumAc(kadi, adSoyad, tumVardiyalar) {
-            aktifKullanici = { kadi, adSoyad, tumVardiyalar };
-            sessionStorage.setItem("vardiya_aktif_kadi", kadi);
+        async function oturumAc(user) {
+            let adSoyad = user.email ? user.email.split("@")[0] : "Kullanıcı";
+            let tumVardiyalar = {};
+
+            try {
+                const ref = doc(db, "vardiya_kullanicilar", user.uid);
+                const snap = await getDoc(ref);
+                if (snap.exists()) {
+                    const d = snap.data();
+                    adSoyad = d.adSoyad || adSoyad;
+                    tumVardiyalar = d.vardiyalar || {};
+                } else {
+                    await setDoc(ref, {
+                        uid: user.uid,
+                        email: user.email || "",
+                        adSoyad,
+                        kvkkOnay: true,
+                        vardiyalar: {},
+                        olusturulma: new Date().toISOString()
+                    }, { merge: true });
+                }
+            } catch (e) {
+                console.error(e);
+            }
+
+            aktifKullanici = { uid: user.uid, email: user.email || "", adSoyad, tumVardiyalar };
             document.getElementById("authPanel").style.display = "none";
             document.getElementById("vardiyaPanel").style.display = "block";
             document.getElementById("logoutBtn").style.display = "inline-block";
-            document.getElementById("aktifKullaniciAdi").innerText = `${adSoyad} (@${kadi})`;
+            document.getElementById("aktifKullaniciAdi").innerText = adSoyad;
+            document.getElementById("hesapSilPanel").style.display = "none";
+            document.getElementById("hesapSilOnayKutusu").style.display = "none";
+            document.getElementById("accountMsg").innerText = "";
             await ayDegisti();
         }
 
-        window.cikisYap = function() {
+        window.cikisYap = async function() {
+            try {
+                await signOut(auth);
+            } catch (e) {
+                console.error(e);
+            }
             aktifKullanici = null;
-            sessionStorage.removeItem("vardiya_aktif_kadi");
             document.getElementById("vardiyaPanel").style.display = "none";
             document.getElementById("logoutBtn").style.display = "none";
             document.getElementById("authPanel").style.display = "block";
             document.getElementById("loginPass").value = "";
             document.getElementById("authMsg").innerText = "";
+        };
+
+        window.hesapMenusuToggle = function() {
+            const panel = document.getElementById("hesapSilPanel");
+            const isOpen = panel.style.display === "flex";
+            panel.style.display = isOpen ? "none" : "flex";
+            if (isOpen) {
+                document.getElementById("hesapSilOnayKutusu").style.display = "none";
+                document.getElementById("accountMsg").innerText = "";
+            }
+        };
+
+        window.hesabiSilOnayAc = function() {
+            document.getElementById("accountMsg").innerText = "";
+            document.getElementById("hesapSilOnayKutusu").style.display = "flex";
+        };
+
+        window.hesabiSilOnayKapat = function() {
+            document.getElementById("hesapSilOnayKutusu").style.display = "none";
+            document.getElementById("accountMsg").innerText = "";
+        };
+
+        window.hesabiKaliciSil = async function() {
+            const user = auth.currentUser;
+            const accMsg = document.getElementById("accountMsg");
+            if (!user) return;
+
+            accMsg.style.color = "#475569";
+            accMsg.innerText = "Hesap ve veriler siliniyor...";
+
+            try {
+                await deleteDoc(doc(db, "vardiya_kullanicilar", user.uid));
+                await deleteUser(user);
+            } catch (e) {
+                console.error(e);
+                if (e.code === "auth/requires-recent-login") {
+                    const mevcutSifre = prompt("Güvenlik nedeniyle hesabı silmek için mevcut şifrenizi girin:");
+                    if (!mevcutSifre) {
+                        accMsg.style.color = "#dc2626";
+                        accMsg.innerText = "Şifre girilmediği için silme işlemi iptal edildi.";
+                        return;
+                    }
+                    try {
+                        const cred = EmailAuthProvider.credential(user.email, mevcutSifre);
+                        await reauthenticateWithCredential(user, cred);
+                        await deleteDoc(doc(db, "vardiya_kullanicilar", user.uid));
+                        await deleteUser(user);
+                    } catch (reauthErr) {
+                        console.error(reauthErr);
+                        accMsg.style.color = "#dc2626";
+                        accMsg.innerText = "Şifre doğrulanamadı veya hesap silinemedi.";
+                    }
+                } else {
+                    accMsg.style.color = "#dc2626";
+                    accMsg.innerText = "Hesap silinirken bir hata oluştu.";
+                }
+            }
         };
 
         function ayGunSayisi(yil, ay) {
@@ -672,7 +833,7 @@
 
             document.getElementById("kayitDurumu").innerText = "Yükleniyor...";
             try {
-                const ref = doc(db, "vardiya_kullanicilar", kullaniciDocId(aktifKullanici.kadi));
+                const ref = doc(db, "vardiya_kullanicilar", aktifKullanici.uid);
                 const snap = await getDoc(ref);
                 if (snap.exists()) {
                     aktifKullanici.tumVardiyalar = snap.data().vardiyalar || {};
@@ -838,7 +999,7 @@
 
             try {
                 aktifKullanici.tumVardiyalar[anahtar] = mevcutAyVerisi;
-                const ref = doc(db, "vardiya_kullanicilar", kullaniciDocId(aktifKullanici.kadi));
+                const ref = doc(db, "vardiya_kullanicilar", aktifKullanici.uid);
                 await setDoc(ref, {
                     vardiyalar: aktifKullanici.tumVardiyalar,
                     guncellenme: new Date().toISOString()
@@ -854,19 +1015,14 @@
             }
         };
 
-        window.addEventListener("DOMContentLoaded", async () => {
-            const kayitliKadi = sessionStorage.getItem("vardiya_aktif_kadi");
-            if (kayitliKadi) {
-                try {
-                    const ref = doc(db, "vardiya_kullanicilar", kullaniciDocId(kayitliKadi));
-                    const snap = await getDoc(ref);
-                    if (snap.exists()) {
-                        const d = snap.data();
-                        await oturumAc(d.kullaniciAdi || kayitliKadi, d.adSoyad || kayitliKadi, d.vardiyalar || {});
-                    }
-                } catch (e) {
-                    console.error(e);
-                }
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                await oturumAc(user);
+            } else {
+                aktifKullanici = null;
+                document.getElementById("vardiyaPanel").style.display = "none";
+                document.getElementById("logoutBtn").style.display = "none";
+                document.getElementById("authPanel").style.display = "block";
             }
         });
     </script>
