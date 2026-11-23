@@ -11,7 +11,6 @@
             --primary-dark: #4b319d;
             --green-main: #059669;
             --green-dark: #047857;
-            --green-soft: #ecfdf5;
             --green-border: #6ee7b7;
             --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             --card-bg: #ffffff;
@@ -81,26 +80,48 @@
             gap: 12px;
         }
 
-        .hero-box {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-            border: 1px solid #e2e8f0;
+        /* Duyuru Panosu */
+        .announcement-box {
+            background: #ffffff;
+            border-left: 4px solid var(--primary);
+            border-radius: 14px;
+            padding: 14px 16px;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+            border-top: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .hero-box h1 {
-            margin: 0 0 4px 0;
-            font-size: 18px;
+        .announcement-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .announcement-title {
+            font-size: 14px;
             font-weight: 800;
             color: #1e293b;
+            margin: 0;
         }
 
-        .hero-box p {
+        .announcement-badge {
+            font-size: 10px;
+            font-weight: 700;
+            background: #ede9fe;
+            color: var(--primary-dark);
+            padding: 3px 8px;
+            border-radius: 999px;
+        }
+
+        .announcement-text {
             margin: 0;
             font-size: 12.5px;
-            color: var(--text-muted);
-            line-height: 1.45;
+            color: #475569;
+            line-height: 1.5;
+            white-space: pre-line;
         }
 
         .menu-card {
@@ -284,9 +305,13 @@
     </header>
 
     <main class="container">
-        <section class="hero-box">
-            <h1>Hesaplama ve Çizelge Merkezi</h1>
-            <p>Maaş, fark, vardiya çizelgesi, sosyal haklar ve enflasyon araçlarına tek yerden ulaşın.</p>
+        <!-- Duyuru Panosu -->
+        <section class="announcement-box">
+            <div class="announcement-header">
+                <h1 class="announcement-title">Duyuru Panosu</h1>
+                <span class="announcement-badge">Güncel</span>
+            </div>
+            <p class="announcement-text" id="duyuruMetni">Güncel bordro, fark ve enflasyon hesaplama araçları yayında. Kişisel vardiya çizelgenizi oluşturmak için ilgili kartı kullanabilirsiniz.</p>
         </section>
 
         <!-- 1. Sırada: Maaş Hesaplama -->
@@ -358,6 +383,38 @@
         <a href="sosyal.html" class="bottom-btn"><span>📋</span> Sosyal</a>
         <a href="enf.html" class="bottom-btn"><span>📈</span> Enflasyon</a>
     </nav>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
+            authDomain: "bordroapp.firebaseapp.com",
+            projectId: "bordroapp",
+            storageBucket: "bordroapp.firebasestorage.app",
+            messagingSenderId: "495208822576",
+            appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
+            measurementId: "G-6ZRKG9HG9J"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function duyuruYukle() {
+            try {
+                const ref = doc(db, "ayarlar", "veriler");
+                const snap = await getDoc(ref);
+                if (snap.exists() && snap.data().duyuru) {
+                    document.getElementById("duyuruMetni").innerText = snap.data().duyuru;
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        duyuruYukle();
+    </script>
 
 </body>
 </html>
