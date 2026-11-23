@@ -23,10 +23,10 @@
             background: var(--bg-gradient);
             color: var(--text-main);
             margin: 0;
-            padding-top: 70px;
-            padding-bottom: 95px;
-            padding-left: 12px;
-            padding-right: 12px;
+            padding-top: 66px;
+            padding-bottom: 88px;
+            padding-left: 10px;
+            padding-right: 10px;
             box-sizing: border-box;
         }
 
@@ -52,93 +52,149 @@
         .logout-btn:hover { background: #e2e8f0; }
 
         .container {
-            max-width: 720px; margin: 0 auto; background: var(--card-bg);
-            padding: 18px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            max-width: 760px; margin: 0 auto; background: var(--card-bg);
+            padding: 15px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.08);
             box-sizing: border-box;
         }
-        h2 {
-            text-align: center; color: #2c3e50; margin: 0 0 14px 0;
-            border-bottom: 2px solid #5d3ebc; padding-bottom: 8px; font-size: 17px;
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 0 0 12px 0;
+            border-bottom: 2px solid #5d3ebc;
+            padding-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .title-row h2 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        .year-inline {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .year-inline label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #475569;
+        }
+        .year-inline select {
+            padding: 5px 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 700;
+            background: #f8fafc;
+            color: #1e293b;
         }
 
-        /* Auth Kartı */
         .auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
         .auth-tab {
             padding: 10px; border: 2px solid #5d3ebc; border-radius: 10px;
             background: #fff; color: #5d3ebc; font-weight: 700; font-size: 13px; cursor: pointer;
         }
         .auth-tab.active { background: #5d3ebc; color: #fff; }
-        .form-group { margin-bottom: 11px; }
-        .form-group label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 4px; }
+        .form-group { margin-bottom: 10px; }
+        .form-group label { display: block; font-size: 11.5px; font-weight: 600; color: #475569; margin-bottom: 3px; }
         .form-group input, .form-group select {
-            width: 100%; padding: 9px 10px; border: 1px solid #cbd5e1;
-            border-radius: 8px; font-size: 13px; box-sizing: border-box; background: #fff;
+            width: 100%; padding: 8px 9px; border: 1px solid #cbd5e1;
+            border-radius: 8px; font-size: 12.5px; box-sizing: border-box; background: #fff;
         }
         .primary-btn {
-            width: 100%; padding: 11px; border: none; border-radius: 10px;
+            width: 100%; padding: 10px; border: none; border-radius: 10px;
             background: linear-gradient(135deg, #5d3ebc 0%, #7c3aed 100%);
-            color: #fff; font-weight: 700; font-size: 14px; cursor: pointer;
+            color: #fff; font-weight: 700; font-size: 13.5px; cursor: pointer;
         }
         .primary-btn:hover { opacity: 0.95; }
-        .msg-box { margin-top: 10px; font-size: 12px; text-align: center; font-weight: 600; min-height: 18px; }
+        .msg-box { margin-top: 8px; font-size: 12px; text-align: center; font-weight: 600; min-height: 16px; }
 
-        /* Vardiya Üst Kontrol & Özet */
         .user-bar {
             display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
             gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0;
-            padding: 10px 12px; border-radius: 10px; margin-bottom: 12px; font-size: 12px;
+            padding: 8px 11px; border-radius: 9px; margin-bottom: 10px; font-size: 12px;
         }
         .controls-row {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;
         }
         .summary-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;
         }
         .summary-card {
-            background: #1e293b; color: #fff; padding: 12px; border-radius: 12px; text-align: center;
+            background: #1e293b; color: #fff; padding: 9px 10px; border-radius: 10px; text-align: center;
         }
         .summary-card.mesai { background: #065f46; }
-        .summary-label { font-size: 11px; opacity: 0.9; text-transform: uppercase; }
-        .summary-val { font-size: 22px; font-weight: 800; margin-top: 4px; }
+        .summary-label { font-size: 10.5px; opacity: 0.9; text-transform: uppercase; }
+        .summary-val { font-size: 19px; font-weight: 800; margin-top: 2px; }
 
-        /* Gün Satırları */
-        .days-list { display: flex; flex-direction: column; gap: 8px; }
+        /* Daraltılmış Gün Satırları */
+        .days-list { display: flex; flex-direction: column; gap: 4px; }
         .day-row {
             display: grid;
-            grid-template-columns: 64px 1fr 84px 86px;
-            gap: 8px;
+            grid-template-columns: 74px 1fr 94px 72px 72px;
+            gap: 6px;
             align-items: center;
-            padding: 8px 10px;
+            padding: 5px 8px;
             border: 1px solid #e2e8f0;
-            border-radius: 10px;
+            border-radius: 8px;
             background: #ffffff;
-            transition: background 0.15s ease;
+            transition: background 0.12s ease;
         }
         .day-row.tatil {
             background: var(--danger-bg);
             border-color: var(--danger-border);
             color: var(--danger-text);
         }
-        .day-badge { font-weight: 800; font-size: 13px; }
-        .shift-group { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-        .shift-pill {
-            display: inline-flex; align-items: center; gap: 3px;
-            font-size: 11px; font-weight: 600; padding: 4px 7px;
-            border-radius: 7px; background: #f1f5f9; border: 1px solid #cbd5e1; cursor: pointer;
-            color: #1e293b;
+        .day-col {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
         }
-        .shift-pill.tatil-pill { background: #fecaca; border-color: #ef4444; color: #7f1d1d; }
-        .shift-pill input { margin: 0; cursor: pointer; }
-        .day-row input[type="number"] {
-            width: 100%; padding: 6px; border: 1px solid #cbd5e1;
-            border-radius: 7px; font-size: 12px; box-sizing: border-box; text-align: center;
+        .day-badge { font-weight: 800; font-size: 12px; }
+        .day-sub { font-size: 9.5px; opacity: 0.8; margin-top: 1px; }
+
+        .shift-group { display: flex; flex-wrap: nowrap; gap: 4px; align-items: center; overflow-x: auto; }
+        .shift-pill {
+            display: inline-flex; align-items: center; gap: 2px;
+            font-size: 10.5px; font-weight: 600; padding: 3px 6px;
+            border-radius: 6px; background: #f1f5f9; border: 1px solid #cbd5e1; cursor: pointer;
+            color: #1e293b; user-select: none; white-space: nowrap;
+        }
+        .shift-pill.active-shift {
+            background: #ede9fe; border-color: #5d3ebc; color: #4c1d95;
+        }
+        .shift-pill.tatil-pill {
+            background: #fecaca; border-color: #ef4444; color: #7f1d1d; white-space: nowrap;
+        }
+        .shift-pill input { margin: 0; cursor: pointer; width: 12px; height: 12px; }
+
+        .mesai-box {
+            display: flex;
+            flex-direction: column;
+        }
+        .mesai-label {
+            font-size: 9px;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 1px;
+            text-align: center;
+        }
+        .day-row.tatil .mesai-label {
+            color: #991b1b;
+        }
+        .mesai-box input[type="number"] {
+            width: 100%; padding: 4px 5px; border: 1px solid #cbd5e1;
+            border-radius: 6px; font-size: 11.5px; box-sizing: border-box; text-align: center;
             background: #fff; color: #1e293b;
         }
-        .gece-info { font-size: 11px; font-weight: 700; text-align: center; }
+        .gece-info { font-size: 10.5px; font-weight: 700; text-align: center; white-space: nowrap; }
 
         .save-bar {
-            position: sticky; bottom: 62px; margin-top: 14px;
-            background: rgba(255,255,255,0.95); padding: 10px 0 4px 0;
+            position: sticky; bottom: 58px; margin-top: 10px;
+            background: rgba(255,255,255,0.96); padding: 8px 0 2px 0;
         }
 
         .bottom-bar {
@@ -153,10 +209,15 @@
         .bottom-btn.active, .bottom-btn:hover { color: #5d3ebc; }
         .bottom-btn span { font-size: 18px; }
 
-        @media (max-width: 560px) {
-            .day-row { grid-template-columns: 54px 1fr 72px; }
-            .gece-info { grid-column: 1 / -1; text-align: left; font-size: 10.5px; }
-            .controls-row { grid-template-columns: 1fr; }
+        @media (max-width: 600px) {
+            .day-row {
+                grid-template-columns: 68px 1fr 64px;
+                gap: 4px 6px;
+                padding: 5px 6px;
+            }
+            .shift-group { grid-column: 1 / -1; justify-content: flex-start; }
+            .mesai-box { grid-column: 2 / 3; }
+            .gece-info { grid-column: 3 / 4; text-align: right; }
         }
     </style>
 </head>
@@ -173,7 +234,9 @@
     <div class="container">
         <!-- GİRİŞ / HESAP OLUŞTURMA EKRANI -->
         <div id="authPanel">
-            <h2>Kişisel Vardiya Hesabı</h2>
+            <div class="title-row">
+                <h2>Kişisel Vardiya Hesabı</h2>
+            </div>
             <div class="auth-tabs">
                 <button type="button" id="tabGiris" class="auth-tab active" onclick="authSekme('giris')">Giriş Yap</button>
                 <button type="button" id="tabKayit" class="auth-tab" onclick="authSekme('kayit')">Yeni Hesap Oluştur</button>
@@ -212,7 +275,17 @@
 
         <!-- VARDİYA ÇİZELGESİ EKRANI -->
         <div id="vardiyaPanel" style="display:none;">
-            <h2>Kişisel Vardiya Çizelgesi</h2>
+            <div class="title-row">
+                <h2>Kişisel Vardiya Çizelgesi</h2>
+                <div class="year-inline">
+                    <label for="yilSec">Yıl:</label>
+                    <select id="yilSec" onchange="ayDegisti()">
+                        <option value="2025">2025</option>
+                        <option value="2026" selected>2026</option>
+                        <option value="2027">2027</option>
+                    </select>
+                </div>
+            </div>
 
             <div class="user-bar">
                 <div><strong>Kullanıcı:</strong> <span id="aktifKullaniciAdi">-</span></div>
@@ -221,15 +294,7 @@
 
             <div class="controls-row">
                 <div class="form-group" style="margin:0;">
-                    <label>Yıl</label>
-                    <select id="yilSec" onchange="ayDegisti()">
-                        <option value="2026" selected>2026</option>
-                        <option value="2027">2027</option>
-                        <option value="2025">2025</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin:0;">
-                    <label>Ay Seçin (12 Ay)</label>
+                    <label for="aySec">Ay Seçin (12 Ay)</label>
                     <select id="aySec" onchange="ayDegisti()">
                         <option value="1">Ocak</option>
                         <option value="2">Şubat</option>
@@ -243,6 +308,19 @@
                         <option value="10">Ekim</option>
                         <option value="11" selected>Kasım</option>
                         <option value="12">Aralık</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin:0;">
+                    <label for="haftaTatiliSec">Hafta Tatili Günü</label>
+                    <select id="haftaTatiliSec" onchange="haftaTatiliUygula()">
+                        <option value="">Seçilmedi</option>
+                        <option value="0" selected>Pazar</option>
+                        <option value="6">Cumartesi</option>
+                        <option value="5">Cuma</option>
+                        <option value="4">Perşembe</option>
+                        <option value="3">Çarşamba</option>
+                        <option value="2">Salı</option>
+                        <option value="1">Pazartesi</option>
                     </select>
                 </div>
             </div>
@@ -292,11 +370,20 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        const gunAdlariKisa = ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"];
         let aktifKullanici = null;
-        let mevcutAyVerisi = {}; // { gunNo: { vardiya: 0|1|2|3, tatil: bool, mesai: number } }
+        let mevcutAyVerisi = {};
 
         function kullaniciDocId(kadi) {
             return encodeURIComponent(kadi.trim().toLowerCase());
+        }
+
+        async function sifreHashle(sifre, kadi) {
+            const veri = new TextEncoder().encode(`${kadi.trim().toLowerCase()}:${sifre}`);
+            const digest = await crypto.subtle.digest("SHA-256", veri);
+            return Array.from(new Uint8Array(digest))
+                .map(b => b.toString(16).padStart(2, "0"))
+                .join("");
         }
 
         window.authSekme = function(sekme) {
@@ -340,10 +427,11 @@
                     return;
                 }
 
+                const hash = await sifreHashle(sifre, kadi);
                 await setDoc(ref, {
                     kullaniciAdi: kadi,
                     adSoyad: adSoyad || kadi,
-                    sifre: sifre,
+                    sifreHash: hash,
                     vardiyalar: {},
                     olusturulma: new Date().toISOString()
                 });
@@ -379,7 +467,12 @@
                 }
 
                 const data = snap.data();
-                if (data.sifre !== sifre) {
+                const girilenHash = await sifreHashle(sifre, kadi);
+                const eslesme = data.sifreHash
+                    ? data.sifreHash === girilenHash
+                    : data.sifre === sifre;
+
+                if (!eslesme) {
                     msg.style.color = "#dc2626";
                     msg.innerText = "Şifre hatalı.";
                     return;
@@ -417,6 +510,30 @@
             return new Date(yil, ay, 0).getDate();
         }
 
+        window.haftaTatiliUygula = function() {
+            const seciliGunStr = document.getElementById("haftaTatiliSec").value;
+            if (seciliGunStr === "") return;
+            const hedefHaftaGunu = parseInt(seciliGunStr, 10);
+
+            const yil = parseInt(document.getElementById("yilSec").value, 10);
+            const ay = parseInt(document.getElementById("aySec").value, 10);
+            const gunSayisi = ayGunSayisi(yil, ay);
+
+            for (let g = 1; g <= gunSayisi; g++) {
+                const tarihObj = new Date(yil, ay - 1, g);
+                const isTatili = tarihObj.getDay() === hedefHaftaGunu;
+                const onceki = mevcutAyVerisi[g] || { vardiya: 0, tatil: false, mesai: 0 };
+                mevcutAyVerisi[g] = {
+                    vardiya: parseInt(onceki.vardiya, 10) || 0,
+                    tatil: isTatili,
+                    mesai: parseFloat(onceki.mesai) || 0
+                };
+            }
+
+            gunleriCiz(yil, ay);
+            ozetHesapla();
+        };
+
         window.ayDegisti = async function() {
             if (!aktifKullanici) return;
             const yil = parseInt(document.getElementById("yilSec").value, 10);
@@ -434,8 +551,16 @@
                 console.error(e);
             }
 
-            mevcutAyVerisi = aktifKullanici.tumVardiyalar[anahtar] || {};
-            gunleriCiz(yil, ay);
+            const kayitliAy = aktifKullanici.tumVardiyalar[anahtar];
+            if (kayitliAy && Object.keys(kayitliAy).length > 0) {
+                mevcutAyVerisi = kayitliAy;
+                gunleriCiz(yil, ay);
+            } else {
+                mevcutAyVerisi = {};
+                gunleriCiz(yil, ay);
+                haftaTatiliUygula();
+            }
+
             ozetHesapla();
             document.getElementById("kayitDurumu").innerText = `${anahtar} yüklendi`;
         };
@@ -452,34 +577,51 @@
                 const mesai = parseFloat(kayit.mesai) || 0;
                 const geceSaat = vardiya === 2 ? 2 : (vardiya === 3 ? 6 : 0);
 
+                const tarihObj = new Date(yil, ay - 1, g);
+                const gunKisa = gunAdlariKisa[tarihObj.getDay()];
+                const tarihKisa = `${String(g).padStart(2, "0")}.${String(ay).padStart(2, "0")}.${yil}`;
+
                 const row = document.createElement("div");
                 row.className = `day-row ${tatil ? "tatil" : ""}`;
                 row.id = `gun_row_${g}`;
 
                 row.innerHTML = `
-                    <div class="day-badge">${g}. Gün</div>
+                    <div class="day-col">
+                        <span class="day-badge">${g}. Gün</span>
+                        <span class="day-sub">${tarihKisa} · ${gunKisa}</span>
+                    </div>
                     <div class="shift-group">
-                        <label class="shift-pill">
-                            <input type="radio" name="v_${g}" value="1" ${vardiya === 1 ? "checked" : ""} onchange="gunGuncelle(${g})"> 1.V
+                        <label class="shift-pill ${vardiya === 1 ? "active-shift" : ""}">
+                            <input type="radio" name="v_${g}" value="1" ${vardiya === 1 ? "checked" : ""} onclick="vardiyaTikla(${g}, 1)"> 1.V
                         </label>
-                        <label class="shift-pill">
-                            <input type="radio" name="v_${g}" value="2" ${vardiya === 2 ? "checked" : ""} onchange="gunGuncelle(${g})"> 2.V (+2s)
+                        <label class="shift-pill ${vardiya === 2 ? "active-shift" : ""}">
+                            <input type="radio" name="v_${g}" value="2" ${vardiya === 2 ? "checked" : ""} onclick="vardiyaTikla(${g}, 2)"> 2.V (+2s)
                         </label>
-                        <label class="shift-pill">
-                            <input type="radio" name="v_${g}" value="3" ${vardiya === 3 ? "checked" : ""} onchange="gunGuncelle(${g})"> 3.V (+6s)
+                        <label class="shift-pill ${vardiya === 3 ? "active-shift" : ""}">
+                            <input type="radio" name="v_${g}" value="3" ${vardiya === 3 ? "checked" : ""} onclick="vardiyaTikla(${g}, 3)"> 3.V (+6s)
                         </label>
                         <label class="shift-pill tatil-pill">
-                            <input type="checkbox" id="tatil_${g}" ${tatil ? "checked" : ""} onchange="gunGuncelle(${g})"> Tatil
+                            <input type="checkbox" id="tatil_${g}" ${tatil ? "checked" : ""} onchange="gunGuncelle(${g})"> Hafta Tatili
                         </label>
                     </div>
-                    <div>
-                        <input type="number" id="mesai_${g}" step="0.5" min="0" value="${mesai}" placeholder="Mesai" oninput="gunGuncelle(${g})">
+                    <div class="mesai-box">
+                        <span class="mesai-label">Mesai</span>
+                        <input type="number" id="mesai_${g}" step="0.5" min="0" value="${mesai}" oninput="gunGuncelle(${g})">
                     </div>
                     <div class="gece-info" id="gece_gun_${g}">Gece: ${geceSaat}s</div>
                 `;
                 container.appendChild(row);
             }
         }
+
+        window.vardiyaTikla = function(g, deger) {
+            const mevcut = mevcutAyVerisi[g] ? (parseInt(mevcutAyVerisi[g].vardiya, 10) || 0) : 0;
+            const radios = document.querySelectorAll(`input[name="v_${g}"]`);
+            if (mevcut === deger) {
+                radios.forEach(r => { r.checked = false; });
+            }
+            gunGuncelle(g);
+        };
 
         window.gunGuncelle = function(g) {
             const seciliRadio = document.querySelector(`input[name="v_${g}"]:checked`);
@@ -495,6 +637,12 @@
             } else {
                 row.classList.remove("tatil");
             }
+
+            row.querySelectorAll(".shift-pill:not(.tatil-pill)").forEach(pill => {
+                const inp = pill.querySelector("input");
+                if (inp && inp.checked) pill.classList.add("active-shift");
+                else pill.classList.remove("active-shift");
+            });
 
             const geceSaat = vardiya === 2 ? 2 : (vardiya === 3 ? 6 : 0);
             document.getElementById(`gece_gun_${g}`).innerText = `Gece: ${geceSaat}s`;
