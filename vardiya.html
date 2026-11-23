@@ -9,11 +9,12 @@
         :root {
             --primary: #5d3ebc;
             --primary-dark: #4b319d;
+            --primary-soft: #f3e8ff;
             --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             --card-bg: #ffffff;
-            --text-main: #1e293b;
+            --text-main: #0f172a;
             --text-muted: #64748b;
-            --danger-bg: #fee2e2;
+            --danger-bg: #fef2f2;
             --danger-border: #ef4444;
             --danger-text: #991b1b;
         }
@@ -52,44 +53,22 @@
         .logout-btn:hover { background: #e2e8f0; }
 
         .container {
-            max-width: 760px; margin: 0 auto; background: var(--card-bg);
-            padding: 15px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            max-width: 740px; margin: 0 auto; background: var(--card-bg);
+            padding: 15px; border-radius: 16px; box-shadow: 0 10px 30px rgba(15,23,42,0.08);
             box-sizing: border-box;
         }
 
         .title-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin: 0 0 12px 0;
-            border-bottom: 2px solid #5d3ebc;
-            padding-bottom: 8px;
-            flex-wrap: wrap;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 10px; margin: 0 0 12px 0; border-bottom: 2px solid #5d3ebc;
+            padding-bottom: 8px; flex-wrap: wrap;
         }
-        .title-row h2 {
-            margin: 0;
-            color: #2c3e50;
-            font-size: 16px;
-        }
-        .year-inline {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .year-inline label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #475569;
-        }
+        .title-row h2 { margin: 0; color: #1e293b; font-size: 16px; font-weight: 800; }
+        .year-inline { display: flex; align-items: center; gap: 6px; }
+        .year-inline label { font-size: 12px; font-weight: 700; color: #475569; }
         .year-inline select {
-            padding: 5px 8px;
-            border: 1px solid #cbd5e1;
-            border-radius: 7px;
-            font-size: 12px;
-            font-weight: 700;
-            background: #f8fafc;
-            color: #1e293b;
+            padding: 5px 9px; border: 1px solid #cbd5e1; border-radius: 8px;
+            font-size: 12px; font-weight: 700; background: #f8fafc; color: #0f172a;
         }
 
         .auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
@@ -99,101 +78,216 @@
         }
         .auth-tab.active { background: #5d3ebc; color: #fff; }
         .form-group { margin-bottom: 10px; }
-        .form-group label { display: block; font-size: 11.5px; font-weight: 600; color: #475569; margin-bottom: 3px; }
+        .form-group label { display: block; font-size: 11.5px; font-weight: 700; color: #475569; margin-bottom: 3px; }
         .form-group input, .form-group select {
-            width: 100%; padding: 8px 9px; border: 1px solid #cbd5e1;
-            border-radius: 8px; font-size: 12.5px; box-sizing: border-box; background: #fff;
+            width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1;
+            border-radius: 8px; font-size: 12.5px; box-sizing: border-box; background: #fff; color: #0f172a;
         }
         .primary-btn {
-            width: 100%; padding: 10px; border: none; border-radius: 10px;
+            width: 100%; padding: 11px; border: none; border-radius: 10px;
             background: linear-gradient(135deg, #5d3ebc 0%, #7c3aed 100%);
             color: #fff; font-weight: 700; font-size: 13.5px; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(93,62,188,0.22);
         }
-        .primary-btn:hover { opacity: 0.95; }
+        .primary-btn:hover { opacity: 0.96; }
         .msg-box { margin-top: 8px; font-size: 12px; text-align: center; font-weight: 600; min-height: 16px; }
 
         .user-bar {
             display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
             gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0;
-            padding: 8px 11px; border-radius: 9px; margin-bottom: 10px; font-size: 12px;
+            padding: 8px 12px; border-radius: 10px; margin-bottom: 10px; font-size: 12px;
         }
         .controls-row {
             display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;
         }
         .summary-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
         }
         .summary-card {
-            background: #1e293b; color: #fff; padding: 9px 10px; border-radius: 10px; text-align: center;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: #fff; padding: 9px 10px; border-radius: 11px; text-align: center;
         }
-        .summary-card.mesai { background: #065f46; }
-        .summary-label { font-size: 10.5px; opacity: 0.9; text-transform: uppercase; }
+        .summary-card.mesai {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+        }
+        .summary-label { font-size: 10px; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.4px; }
         .summary-val { font-size: 19px; font-weight: 800; margin-top: 2px; }
 
-        /* Daraltılmış Gün Satırları */
-        .days-list { display: flex; flex-direction: column; gap: 4px; }
-        .day-row {
+        /* Görseldeki Düzenin Premium Kart Hali */
+        .days-list { display: flex; flex-direction: column; gap: 6px; }
+        .day-card {
             display: grid;
-            grid-template-columns: 74px 1fr 94px 72px 72px;
-            gap: 6px;
+            grid-template-columns: 88px 1fr;
+            gap: 10px;
             align-items: center;
-            padding: 5px 8px;
+            padding: 8px 11px;
             border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            border-radius: 12px;
             background: #ffffff;
-            transition: background 0.12s ease;
+            box-shadow: 0 2px 6px rgba(15,23,42,0.03);
+            transition: all 0.14s ease;
         }
-        .day-row.tatil {
+        .day-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.06);
+        }
+        .day-card.tatil {
             background: var(--danger-bg);
-            border-color: var(--danger-border);
+            border-color: #fca5a5;
             color: var(--danger-text);
         }
-        .day-col {
+
+        .day-left {
             display: flex;
             flex-direction: column;
-            line-height: 1.15;
+            align-items: flex-start;
+            justify-content: center;
+            border-right: 1px solid #e2e8f0;
+            padding-right: 8px;
         }
-        .day-badge { font-weight: 800; font-size: 12px; }
-        .day-sub { font-size: 9.5px; opacity: 0.8; margin-top: 1px; }
-
-        .shift-group { display: flex; flex-wrap: nowrap; gap: 4px; align-items: center; overflow-x: auto; }
-        .shift-pill {
-            display: inline-flex; align-items: center; gap: 2px;
-            font-size: 10.5px; font-weight: 600; padding: 3px 6px;
-            border-radius: 6px; background: #f1f5f9; border: 1px solid #cbd5e1; cursor: pointer;
-            color: #1e293b; user-select: none; white-space: nowrap;
+        .day-card.tatil .day-left {
+            border-right-color: #fecaca;
         }
-        .shift-pill.active-shift {
-            background: #ede9fe; border-color: #5d3ebc; color: #4c1d95;
+        .day-num {
+            font-size: 16px;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.3px;
         }
-        .shift-pill.tatil-pill {
-            background: #fecaca; border-color: #ef4444; color: #7f1d1d; white-space: nowrap;
+        .day-date {
+            font-size: 9.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-top: 2px;
+            line-height: 1.2;
         }
-        .shift-pill input { margin: 0; cursor: pointer; width: 12px; height: 12px; }
-
-        .mesai-box {
-            display: flex;
-            flex-direction: column;
-        }
-        .mesai-label {
-            font-size: 9px;
+        .day-name {
+            font-size: 10px;
             font-weight: 700;
-            color: #64748b;
-            margin-bottom: 1px;
+            color: #475569;
+            line-height: 1.2;
+        }
+        .day-card.tatil .day-date,
+        .day-card.tatil .day-name {
+            color: #b91c1c;
+        }
+
+        .day-right {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .shifts-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .shift-choices {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .shift-item {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #334155;
+            padding: 2px 6px;
+            border-radius: 7px;
+            transition: background 0.12s ease;
+        }
+        .shift-item.active {
+            background: var(--primary-soft);
+            color: var(--primary-dark);
+        }
+        .shift-item input[type="radio"] {
+            margin: 3px 0 0 0;
+            accent-color: #0f172a;
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+        }
+        .gece-tag {
+            font-size: 10px;
+            font-weight: 700;
+            background: #f1f5f9;
+            color: #334155;
+            padding: 3px 7px;
+            border-radius: 999px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .bottom-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .fmesai-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .fmesai-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .day-card.tatil .fmesai-label {
+            color: var(--danger-text);
+        }
+        .fmesai-input {
+            width: 78px;
+            height: 24px;
+            padding: 2px 6px;
+            border: 1.5px solid #334155;
+            border-radius: 4px;
+            background: #ffffff;
+            color: #0f172a;
+            font-size: 11.5px;
+            font-weight: 700;
             text-align: center;
+            box-sizing: border-box;
         }
-        .day-row.tatil .mesai-label {
-            color: #991b1b;
+
+        .htatili-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            user-select: none;
+            padding: 2px 6px;
+            border-radius: 6px;
         }
-        .mesai-box input[type="number"] {
-            width: 100%; padding: 4px 5px; border: 1px solid #cbd5e1;
-            border-radius: 6px; font-size: 11.5px; box-sizing: border-box; text-align: center;
-            background: #fff; color: #1e293b;
+        .htatili-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #1e293b;
         }
-        .gece-info { font-size: 10.5px; font-weight: 700; text-align: center; white-space: nowrap; }
+        .day-card.tatil .htatili-label {
+            color: #b91c1c;
+        }
+        .htatili-box {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+            accent-color: #dc2626;
+            outline: 1.5px solid #dc2626;
+            outline-offset: -1px;
+        }
 
         .save-bar {
-            position: sticky; bottom: 58px; margin-top: 10px;
+            position: sticky; bottom: 58px; margin-top: 12px;
             background: rgba(255,255,255,0.96); padding: 8px 0 2px 0;
         }
 
@@ -209,15 +303,12 @@
         .bottom-btn.active, .bottom-btn:hover { color: #5d3ebc; }
         .bottom-btn span { font-size: 18px; }
 
-        @media (max-width: 600px) {
-            .day-row {
-                grid-template-columns: 68px 1fr 64px;
-                gap: 4px 6px;
-                padding: 5px 6px;
-            }
-            .shift-group { grid-column: 1 / -1; justify-content: flex-start; }
-            .mesai-box { grid-column: 2 / 3; }
-            .gece-info { grid-column: 3 / 4; text-align: right; }
+        @media (max-width: 480px) {
+            .controls-row { grid-template-columns: 1fr; }
+            .day-card { grid-template-columns: 78px 1fr; gap: 8px; padding: 8px 9px; }
+            .day-num { font-size: 14.5px; }
+            .shift-choices { gap: 6px; }
+            .fmesai-input { width: 68px; }
         }
     </style>
 </head>
@@ -370,7 +461,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const gunAdlariKisa = ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"];
+        const gunAdlariTam = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
         let aktifKullanici = null;
         let mevcutAyVerisi = {};
 
@@ -578,39 +669,50 @@
                 const geceSaat = vardiya === 2 ? 2 : (vardiya === 3 ? 6 : 0);
 
                 const tarihObj = new Date(yil, ay - 1, g);
-                const gunKisa = gunAdlariKisa[tarihObj.getDay()];
-                const tarihKisa = `${String(g).padStart(2, "0")}.${String(ay).padStart(2, "0")}.${yil}`;
+                const gunTam = gunAdlariTam[tarihObj.getDay()];
+                const tarihFormat = `${String(g).padStart(2, "0")}.${String(ay).padStart(2, "0")}.${yil}`;
 
-                const row = document.createElement("div");
-                row.className = `day-row ${tatil ? "tatil" : ""}`;
-                row.id = `gun_row_${g}`;
+                const card = document.createElement("div");
+                card.className = `day-card ${tatil ? "tatil" : ""}`;
+                card.id = `gun_card_${g}`;
 
-                row.innerHTML = `
-                    <div class="day-col">
-                        <span class="day-badge">${g}. Gün</span>
-                        <span class="day-sub">${tarihKisa} · ${gunKisa}</span>
+                card.innerHTML = `
+                    <div class="day-left">
+                        <span class="day-num">${g}.gün</span>
+                        <span class="day-date">${tarihFormat}</span>
+                        <span class="day-name">${gunTam}</span>
                     </div>
-                    <div class="shift-group">
-                        <label class="shift-pill ${vardiya === 1 ? "active-shift" : ""}">
-                            <input type="radio" name="v_${g}" value="1" ${vardiya === 1 ? "checked" : ""} onclick="vardiyaTikla(${g}, 1)"> 1.V
-                        </label>
-                        <label class="shift-pill ${vardiya === 2 ? "active-shift" : ""}">
-                            <input type="radio" name="v_${g}" value="2" ${vardiya === 2 ? "checked" : ""} onclick="vardiyaTikla(${g}, 2)"> 2.V (+2s)
-                        </label>
-                        <label class="shift-pill ${vardiya === 3 ? "active-shift" : ""}">
-                            <input type="radio" name="v_${g}" value="3" ${vardiya === 3 ? "checked" : ""} onclick="vardiyaTikla(${g}, 3)"> 3.V (+6s)
-                        </label>
-                        <label class="shift-pill tatil-pill">
-                            <input type="checkbox" id="tatil_${g}" ${tatil ? "checked" : ""} onchange="gunGuncelle(${g})"> Hafta Tatili
-                        </label>
+                    <div class="day-right">
+                        <div class="shifts-line">
+                            <div class="shift-choices">
+                                <label class="shift-item ${vardiya === 1 ? "active" : ""}">
+                                    <span>1.Vardiya</span>
+                                    <input type="radio" name="v_${g}" value="1" ${vardiya === 1 ? "checked" : ""} onclick="vardiyaTikla(${g}, 1)">
+                                </label>
+                                <label class="shift-item ${vardiya === 2 ? "active" : ""}">
+                                    <span>2.Vardiya</span>
+                                    <input type="radio" name="v_${g}" value="2" ${vardiya === 2 ? "checked" : ""} onclick="vardiyaTikla(${g}, 2)">
+                                </label>
+                                <label class="shift-item ${vardiya === 3 ? "active" : ""}">
+                                    <span>3.Vardiya</span>
+                                    <input type="radio" name="v_${g}" value="3" ${vardiya === 3 ? "checked" : ""} onclick="vardiyaTikla(${g}, 3)">
+                                </label>
+                            </div>
+                            <span class="gece-tag" id="gece_gun_${g}">Gece: +${geceSaat}s</span>
+                        </div>
+                        <div class="bottom-line">
+                            <div class="fmesai-wrap">
+                                <span class="fmesai-label">F.mesai</span>
+                                <input type="number" class="fmesai-input" id="mesai_${g}" step="0.5" min="0" value="${mesai}" oninput="gunGuncelle(${g})">
+                            </div>
+                            <label class="htatili-wrap">
+                                <span class="htatili-label">H.tatili</span>
+                                <input type="checkbox" class="htatili-box" id="tatil_${g}" ${tatil ? "checked" : ""} onchange="gunGuncelle(${g})">
+                            </label>
+                        </div>
                     </div>
-                    <div class="mesai-box">
-                        <span class="mesai-label">Mesai</span>
-                        <input type="number" id="mesai_${g}" step="0.5" min="0" value="${mesai}" oninput="gunGuncelle(${g})">
-                    </div>
-                    <div class="gece-info" id="gece_gun_${g}">Gece: ${geceSaat}s</div>
                 `;
-                container.appendChild(row);
+                container.appendChild(card);
             }
         }
 
@@ -631,21 +733,21 @@
 
             mevcutAyVerisi[g] = { vardiya, tatil, mesai };
 
-            const row = document.getElementById(`gun_row_${g}`);
+            const card = document.getElementById(`gun_card_${g}`);
             if (tatil) {
-                row.classList.add("tatil");
+                card.classList.add("tatil");
             } else {
-                row.classList.remove("tatil");
+                card.classList.remove("tatil");
             }
 
-            row.querySelectorAll(".shift-pill:not(.tatil-pill)").forEach(pill => {
-                const inp = pill.querySelector("input");
-                if (inp && inp.checked) pill.classList.add("active-shift");
-                else pill.classList.remove("active-shift");
+            card.querySelectorAll(".shift-item").forEach(item => {
+                const inp = item.querySelector("input");
+                if (inp && inp.checked) item.classList.add("active");
+                else item.classList.remove("active");
             });
 
             const geceSaat = vardiya === 2 ? 2 : (vardiya === 3 ? 6 : 0);
-            document.getElementById(`gece_gun_${g}`).innerText = `Gece: ${geceSaat}s`;
+            document.getElementById(`gece_gun_${g}`).innerText = `Gece: +${geceSaat}s`;
 
             ozetHesapla();
         };
