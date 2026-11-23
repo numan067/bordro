@@ -3,37 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maaş Hesaplama Portalı</title>
-    <!-- Sekme İkonu (Favicon) -->
+    <title>Maaş Hesaplama Portalı - Ana Sayfa</title>
     <link rel="icon" type="image/png" href="logo.png">
-    
     <style>
         :root {
             --primary: #5d3ebc;
             --primary-dark: #4b319d;
+            --green-main: #059669;
+            --green-dark: #047857;
+            --green-soft: #ecfdf5;
+            --green-border: #6ee7b7;
             --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             --card-bg: #ffffff;
-            --text-main: #1e293b;
+            --text-main: #0f172a;
             --text-muted: #64748b;
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background: var(--bg-gradient);
             color: var(--text-main);
             margin: 0;
-            padding-top: 70px; /* Üst bar içeriği kapatmasın diye boşluk */
-            padding-bottom: 90px; /* Alt bar içeriği kapatmasın diye boşluk */
-            padding-left: 15px;
-            padding-right: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            padding-top: 72px;
+            padding-bottom: 88px;
+            padding-left: 12px;
+            padding-right: 12px;
             box-sizing: border-box;
         }
 
-        /* Sabit Üst Bar */
         .top-navbar {
             position: fixed;
             top: 0;
@@ -41,9 +38,10 @@
             width: 100%;
             height: 55px;
             background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 0 15px;
             z-index: 2000;
             box-sizing: border-box;
@@ -62,13 +60,12 @@
             height: 36px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #5d3ebc;
+            border: 2px solid var(--primary);
         }
 
         .top-title {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
-            color: var(--text-main);
             text-transform: uppercase;
             letter-spacing: -0.3px;
             background: linear-gradient(90deg, #5d3ebc, #9333ea);
@@ -76,123 +73,174 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .portal-card {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 480px;
-            padding: 25px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .menu-grid {
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 25px;
         }
 
-        .menu-btn {
-            background: linear-gradient(135deg, #5d3ebc 0%, #7c3aed 100%);
-            color: white;
-            border: none;
-            padding: 14px 18px;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 12px;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(93, 62, 188, 0.2);
-            transition: all 0.3s ease;
+        .hero-box {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+            border: 1px solid #e2e8f0;
         }
 
-        .menu-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(93, 62, 188, 0.3);
-            background: linear-gradient(135deg, #4b319d 0%, #6d28d9 100%);
+        .hero-box h1 {
+            margin: 0 0 4px 0;
+            font-size: 18px;
+            font-weight: 800;
+            color: #1e293b;
         }
 
-        /* Duyuru Panosu */
-        .announcement-box {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            border-radius: 14px;
-            padding: 15px;
-            margin-top: 10px;
-            text-align: left;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-        }
-
-        .announcement-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: #d97706;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            text-align: center;
-        }
-
-        .announcement-list {
+        .hero-box p {
             margin: 0;
-            padding-left: 18px;
-            font-size: 13px;
-            color: #78350f;
-            font-weight: 500;
-            line-height: 1.5;
-        }
-
-        .announcement-list li {
-            margin-bottom: 4px;
-        }
-
-        .announcement-image-container {
-            margin-top: 10px;
-            width: 100%;
-            max-height: 180px;
-            overflow: hidden;
-            border-radius: 10px;
-            display: none;
-        }
-
-        .announcement-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .admin-link {
-            display: inline-block;
-            margin-top: 18px;
-            font-size: 13px;
+            font-size: 12.5px;
             color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .menu-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: var(--card-bg);
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 14px 16px;
             text-decoration: none;
-            transition: color 0.2s;
+            color: var(--text-main);
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
         }
 
-        .admin-link:hover {
-            color: var(--primary);
-            text-decoration: underline;
+        .menu-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+            border-color: #cbd5e1;
         }
 
-        /* Sabit Alt Navigasyon Barı */
+        .card-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.25;
+        }
+
+        .card-desc {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            line-height: 1.35;
+        }
+
+        .card-arrow {
+            font-size: 16px;
+            font-weight: 700;
+            color: #64748b;
+            flex-shrink: 0;
+        }
+
+        /* 3. Sıra: Yeşil Tonunda Kişisel Vardiya Çizelgesi Kartı */
+        .menu-card.vardiya-green {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 1.5px solid var(--green-border);
+            box-shadow: 0 6px 18px rgba(5, 150, 105, 0.12);
+        }
+
+        .menu-card.vardiya-green:hover {
+            border-color: var(--green-main);
+            box-shadow: 0 10px 22px rgba(5, 150, 105, 0.18);
+        }
+
+        .menu-card.vardiya-green .card-icon {
+            background: linear-gradient(135deg, var(--green-main) 0%, var(--green-dark) 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(5, 150, 105, 0.25);
+        }
+
+        .menu-card.vardiya-green .card-title {
+            color: #064e3b;
+        }
+
+        .menu-card.vardiya-green .card-desc {
+            color: #047857;
+        }
+
+        .menu-card.vardiya-green .card-arrow {
+            color: var(--green-dark);
+        }
+
+        /* 4. Sıra: Sosyal Haklar ve Enflasyon Takibi Yan Yana */
+        .split-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .menu-card.compact {
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 13px 14px;
+            gap: 10px;
+        }
+
+        .menu-card.compact .card-left {
+            width: 100%;
+            align-items: flex-start;
+        }
+
+        .menu-card.compact .card-icon {
+            width: 36px;
+            height: 36px;
+            font-size: 17px;
+            border-radius: 10px;
+        }
+
+        .menu-card.compact .card-title {
+            font-size: 13px;
+        }
+
+        .menu-card.compact .card-desc {
+            font-size: 11px;
+        }
+
+        .menu-card.compact .card-arrow {
+            align-self: flex-end;
+            font-size: 14px;
+        }
+
         .bottom-bar {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
             background: #ffffff;
-            box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
             display: flex;
             justify-content: space-around;
             padding: 8px 0;
@@ -200,6 +248,7 @@
             box-sizing: border-box;
             border-top: 1px solid #e2e8f0;
         }
+
         .bottom-btn {
             background: none;
             border: none;
@@ -213,11 +262,13 @@
             cursor: pointer;
             gap: 3px;
             flex: 1;
-            transition: color 0.2s;
         }
-        .bottom-btn.active, .bottom-btn:hover {
-            color: #5d3ebc;
+
+        .bottom-btn.active,
+        .bottom-btn:hover {
+            color: var(--primary);
         }
+
         .bottom-btn span {
             font-size: 18px;
         }
@@ -225,7 +276,6 @@
 </head>
 <body>
 
-    <!-- Sabit Üst Bar (Logo + Başlık) -->
     <header class="top-navbar">
         <a href="index.html" class="top-brand">
             <img src="logo.png" alt="Logo" class="top-logo" onerror="this.src='logo.jpg'">
@@ -233,108 +283,81 @@
         </a>
     </header>
 
-    <div class="portal-card">
-        <div class="menu-grid">
-            <a href="hesapla.html" class="menu-btn">Maaş Hesaplama</a>
-            <a href="fark.html" class="menu-btn">Fark Hesaplama</a>
-            <a href="sosyal.html" class="menu-btn">Sosyal Haklar</a>
-            <a href="enf.html" class="menu-btn">Enflasyon Takibi</a>
-        </div>
+    <main class="container">
+        <section class="hero-box">
+            <h1>Hesaplama ve Çizelge Merkezi</h1>
+            <p>Maaş, fark, vardiya çizelgesi, sosyal haklar ve enflasyon araçlarına tek yerden ulaşın.</p>
+        </section>
 
-        <!-- Duyuru Panosu -->
-        <div class="announcement-box">
-            <div class="announcement-title">
-                📢 Duyuru Panosu
+        <!-- 1. Sırada: Maaş Hesaplama -->
+        <a href="hesapla.html" class="menu-card">
+            <div class="card-left">
+                <div class="card-icon">🧮</div>
+                <div>
+                    <div class="card-title">Maaş Hesaplama</div>
+                    <div class="card-desc">Aylık net ve brüt maaş, mesai ve kesinti hesaplamaları</div>
+                </div>
             </div>
-            <ul id="duyuruListesi" class="announcement-list">
-                <li>Yükleniyor...</li>
-            </ul>
-            <div id="duyuruFotoContainer" class="announcement-image-container">
-                <img id="duyuruFoto" src="" alt="Duyuru Görseli">
+            <span class="card-arrow">›</span>
+        </a>
+
+        <!-- 2. Sırada: Fark Hesaplama -->
+        <a href="fark.html" class="menu-card">
+            <div class="card-left">
+                <div class="card-icon">⚖️</div>
+                <div>
+                    <div class="card-title">Fark Hesaplama</div>
+                    <div class="card-desc">Dönem, zam veya bordro farklarını karşılaştırın ve hesaplayın</div>
+                </div>
             </div>
+            <span class="card-arrow">›</span>
+        </a>
+
+        <!-- 3. Sırada: Kişisel Vardiya Çizelgesi (Yeşil Tonunda) -->
+        <a href="vardiya.html" class="menu-card vardiya-green">
+            <div class="card-left">
+                <div class="card-icon">🗓️</div>
+                <div>
+                    <div class="card-title">Kişisel Vardiya Çizelgesi</div>
+                    <div class="card-desc">Aylık vardiya, gece çalışması, fazla mesai, eksik ve hafta tatili takibi</div>
+                </div>
+            </div>
+            <span class="card-arrow">›</span>
+        </a>
+
+        <!-- 4. Sırada: Sosyal Haklar ve Enflasyon Takibi Yan Yana -->
+        <div class="split-row">
+            <a href="sosyal.html" class="menu-card compact">
+                <div class="card-left">
+                    <div class="card-icon">📋</div>
+                    <div>
+                        <div class="card-title">Sosyal Haklar</div>
+                        <div class="card-desc">Yardım ve yan hak kalemleri</div>
+                    </div>
+                </div>
+                <span class="card-arrow">›</span>
+            </a>
+
+            <a href="enf.html" class="menu-card compact">
+                <div class="card-left">
+                    <div class="card-icon">📈</div>
+                    <div>
+                        <div class="card-title">Enflasyon Takibi</div>
+                        <div class="card-desc">Aylık ve kümülatif enflasyon verileri</div>
+                    </div>
+                </div>
+                <span class="card-arrow">›</span>
+            </a>
         </div>
+    </main>
 
-        <a href="yonetim.html" class="admin-link">Yönetim Paneli Girişi</a>
-    </div>
-
-    <!-- Sabit Alt Navigasyon Barı -->
     <nav class="bottom-bar">
-        <a href="index.html" class="bottom-btn active">
-            <span>🏠</span> Ana Sayfa
-        </a>
-        <a href="hesapla.html" class="bottom-btn">
-            <span>🧮</span> Maaş
-        </a>
-        <a href="fark.html" class="bottom-btn">
-            <span>⚖️</span> Fark
-        </a>
-        <a href="sosyal.html" class="bottom-btn">
-            <span>📋</span> Sosyal
-        </a>
-        <a href="enf.html" class="bottom-btn">
-            <span>📈</span> Enflasyon
-        </a>
+        <a href="index.html" class="bottom-btn active"><span>🏠</span> Ana Sayfa</a>
+        <a href="hesapla.html" class="bottom-btn"><span>🧮</span> Maaş</a>
+        <a href="fark.html" class="bottom-btn"><span>⚖️</span> Fark</a>
+        <a href="sosyal.html" class="bottom-btn"><span>📋</span> Sosyal</a>
+        <a href="enf.html" class="bottom-btn"><span>📈</span> Enflasyon</a>
     </nav>
 
-    <!-- Firebase Duyuru ve Fotoğraf Çekme Scripti -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-          apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
-          authDomain: "bordroapp.firebaseapp.com",
-          projectId: "bordroapp",
-          storageBucket: "bordroapp.firebasestorage.app",
-          messagingSenderId: "495208822576",
-          appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
-          measurementId: "G-6ZRKG9HG9J"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        async function duyuruyuGetir() {
-            try {
-                const docRef = doc(db, "ayarlar", "veriler");
-                const docSnap = await getDoc(docRef);
-                const listeEl = document.getElementById("duyuruListesi");
-                const fotoContainer = document.getElementById("duyuruFotoContainer");
-                const fotoImg = document.getElementById("duyuruFoto");
-
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    let satirlar = [];
-
-                    if (data.duyuru1 && data.duyuru1.trim() !== "") satirlar.push(data.duyuru1);
-                    if (data.duyuru2 && data.duyuru2.trim() !== "") satirlar.push(data.duyuru2);
-                    if (data.duyuru3 && data.duyuru3.trim() !== "") satirlar.push(data.duyuru3);
-
-                    if (satirlar.length > 0) {
-                        listeEl.innerHTML = "";
-                        satirlar.forEach(metin => {
-                            listeEl.innerHTML += `<li>${metin}</li>`;
-                        });
-                    } else {
-                        listeEl.innerHTML = `<li>Şu an aktif bir duyuru bulunmuyor.</li>`;
-                    }
-
-                    if (data.duyuruFoto && data.duyuruFoto.trim() !== "") {
-                        fotoImg.src = data.duyuruFoto;
-                        fotoContainer.style.display = "block";
-                    } else {
-                        fotoContainer.style.display = "none";
-                    }
-                } else {
-                    listeEl.innerHTML = `<li>Şu an aktif bir duyuru bulunmuyor.</li>`;
-                }
-            } catch (error) {
-                console.error("Duyuru çekilemedi:", error);
-                document.getElementById("duyuruListesi").innerHTML = `<li>Duyurular yüklenirken hata oluştu.</li>`;
-            }
-        }
-
-        duyuruyuGetir();
-    </script>
 </body>
 </html>
