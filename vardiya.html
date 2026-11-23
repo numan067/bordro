@@ -113,7 +113,6 @@
         .summary-label { font-size: 10px; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.4px; }
         .summary-val { font-size: 19px; font-weight: 800; margin-top: 2px; }
 
-        /* Görseldeki Düzenin Premium Kart Hali */
         .days-list { display: flex; flex-direction: column; gap: 6px; }
         .day-card {
             display: grid;
@@ -323,7 +322,6 @@
     </header>
 
     <div class="container">
-        <!-- GİRİŞ / HESAP OLUŞTURMA EKRANI -->
         <div id="authPanel">
             <div class="title-row">
                 <h2>Kişisel Vardiya Hesabı</h2>
@@ -364,7 +362,6 @@
             <div id="authMsg" class="msg-box"></div>
         </div>
 
-        <!-- VARDİYA ÇİZELGESİ EKRANI -->
         <div id="vardiyaPanel" style="display:none;">
             <div class="title-row">
                 <h2>Kişisel Vardiya Çizelgesi</h2>
@@ -475,6 +472,35 @@
             return Array.from(new Uint8Array(digest))
                 .map(b => b.toString(16).padStart(2, "0"))
                 .join("");
+        }
+
+        function gunSaatleriniHesapla(vardiya, mesai) {
+            const v = parseInt(vardiya, 10) || 0;
+            const m = Math.max(0, parseFloat(mesai) || 0);
+
+            let gece = 0;
+            let ekstraMesai = 0;
+
+            if (v === 2) {
+                gece = 2;
+                ekstraMesai = m;
+            } else if (v === 3) {
+                if (m >= 2) {
+                    gece = 8;
+                    ekstraMesai = 0;
+                } else if (m > 0) {
+                    gece = 6 + m;
+                    ekstraMesai = 0;
+                } else {
+                    gece = 6;
+                    ekstraMesai = 0;
+                }
+            } else {
+                gece = 0;
+                ekstraMesai = m;
+            }
+
+            return { gece, ekstraMesai };
         }
 
         window.authSekme = function(sekme) {
@@ -666,7 +692,7 @@
                 const vardiya = parseInt(kayit.vardiya, 10) || 0;
                 const tatil = Boolean(kayit.tatil);
                 const mesai = parseFloat(kayit.mesai) || 0;
-                const geceSaat = vardiya === 2 ? 2 : (vardiya === 3 ? 6 : 0);
+                const { gece } = gunSaatleriniHesapla(vardiya, mesai);
 
                 const tarihObj = new Date(yil, ay - 1, g);
                 const gunTam = gunAdlariTam[tarihObj.getDay()];
@@ -698,7 +724,7 @@
                                     <input type="radio" name="v_${g}" value="3" ${vardiya === 3 ? "checked" : ""} onclick="vardiyaTikla(${g}, 3)">
                                 </label>
                             </div>
-                            <span class="gece-tag" id="gece_gun_${g}">Gece: +${geceSaat}s</span>
+                            <span class="gece-tag" id="gece_gun_${g}">Gece: ${gece.toLocaleString("tr-TR", { maximumFractionDigits: 2 })}s</span>
                         </div>
                         <div class="bottom-line">
                             <div class="fmesai-wrap">
@@ -746,8 +772,8 @@
                 else item.classList.remove("active");
             });
 
-            const geceSaat = vardiya === 2 ? 2 : (vardiya === 3 ? 6 : 0);
-            document.getElementById(`gece_gun_${g}`).innerText = `Gece: +${geceSaat}s`;
+            const { gece } = gunSaatleriniHesapla(vardiya, mesai);
+            document.getElementById(`gece_gun_${g}`).innerText = `Gece: ${gece.toLocaleString("tr-TR", { maximumFractionDigits: 2 })}s`;
 
             ozetHesapla();
         };
@@ -762,16 +788,12 @@
 
             for (let g = 1; g <= gunSayisi; g++) {
                 const kayit = mevcutAyVerisi[g] || { vardiya: 0, tatil: false, mesai: 0 };
-                const v = parseInt(kayit.vardiya, 10) || 0;
-                const m = parseFloat(kayit.mesai) || 0;
-
-                if (v === 2) toplamGece += 2;
-                else if (v === 3) toplamGece += 6;
-
-                toplamMesai += m;
+                const { gece, ekstraMesai } = gunSaatleriniHesapla(kayit.vardiya, kayit.mesai);
+                toplamGece += gece;
+                toplamMesai += ekstraMesai;
             }
 
-            document.getElementById("toplamGece").innerText = `${toplamGece} Sa`;
+            document.getElementById("toplamGece").innerText = `${toplamGece.toLocaleString("tr-TR", { maximumFractionDigits: 2 })} Sa`;
             document.getElementById("toplamMesai").innerText = `${toplamMesai.toLocaleString("tr-TR", { maximumFractionDigits: 2 })} Sa`;
         }
 
