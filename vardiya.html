@@ -176,7 +176,6 @@
         }
         .confirm-btns { display: flex; gap: 6px; }
 
-        /* Ay seçimi ve hafta tatili seçimi her ekranda yan yana */
         .controls-row {
             display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px;
         }
@@ -239,13 +238,9 @@
 
         .day-right { display: flex; flex-direction: column; gap: 7px; }
 
-        /* Vardiya seçimleri, İzin ve H.tatili tek satırda yan yana */
         .shifts-line {
-            display: flex; align-items: center; justify-content: space-between;
-            gap: 6px; flex-wrap: wrap;
-        }
-        .shift-row-left {
-            display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+            display: flex; align-items: center; justify-content: flex-start;
+            gap: 8px; flex-wrap: wrap;
         }
         .shift-choices { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
         .shift-item {
@@ -283,11 +278,6 @@
             accent-color: #dc2626; outline: 1.5px solid #dc2626; outline-offset: -1px;
         }
 
-        .gece-tag {
-            font-size: 10px; font-weight: 700; background: #f1f5f9; color: #334155;
-            padding: 3px 7px; border-radius: 999px; border: 1px solid #e2e8f0;
-        }
-
         .bottom-line {
             display: flex; align-items: center; justify-content: flex-start;
             gap: 10px; flex-wrap: wrap;
@@ -298,7 +288,6 @@
         .day-card.izin .fmesai-label { color: var(--izin-text); }
         .day-card.tatil .fmesai-label { color: var(--danger-text); }
 
-        /* Kutucuk içi sayı fontu daha büyük ve kalın */
         .fmesai-input {
             width: 72px; height: 28px; padding: 2px 6px; border: 1.5px solid #334155;
             border-radius: 5px; background: #ffffff; color: #0f172a;
@@ -1106,7 +1095,6 @@
                 const izin = Boolean(kayit.izin);
                 const mesaiDeger = kutuMetni(kayit.mesai);
                 const eksikDeger = kutuMetni(kayit.eksik);
-                const { gece } = gunSaatleriniHesapla(vardiya, tatil, mesaiDeger, eksikDeger);
 
                 const tarihObj = new Date(yil, ay - 1, g);
                 const gunTam = gunAdlariTam[tarihObj.getDay()];
@@ -1125,33 +1113,30 @@
                     </div>
                     <div class="day-right">
                         <div class="shifts-line">
-                            <div class="shift-row-left">
-                                <div class="shift-choices">
-                                    <label class="shift-item ${vardiya === 1 ? "active" : ""}">
-                                        <span>1.Vardiya</span>
-                                        <input type="radio" name="v_${g}" value="1" ${vardiya === 1 ? "checked" : ""} onclick="vardiyaTikla(${g}, 1)">
-                                    </label>
-                                    <label class="shift-item ${vardiya === 2 ? "active" : ""}">
-                                        <span>2.Vardiya</span>
-                                        <input type="radio" name="v_${g}" value="2" ${vardiya === 2 ? "checked" : ""} onclick="vardiyaTikla(${g}, 2)">
-                                    </label>
-                                    <label class="shift-item ${vardiya === 3 ? "active" : ""}">
-                                        <span>3.Vardiya</span>
-                                        <input type="radio" name="v_${g}" value="3" ${vardiya === 3 ? "checked" : ""} onclick="vardiyaTikla(${g}, 3)">
-                                    </label>
-                                </div>
-                                <div class="side-checks">
-                                    <label class="izin-wrap">
-                                        <span class="izin-label">İzin</span>
-                                        <input type="checkbox" class="izin-box" id="izin_${g}" ${izin ? "checked" : ""} onchange="gunGuncelle(${g})">
-                                    </label>
-                                    <label class="htatili-wrap">
-                                        <span class="htatili-label">H.tatili</span>
-                                        <input type="checkbox" class="htatili-box" id="tatil_${g}" ${tatil ? "checked" : ""} onchange="gunGuncelle(${g})">
-                                    </label>
-                                </div>
+                            <div class="shift-choices">
+                                <label class="shift-item ${vardiya === 1 ? "active" : ""}">
+                                    <span>1.Vardiya</span>
+                                    <input type="radio" name="v_${g}" value="1" ${vardiya === 1 ? "checked" : ""} onclick="vardiyaTikla(${g}, 1)">
+                                </label>
+                                <label class="shift-item ${vardiya === 2 ? "active" : ""}">
+                                    <span>2.Vardiya</span>
+                                    <input type="radio" name="v_${g}" value="2" ${vardiya === 2 ? "checked" : ""} onclick="vardiyaTikla(${g}, 2)">
+                                </label>
+                                <label class="shift-item ${vardiya === 3 ? "active" : ""}">
+                                    <span>3.Vardiya</span>
+                                    <input type="radio" name="v_${g}" value="3" ${vardiya === 3 ? "checked" : ""} onclick="vardiyaTikla(${g}, 3)">
+                                </label>
                             </div>
-                            <span class="gece-tag" id="gece_gun_${g}">Gece: ${formatSaat(gece)}s</span>
+                            <div class="side-checks">
+                                <label class="izin-wrap">
+                                    <span class="izin-label">İzin</span>
+                                    <input type="checkbox" class="izin-box" id="izin_${g}" ${izin ? "checked" : ""} onchange="gunGuncelle(${g})">
+                                </label>
+                                <label class="htatili-wrap">
+                                    <span class="htatili-label">H.tatili</span>
+                                    <input type="checkbox" class="htatili-box" id="tatil_${g}" ${tatil ? "checked" : ""} onchange="gunGuncelle(${g})">
+                                </label>
+                            </div>
                         </div>
                         <div class="bottom-line">
                             <div class="hours-inputs-group">
@@ -1198,9 +1183,6 @@
                 if (inp && inp.checked) item.classList.add("active");
                 else item.classList.remove("active");
             });
-
-            const { gece } = gunSaatleriniHesapla(vardiya, tatil, mesaiRaw, eksikRaw);
-            document.getElementById(`gece_gun_${g}`).innerText = `Gece: ${formatSaat(gece)}s`;
 
             ozetHesapla();
         };
