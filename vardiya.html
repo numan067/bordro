@@ -3,1028 +3,592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maaş Hesaplama Portalı - Vardiya</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <title>Vardiya Çizelgesi</title>
     <style>
-        :root {
-            --primary: #5d3ebc;
-            --primary-dark: #4b319d;
-            --primary-soft: #f3e8ff;
-            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --danger-bg: #fef2f2;
-            --danger-border: #ef4444;
-            --danger-text: #991b1b;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-main);
-            margin: 0;
-            padding-top: 66px;
-            padding-bottom: 88px;
-            padding-left: 10px;
-            padding-right: 10px;
-            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #1e293b;
+            padding: 15px 10px 40px 10px;
         }
-
-        .top-navbar {
-            position: fixed; top: 0; left: 0; width: 100%; height: 55px;
-            background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 15px; z-index: 2000; box-sizing: border-box; border-bottom: 1px solid #e2e8f0;
-        }
-        .top-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .top-logo { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #5d3ebc; }
-        .top-title {
-            font-size: 14px; font-weight: 700; color: var(--text-main);
-            text-transform: uppercase; letter-spacing: -0.3px;
-            background: linear-gradient(90deg, #5d3ebc, #9333ea);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .logout-btn {
-            background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1;
-            padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;
-            cursor: pointer; display: none;
-        }
-        .logout-btn:hover { background: #e2e8f0; }
-
         .container {
-            max-width: 760px; margin: 0 auto; background: var(--card-bg);
-            padding: 15px; border-radius: 16px; box-shadow: 0 10px 30px rgba(15,23,42,0.08);
-            box-sizing: border-box;
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
         }
 
-        .title-row {
-            display: flex; align-items: center; justify-content: space-between;
-            gap: 10px; margin: 0 0 12px 0; border-bottom: 2px solid #5d3ebc;
-            padding-bottom: 8px; flex-wrap: wrap;
+        /* ÜST BAR & HESABIM BUTONU */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
         }
-        .title-row h2 { margin: 0; color: #1e293b; font-size: 16px; font-weight: 800; }
-        .year-inline { display: flex; align-items: center; gap: 6px; }
-        .year-inline label { font-size: 12px; font-weight: 700; color: #475569; }
-        .year-inline select {
-            padding: 5px 9px; border: 1px solid #cbd5e1; border-radius: 8px;
-            font-size: 12px; font-weight: 700; background: #f8fafc; color: #0f172a;
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
         }
-
-        .auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-        .auth-tab {
-            padding: 10px; border: 2px solid #5d3ebc; border-radius: 10px;
-            background: #fff; color: #5d3ebc; font-weight: 700; font-size: 13px; cursor: pointer;
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
         }
-        .auth-tab.active { background: #5d3ebc; color: #fff; }
-        .form-group { margin-bottom: 10px; }
-        .form-group label { display: block; font-size: 11.5px; font-weight: 700; color: #475569; margin-bottom: 3px; }
-        .form-group input, .form-group select {
-            width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1;
-            border-radius: 8px; font-size: 12.5px; box-sizing: border-box; background: #fff; color: #0f172a;
+        .user-name {
+            font-weight: 600;
+            color: #475569;
         }
-        .primary-btn {
-            width: 100%; padding: 11px; border: none; border-radius: 10px;
-            background: linear-gradient(135deg, #5d3ebc 0%, #7c3aed 100%);
-            color: #fff; font-weight: 700; font-size: 13.5px; cursor: pointer;
-            box-shadow: 0 4px 12px rgba(93,62,188,0.22);
+        .hesabim-btn {
+            color: #dc2626; /* Kırmızı yazı */
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            background: none;
+            border: 1px solid #fecaca;
+            background-color: #fef2f2;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: all 0.2s;
         }
-        .primary-btn:hover { opacity: 0.96; }
-
-        .secondary-btn {
-            padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px;
-            background: #f8fafc; color: #1e293b; font-weight: 700; font-size: 12px; cursor: pointer;
-        }
-        .secondary-btn:hover { background: #e2e8f0; }
-
-        .danger-btn {
-            padding: 7px 11px; border: none; border-radius: 8px;
-            background: #dc2626; color: #ffffff; font-weight: 700; font-size: 11.5px; cursor: pointer;
-        }
-        .danger-btn:hover { background: #b91c1c; }
-
-        .link-row {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-top: 8px; font-size: 12px;
-        }
-        .text-link {
-            background: none; border: none; padding: 0; color: var(--primary);
-            font-weight: 700; font-size: 12px; cursor: pointer; text-decoration: underline;
+        .hesabim-btn:hover {
+            background-color: #fee2e2;
         }
 
-        .forgot-box {
-            margin-top: 10px; padding: 11px; border: 1px solid #e2e8f0;
-            border-radius: 10px; background: #f8fafc; display: none;
+        /* AY VE HAFTA TATİLİ YAN YANA SEÇİM ALANI */
+        .controls-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            flex: 1;
+        }
+        .control-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 5px;
+        }
+        .control-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #f8fafc;
+            color: #1e293b;
         }
 
-        .kvkk-check {
-            display: flex; align-items: flex-start; gap: 8px;
-            font-size: 11.5px; color: #334155; line-height: 1.4;
-            margin: 10px 0 12px 0; background: #f8fafc; padding: 8px 10px;
-            border-radius: 8px; border: 1px solid #e2e8f0;
+        /* VARDİYA TABLOSU */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
         }
-        .kvkk-check input { width: auto; margin-top: 2px; cursor: pointer; }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 9px 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+        }
+        select.vardiya-select {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+            font-size: 13px;
+            background-color: #fff;
+        }
 
-        .msg-box { margin-top: 8px; font-size: 12px; text-align: center; font-weight: 600; min-height: 16px; }
+        /* HAFTA TATİLİ (KIRMIZI) VE İZİN (SARI) RENKLENDİRMELERİ */
+        tr.tatil-row {
+            background-color: #fee2e2 !important;
+            color: #991b1b;
+            font-weight: 600;
+        }
+        tr.izin-row {
+            background-color: #fef08a !important; /* Sarı satır */
+            color: #854d0e;
+            font-weight: 600;
+        }
 
-        .user-bar {
-            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
-            gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0;
-            padding: 8px 12px; border-radius: 10px; margin-bottom: 10px; font-size: 12px;
+        /* SARI İZİN KUTUCUĞU */
+        .izin-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12.5px;
+            color: #854d0e;
+            background-color: #fef9c3;
+            border: 1.5px solid #eab308;
+            padding: 4px 8px;
+            border-radius: 6px;
+            user-select: none;
+        }
+        .izin-checkbox {
+            accent-color: #eab308; /* Sarı tik rengi */
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        /* MODAL (HESABIM / BİLGİLERİM PENCERESİ) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+        .modal-box {
+            background: #ffffff;
+            width: 100%;
+            max-width: 440px;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             position: relative;
         }
-        .user-name-trigger {
-            cursor: pointer; font-weight: 800; color: #0f172a;
-            text-decoration: underline; text-decoration-style: dotted;
-            background: none; border: none; padding: 0; font-size: 12px;
-        }
-        .user-name-trigger:hover { color: var(--primary); }
-
-        .account-action-box {
-            width: 100%; margin-top: 6px; padding: 9px 11px;
-            border-radius: 9px; background: #fef2f2; border: 1px solid #fecaca;
-            display: none; flex-direction: column; gap: 8px;
-        }
-        .confirm-row {
-            display: flex; align-items: center; justify-content: space-between;
-            gap: 8px; flex-wrap: wrap; font-size: 11.5px; color: #7f1d1d; font-weight: 600;
-        }
-        .confirm-btns { display: flex; gap: 6px; }
-
-        .controls-row {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;
-        }
-        .summary-grid {
-            display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px;
-        }
-        .summary-card {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            color: #fff; padding: 8px 6px; border-radius: 11px; text-align: center;
-            display: flex; flex-direction: column; justify-content: center; min-width: 0;
-        }
-        .summary-card.mesai {
-            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
-        }
-        .summary-card.calisma {
-            background: linear-gradient(135deg, #4c1d95 0%, #5d3ebc 100%);
-        }
-        .summary-label { font-size: 9px; opacity: 0.92; text-transform: uppercase; letter-spacing: 0.2px; line-height: 1.2; }
-        .summary-val { font-size: 15.5px; font-weight: 800; margin-top: 4px; white-space: nowrap; }
-
-        .days-list { display: flex; flex-direction: column; gap: 6px; }
-        .day-card {
-            display: grid;
-            grid-template-columns: 88px 1fr;
-            gap: 10px;
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 8px 11px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .modal-header h3 {
+            font-size: 17px;
+            color: #0f172a;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #64748b;
+        }
+        .info-card {
+            background: #f8fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            background: #ffffff;
-            box-shadow: 0 2px 6px rgba(15,23,42,0.03);
-            transition: all 0.14s ease;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 13.5px;
         }
-        .day-card:hover {
-            border-color: #cbd5e1;
-            box-shadow: 0 4px 12px rgba(15,23,42,0.06);
+        .info-card p {
+            margin-bottom: 6px;
         }
-        .day-card.tatil {
-            background: var(--danger-bg);
-            border-color: #fca5a5;
-            color: var(--danger-text);
+        .info-card p:last-child {
+            margin-bottom: 0;
         }
-
-        .day-left {
-            display: flex; flex-direction: column; align-items: flex-start;
-            justify-content: center; border-right: 1px solid #e2e8f0; padding-right: 8px;
+        .form-group {
+            margin-bottom: 12px;
         }
-        .day-card.tatil .day-left { border-right-color: #fecaca; }
-        .day-num { font-size: 16px; font-weight: 800; line-height: 1.1; letter-spacing: -0.3px; }
-        .day-date { font-size: 9.5px; font-weight: 600; color: var(--text-muted); margin-top: 2px; line-height: 1.2; }
-        .day-name { font-size: 10px; font-weight: 700; color: #475569; line-height: 1.2; }
-        .day-card.tatil .day-date, .day-card.tatil .day-name { color: #b91c1c; }
-
-        .day-right { display: flex; flex-direction: column; gap: 6px; }
-
-        .shifts-line {
-            display: flex; align-items: center; justify-content: space-between;
-            gap: 6px; flex-wrap: wrap;
+        .form-group label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #334155;
         }
-        .shift-choices { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .shift-item {
-            display: inline-flex; flex-direction: column; align-items: center;
-            cursor: pointer; user-select: none; font-size: 10.5px; font-weight: 700;
-            color: #334155; padding: 2px 6px; border-radius: 7px; transition: background 0.12s ease;
+        .form-group input {
+            width: 100%;
+            padding: 9px 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13.5px;
         }
-        .shift-item.active { background: var(--primary-soft); color: var(--primary-dark); }
-        .shift-item input[type="radio"] {
-            margin: 3px 0 0 0; accent-color: #0f172a; width: 14px; height: 14px; cursor: pointer;
+        .save-btn {
+            width: 100%;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 4px;
         }
-        .gece-tag {
-            font-size: 10px; font-weight: 700; background: #f1f5f9; color: #334155;
-            padding: 3px 7px; border-radius: 999px; border: 1px solid #e2e8f0;
+        .save-btn:hover {
+            background-color: #1d4ed8;
         }
 
-        .bottom-line {
-            display: flex; align-items: center; justify-content: space-between;
-            gap: 8px; flex-wrap: wrap;
+        /* HESABIMI SİL BÖLÜMÜ */
+        .delete-section {
+            margin-top: 22px;
+            padding-top: 15px;
+            border-top: 1px solid #fee2e2;
+            text-align: center;
         }
-        .hours-inputs-group { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .fmesai-wrap { display: inline-flex; align-items: center; gap: 4px; }
-        .fmesai-label { font-size: 10.5px; font-weight: 700; color: #1e293b; }
-        .day-card.tatil .fmesai-label { color: var(--danger-text); }
-        .fmesai-input {
-            width: 64px; height: 24px; padding: 2px 5px; border: 1.5px solid #334155;
-            border-radius: 4px; background: #ffffff; color: #0f172a; font-size: 11.5px;
-            font-weight: 700; text-align: center; box-sizing: border-box;
+        .delete-btn {
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .delete-btn:hover {
+            background-color: #b91c1c;
+        }
+        .confirm-box {
+            display: none;
+            margin-top: 12px;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        .confirm-box p {
+            font-size: 13px;
+            color: #991b1b;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .confirm-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-yes {
+            flex: 1;
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-no {
+            flex: 1;
+            background-color: #e2e8f0;
+            color: #1e293b;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .status-msg {
+            font-size: 12.5px;
+            color: #16a34a;
+            font-weight: 600;
+            margin-top: 8px;
+            text-align: center;
         }
 
-        .htatili-wrap {
-            display: inline-flex; align-items: center; gap: 5px;
-            cursor: pointer; user-select: none; padding: 2px 6px; border-radius: 6px;
-        }
-        .htatili-label { font-size: 11px; font-weight: 700; color: #1e293b; }
-        .day-card.tatil .htatili-label { color: #b91c1c; }
-        .htatili-box {
-            width: 18px; height: 18px; margin: 0; cursor: pointer;
-            accent-color: #dc2626; outline: 1.5px solid #dc2626; outline-offset: -1px;
-        }
-
-        .save-bar {
-            position: sticky; bottom: 58px; margin-top: 12px;
-            background: rgba(255,255,255,0.96); padding: 8px 0 2px 0;
-        }
-
-        .kvkk-footer {
-            margin-top: 14px; text-align: center; font-size: 11.5px; color: var(--text-muted);
-        }
-
-        /* KVKK Aydınlatma Penceresi */
-        .modal-backdrop {
-            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55);
-            display: none; align-items: center; justify-content: center;
-            padding: 14px; z-index: 3000; box-sizing: border-box;
-        }
-        .modal-card {
-            background: #ffffff; max-width: 520px; width: 100%; max-height: 82vh;
-            overflow-y: auto; border-radius: 16px; padding: 18px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); box-sizing: border-box;
-        }
-        .modal-card h3 { margin: 0 0 8px 0; font-size: 15px; color: #0f172a; }
-        .modal-card p, .modal-card li { font-size: 12px; color: #334155; line-height: 1.5; }
-        .modal-card ul { padding-left: 18px; margin: 6px 0 12px 0; }
-
-        .bottom-bar {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff;
-            box-shadow: 0 -4px 16px rgba(0,0,0,0.08); display: flex; justify-content: space-around;
-            padding: 8px 0; z-index: 1000; box-sizing: border-box; border-top: 1px solid #e2e8f0;
-        }
-        .bottom-btn {
-            background: none; border: none; display: flex; flex-direction: column; align-items: center;
-            font-size: 11px; font-weight: 600; color: #64748b; text-decoration: none; cursor: pointer; gap: 3px; flex: 1;
-        }
-        .bottom-btn.active, .bottom-btn:hover { color: #5d3ebc; }
-        .bottom-btn span { font-size: 18px; }
-
-        @media (max-width: 540px) {
-            .summary-label { font-size: 8px; }
-            .summary-val { font-size: 13.5px; }
-            .controls-row { grid-template-columns: 1fr; }
-            .day-card { grid-template-columns: 78px 1fr; gap: 8px; padding: 8px 9px; }
-            .day-num { font-size: 14.5px; }
-            .shift-choices { gap: 6px; }
-            .fmesai-input { width: 58px; }
+        @media (max-width: 520px) {
+            .controls-row { flex-direction: row; gap: 8px; }
+            th, td { padding: 7px 6px; font-size: 12px; }
+            .izin-label { padding: 3px 6px; font-size: 11px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="top-navbar">
-        <a href="index.html" class="top-brand">
-            <img src="logo.png" alt="Logo" class="top-logo" onerror="this.src='logo.jpg'">
-            <span class="top-title">Maaş Hesaplama Portalı</span>
-        </a>
-        <button type="button" id="logoutBtn" class="logout-btn" onclick="cikisYap()">Çıkış</button>
-    </header>
-
-    <div class="container">
-        <div id="authPanel">
-            <div class="title-row">
-                <h2>Kişisel Vardiya Hesabı</h2>
-            </div>
-            <div class="auth-tabs">
-                <button type="button" id="tabGiris" class="auth-tab active" onclick="authSekme('giris')">Giriş Yap</button>
-                <button type="button" id="tabKayit" class="auth-tab" onclick="authSekme('kayit')">E-posta ile Kayıt Ol</button>
-            </div>
-
-            <div id="formGiris">
-                <div class="form-group">
-                    <label for="loginEmail">E-posta Adresi</label>
-                    <input type="email" id="loginEmail" placeholder="ornek@eposta.com">
-                </div>
-                <div class="form-group">
-                    <label for="loginPass">Şifre</label>
-                    <input type="password" id="loginPass" placeholder="Şifreniz">
-                </div>
-                <button type="button" class="primary-btn" onclick="girisYap()">Giriş Yap</button>
-
-                <div class="link-row">
-                    <button type="button" class="text-link" onclick="sifremiUnuttumAc()">Şifremi Unuttum</button>
-                    <button type="button" class="text-link" onclick="kvkkModalAc()">KVKK Aydınlatma Metni</button>
-                </div>
-
-                <div id="forgotBox" class="forgot-box">
-                    <div class="form-group" style="margin-bottom:8px;">
-                        <label for="resetEmail">Şifre Sıfırlama Bağlantısı İçin E-posta</label>
-                        <input type="email" id="resetEmail" placeholder="Kayıtlı e-posta adresiniz">
-                    </div>
-                    <button type="button" class="secondary-btn" style="width:100%;" onclick="sifreSifirlamaGonder()">Şifre Sıfırlama Linki Gönder</button>
-                    <div id="resetMsg" class="msg-box"></div>
-                </div>
-            </div>
-
-            <div id="formKayit" style="display:none;">
-                <div class="form-group">
-                    <label for="regName">Ad Soyad</label>
-                    <input type="text" id="regName" placeholder="Adınız Soyadınız">
-                </div>
-                <div class="form-group">
-                    <label for="regEmail">E-posta Adresi</label>
-                    <input type="email" id="regEmail" placeholder="ornek@eposta.com">
-                </div>
-                <div class="form-group">
-                    <label for="regPass">Şifre</label>
-                    <input type="password" id="regPass" placeholder="En az 6 karakter">
-                </div>
-
-                <label class="kvkk-check">
-                    <input type="checkbox" id="kvkkOnay">
-                    <span>
-                        <button type="button" class="text-link" onclick="kvkkModalAc()">KVKK Aydınlatma Metni</button>'ni okudum, kişisel verilerimin vardiya çizelgesi hizmetinin sunulması amacıyla işlenmesini kabul ediyorum.
-                    </span>
-                </label>
-
-                <button type="button" class="primary-btn" onclick="hesapOlustur()">E-posta ile Hesap Oluştur</button>
-            </div>
-
-            <div id="authMsg" class="msg-box"></div>
-
-            <div class="kvkk-footer">
-                <button type="button" class="text-link" onclick="kvkkModalAc()">KVKK ve Gizlilik Aydınlatma Metni</button>
-            </div>
-        </div>
-
-        <div id="vardiyaPanel" style="display:none;">
-            <div class="title-row">
-                <h2>Kişisel Vardiya Çizelgesi</h2>
-                <div class="year-inline">
-                    <label for="yilSec">Yıl:</label>
-                    <select id="yilSec" onchange="ayDegisti()">
-                        <option value="2025">2025</option>
-                        <option value="2026" selected>2026</option>
-                        <option value="2027">2027</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="user-bar">
-                <div>
-                    <strong>Hesap:</strong>
-                    <button type="button" id="aktifKullaniciAdi" class="user-name-trigger" onclick="hesapMenusuToggle()" title="Hesap işlemleri için tıklayın">-</button>
-                </div>
-                <div id="kayitDurumu" style="color:#64748b;">Hazır</div>
-
-                <div id="hesapSilPanel" class="account-action-box">
-                    <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <span style="font-size:11.5px; color:#7f1d1d; font-weight:700;">Hesap Yönetimi</span>
-                        <button type="button" class="danger-btn" onclick="hesabiSilOnayAc()">Hesabımı Sil</button>
-                    </div>
-
-                    <div id="hesapSilOnayKutusu" style="display:none;" class="confirm-row">
-                        <span>Hesabınız ve tüm vardiya kayıtlarınız kalıcı olarak silinecek. Emin misiniz?</span>
-                        <div class="confirm-btns">
-                            <button type="button" class="danger-btn" onclick="hesabiKaliciSil()">Evet</button>
-                            <button type="button" class="secondary-btn" onclick="hesabiSilOnayKapat()">Hayır</button>
-                        </div>
-                    </div>
-                    <div id="accountMsg" class="msg-box" style="margin-top:0; text-align:left;"></div>
-                </div>
-            </div>
-
-            <div class="controls-row">
-                <div class="form-group" style="margin:0;">
-                    <label for="aySec">Ay Seçin (12 Ay)</label>
-                    <select id="aySec" onchange="ayDegisti()">
-                        <option value="1">Ocak</option>
-                        <option value="2">Şubat</option>
-                        <option value="3">Mart</option>
-                        <option value="4">Nisan</option>
-                        <option value="5">Mayıs</option>
-                        <option value="6">Haziran</option>
-                        <option value="7">Temmuz</option>
-                        <option value="8">Ağustos</option>
-                        <option value="9">Eylül</option>
-                        <option value="10">Ekim</option>
-                        <option value="11" selected>Kasım</option>
-                        <option value="12">Aralık</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin:0;">
-                    <label for="haftaTatiliSec">Hafta Tatili Günü</label>
-                    <select id="haftaTatiliSec" onchange="haftaTatiliUygula()">
-                        <option value="">Seçilmedi</option>
-                        <option value="0" selected>Pazar</option>
-                        <option value="6">Cumartesi</option>
-                        <option value="5">Cuma</option>
-                        <option value="4">Perşembe</option>
-                        <option value="3">Çarşamba</option>
-                        <option value="2">Salı</option>
-                        <option value="1">Pazartesi</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="summary-grid">
-                <div class="summary-card">
-                    <div class="summary-label">Toplam Gece Çalışması</div>
-                    <div class="summary-val" id="toplamGece">0 Sa</div>
-                </div>
-                <div class="summary-card mesai">
-                    <div class="summary-label">Toplam Mesai</div>
-                    <div class="summary-val" id="toplamMesai">0 Sa</div>
-                </div>
-                <div class="summary-card calisma">
-                    <div class="summary-label">Aylık Toplam Çalışma Saati</div>
-                    <div class="summary-val" id="toplamCalisma">0 Sa</div>
-                </div>
-            </div>
-
-            <div id="gunlerListesi" class="days-list"></div>
-
-            <div class="save-bar">
-                <button type="button" class="primary-btn" onclick="vardiyaKaydet()">Çizelgeyi Kaydet</button>
-                <div id="saveMsg" class="msg-box"></div>
-            </div>
-
-            <div class="kvkk-footer">
-                <button type="button" class="text-link" onclick="kvkkModalAc()">KVKK Aydınlatma Metni</button>
-            </div>
+<div class="container">
+    <!-- ÜST BAR -->
+    <div class="top-bar">
+        <div class="page-title">Vardiya Çizelgesi</div>
+        <div class="user-area">
+            <span class="user-name" id="headerUserName">Numan Özdemir</span>
+            <button class="hesabim-btn" onclick="openAccountModal()">Hesabım</button>
         </div>
     </div>
 
-    <!-- KVKK Aydınlatma Metni Modalı -->
-    <div id="kvkkModal" class="modal-backdrop" onclick="if(event.target === this) kvkkModalKapat()">
-        <div class="modal-card">
-            <h3>6698 Sayılı KVKK Kapsamında Aydınlatma Metni</h3>
-            <p>Kişisel Vardiya Çizelgesi özelliği kapsamında işlenen kişisel verilere ilişkin bilgilendirme aşağıdadır:</p>
-            <ul>
-                <li><strong>İşlenen Veriler:</strong> Ad soyad, e-posta adresi, kimlik doğrulama bilgileri ve kullanıcı tarafından girilen aylık vardiya, fazla mesai, eksik saat ve hafta tatili kayıtları.</li>
-                <li><strong>İşleme Amacı:</strong> Kişisel vardiya çizelgesinin oluşturulması, gece/mesai/çalışma saatlerinin hesaplanması ve kullanıcının kendi verilerine erişebilmesi.</li>
-                <li><strong>Saklama ve Aktarım:</strong> Veriler kimlik doğrulama ve bulut veritabanı altyapısı (Firebase Authentication ve Firestore) üzerinde saklanır.</li>
-                <li><strong>Haklarınız:</strong> KVKK madde 11 uyarınca verilerinize ilişkin bilgi talep etme ve hesabınız ile kayıtlarınızı silme hakkına sahipsiniz. Hesap menüsünden <strong>Hesabımı Sil</strong> seçeneği ile hesabınızı ve kayıtlarınızı silebilirsiniz.</li>
-            </ul>
-            <button type="button" class="primary-btn" onclick="kvkkModalKapat()">Kapat</button>
+    <!-- AY SEÇİMİ VE HAFTA TATİLİ GÜNÜ YAN YANA -->
+    <div class="controls-row">
+        <div class="control-group">
+            <label for="aySecimi">Ay Seçimi</label>
+            <select id="aySecimi" onchange="onMonthChange()">
+                <option value="2026-0">Ocak 2026</option>
+                <option value="2026-1">Şubat 2026</option>
+                <option value="2026-2">Mart 2026</option>
+                <option value="2026-3">Nisan 2026</option>
+                <option value="2026-4">Mayıs 2026</option>
+                <option value="2026-5">Haziran 2026</option>
+                <option value="2026-6">Temmuz 2026</option>
+                <option value="2026-7">Ağustos 2026</option>
+                <option value="2026-8">Eylül 2026</option>
+                <option value="2026-9">Ekim 2026</option>
+                <option value="2026-10" selected>Kasım 2026</option>
+                <option value="2026-11">Aralık 2026</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label for="tatilSecimi">Hafta Tatili Günü</label>
+            <select id="tatilSecimi" onchange="onHolidayChange()">
+                <option value="1">Pazartesi</option>
+                <option value="2">Salı</option>
+                <option value="3">Çarşamba</option>
+                <option value="4">Perşembe</option>
+                <option value="5">Cuma</option>
+                <option value="6">Cumartesi</option>
+                <option value="0">Pazar</option>
+                <option value="6-0">Cumartesi-Pazar</option>
+            </select>
         </div>
     </div>
 
-    <nav class="bottom-bar">
-        <a href="index.html" class="bottom-btn"><span>🏠</span> Ana Sayfa</a>
-        <a href="hesapla.html" class="bottom-btn"><span>🧮</span> Maaş</a>
-        <a href="fark.html" class="bottom-btn"><span>⚖️</span> Fark</a>
-        <a href="sosyal.html" class="bottom-btn"><span>📋</span> Sosyal</a>
-        <a href="enf.html" class="bottom-btn"><span>📈</span> Enflasyon</a>
-    </nav>
+    <!-- VARDİYA TABLOSU -->
+    <table>
+        <thead>
+            <tr>
+                <th>Tarih</th>
+                <th>Gün</th>
+                <th>Vardiya</th>
+                <th style="width: 85px; text-align: center;">İzin</th>
+            </tr>
+        </thead>
+        <tbody id="vardiyaBody">
+            <!-- JS ile doldurulacak -->
+        </tbody>
+    </table>
+</div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import {
-            getAuth,
-            createUserWithEmailAndPassword,
-            signInWithEmailAndPassword,
-            sendPasswordResetEmail,
-            signOut,
-            deleteUser,
-            reauthenticateWithCredential,
-            EmailAuthProvider,
-            onAuthStateChanged
-        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<!-- HESABIM / BİLGİLERİM PENCERESİ -->
+<div class="modal-overlay" id="accountModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Bilgilerim</h3>
+            <button class="close-btn" onclick="closeAccountModal()">&times;</button>
+        </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
-            authDomain: "bordroapp.firebaseapp.com",
-            projectId: "bordroapp",
-            storageBucket: "bordroapp.firebasestorage.app",
-            messagingSenderId: "495208822576",
-            appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
-            measurementId: "G-6ZRKG9HG9J"
-        };
+        <!-- KULLANICI BİLGİLERİ -->
+        <div class="info-card">
+            <p><strong>İsim Soyisim:</strong> <span id="infoFullName">Numan Özdemir</span></p>
+            <p><strong>E-posta:</strong> <span id="infoEmail">numan@ornek.com</span></p>
+        </div>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        <!-- E-POSTA VE ŞİFRE DEĞİŞTİRME -->
+        <div class="form-group">
+            <label for="newEmail">Yeni E-posta Adresi</label>
+            <input type="email" id="newEmail" placeholder="Yeni e-posta adresinizi girin">
+        </div>
+        <div class="form-group">
+            <label for="newPassword">Yeni Şifre</label>
+            <input type="password" id="newPassword" placeholder="Yeni şifrenizi girin">
+        </div>
+        <button class="save-btn" onclick="updateAccountInfo()">Bilgileri Güncelle</button>
+        <div class="status-msg" id="accountStatusMsg"></div>
 
-        const gunAdlariTam = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
-        let aktifKullanici = null;
-        let mevcutAyVerisi = {};
+        <!-- EN ALTTA HESABIMI SİL -> EVET / HAYIR -->
+        <div class="delete-section">
+            <button class="delete-btn" onclick="showDeleteConfirm()">Hesabımı Sil</button>
+            
+            <div class="confirm-box" id="deleteConfirmBox">
+                <p>Hesabınızı kalıcı olarak silmek istediğinize emin misiniz?</p>
+                <div class="confirm-actions">
+                    <button class="btn-yes" onclick="confirmDeleteAccount()">Evet</button>
+                    <button class="btn-no" onclick="hideDeleteConfirm()">Hayır</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-        function formatSaat(n) {
-            return n.toLocaleString("tr-TR", { maximumFractionDigits: 2 });
+<script>
+    const gunIsimleri = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+
+    // Varsayılan kullanıcı verisi (localStorage'dan okunur)
+    let userData = JSON.parse(localStorage.getItem("bordro_user")) || {
+        fullName: "Numan Özdemir",
+        email: "numan@ornek.com",
+        password: "******"
+    };
+
+    function syncUserUI() {
+        document.getElementById("headerUserName").innerText = userData.fullName;
+        document.getElementById("infoFullName").innerText = userData.fullName;
+        document.getElementById("infoEmail").innerText = userData.email;
+    }
+
+    // Seçili ay için kaydedilmiş hafta tatilini getir
+    function loadSavedHolidayForMonth(monthKey) {
+        const savedHolidays = JSON.parse(localStorage.getItem("vardiya_holidays")) || {};
+        const tatilSelect = document.getElementById("tatilSecimi");
+        if (savedHolidays[monthKey] !== undefined) {
+            tatilSelect.value = savedHolidays[monthKey];
+        } else {
+            tatilSelect.value = "0"; // Varsayılan Pazar
         }
+    }
 
-        function gunSaatleriniHesapla(vardiya, tatil, mesai, eksik) {
-            const v = parseInt(vardiya, 10) || 0;
-            const t = Boolean(tatil);
-            const m = Math.max(0, parseFloat(mesai) || 0);
-            const e = Math.max(0, parseFloat(eksik) || 0);
+    function onMonthChange() {
+        const monthKey = document.getElementById("aySecimi").value;
+        loadSavedHolidayForMonth(monthKey);
+        renderTable();
+    }
 
-            let gece = 0;
+    function onHolidayChange() {
+        const monthKey = document.getElementById("aySecimi").value;
+        const selectedHoliday = document.getElementById("tatilSecimi").value;
+        
+        // O ayın hafta tatili seçimini kalıcı olarak kaydet
+        const savedHolidays = JSON.parse(localStorage.getItem("vardiya_holidays")) || {};
+        savedHolidays[monthKey] = selectedHoliday;
+        localStorage.setItem("vardiya_holidays", JSON.stringify(savedHolidays));
 
-            if (v === 2) {
-                gece = 4;
-            } else if (v === 3) {
-                const bonusGece = m >= 4 ? 4 : (m >= 3 ? 3 : (m >= 2 ? 2 : (m >= 1 ? 1 : 0)));
-                gece = 6 + bonusGece;
-            }
+        renderTable();
+    }
 
-            const isaretliGun = (v > 0 || t) ? 7.5 : 0;
-            const netGunCalisma = isaretliGun - e;
+    function renderTable() {
+        const monthKey = document.getElementById("aySecimi").value;
+        const [year, month] = monthKey.split("-").map(Number);
+        const holidayVal = document.getElementById("tatilSecimi").value;
 
-            return { gece, gunMesai: m, netGunCalisma };
-        }
+        const savedLeaves = JSON.parse(localStorage.getItem("vardiya_leaves")) || {};
+        const savedShifts = JSON.parse(localStorage.getItem("vardiya_shifts")) || {};
 
-        window.kvkkModalAc = function() {
-            document.getElementById("kvkkModal").style.display = "flex";
-        };
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const tbody = document.getElementById("vardiyaBody");
+        tbody.innerHTML = "";
 
-        window.kvkkModalKapat = function() {
-            document.getElementById("kvkkModal").style.display = "none";
-        };
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateObj = new Date(year, month, day);
+            const dayOfWeek = dateObj.getDay(); // 0: Pazar, 1: Pzt ... 6: Cmt
+            const dateStr = `${String(day).padStart(2, "0")}.${String(month + 1).padStart(2, "0")}.${year}`;
+            const dayKey = `${monthKey}-${day}`;
 
-        window.sifremiUnuttumAc = function() {
-            const box = document.getElementById("forgotBox");
-            const visible = box.style.display === "block";
-            box.style.display = visible ? "none" : "block";
-            const girisEposta = document.getElementById("loginEmail").value.trim();
-            if (girisEposta && !document.getElementById("resetEmail").value.trim()) {
-                document.getElementById("resetEmail").value = girisEposta;
-            }
-            document.getElementById("resetMsg").innerText = "";
-        };
-
-        window.sifreSifirlamaGonder = async function() {
-            const email = document.getElementById("resetEmail").value.trim();
-            const resetMsg = document.getElementById("resetMsg");
-
-            if (!email) {
-                resetMsg.style.color = "#dc2626";
-                resetMsg.innerText = "Lütfen e-posta adresinizi girin.";
-                return;
-            }
-
-            try {
-                resetMsg.style.color = "#475569";
-                resetMsg.innerText = "Şifre sıfırlama bağlantısı gönderiliyor...";
-                await sendPasswordResetEmail(auth, email);
-                resetMsg.style.color = "#16a34a";
-                resetMsg.innerText = "Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.";
-            } catch (e) {
-                console.error(e);
-                resetMsg.style.color = "#dc2626";
-                resetMsg.innerText = "Bağlantı gönderilemedi. E-posta adresini kontrol edin.";
-            }
-        };
-
-        window.authSekme = function(sekme) {
-            document.getElementById("authMsg").innerText = "";
-            if (sekme === "giris") {
-                document.getElementById("tabGiris").classList.add("active");
-                document.getElementById("tabKayit").classList.remove("active");
-                document.getElementById("formGiris").style.display = "block";
-                document.getElementById("formKayit").style.display = "none";
+            // Hafta tatili kontrolü (Tek gün veya Cumartesi-Pazar)
+            let isHoliday = false;
+            if (holidayVal === "6-0") {
+                isHoliday = (dayOfWeek === 6 || dayOfWeek === 0);
             } else {
-                document.getElementById("tabKayit").classList.add("active");
-                document.getElementById("tabGiris").classList.remove("active");
-                document.getElementById("formKayit").style.display = "block";
-                document.getElementById("formGiris").style.display = "none";
-                document.getElementById("forgotBox").style.display = "none";
-            }
-        };
-
-        window.hesapOlustur = async function() {
-            const adSoyad = document.getElementById("regName").value.trim();
-            const email = document.getElementById("regEmail").value.trim();
-            const sifre = document.getElementById("regPass").value;
-            const kvkkKabul = document.getElementById("kvkkOnay").checked;
-            const msg = document.getElementById("authMsg");
-
-            if (!email || !sifre) {
-                msg.style.color = "#dc2626";
-                msg.innerText = "E-posta ve şifre zorunludur.";
-                return;
-            }
-            if (sifre.length < 6) {
-                msg.style.color = "#dc2626";
-                msg.innerText = "Şifre en az 6 karakter olmalıdır.";
-                return;
-            }
-            if (!kvkkKabul) {
-                msg.style.color = "#dc2626";
-                msg.innerText = "Devam etmek için KVKK Aydınlatma Metni'ni onaylamalısınız.";
-                return;
+                isHoliday = (dayOfWeek === Number(holidayVal));
             }
 
-            try {
-                msg.style.color = "#475569";
-                msg.innerText = "Hesap oluşturuluyor...";
-                const cred = await createUserWithEmailAndPassword(auth, email, sifre);
-                const user = cred.user;
-                const gorunenAd = adSoyad || email.split("@")[0];
+            // İzin kontrolü
+            const isLeave = !!savedLeaves[dayKey];
+            const currentShift = savedShifts[dayKey] || (isHoliday ? "Hafta Tatili" : "08:00 - 16:00");
 
-                await setDoc(doc(db, "vardiya_kullanicilar", user.uid), {
-                    uid: user.uid,
-                    email,
-                    adSoyad: gorunenAd,
-                    kvkkOnay: true,
-                    kvkkOnayTarihi: new Date().toISOString(),
-                    vardiyalar: {},
-                    olusturulma: new Date().toISOString()
-                });
-
-                msg.style.color = "#16a34a";
-                msg.innerText = "Hesap oluşturuldu!";
-            } catch (e) {
-                console.error(e);
-                msg.style.color = "#dc2626";
-                if (e.code === "auth/email-already-in-use") {
-                    msg.innerText = "Bu e-posta adresi zaten kayıtlı.";
-                } else if (e.code === "auth/invalid-email") {
-                    msg.innerText = "Geçerli bir e-posta adresi girin.";
-                } else {
-                    msg.innerText = "Hesap oluşturulurken hata oluştu.";
-                }
-            }
-        };
-
-        window.girisYap = async function() {
-            const email = document.getElementById("loginEmail").value.trim();
-            const sifre = document.getElementById("loginPass").value;
-            const msg = document.getElementById("authMsg");
-
-            if (!email || !sifre) {
-                msg.style.color = "#dc2626";
-                msg.innerText = "E-posta ve şifre girin.";
-                return;
+            const tr = document.createElement("tr");
+            if (isLeave) {
+                tr.classList.add("izin-row"); // İzin seçiliyse sarı
+            } else if (isHoliday) {
+                tr.classList.add("tatil-row"); // Hafta tatili ise kırmızı
             }
 
-            try {
-                msg.style.color = "#475569";
-                msg.innerText = "Giriş yapılıyor...";
-                await signInWithEmailAndPassword(auth, email, sifre);
-                msg.innerText = "";
-            } catch (e) {
-                console.error(e);
-                msg.style.color = "#dc2626";
-                msg.innerText = "E-posta veya şifre hatalı.";
-            }
-        };
+            tr.innerHTML = `
+                <td>${dateStr}</td>
+                <td>${gunIsimleri[dayOfWeek]}</td>
+                <td>
+                    <select class="vardiya-select" onchange="saveShift('${dayKey}', this.value)">
+                        <option value="08:00 - 16:00" ${currentShift === "08:00 - 16:00" ? "selected" : ""}>08:00 - 16:00 (Gündüz)</option>
+                        <option value="16:00 - 24:00" ${currentShift === "16:00 - 24:00" ? "selected" : ""}>16:00 - 24:00 (Akşam)</option>
+                        <option value="24:00 - 08:00" ${currentShift === "24:00 - 08:00" ? "selected" : ""}>24:00 - 08:00 (Gece)</option>
+                        <option value="Hafta Tatili" ${currentShift === "Hafta Tatili" ? "selected" : ""}>Hafta Tatili</option>
+                    </select>
+                </td>
+                <td style="text-align: center;">
+                    <label class="izin-label">
+                        <input type="checkbox" class="izin-checkbox" ${isLeave ? "checked" : ""} onchange="toggleLeave('${dayKey}', this.checked)">
+                        İzin
+                    </label>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        }
+    }
 
-        async function oturumAc(user) {
-            let adSoyad = user.email ? user.email.split("@")[0] : "Kullanıcı";
-            let tumVardiyalar = {};
+    function toggleLeave(dayKey, checked) {
+        const savedLeaves = JSON.parse(localStorage.getItem("vardiya_leaves")) || {};
+        if (checked) {
+            savedLeaves[dayKey] = true;
+        } else {
+            delete savedLeaves[dayKey];
+        }
+        localStorage.setItem("vardiya_leaves", JSON.stringify(savedLeaves));
+        renderTable();
+    }
 
-            try {
-                const ref = doc(db, "vardiya_kullanicilar", user.uid);
-                const snap = await getDoc(ref);
-                if (snap.exists()) {
-                    const d = snap.data();
-                    adSoyad = d.adSoyad || adSoyad;
-                    tumVardiyalar = d.vardiyalar || {};
-                } else {
-                    await setDoc(ref, {
-                        uid: user.uid,
-                        email: user.email || "",
-                        adSoyad,
-                        kvkkOnay: true,
-                        vardiyalar: {},
-                        olusturulma: new Date().toISOString()
-                    }, { merge: true });
-                }
-            } catch (e) {
-                console.error(e);
-            }
+    function saveShift(dayKey, val) {
+        const savedShifts = JSON.parse(localStorage.getItem("vardiya_shifts")) || {};
+        savedShifts[dayKey] = val;
+        localStorage.setItem("vardiya_shifts", JSON.stringify(savedShifts));
+    }
 
-            aktifKullanici = { uid: user.uid, email: user.email || "", adSoyad, tumVardiyalar };
-            document.getElementById("authPanel").style.display = "none";
-            document.getElementById("vardiyaPanel").style.display = "block";
-            document.getElementById("logoutBtn").style.display = "inline-block";
-            document.getElementById("aktifKullaniciAdi").innerText = adSoyad;
-            document.getElementById("hesapSilPanel").style.display = "none";
-            document.getElementById("hesapSilOnayKutusu").style.display = "none";
-            document.getElementById("accountMsg").innerText = "";
-            await ayDegisti();
+    /* HESABIM MODAL İŞLEMLERİ */
+    function openAccountModal() {
+        document.getElementById("accountStatusMsg").innerText = "";
+        document.getElementById("newEmail").value = "";
+        document.getElementById("newPassword").value = "";
+        hideDeleteConfirm();
+        document.getElementById("accountModal").style.display = "flex";
+    }
+
+    function closeAccountModal() {
+        document.getElementById("accountModal").style.display = "none";
+    }
+
+    function updateAccountInfo() {
+        const newEmail = document.getElementById("newEmail").value.trim();
+        const newPassword = document.getElementById("newPassword").value.trim();
+        const statusEl = document.getElementById("accountStatusMsg");
+
+        if (!newEmail && !newPassword) {
+            statusEl.style.color = "#dc2626";
+            statusEl.innerText = "Lütfen değiştirmek istediğiniz e-posta veya şifreyi girin.";
+            return;
         }
 
-        window.cikisYap = async function() {
-            try {
-                await signOut(auth);
-            } catch (e) {
-                console.error(e);
-            }
-            aktifKullanici = null;
-            document.getElementById("vardiyaPanel").style.display = "none";
-            document.getElementById("logoutBtn").style.display = "none";
-            document.getElementById("authPanel").style.display = "block";
-            document.getElementById("loginPass").value = "";
-            document.getElementById("authMsg").innerText = "";
-        };
+        if (newEmail) userData.email = newEmail;
+        if (newPassword) userData.password = newPassword;
 
-        window.hesapMenusuToggle = function() {
-            const panel = document.getElementById("hesapSilPanel");
-            const isOpen = panel.style.display === "flex";
-            panel.style.display = isOpen ? "none" : "flex";
-            if (isOpen) {
-                document.getElementById("hesapSilOnayKutusu").style.display = "none";
-                document.getElementById("accountMsg").innerText = "";
-            }
-        };
+        localStorage.setItem("bordro_user", JSON.stringify(userData));
+        syncUserUI();
 
-        window.hesabiSilOnayAc = function() {
-            document.getElementById("accountMsg").innerText = "";
-            document.getElementById("hesapSilOnayKutusu").style.display = "flex";
-        };
+        statusEl.style.color = "#16a34a";
+        statusEl.innerText = "Bilgileriniz başarıyla güncellendi.";
+        document.getElementById("newEmail").value = "";
+        document.getElementById("newPassword").value = "";
+    }
 
-        window.hesabiSilOnayKapat = function() {
-            document.getElementById("hesapSilOnayKutusu").style.display = "none";
-            document.getElementById("accountMsg").innerText = "";
-        };
+    function showDeleteConfirm() {
+        document.getElementById("deleteConfirmBox").style.display = "block";
+    }
 
-        window.hesabiKaliciSil = async function() {
-            const user = auth.currentUser;
-            const accMsg = document.getElementById("accountMsg");
-            if (!user) return;
+    function hideDeleteConfirm() {
+        document.getElementById("deleteConfirmBox").style.display = "none";
+    }
 
-            accMsg.style.color = "#475569";
-            accMsg.innerText = "Hesap ve veriler siliniyor...";
+    function confirmDeleteAccount() {
+        localStorage.removeItem("bordro_user");
+        localStorage.removeItem("vardiya_holidays");
+        localStorage.removeItem("vardiya_leaves");
+        localStorage.removeItem("vardiya_shifts");
+        alert("Hesabınız ve kayıtlı verileriniz silindi.");
+        location.reload();
+    }
 
-            try {
-                await deleteDoc(doc(db, "vardiya_kullanicilar", user.uid));
-                await deleteUser(user);
-            } catch (e) {
-                console.error(e);
-                if (e.code === "auth/requires-recent-login") {
-                    const mevcutSifre = prompt("Güvenlik nedeniyle hesabı silmek için mevcut şifrenizi girin:");
-                    if (!mevcutSifre) {
-                        accMsg.style.color = "#dc2626";
-                        accMsg.innerText = "Şifre girilmediği için silme işlemi iptal edildi.";
-                        return;
-                    }
-                    try {
-                        const cred = EmailAuthProvider.credential(user.email, mevcutSifre);
-                        await reauthenticateWithCredential(user, cred);
-                        await deleteDoc(doc(db, "vardiya_kullanicilar", user.uid));
-                        await deleteUser(user);
-                    } catch (reauthErr) {
-                        console.error(reauthErr);
-                        accMsg.style.color = "#dc2626";
-                        accMsg.innerText = "Şifre doğrulanamadı veya hesap silinemedi.";
-                    }
-                } else {
-                    accMsg.style.color = "#dc2626";
-                    accMsg.innerText = "Hesap silinirken bir hata oluştu.";
-                }
-            }
-        };
+    // Sayfa ilk açıldığında başlat
+    syncUserUI();
+    loadSavedHolidayForMonth(document.getElementById("aySecimi").value);
+    renderTable();
+</script>
 
-        function ayGunSayisi(yil, ay) {
-            return new Date(yil, ay, 0).getDate();
-        }
-
-        window.haftaTatiliUygula = function() {
-            const seciliGunStr = document.getElementById("haftaTatiliSec").value;
-            if (seciliGunStr === "") return;
-            const hedefHaftaGunu = parseInt(seciliGunStr, 10);
-
-            const yil = parseInt(document.getElementById("yilSec").value, 10);
-            const ay = parseInt(document.getElementById("aySec").value, 10);
-            const gunSayisi = ayGunSayisi(yil, ay);
-
-            for (let g = 1; g <= gunSayisi; g++) {
-                const tarihObj = new Date(yil, ay - 1, g);
-                const isTatili = tarihObj.getDay() === hedefHaftaGunu;
-                const onceki = mevcutAyVerisi[g] || { vardiya: 0, tatil: false, mesai: 0, eksik: 0 };
-                mevcutAyVerisi[g] = {
-                    vardiya: parseInt(onceki.vardiya, 10) || 0,
-                    tatil: isTatili,
-                    mesai: parseFloat(onceki.mesai) || 0,
-                    eksik: parseFloat(onceki.eksik) || 0
-                };
-            }
-
-            gunleriCiz(yil, ay);
-            ozetHesapla();
-        };
-
-        window.ayDegisti = async function() {
-            if (!aktifKullanici) return;
-            const yil = parseInt(document.getElementById("yilSec").value, 10);
-            const ay = parseInt(document.getElementById("aySec").value, 10);
-            const anahtar = `${yil}-${String(ay).padStart(2, "0")}`;
-
-            document.getElementById("kayitDurumu").innerText = "Yükleniyor...";
-            try {
-                const ref = doc(db, "vardiya_kullanicilar", aktifKullanici.uid);
-                const snap = await getDoc(ref);
-                if (snap.exists()) {
-                    aktifKullanici.tumVardiyalar = snap.data().vardiyalar || {};
-                }
-            } catch (e) {
-                console.error(e);
-            }
-
-            const kayitliAy = aktifKullanici.tumVardiyalar[anahtar];
-            if (kayitliAy && Object.keys(kayitliAy).length > 0) {
-                mevcutAyVerisi = kayitliAy;
-                gunleriCiz(yil, ay);
-            } else {
-                mevcutAyVerisi = {};
-                gunleriCiz(yil, ay);
-                haftaTatiliUygula();
-            }
-
-            ozetHesapla();
-            document.getElementById("kayitDurumu").innerText = `${anahtar} yüklendi`;
-        };
-
-        function gunleriCiz(yil, ay) {
-            const gunSayisi = ayGunSayisi(yil, ay);
-            const container = document.getElementById("gunlerListesi");
-            container.innerHTML = "";
-
-            for (let g = 1; g <= gunSayisi; g++) {
-                const kayit = mevcutAyVerisi[g] || { vardiya: 0, tatil: false, mesai: 0, eksik: 0 };
-                const vardiya = parseInt(kayit.vardiya, 10) || 0;
-                const tatil = Boolean(kayit.tatil);
-                const mesai = parseFloat(kayit.mesai) || 0;
-                const eksik = parseFloat(kayit.eksik) || 0;
-                const { gece } = gunSaatleriniHesapla(vardiya, tatil, mesai, eksik);
-
-                const tarihObj = new Date(yil, ay - 1, g);
-                const gunTam = gunAdlariTam[tarihObj.getDay()];
-                const tarihFormat = `${String(g).padStart(2, "0")}.${String(ay).padStart(2, "0")}.${yil}`;
-
-                const card = document.createElement("div");
-                card.className = `day-card ${tatil ? "tatil" : ""}`;
-                card.id = `gun_card_${g}`;
-
-                card.innerHTML = `
-                    <div class="day-left">
-                        <span class="day-num">${g}.gün</span>
-                        <span class="day-date">${tarihFormat}</span>
-                        <span class="day-name">${gunTam}</span>
-                    </div>
-                    <div class="day-right">
-                        <div class="shifts-line">
-                            <div class="shift-choices">
-                                <label class="shift-item ${vardiya === 1 ? "active" : ""}">
-                                    <span>1.Vardiya</span>
-                                    <input type="radio" name="v_${g}" value="1" ${vardiya === 1 ? "checked" : ""} onclick="vardiyaTikla(${g}, 1)">
-                                </label>
-                                <label class="shift-item ${vardiya === 2 ? "active" : ""}">
-                                    <span>2.Vardiya</span>
-                                    <input type="radio" name="v_${g}" value="2" ${vardiya === 2 ? "checked" : ""} onclick="vardiyaTikla(${g}, 2)">
-                                </label>
-                                <label class="shift-item ${vardiya === 3 ? "active" : ""}">
-                                    <span>3.Vardiya</span>
-                                    <input type="radio" name="v_${g}" value="3" ${vardiya === 3 ? "checked" : ""} onclick="vardiyaTikla(${g}, 3)">
-                                </label>
-                            </div>
-                            <span class="gece-tag" id="gece_gun_${g}">Gece: ${formatSaat(gece)}s</span>
-                        </div>
-                        <div class="bottom-line">
-                            <div class="hours-inputs-group">
-                                <div class="fmesai-wrap">
-                                    <span class="fmesai-label">F.mesai</span>
-                                    <input type="number" class="fmesai-input" id="mesai_${g}" step="0.5" min="0" value="${mesai}" oninput="gunGuncelle(${g})">
-                                </div>
-                                <div class="fmesai-wrap">
-                                    <span class="fmesai-label">Eksik</span>
-                                    <input type="number" class="fmesai-input" id="eksik_${g}" step="0.5" min="0" value="${eksik}" oninput="gunGuncelle(${g})">
-                                </div>
-                            </div>
-                            <label class="htatili-wrap">
-                                <span class="htatili-label">H.tatili</span>
-                                <input type="checkbox" class="htatili-box" id="tatil_${g}" ${tatil ? "checked" : ""} onchange="gunGuncelle(${g})">
-                            </label>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            }
-        }
-
-        window.vardiyaTikla = function(g, deger) {
-            const mevcut = mevcutAyVerisi[g] ? (parseInt(mevcutAyVerisi[g].vardiya, 10) || 0) : 0;
-            const radios = document.querySelectorAll(`input[name="v_${g}"]`);
-            if (mevcut === deger) {
-                radios.forEach(r => { r.checked = false; });
-            }
-            gunGuncelle(g);
-        };
-
-        window.gunGuncelle = function(g) {
-            const seciliRadio = document.querySelector(`input[name="v_${g}"]:checked`);
-            const vardiya = seciliRadio ? parseInt(seciliRadio.value, 10) : 0;
-            const tatil = document.getElementById(`tatil_${g}`).checked;
-            const mesai = parseFloat(document.getElementById(`mesai_${g}`).value) || 0;
-            const eksik = parseFloat(document.getElementById(`eksik_${g}`).value) || 0;
-
-            mevcutAyVerisi[g] = { vardiya, tatil, mesai, eksik };
-
-            const card = document.getElementById(`gun_card_${g}`);
-            if (tatil) {
-                card.classList.add("tatil");
-            } else {
-                card.classList.remove("tatil");
-            }
-
-            card.querySelectorAll(".shift-item").forEach(item => {
-                const inp = item.querySelector("input");
-                if (inp && inp.checked) item.classList.add("active");
-                else item.classList.remove("active");
-            });
-
-            const { gece } = gunSaatleriniHesapla(vardiya, tatil, mesai, eksik);
-            document.getElementById(`gece_gun_${g}`).innerText = `Gece: ${formatSaat(gece)}s`;
-
-            ozetHesapla();
-        };
-
-        function ozetHesapla() {
-            const yil = parseInt(document.getElementById("yilSec").value, 10);
-            const ay = parseInt(document.getElementById("aySec").value, 10);
-            const gunSayisi = ayGunSayisi(yil, ay);
-
-            let toplamGece = 0;
-            let toplamMesai = 0;
-            let toplamCalisma = 0;
-
-            for (let g = 1; g <= gunSayisi; g++) {
-                const kayit = mevcutAyVerisi[g] || { vardiya: 0, tatil: false, mesai: 0, eksik: 0 };
-                const { gece, gunMesai, netGunCalisma } = gunSaatleriniHesapla(
-                    kayit.vardiya,
-                    kayit.tatil,
-                    kayit.mesai,
-                    kayit.eksik
-                );
-                toplamGece += gece;
-                toplamMesai += gunMesai;
-                toplamCalisma += netGunCalisma;
-            }
-
-            document.getElementById("toplamGece").innerText = `${formatSaat(toplamGece)} Sa`;
-            document.getElementById("toplamMesai").innerText = `${formatSaat(toplamMesai)} Sa`;
-            document.getElementById("toplamCalisma").innerText = `${formatSaat(toplamCalisma)} Sa`;
-        }
-
-        window.vardiyaKaydet = async function() {
-            if (!aktifKullanici) return;
-            const yil = parseInt(document.getElementById("yilSec").value, 10);
-            const ay = parseInt(document.getElementById("aySec").value, 10);
-            const anahtar = `${yil}-${String(ay).padStart(2, "0")}`;
-            const msg = document.getElementById("saveMsg");
-
-            msg.style.color = "#475569";
-            msg.innerText = "Kaydediliyor...";
-
-            try {
-                aktifKullanici.tumVardiyalar[anahtar] = mevcutAyVerisi;
-                const ref = doc(db, "vardiya_kullanicilar", aktifKullanici.uid);
-                await setDoc(ref, {
-                    vardiyalar: aktifKullanici.tumVardiyalar,
-                    guncellenme: new Date().toISOString()
-                }, { merge: true });
-
-                msg.style.color = "#16a34a";
-                msg.innerText = "Vardiya çizelgesi kaydedildi.";
-                document.getElementById("kayitDurumu").innerText = `${anahtar} kaydedildi`;
-            } catch (e) {
-                console.error(e);
-                msg.style.color = "#dc2626";
-                msg.innerText = "Kaydederken hata oluştu.";
-            }
-        };
-
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                await oturumAc(user);
-            } else {
-                aktifKullanici = null;
-                document.getElementById("vardiyaPanel").style.display = "none";
-                document.getElementById("logoutBtn").style.display = "none";
-                document.getElementById("authPanel").style.display = "block";
-            }
-        });
-    </script>
 </body>
 </html>
