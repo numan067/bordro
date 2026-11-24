@@ -69,6 +69,20 @@
         button.save-btn:hover {
             background-color: #4b319d;
         }
+        button.refresh-btn {
+            padding: 7px 12px;
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button.refresh-btn:hover {
+            background-color: #e2e8f0;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -104,6 +118,51 @@
         }
         .panel-section.active {
             display: block;
+        }
+
+        .users-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #5d3ebc;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .users-header h3 {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin: 0;
+        }
+        .users-status {
+            font-size: 13px;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .user-card-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 11px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            background: #f8fafc;
+            font-size: 14px;
+        }
+        .user-name-text {
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .user-mail-text {
+            color: #475569;
+            font-weight: 500;
         }
 
         /* Sabit Alt Bar (Navigation Bar) */
@@ -235,6 +294,16 @@
             </div>
 
         </form>
+
+        <!-- BÖLÜM 4: VARDİYA KULLANICILARI -->
+        <div id="secKullanicilar" class="panel-section">
+            <div class="users-header">
+                <h3>Vardiya Çizelgesi Kullanıcıları</h3>
+                <button type="button" class="refresh-btn" onclick="vardiyaKullanicilariniYukle()">Yenile</button>
+            </div>
+            <div id="kullanicilarDurum" class="users-status">Kullanıcılar yükleniyor...</div>
+            <div id="kullanicilarListesi" class="user-list"></div>
+        </div>
     </div>
 
     <!-- SABİT ALT NAVİGASYON BARI -->
@@ -247,6 +316,9 @@
         </button>
         <button type="button" class="bottom-btn" onclick="bolumGecis('secEnf', this)">
             <span>📈</span> Enflasyon
+        </button>
+        <button type="button" class="bottom-btn" onclick="bolumGecis('secKullanicilar', this)">
+            <span>👥</span> Kullanıcılar
         </button>
     </div>
 
@@ -292,13 +364,58 @@
       ];
 
       // Bölümler arası geçiş fonksiyonu
-      window.bolumGecis = function(secId, btn) {
+      window.bolumGecis = async function(secId, btn) {
           document.querySelectorAll('.panel-section').forEach(el => el.classList.remove('active'));
           document.getElementById(secId).classList.add('active');
           document.querySelectorAll('.bottom-btn').forEach(el => el.classList.remove('active'));
           btn.classList.add('active');
           window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+
+          if (secId === 'secKullanicilar') {
+              await vardiyaKullanicilariniYukle();
+          }
+      };
+
+      window.vardiyaKullanicilariniYukle = async function() {
+          const listeEl = document.getElementById("kullanicilarListesi");
+          const durumEl = document.getElementById("kullanicilarDurum");
+          listeEl.innerHTML = "";
+          durumEl.style.color = "#4a5568";
+          durumEl.innerText = "Kullanıcı hesapları getiriliyor...";
+
+          try {
+              const snap = await getDocs(collection(db, "vardiya_kullanicilar"));
+              if (snap.empty) {
+                  durumEl.innerText = "Kayıtlı vardiya kullanıcısı bulunamadı.";
+                  return;
+              }
+
+              let toplam = 0;
+              snap.forEach((docSnap) => {
+                  const d = docSnap.data() || {};
+                  const ad = d.adSoyad || d.kullaniciAdi || docSnap.id;
+                  const mail = d.email || "-";
+                  toplam++;
+
+                  const row = document.createElement("div");
+                  row.className = "user-card-row";
+                  row.innerHTML = `
+                      <div>
+                          <span class="user-name-text">${ad}</span>
+                          <span class="user-mail-text"> — ${mail}</span>
+                      </div>
+                  `;
+                  listeEl.appendChild(row);
+              });
+
+              durumEl.style.color = "#047857";
+              durumEl.innerText = `Toplam ${toplam} kullanıcı listelendi.`;
+          } catch (error) {
+              console.error("Kullanıcılar yüklenemedi:", error);
+              durumEl.style.color = "#dc2626";
+              durumEl.innerText = "Kullanıcılar yüklenirken hata oluştu: " + error.message;
+          }
+      };
 
       document.getElementById("loginForm").addEventListener("submit", async (e) => {
           e.preventDefault();
