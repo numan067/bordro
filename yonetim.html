@@ -173,6 +173,12 @@
             box-sizing: border-box;
             font-weight: 600;
         }
+        .total-cell {
+            font-weight: 800;
+            color: #1e293b;
+            background: #f8fafc;
+            white-space: nowrap;
+        }
 
         .users-header {
             display: flex;
@@ -359,7 +365,7 @@
                         </div>
                         <button type="button" class="refresh-btn" onclick="asgariUcrettenYenidenHesapla()">Asgari Ücretten Yeniden Hesapla</button>
                     </div>
-                    <div class="formula-note">Asgari ücret değiştiğinde Ocak–Aralık gelir ve damga vergisi istisnaları otomatik hesaplanır; tablodaki hücrelere girerek sonradan manuel değiştirebilirsiniz.</div>
+                    <div class="formula-note">Asgari ücret değiştiğinde Ocak–Aralık gelir ve damga vergisi istisnaları otomatik hesaplanır; tablodaki hücrelere girerek sonradan manuel değiştirebilirsiniz. GVI + DVI toplamı her ay otomatik gösterilir.</div>
                 </div>
 
                 <table>
@@ -368,6 +374,7 @@
                             <th>Ay</th>
                             <th>Gelir Vergisi İstisnası</th>
                             <th>Damga Vergisi İstisnası</th>
+                            <th>GVI + DVI Toplamı</th>
                         </tr>
                     </thead>
                     <tbody id="formulIstisnaBody"></tbody>
@@ -462,6 +469,34 @@
       const DAMGA_VERGISI_ORANI = 0.00759;
       let manuelIstisnaBayragi = false;
 
+      function ayToplaminiGuncelle(ayIdx) {
+          const tbody = document.getElementById("formulIstisnaBody");
+          if (!tbody) return;
+
+          const gvInp = tbody.querySelector(`input[data-formul-ay="${ayIdx}"][data-formul-alan="gelirVergisiIstisnasi"]`);
+          const dvInp = tbody.querySelector(`input[data-formul-ay="${ayIdx}"][data-formul-alan="damgaVergisiIstisnasi"]`);
+          const topEl = tbody.querySelector(`[data-formul-toplam="${ayIdx}"]`);
+          if (!gvInp || !dvInp || !topEl) return;
+
+          const gvHas = gvInp.value !== "";
+          const dvHas = dvInp.value !== "";
+          if (!gvHas && !dvHas) {
+              topEl.innerText = "-";
+              return;
+          }
+
+          const gv = parseFloat(gvInp.value) || 0;
+          const dv = parseFloat(dvInp.value) || 0;
+          const toplam = Number((gv + dv).toFixed(2));
+          topEl.innerText = toplam.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function tumAyToplamlariniGuncelle() {
+          for (let i = 0; i < 12; i++) {
+              ayToplaminiGuncelle(i);
+          }
+      }
+
       function istisnaTablosunuOlustur(kayitliAylar = {}) {
           const tbody = document.getElementById("formulIstisnaBody");
           tbody.innerHTML = "";
@@ -475,14 +510,17 @@
                   <tr>
                       <td><strong>${ayAdi}</strong></td>
                       <td>
-                          <input type="number" step="0.01" class="table-num-input" data-formul-ay="${idx}" data-formul-alan="gelirVergisiIstisnasi" value="${gvVal}" oninput="manuelIstisnaGirildi()">
+                          <input type="number" step="0.01" class="table-num-input" data-formul-ay="${idx}" data-formul-alan="gelirVergisiIstisnasi" value="${gvVal}" oninput="istisnaHucreDegisti(${idx})">
                       </td>
                       <td>
-                          <input type="number" step="0.01" class="table-num-input" data-formul-ay="${idx}" data-formul-alan="damgaVergisiIstisnasi" value="${dvVal}" oninput="manuelIstisnaGirildi()">
+                          <input type="number" step="0.01" class="table-num-input" data-formul-ay="${idx}" data-formul-alan="damgaVergisiIstisnasi" value="${dvVal}" oninput="istisnaHucreDegisti(${idx})">
                       </td>
+                      <td class="total-cell" data-formul-toplam="${idx}">-</td>
                   </tr>
               `;
           });
+
+          tumAyToplamlariniGuncelle();
       }
 
       function vergiDilimiOraniBul(kumulatifMatrahOnceki) {
@@ -505,6 +543,7 @@
                   if (gvInp) gvInp.value = "";
                   if (dvInp) dvInp.value = "";
               }
+              tumAyToplamlariniGuncelle();
               return;
           }
 
@@ -522,10 +561,13 @@
               if (gvInp) gvInp.value = gvIstisna;
               if (dvInp) dvInp.value = dvIstisna;
           }
+
+          tumAyToplamlariniGuncelle();
       }
 
-      window.manuelIstisnaGirildi = function() {
+      window.istisnaHucreDegisti = function(ayIdx) {
           manuelIstisnaBayragi = true;
+          ayToplaminiGuncelle(ayIdx);
       };
 
       window.asgariUcretHesapla = function() {
