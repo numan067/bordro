@@ -38,7 +38,7 @@
             color: #4a5568;
             font-weight: 600;
         }
-        input[type="text"], input[type="password"] {
+        input[type="text"], input[type="password"], input[type="number"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #cbd5e0;
@@ -118,6 +118,60 @@
         }
         .panel-section.active {
             display: block;
+        }
+
+        .formula-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 12px;
+        }
+        .formula-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .formula-top-row .form-group {
+            flex: 1;
+            min-width: 220px;
+            margin-bottom: 0;
+        }
+        .formula-note {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 6px;
+        }
+        .night-rate-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-top: 14px;
+        }
+        .night-rate-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .night-rate-input {
+            max-width: 220px;
+            font-weight: 700;
+        }
+        .table-num-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-weight: 600;
         }
 
         .users-header {
@@ -293,9 +347,43 @@
                 <button type="submit" class="save-btn">Değişiklikleri Kaydet</button>
             </div>
 
+            <!-- BÖLÜM 4: FORMÜL -->
+            <div id="secFormul" class="panel-section">
+                <h3>Formül Parametreleri ve İstisnalar</h3>
+
+                <div class="formula-box">
+                    <div class="formula-top-row">
+                        <div class="form-group">
+                            <label for="asgariUcretInput">Asgari Ücret (Brüt)</label>
+                            <input type="number" id="asgariUcretInput" step="0.01" min="0" placeholder="Asgari ücreti girin..." oninput="asgariUcretHesapla()">
+                        </div>
+                        <button type="button" class="refresh-btn" onclick="asgariUcrettenYenidenHesapla()">Asgari Ücretten Yeniden Hesapla</button>
+                    </div>
+                    <div class="formula-note">Asgari ücret değiştiğinde Ocak–Aralık gelir ve damga vergisi istisnaları otomatik hesaplanır; tablodaki hücrelere girerek sonradan manuel değiştirebilirsiniz.</div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ay</th>
+                            <th>Gelir Vergisi İstisnası</th>
+                            <th>Damga Vergisi İstisnası</th>
+                        </tr>
+                    </thead>
+                    <tbody id="formulIstisnaBody"></tbody>
+                </table>
+
+                <div class="night-rate-row">
+                    <label for="geceSaatUcretiInput" class="night-rate-label">Gece çalışma saat ücreti</label>
+                    <input type="number" id="geceSaatUcretiInput" class="night-rate-input" step="0.01" min="0" placeholder="Değer girin...">
+                </div>
+
+                <button type="submit" class="save-btn">Kaydet</button>
+            </div>
+
         </form>
 
-        <!-- BÖLÜM 4: VARDİYA KULLANICILARI -->
+        <!-- BÖLÜM 5: VARDİYA KULLANICILARI -->
         <div id="secKullanicilar" class="panel-section">
             <div class="users-header">
                 <h3>Vardiya Çizelgesi Kullanıcıları</h3>
@@ -316,6 +404,9 @@
         </button>
         <button type="button" class="bottom-btn" onclick="bolumGecis('secEnf', this)">
             <span>📈</span> Enflasyon
+        </button>
+        <button type="button" class="bottom-btn" onclick="bolumGecis('secFormul', this)">
+            <span>🧮</span> Formül
         </button>
         <button type="button" class="bottom-btn" onclick="bolumGecis('secKullanicilar', this)">
             <span>👥</span> Kullanıcılar
@@ -362,6 +453,92 @@
           "Mayıs 2026", "Haziran 2026", "Temmuz 2026", "Ağustos 2026", 
           "Eylül 2026", "Ekim 2026", "Kasım 2026", "Aralık 2026"
       ];
+
+      const yilAylari = [
+          "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+          "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+      ];
+
+      const DAMGA_VERGISI_ORANI = 0.00759;
+      let manuelIstisnaBayragi = false;
+
+      function istisnaTablosunuOlustur(kayitliAylar = {}) {
+          const tbody = document.getElementById("formulIstisnaBody");
+          tbody.innerHTML = "";
+
+          yilAylari.forEach((ayAdi, idx) => {
+              const kayit = kayitliAylar[idx] || {};
+              const gvVal = kayit.gelirVergisiIstisnasi !== undefined ? kayit.gelirVergisiIstisnasi : "";
+              const dvVal = kayit.damgaVergisiIstisnasi !== undefined ? kayit.damgaVergisiIstisnasi : "";
+
+              tbody.innerHTML += `
+                  <tr>
+                      <td><strong>${ayAdi}</strong></td>
+                      <td>
+                          <input type="number" step="0.01" class="table-num-input" data-formul-ay="${idx}" data-formul-alan="gelirVergisiIstisnasi" value="${gvVal}" oninput="manuelIstisnaGirildi()">
+                      </td>
+                      <td>
+                          <input type="number" step="0.01" class="table-num-input" data-formul-ay="${idx}" data-formul-alan="damgaVergisiIstisnasi" value="${dvVal}" oninput="manuelIstisnaGirildi()">
+                      </td>
+                  </tr>
+              `;
+          });
+      }
+
+      function vergiDilimiOraniBul(kumulatifMatrahOnceki) {
+          if (kumulatifMatrahOnceki < 190000) return 0.15;
+          if (kumulatifMatrahOnceki < 400000) return 0.20;
+          if (kumulatifMatrahOnceki < 1500000) return 0.27;
+          if (kumulatifMatrahOnceki < 5300000) return 0.35;
+          return 0.40;
+      }
+
+      function istisnalariAsgariUcrettenHesapla(asgariUcret) {
+          const brut = parseFloat(asgariUcret);
+          const tbody = document.getElementById("formulIstisnaBody");
+          if (!tbody) return;
+
+          if (!brut || brut <= 0) {
+              for (let i = 0; i < 12; i++) {
+                  const gvInp = tbody.querySelector(`input[data-formul-ay="${i}"][data-formul-alan="gelirVergisiIstisnasi"]`);
+                  const dvInp = tbody.querySelector(`input[data-formul-ay="${i}"][data-formul-alan="damgaVergisiIstisnasi"]`);
+                  if (gvInp) gvInp.value = "";
+                  if (dvInp) dvInp.value = "";
+              }
+              return;
+          }
+
+          const aylikMatrah = brut * 0.85;
+          let kumulatifMatrah = 0;
+
+          for (let i = 0; i < 12; i++) {
+              const oran = vergiDilimiOraniBul(kumulatifMatrah);
+              const gvIstisna = Number((aylikMatrah * oran).toFixed(2));
+              const dvIstisna = Number((brut * DAMGA_VERGISI_ORANI).toFixed(2));
+              kumulatifMatrah += aylikMatrah;
+
+              const gvInp = tbody.querySelector(`input[data-formul-ay="${i}"][data-formul-alan="gelirVergisiIstisnasi"]`);
+              const dvInp = tbody.querySelector(`input[data-formul-ay="${i}"][data-formul-alan="damgaVergisiIstisnasi"]`);
+              if (gvInp) gvInp.value = gvIstisna;
+              if (dvInp) dvInp.value = dvIstisna;
+          }
+      }
+
+      window.manuelIstisnaGirildi = function() {
+          manuelIstisnaBayragi = true;
+      };
+
+      window.asgariUcretHesapla = function() {
+          if (manuelIstisnaBayragi) return;
+          const val = document.getElementById("asgariUcretInput").value;
+          istisnalariAsgariUcrettenHesapla(val);
+      };
+
+      window.asgariUcrettenYenidenHesapla = function() {
+          manuelIstisnaBayragi = false;
+          const val = document.getElementById("asgariUcretInput").value;
+          istisnalariAsgariUcrettenHesapla(val);
+      };
 
       // Bölümler arası geçiş fonksiyonu
       window.bolumGecis = async function(secId, btn) {
@@ -456,6 +633,8 @@
           const duyuruFotoInput = document.getElementById("duyuruFotoInput");
           const yil1Input = document.getElementById("yil1Input");
           const yil2Input = document.getElementById("yil2Input");
+          const asgariUcretInput = document.getElementById("asgariUcretInput");
+          const geceSaatUcretiInput = document.getElementById("geceSaatUcretiInput");
 
           const docRef = doc(db, "ayarlar", "veriler");
           const docSnap = await getDoc(docRef);
@@ -470,6 +649,7 @@
 
           let sosyalData = data.sosyal || {};
           let enfData = data.enflasyon || {};
+          let formulData = data.formuller || {};
 
           sosyalBody.innerHTML = "";
           sosyalKeys.forEach(item => {
@@ -495,6 +675,21 @@
                   </tr>
               `;
           });
+
+          asgariUcretInput.value = formulData.asgariUcret !== undefined ? formulData.asgariUcret : "";
+          geceSaatUcretiInput.value = formulData.geceCalismaSaatUcreti !== undefined ? formulData.geceCalismaSaatUcreti : "";
+          istisnaTablosunuOlustur(formulData.aylikIstisnalar || {});
+
+          const mevcutAyKaydi = formulData.aylikIstisnalar && formulData.aylikIstisnalar[0];
+          const tabloDoluMu = mevcutAyKaydi && (
+              (mevcutAyKaydi.gelirVergisiIstisnasi !== undefined && mevcutAyKaydi.gelirVergisiIstisnasi !== "") ||
+              (mevcutAyKaydi.damgaVergisiIstisnasi !== undefined && mevcutAyKaydi.damgaVergisiIstisnasi !== "")
+          );
+
+          manuelIstisnaBayragi = Boolean(formulData.manuelIstisnaDegistirildi);
+          if (!tabloDoluMu && asgariUcretInput.value !== "") {
+              istisnalariAsgariUcrettenHesapla(asgariUcretInput.value);
+          }
       }
 
       document.getElementById("yonetimForm").addEventListener("submit", async (e) => {
@@ -506,9 +701,12 @@
           let yeniDuyuruFoto = document.getElementById("duyuruFotoInput").value;
           let yil1 = document.getElementById("yil1Input").value;
           let yil2 = document.getElementById("yil2Input").value;
+          let asgariUcret = document.getElementById("asgariUcretInput").value;
+          let geceSaatUcreti = document.getElementById("geceSaatUcretiInput").value;
 
           let sosyalObj = {};
           let enfObj = {};
+          let aylikIstisnalarObj = {};
 
           document.querySelectorAll("#panelSection input[data-type]").forEach(input => {
               let type = input.getAttribute("data-type");
@@ -523,6 +721,13 @@
               }
           });
 
+          document.querySelectorAll("#formulIstisnaBody input[data-formul-ay]").forEach(input => {
+              const ayIdx = parseInt(input.getAttribute("data-formul-ay"), 10);
+              const alan = input.getAttribute("data-formul-alan");
+              if (!aylikIstisnalarObj[ayIdx]) aylikIstisnalarObj[ayIdx] = {};
+              aylikIstisnalarObj[ayIdx][alan] = input.value;
+          });
+
           try {
               await setDoc(doc(db, "ayarlar", "veriler"), {
                   duyuru1: d1,
@@ -532,8 +737,14 @@
                   yil1: yil1,
                   yil2: yil2,
                   sosyal: sosyalObj,
-                  enflasyon: enfObj
-              });
+                  enflasyon: enfObj,
+                  formuller: {
+                      asgariUcret: asgariUcret,
+                      geceCalismaSaatUcreti: geceSaatUcreti,
+                      aylikIstisnalar: aylikIstisnalarObj,
+                      manuelIstisnaDegistirildi: manuelIstisnaBayragi
+                  }
+              }, { merge: true });
               alert("Değişiklikler başarıyla kaydedildi!");
           } catch (error) {
               console.error("Kayıt hatası:", error);
