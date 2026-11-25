@@ -38,13 +38,36 @@
             color: #4a5568;
             font-weight: 600;
         }
-        input[type="text"], input[type="password"], input[type="number"] {
+        input[type="text"], input[type="password"], input[type="number"], input[type="file"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #cbd5e0;
             border-radius: 8px;
             box-sizing: border-box;
             font-family: inherit;
+            background: #fff;
+        }
+        .photo-preview-box {
+            margin-top: 10px;
+            padding: 12px;
+            border: 1px dashed #cbd5e0;
+            border-radius: 12px;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 90px;
+        }
+        .photo-preview-box img {
+            max-width: 100%;
+            max-height: 220px;
+            border-radius: 10px;
+            display: block;
+            object-fit: contain;
+        }
+        .photo-preview-empty {
+            font-size: 13px;
+            color: #64748b;
         }
         .row {
             display: flex;
@@ -68,6 +91,10 @@
         }
         button.save-btn:hover {
             background-color: #4b319d;
+        }
+        button.save-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
         }
         button.refresh-btn {
             padding: 7px 12px;
@@ -344,10 +371,20 @@
                     <input type="text" id="duyuru3" placeholder="Üçüncü satır duyuru metni...">
                 </div>
                 <div class="form-group">
-                    <label for="duyuruFotoInput">Duyuru Fotoğrafı URL'si:</label>
+                    <label for="duyuruDosyaInput">Duyuru Fotoğrafı Yükle (Yeni yüklenince eskisi silinir):</label>
+                    <input type="file" id="duyuruDosyaInput" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="duyuruFotoInput">Duyuru Fotoğrafı URL'si (İsteğe bağlı manuel link):</label>
                     <input type="text" id="duyuruFotoInput" placeholder="Fotoğraf linkini buraya yapıştırın (Örn: https://...)">
                 </div>
-                <button type="submit" class="save-btn">Değişiklikleri Kaydet</button>
+                <div class="form-group">
+                    <label>Görsel Önizleme:</label>
+                    <div id="duyuruOnizleme" class="photo-preview-box">
+                        <span class="photo-preview-empty">Henüz duyuru görseli seçilmemiş.</span>
+                    </div>
+                </div>
+                <button type="submit" id="kaydetBtn" class="save-btn">Değişiklikleri Kaydet</button>
             </div>
 
             <!-- BÖLÜM 2: SOSYAL YARDIMLAR -->
@@ -493,6 +530,7 @@
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
       import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+      import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
@@ -506,6 +544,10 @@
 
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
+      const storage = getStorage(app);
+
+      let mevcutDuyuruFotoPath = "";
+      let geciciOnizlemeUrl = "";
 
       const sosyalKeys = [
           { id: "servis", adi: "Servis Ücreti" },
@@ -537,6 +579,37 @@
 
       const DAMGA_VERGISI_ORANI = 0.00759;
       let manuelIstisnaBayragi = false;
+
+      function onizlemeyiGuncelle(src) {
+          const box = document.getElementById("duyuruOnizleme");
+          if (!box) return;
+          const temizSrc = (src || "").trim();
+          if (!temizSrc) {
+              box.innerHTML = `<span class="photo-preview-empty">Henüz duyuru görseli seçilmemiş.</span>`;
+              return;
+          }
+          box.innerHTML = `<img src="${temizSrc}" alt="Duyuru Görseli Önizleme">`;
+      }
+
+      document.getElementById("duyuruDosyaInput").addEventListener("change", (e) => {
+          const dosya = e.target.files && e.target.files[0];
+          if (geciciOnizlemeUrl) {
+              URL.revokeObjectURL(geciciOnizlemeUrl);
+              geciciOnizlemeUrl = "";
+          }
+          if (!dosya) {
+              onizlemeyiGuncelle(document.getElementById("duyuruFotoInput").value);
+              return;
+          }
+          geciciOnizlemeUrl = URL.createObjectURL(dosya);
+          onizlemeyiGuncelle(geciciOnizlemeUrl);
+      });
+
+      document.getElementById("duyuruFotoInput").addEventListener("input", (e) => {
+          const dosyaInput = document.getElementById("duyuruDosyaInput");
+          if (dosyaInput && dosyaInput.files && dosyaInput.files.length > 0) return;
+          onizlemeyiGuncelle(e.target.value);
+      });
 
       function vergiDilimleriAl() {
           const r1 = (parseFloat(document.getElementById("gvOran1").value) || 0) / 100;
@@ -795,6 +868,9 @@
           duyuru2.value = data.duyuru2 || "";
           duyuru3.value = data.duyuru3 || "";
           duyuruFotoInput.value = data.duyuruFoto || "";
+          mevcutDuyuruFotoPath = data.duyuruFotoPath || "";
+          onizlemeyiGuncelle(duyuruFotoInput.value);
+
           yil1Input.value = data.yil1 || "2025";
           yil2Input.value = data.yil2 || "2026";
 
@@ -858,59 +934,100 @@
       document.getElementById("yonetimForm").addEventListener("submit", async (e) => {
           e.preventDefault();
 
-          let d1 = document.getElementById("duyuru1").value;
-          let d2 = document.getElementById("duyuru2").value;
-          let d3 = document.getElementById("duyuru3").value;
-          let yeniDuyuruFoto = document.getElementById("duyuruFotoInput").value;
-          let yil1 = document.getElementById("yil1Input").value;
-          let yil2 = document.getElementById("yil2Input").value;
-          let asgariUcret = document.getElementById("asgariUcretInput").value;
-          let geceSaatUcreti = document.getElementById("geceSaatUcretiInput").value;
-
-          const gelirVergisiOranlari = {
-              d1: document.getElementById("gvOran1").value,
-              d2: document.getElementById("gvOran2").value,
-              d3: document.getElementById("gvOran3").value,
-              d4: document.getElementById("gvOran4").value
-          };
-
-          const gelirVergisiSinirlari = {
-              s1: document.getElementById("gvSinir1").value,
-              s2: document.getElementById("gvSinir2").value,
-              s3: document.getElementById("gvSinir3").value,
-              s4: document.getElementById("gvSinir4").value
-          };
-
-          let sosyalObj = {};
-          let enfObj = {};
-          let aylikIstisnalarObj = {};
-
-          document.querySelectorAll("#panelSection input[data-type]").forEach(input => {
-              let type = input.getAttribute("data-type");
-              if (type === "sosyal") {
-                  let id = input.getAttribute("data-id");
-                  let yil = input.getAttribute("data-yil");
-                  if (!sosyalObj[id]) sosyalObj[id] = {};
-                  sosyalObj[id]["_" + yil] = input.value;
-              } else if (type === "enf") {
-                  let index = input.getAttribute("data-index");
-                  enfObj[index] = input.value;
-              }
-          });
-
-          document.querySelectorAll("#formulIstisnaBody input[data-formul-ay]").forEach(input => {
-              const ayIdx = parseInt(input.getAttribute("data-formul-ay"), 10);
-              const alan = input.getAttribute("data-formul-alan");
-              if (!aylikIstisnalarObj[ayIdx]) aylikIstisnalarObj[ayIdx] = {};
-              aylikIstisnalarObj[ayIdx][alan] = input.value;
-          });
+          const kaydetBtn = document.getElementById("kaydetBtn");
+          if (kaydetBtn) kaydetBtn.disabled = true;
 
           try {
+              let d1 = document.getElementById("duyuru1").value;
+              let d2 = document.getElementById("duyuru2").value;
+              let d3 = document.getElementById("duyuru3").value;
+              const dosyaInput = document.getElementById("duyuruDosyaInput");
+              const secilenDosya = dosyaInput && dosyaInput.files ? dosyaInput.files[0] : null;
+              let yeniDuyuruFoto = document.getElementById("duyuruFotoInput").value.trim();
+              let yeniDuyuruFotoPath = mevcutDuyuruFotoPath;
+
+              if (secilenDosya) {
+                  if (!secilenDosya.type.startsWith("image/")) {
+                      throw new Error("Lütfen geçerli bir görsel dosyası seçin.");
+                  }
+
+                  const guvenliAd = (secilenDosya.name || "duyuru")
+                      .toLowerCase()
+                      .replace(/[^a-z0-9._-]/g, "_");
+                  const hedefYol = `duyurular/${Date.now()}_${guvenliAd}`;
+                  const storageRef = ref(storage, hedefYol);
+
+                  await uploadBytes(storageRef, secilenDosya, { contentType: secilenDosya.type });
+                  const indirilenUrl = await getDownloadURL(storageRef);
+
+                  if (mevcutDuyuruFotoPath && mevcutDuyuruFotoPath !== hedefYol) {
+                      try {
+                          await deleteObject(ref(storage, mevcutDuyuruFotoPath));
+                      } catch (silmeHatasi) {
+                          console.warn("Eski duyuru görseli silinemedi:", silmeHatasi);
+                      }
+                  }
+
+                  yeniDuyuruFoto = indirilenUrl;
+                  yeniDuyuruFotoPath = hedefYol;
+              } else if (!yeniDuyuruFoto && mevcutDuyuruFotoPath) {
+                  try {
+                      await deleteObject(ref(storage, mevcutDuyuruFotoPath));
+                  } catch (silmeHatasi) {
+                      console.warn("Eski duyuru görseli silinemedi:", silmeHatasi);
+                  }
+                  yeniDuyuruFotoPath = "";
+              }
+
+              let yil1 = document.getElementById("yil1Input").value;
+              let yil2 = document.getElementById("yil2Input").value;
+              let asgariUcret = document.getElementById("asgariUcretInput").value;
+              let geceSaatUcreti = document.getElementById("geceSaatUcretiInput").value;
+
+              const gelirVergisiOranlari = {
+                  d1: document.getElementById("gvOran1").value,
+                  d2: document.getElementById("gvOran2").value,
+                  d3: document.getElementById("gvOran3").value,
+                  d4: document.getElementById("gvOran4").value
+              };
+
+              const gelirVergisiSinirlari = {
+                  s1: document.getElementById("gvSinir1").value,
+                  s2: document.getElementById("gvSinir2").value,
+                  s3: document.getElementById("gvSinir3").value,
+                  s4: document.getElementById("gvSinir4").value
+              };
+
+              let sosyalObj = {};
+              let enfObj = {};
+              let aylikIstisnalarObj = {};
+
+              document.querySelectorAll("#panelSection input[data-type]").forEach(input => {
+                  let type = input.getAttribute("data-type");
+                  if (type === "sosyal") {
+                      let id = input.getAttribute("data-id");
+                      let yil = input.getAttribute("data-yil");
+                      if (!sosyalObj[id]) sosyalObj[id] = {};
+                      sosyalObj[id]["_" + yil] = input.value;
+                  } else if (type === "enf") {
+                      let index = input.getAttribute("data-index");
+                      enfObj[index] = input.value;
+                  }
+              });
+
+              document.querySelectorAll("#formulIstisnaBody input[data-formul-ay]").forEach(input => {
+                  const ayIdx = parseInt(input.getAttribute("data-formul-ay"), 10);
+                  const alan = input.getAttribute("data-formul-alan");
+                  if (!aylikIstisnalarObj[ayIdx]) aylikIstisnalarObj[ayIdx] = {};
+                  aylikIstisnalarObj[ayIdx][alan] = input.value;
+              });
+
               await setDoc(doc(db, "ayarlar", "veriler"), {
                   duyuru1: d1,
                   duyuru2: d2,
                   duyuru3: d3,
                   duyuruFoto: yeniDuyuruFoto,
+                  duyuruFotoPath: yeniDuyuruFotoPath,
                   yil1: yil1,
                   yil2: yil2,
                   sosyal: sosyalObj,
@@ -924,10 +1041,22 @@
                       manuelIstisnaDegistirildi: manuelIstisnaBayragi
                   }
               }, { merge: true });
+
+              mevcutDuyuruFotoPath = yeniDuyuruFotoPath;
+              document.getElementById("duyuruFotoInput").value = yeniDuyuruFoto;
+              if (dosyaInput) dosyaInput.value = "";
+              if (geciciOnizlemeUrl) {
+                  URL.revokeObjectURL(geciciOnizlemeUrl);
+                  geciciOnizlemeUrl = "";
+              }
+              onizlemeyiGuncelle(yeniDuyuruFoto);
+
               alert("Değişiklikler başarıyla kaydedildi!");
           } catch (error) {
               console.error("Kayıt hatası:", error);
               alert("Hata oluştu: " + error.message);
+          } finally {
+              if (kaydetBtn) kaydetBtn.disabled = false;
           }
       });
     </script>
