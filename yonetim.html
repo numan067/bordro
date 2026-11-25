@@ -10,7 +10,7 @@
             background-color: #f4f4f9;
             margin: 0;
             padding: 20px;
-            padding-bottom: 90px; /* Alt barın içeriği kapatmaması için boşluk */
+            padding-bottom: 90px;
         }
         .login-container, .panel-container {
             background: white;
@@ -54,8 +54,10 @@
             border-radius: 12px;
             background: #f8fafc;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 8px;
             min-height: 90px;
         }
         .photo-preview-box img {
@@ -65,9 +67,10 @@
             display: block;
             object-fit: contain;
         }
-        .photo-preview-empty {
-            font-size: 13px;
+        .photo-preview-empty, .photo-meta-text {
+            font-size: 12.5px;
             color: #64748b;
+            text-align: center;
         }
         .row {
             display: flex;
@@ -139,7 +142,6 @@
             align-items: center;
         }
 
-        /* Sekme Bölümleri */
         .panel-section {
             display: none;
         }
@@ -285,7 +287,6 @@
             font-weight: 500;
         }
 
-        /* Sabit Alt Bar (Navigation Bar) */
         .bottom-bar {
             position: fixed;
             bottom: 0;
@@ -293,7 +294,7 @@
             width: 100%;
             background: #ffffff;
             box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
-            display: none; /* Giriş yapınca açılacak */
+            display: none;
             justify-content: space-around;
             padding: 10px 0;
             z-index: 1000;
@@ -371,12 +372,12 @@
                     <input type="text" id="duyuru3" placeholder="Üçüncü satır duyuru metni...">
                 </div>
                 <div class="form-group">
-                    <label for="duyuruDosyaInput">Duyuru Fotoğrafı Yükle (Yeni yüklenince eskisi silinir):</label>
+                    <label for="duyuruDosyaInput">Duyuru Fotoğrafı Seç (Otomatik sıkıştırılıp Firestore'a yazılır):</label>
                     <input type="file" id="duyuruDosyaInput" accept="image/*">
                 </div>
                 <div class="form-group">
-                    <label for="duyuruFotoInput">Duyuru Fotoğrafı URL'si (İsteğe bağlı manuel link):</label>
-                    <input type="text" id="duyuruFotoInput" placeholder="Fotoğraf linkini buraya yapıştırın (Örn: https://...)">
+                    <label for="duyuruFotoInput">Duyuru Fotoğrafı Verisi / URL:</label>
+                    <input type="text" id="duyuruFotoInput" placeholder="Dosya seçince otomatik dolar veya URL girin...">
                 </div>
                 <div class="form-group">
                     <label>Görsel Önizleme:</label>
@@ -530,7 +531,6 @@
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
       import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-      import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
@@ -544,10 +544,6 @@
 
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
-      const storage = getStorage(app);
-
-      let mevcutDuyuruFotoPath = "";
-      let geciciOnizlemeUrl = "";
 
       const sosyalKeys = [
           { id: "servis", adi: "Servis Ücreti" },
@@ -578,9 +574,10 @@
       ];
 
       const DAMGA_VERGISI_ORANI = 0.00759;
+      const MAX_FIRESTORE_GORSEL_KARAKTER = 700000; // Firestore belge sınırını güvenle aşmamak için
       let manuelIstisnaBayragi = false;
 
-      function onizlemeyiGuncelle(src) {
+      function onizlemeyiGuncelle(src, bilgiMetni = "") {
           const box = document.getElementById("duyuruOnizleme");
           if (!box) return;
           const temizSrc = (src || "").trim();
@@ -588,26 +585,101 @@
               box.innerHTML = `<span class="photo-preview-empty">Henüz duyuru görseli seçilmemiş.</span>`;
               return;
           }
-          box.innerHTML = `<img src="${temizSrc}" alt="Duyuru Görseli Önizleme">`;
+          const ekstraHtml = bilgiMetni
+              ? `<div class="photo-meta-text">${bilgiMetni}</div>`
+              : "";
+          box.innerHTML = `<img src="${temizSrc}" alt="Duyuru Görseli Önizleme">${ekstraHtml}`;
       }
 
-      document.getElementById("duyuruDosyaInput").addEventListener("change", (e) => {
-          const dosya = e.target.files && e.target.files[0];
-          if (geciciOnizlemeUrl) {
-              URL.revokeObjectURL(geciciOnizlemeUrl);
-              geciciOnizlemeUrl = "";
+      function dosyayiOkumakIcinYukle(dosya) {
+          return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = () => reject(new Error("Dosya okunamadı."));
+              reader.readAsDataURL(dosya);
+          });
+      }
+
+      function gorseliYukle(dataUrl) {
+          return new Promise((resolve, reject) => {
+              const img = new Image();
+              img.onload = () => resolve(img);
+              img.onerror = () => reject(new Error("Görsel yüklenemedi."));
+              img.src = dataUrl;
+          });
+      }
+
+      async function gorseliSikistir(dosya) {
+          if (!dosya.type.startsWith("image/")) {
+              throw new Error("Lütfen geçerli bir görsel dosyası seçin.");
           }
+
+          const hamDataUrl = await dosyayiOkumakIcinYukle(dosya);
+          const img = await gorseliYukle(hamDataUrl);
+
+          let maxGenislik = 960;
+          let kalite = 0.78;
+          let sonucDataUrl = "";
+
+          for (let deneme = 0; deneme < 6; deneme++) {
+              let hedefGenislik = img.width || maxGenislik;
+              let hedefYukseklik = img.height || Math.round((hedefGenislik * 9) / 16);
+
+              if (hedefGenislik > maxGenislik) {
+                  hedefYukseklik = Math.round((hedefYukseklik * maxGenislik) / hedefGenislik);
+                  hedefGenislik = maxGenislik;
+              }
+
+              const canvas = document.createElement("canvas");
+              canvas.width = hedefGenislik;
+              canvas.height = hedefYukseklik;
+              const ctx = canvas.getContext("2d");
+              ctx.fillStyle = "#ffffff";
+              ctx.fillRect(0, 0, hedefGenislik, hedefYukseklik);
+              ctx.drawImage(img, 0, 0, hedefGenislik, hedefYukseklik);
+
+              sonucDataUrl = canvas.toDataURL("image/jpeg", kalite);
+
+              if (sonucDataUrl.length <= MAX_FIRESTORE_GORSEL_KARAKTER) {
+                  const yaklasikKb = Math.round((sonucDataUrl.length * 0.75) / 1024);
+                  return {
+                      dataUrl: sonucDataUrl,
+                      bilgi: `Sıkıştırıldı: ${hedefGenislik}x${hedefYukseklik}px (~${yaklasikKb} KB, JPEG)`
+                  };
+              }
+
+              if (kalite > 0.45) {
+                  kalite = Number((kalite - 0.12).toFixed(2));
+              } else {
+                  maxGenislik = Math.max(540, Math.round(maxGenislik * 0.78));
+                  kalite = 0.65;
+              }
+          }
+
+          throw new Error("Görsel boyutu çok büyük; lütfen daha küçük bir görsel seçin.");
+      }
+
+      document.getElementById("duyuruDosyaInput").addEventListener("change", async (e) => {
+          const dosya = e.target.files && e.target.files[0];
+          const fotoInput = document.getElementById("duyuruFotoInput");
           if (!dosya) {
-              onizlemeyiGuncelle(document.getElementById("duyuruFotoInput").value);
+              onizlemeyiGuncelle(fotoInput.value);
               return;
           }
-          geciciOnizlemeUrl = URL.createObjectURL(dosya);
-          onizlemeyiGuncelle(geciciOnizlemeUrl);
+
+          try {
+              onizlemeyiGuncelle("", "Görsel sıkıştırılıyor...");
+              const sikistirilmis = await gorseliSikistir(dosya);
+              fotoInput.value = sikistirilmis.dataUrl;
+              onizlemeyiGuncelle(sikistirilmis.dataUrl, sikistirilmis.bilgi);
+          } catch (err) {
+              alert(err.message);
+              e.target.value = "";
+              onizlemeyiGuncelle(fotoInput.value);
+          }
       });
 
       document.getElementById("duyuruFotoInput").addEventListener("input", (e) => {
-          const dosyaInput = document.getElementById("duyuruDosyaInput");
-          if (dosyaInput && dosyaInput.files && dosyaInput.files.length > 0) return;
           onizlemeyiGuncelle(e.target.value);
       });
 
@@ -764,7 +836,6 @@
           istisnalariAsgariUcrettenHesapla(val);
       };
 
-      // Bölümler arası geçiş fonksiyonu
       window.bolumGecis = async function(secId, btn) {
           document.querySelectorAll('.panel-section').forEach(el => el.classList.remove('active'));
           document.getElementById(secId).classList.add('active');
@@ -837,7 +908,7 @@
               if (girisBasarili) {
                   document.getElementById("loginSection").style.display = "none";
                   document.getElementById("panelSection").style.display = "block";
-                  document.getElementById("bottomNav").style.display = "flex"; // Alt barı göster
+                  document.getElementById("bottomNav").style.display = "flex";
                   verileriYukle();
               } else {
                   alert("Kullanıcı adı veya parola hatalı!");
@@ -868,7 +939,6 @@
           duyuru2.value = data.duyuru2 || "";
           duyuru3.value = data.duyuru3 || "";
           duyuruFotoInput.value = data.duyuruFoto || "";
-          mevcutDuyuruFotoPath = data.duyuruFotoPath || "";
           onizlemeyiGuncelle(duyuruFotoInput.value);
 
           yil1Input.value = data.yil1 || "2025";
@@ -943,40 +1013,12 @@
               let d3 = document.getElementById("duyuru3").value;
               const dosyaInput = document.getElementById("duyuruDosyaInput");
               const secilenDosya = dosyaInput && dosyaInput.files ? dosyaInput.files[0] : null;
-              let yeniDuyuruFoto = document.getElementById("duyuruFotoInput").value.trim();
-              let yeniDuyuruFotoPath = mevcutDuyuruFotoPath;
+              let duyuruFoto = document.getElementById("duyuruFotoInput").value.trim();
 
               if (secilenDosya) {
-                  if (!secilenDosya.type.startsWith("image/")) {
-                      throw new Error("Lütfen geçerli bir görsel dosyası seçin.");
-                  }
-
-                  const guvenliAd = (secilenDosya.name || "duyuru")
-                      .toLowerCase()
-                      .replace(/[^a-z0-9._-]/g, "_");
-                  const hedefYol = `duyurular/${Date.now()}_${guvenliAd}`;
-                  const storageRef = ref(storage, hedefYol);
-
-                  await uploadBytes(storageRef, secilenDosya, { contentType: secilenDosya.type });
-                  const indirilenUrl = await getDownloadURL(storageRef);
-
-                  if (mevcutDuyuruFotoPath && mevcutDuyuruFotoPath !== hedefYol) {
-                      try {
-                          await deleteObject(ref(storage, mevcutDuyuruFotoPath));
-                      } catch (silmeHatasi) {
-                          console.warn("Eski duyuru görseli silinemedi:", silmeHatasi);
-                      }
-                  }
-
-                  yeniDuyuruFoto = indirilenUrl;
-                  yeniDuyuruFotoPath = hedefYol;
-              } else if (!yeniDuyuruFoto && mevcutDuyuruFotoPath) {
-                  try {
-                      await deleteObject(ref(storage, mevcutDuyuruFotoPath));
-                  } catch (silmeHatasi) {
-                      console.warn("Eski duyuru görseli silinemedi:", silmeHatasi);
-                  }
-                  yeniDuyuruFotoPath = "";
+                  const sikistirilmis = await gorseliSikistir(secilenDosya);
+                  duyuruFoto = sikistirilmis.dataUrl;
+                  document.getElementById("duyuruFotoInput").value = duyuruFoto;
               }
 
               let yil1 = document.getElementById("yil1Input").value;
@@ -1026,8 +1068,7 @@
                   duyuru1: d1,
                   duyuru2: d2,
                   duyuru3: d3,
-                  duyuruFoto: yeniDuyuruFoto,
-                  duyuruFotoPath: yeniDuyuruFotoPath,
+                  duyuruFoto: duyuruFoto,
                   yil1: yil1,
                   yil2: yil2,
                   sosyal: sosyalObj,
@@ -1042,14 +1083,8 @@
                   }
               }, { merge: true });
 
-              mevcutDuyuruFotoPath = yeniDuyuruFotoPath;
-              document.getElementById("duyuruFotoInput").value = yeniDuyuruFoto;
               if (dosyaInput) dosyaInput.value = "";
-              if (geciciOnizlemeUrl) {
-                  URL.revokeObjectURL(geciciOnizlemeUrl);
-                  geciciOnizlemeUrl = "";
-              }
-              onizlemeyiGuncelle(yeniDuyuruFoto);
+              onizlemeyiGuncelle(duyuruFoto);
 
               alert("Değişiklikler başarıyla kaydedildi!");
           } catch (error) {
