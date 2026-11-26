@@ -21,10 +21,10 @@
             --warn: #d97706;
             --warn-soft: #fffbeb;
             --danger: #e11d48;
-            --radius-lg: 22px;
-            --radius-md: 16px;
-            --radius-sm: 12px;
-            --shadow: 0 10px 28px rgba(24, 32, 68, 0.06);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+            --shadow: 0 8px 22px rgba(24, 32, 68, 0.06);
         }
 
         * {
@@ -37,41 +37,41 @@
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
-            padding-bottom: 96px;
+            padding-bottom: 88px;
         }
 
         .app-header {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 65%, #6a4df5 100%);
             color: #fff;
-            padding: 18px 16px 26px;
-            border-bottom-left-radius: 28px;
-            border-bottom-right-radius: 28px;
-            box-shadow: 0 12px 28px rgba(76, 47, 208, 0.22);
+            padding: 16px 14px 22px;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+            box-shadow: 0 10px 24px rgba(76, 47, 208, 0.2);
         }
 
         .header-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .brand-box {
             display: flex;
             align-items: center;
-            gap: 11px;
+            gap: 10px;
         }
 
         .brand-logo {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
             background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 800;
             color: var(--primary-dark);
             border: 2px solid rgba(255, 255, 255, 0.6);
@@ -90,21 +90,21 @@
 
         .brand-title {
             margin: 0;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 800;
             letter-spacing: -0.2px;
         }
 
         .brand-sub {
             margin: 2px 0 0;
-            font-size: 11.5px;
+            font-size: 11px;
             opacity: 0.86;
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             flex-wrap: wrap;
         }
 
@@ -112,9 +112,9 @@
             background: rgba(255, 255, 255, 0.16);
             border: 1px solid rgba(255, 255, 255, 0.24);
             color: #fff;
-            border-radius: 11px;
-            padding: 7px 10px;
-            font-size: 11.5px;
+            border-radius: 10px;
+            padding: 6px 9px;
+            font-size: 11px;
             font-weight: 700;
             cursor: pointer;
             text-decoration: none;
@@ -129,19 +129,19 @@
         }
 
         .status-strip {
-            margin-top: 12px;
+            margin-top: 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-size: 11px;
             background: rgba(0, 0, 0, 0.16);
-            padding: 7px 12px;
+            padding: 6px 11px;
             border-radius: 999px;
         }
 
         .status-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: #34d399;
             display: inline-block;
@@ -154,13 +154,13 @@
 
         .container {
             max-width: 720px;
-            margin: -14px auto 0;
-            padding: 0 13px;
+            margin: -12px auto 0;
+            padding: 0 10px;
         }
 
         .view {
             display: none;
-            animation: fadeIn 0.2s ease;
+            animation: fadeIn 0.18s ease;
         }
 
         .view.active {
@@ -168,38 +168,38 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
+            from { opacity: 0; transform: translateY(3px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .card {
             background: var(--card);
             border-radius: var(--radius-lg);
-            padding: 16px;
+            padding: 13px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
 
         .card-title-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 6px;
+            margin-bottom: 9px;
         }
 
         .card-title {
             margin: 0;
-            font-size: 15px;
+            font-size: 14.5px;
             font-weight: 800;
             color: var(--text);
         }
 
         .badge {
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 700;
-            padding: 4px 9px;
+            padding: 3px 8px;
             border-radius: 999px;
             background: #eef1ff;
             color: var(--primary);
@@ -220,24 +220,26 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
             background: linear-gradient(135deg, #f4f2ff 0%, #e9fbf6 100%);
             border: 1px solid #d8dcf5;
             border-radius: var(--radius-md);
-            padding: 13px 14px;
-            margin-bottom: 14px;
-            text-decoration: none;
+            padding: 11px 12px;
+            margin-bottom: 10px;
             color: var(--text);
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
         }
 
         .quick-shift-title {
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 800;
             margin: 0 0 2px;
         }
 
         .quick-shift-desc {
-            font-size: 12px;
+            font-size: 11.5px;
             color: var(--muted);
             margin: 0;
         }
@@ -245,108 +247,126 @@
         .quick-shift-cta {
             background: var(--primary);
             color: #fff;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
-            padding: 8px 12px;
-            border-radius: 11px;
+            padding: 7px 10px;
+            border-radius: 10px;
             white-space: nowrap;
+            border: none;
         }
 
         .banner-wrap {
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
             background: #eef2ff;
-            margin-bottom: 12px;
+            margin-bottom: 9px;
             border: 1px solid var(--border);
         }
 
         .banner-wrap img {
             width: 100%;
             height: auto;
-            max-height: 260px;
+            max-height: 240px;
             object-fit: cover;
             display: block;
         }
 
         .banner-placeholder {
-            padding: 24px 16px;
+            padding: 20px 14px;
             text-align: center;
             color: var(--muted);
-            font-size: 13px;
+            font-size: 12.5px;
         }
 
         .announcement-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .announcement-item {
             background: #f8f9fd;
-            border-left: 4px solid var(--primary);
-            padding: 10px 12px;
-            border-radius: 10px;
-            font-size: 13.5px;
+            border-left: 3.5px solid var(--primary);
+            padding: 8px 10px;
+            border-radius: 9px;
+            font-size: 13px;
             font-weight: 600;
-            line-height: 1.4;
+            line-height: 1.35;
         }
 
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 14px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 6px;
+            margin-bottom: 10px;
         }
 
         .kpi-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 12px;
+            border-radius: 12px;
+            padding: 8px 6px;
             box-shadow: var(--shadow);
+            text-align: center;
+            min-width: 0;
         }
 
         .kpi-label {
-            font-size: 10.5px;
+            font-size: 9.5px;
             color: var(--muted);
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: -0.2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .kpi-value {
-            margin-top: 5px;
-            font-size: 15px;
+            margin-top: 3px;
+            font-size: 12.5px;
             font-weight: 800;
             color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .kpi-sub {
-            margin-top: 2px;
-            font-size: 10.5px;
+            margin-top: 1px;
+            font-size: 9.5px;
             color: #059669;
             font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .field-group {
-            margin-bottom: 10px;
+            margin-bottom: 6px;
+            min-width: 0;
         }
 
         .field-label {
             display: block;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 700;
             color: var(--muted);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .input-control, .select-control {
             width: 100%;
-            padding: 9px 11px;
-            border-radius: 11px;
-            border: 1.5px solid #dbe1ef;
-            font-size: 13.5px;
+            padding: 7px 8px;
+            border-radius: 9px;
+            border: 1.2px solid #dbe1ef;
+            font-size: 13px;
             font-weight: 700;
             color: var(--text);
             background: #fff;
+            min-width: 0;
         }
 
         .input-control:focus, .select-control:focus {
@@ -356,59 +376,49 @@
 
         .two-col {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 6px;
         }
 
         .three-col {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-
-        .meta-hint-bar {
-            background: #f4f6ff;
-            border: 1px solid #dce2f9;
-            border-radius: 12px;
-            padding: 8px 11px;
-            font-size: 11.5px;
-            font-weight: 600;
-            color: var(--primary-dark);
-            margin-bottom: 10px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 5px;
         }
 
         .output-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 12px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 6px;
+            margin-top: 8px;
         }
 
         .output-box {
             background: #f8f9fd;
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 9px 10px;
+            border-radius: 10px;
+            padding: 7px 6px;
             text-align: center;
+            min-width: 0;
         }
 
         .output-label {
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 700;
             color: var(--muted);
             text-transform: uppercase;
         }
 
         .output-val {
-            margin-top: 3px;
-            font-size: 13.5px;
+            margin-top: 2px;
+            font-size: 13px;
             font-weight: 800;
             color: var(--text);
         }
 
         .output-sub {
-            margin-top: 2px;
-            font-size: 10px;
+            margin-top: 1px;
+            font-size: 9.5px;
             color: var(--muted);
             font-weight: 600;
         }
@@ -416,39 +426,39 @@
         .net-box {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
             color: #fff;
-            border-radius: 16px;
-            padding: 14px;
+            border-radius: 14px;
+            padding: 11px;
             text-align: center;
-            margin-top: 12px;
+            margin-top: 8px;
         }
 
         .net-label {
-            font-size: 12px;
+            font-size: 11.5px;
             opacity: 0.9;
             font-weight: 600;
         }
 
         .net-val {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
-            margin-top: 3px;
+            margin-top: 2px;
         }
 
         .mode-switch {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 14px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 6px;
+            margin-bottom: 8px;
         }
 
         .mode-btn {
-            padding: 10px;
-            border: 2px solid var(--primary);
-            border-radius: 12px;
+            padding: 8px;
+            border: 1.5px solid var(--primary);
+            border-radius: 10px;
             background: #fff;
             color: var(--primary);
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12.5px;
             cursor: pointer;
         }
 
@@ -468,75 +478,75 @@
 
         .month-card {
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px;
-            margin-bottom: 10px;
+            border-radius: 11px;
+            padding: 8px;
+            margin-bottom: 6px;
             background: #fafbff;
             position: relative;
         }
 
         .month-title {
-            font-size: 12.5px;
+            font-size: 11.5px;
             font-weight: 800;
             color: var(--primary);
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             text-transform: uppercase;
         }
 
         .btn-remove {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 7px;
+            right: 7px;
             background: #ef4444;
             color: #fff;
             border: none;
-            border-radius: 7px;
-            padding: 4px 8px;
-            font-size: 11px;
+            border-radius: 6px;
+            padding: 3px 7px;
+            font-size: 10.5px;
             font-weight: 700;
             cursor: pointer;
         }
 
         .btn-add-month {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             background: #16a34a;
             color: #fff;
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12.5px;
             cursor: pointer;
-            margin-bottom: 12px;
+            margin-bottom: 6px;
         }
 
         .social-box {
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px;
+            border-radius: 11px;
+            padding: 9px;
             background: #f8fafc;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .social-box h3 {
-            margin: 0 0 8px;
-            font-size: 13px;
+            margin: 0 0 6px;
+            font-size: 12.5px;
             color: var(--text);
         }
 
         .child-row {
             display: flex;
-            gap: 8px;
+            gap: 5px;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         .child-row select {
             flex: 1;
-            padding: 8px;
+            padding: 6px 8px;
             border: 1px solid #cbd5e1;
-            border-radius: 9px;
-            font-size: 12.5px;
+            border-radius: 8px;
+            font-size: 12px;
             font-weight: 600;
             background: #fff;
         }
@@ -545,9 +555,9 @@
             background: var(--primary);
             color: #fff;
             border: none;
-            border-radius: 9px;
-            padding: 8px 12px;
-            font-size: 12px;
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 11.5px;
             font-weight: 700;
             cursor: pointer;
             width: 100%;
@@ -557,9 +567,9 @@
             background: #ef4444;
             color: #fff;
             border: none;
-            border-radius: 9px;
-            padding: 8px 10px;
-            font-size: 12px;
+            border-radius: 8px;
+            padding: 6px 8px;
+            font-size: 11.5px;
             font-weight: 700;
             cursor: pointer;
         }
@@ -567,62 +577,51 @@
         .result-dark-box {
             background: #1e293b;
             color: #fff;
-            border-radius: 16px;
-            padding: 14px;
-            margin-top: 12px;
+            border-radius: 13px;
+            padding: 10px;
+            margin-top: 6px;
         }
 
         .res-line {
             display: flex;
             justify-content: space-between;
-            font-size: 12.5px;
-            padding: 6px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            font-size: 12px;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .res-total-label {
             text-align: center;
-            font-size: 11px;
+            font-size: 10.5px;
             opacity: 0.85;
-            margin-top: 10px;
-            letter-spacing: 0.5px;
+            margin-top: 7px;
+            letter-spacing: 0.4px;
         }
 
         .res-total-val {
             text-align: center;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 800;
             color: #34d399;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         .tax-note-box {
-            margin-top: 12px;
+            margin-top: 8px;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.14);
-            border-radius: 10px;
-            padding: 10px;
-            font-size: 12px;
-            line-height: 1.55;
-        }
-
-        .period-banner {
-            background: #f4f6ff;
-            border: 1px solid #dce2f9;
-            border-radius: 12px;
-            padding: 9px 12px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-bottom: 10px;
+            border-radius: 9px;
+            padding: 8px;
+            font-size: 11.5px;
+            line-height: 1.45;
         }
 
         .benefit-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            padding: 10px 0;
+            gap: 6px;
+            padding: 7px 0;
             border-bottom: 1px solid var(--border);
         }
 
@@ -631,21 +630,38 @@
         }
 
         .benefit-name {
-            font-size: 13.5px;
+            font-size: 12.5px;
             font-weight: 700;
+            min-width: 0;
+            flex: 1;
         }
 
         .benefit-cols {
             display: flex;
-            gap: 8px;
+            gap: 3px;
+            align-items: flex-end;
+            flex-shrink: 0;
+        }
+
+        .col-stack {
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            gap: 2px;
+        }
+
+        .col-year-head {
+            font-size: 9.5px;
+            font-weight: 800;
+            color: var(--muted);
+            line-height: 1;
         }
 
         .col-chip {
-            font-size: 12.5px;
+            font-size: 11.5px;
             font-weight: 700;
-            padding: 5px 10px;
-            border-radius: 9px;
+            padding: 4px 6px;
+            border-radius: 7px;
             background: #f3f5fa;
             color: var(--text);
             white-space: nowrap;
@@ -659,57 +675,57 @@
         .enf-calc-card {
             background: #fffbeb;
             border: 1px solid #fde68a;
-            border-radius: 16px;
-            padding: 14px;
-            margin-bottom: 14px;
+            border-radius: 14px;
+            padding: 11px;
+            margin-bottom: 10px;
         }
 
         .enf-calc-title {
-            margin: 0 0 10px;
-            font-size: 14.5px;
+            margin: 0 0 7px;
+            font-size: 13.5px;
             font-weight: 800;
             color: #b45309;
         }
 
         .amber-btn {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border: none;
-            border-radius: 11px;
+            border-radius: 9px;
             background: #d97706;
             color: #fff;
             font-weight: 800;
-            font-size: 13.5px;
+            font-size: 12.5px;
             cursor: pointer;
         }
 
         .enf-result-box {
-            margin-top: 10px;
+            margin-top: 7px;
             background: #fef3c7;
             border: 1px solid #fcd34d;
-            border-radius: 10px;
-            padding: 10px;
-            font-size: 12.5px;
+            border-radius: 8px;
+            padding: 8px;
+            font-size: 12px;
             color: #78350f;
-            line-height: 1.55;
+            line-height: 1.45;
             display: none;
         }
 
         .tufe-table-wrap {
-            max-height: 310px;
+            max-height: 300px;
             overflow-y: auto;
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 10px;
         }
 
         table.tufe-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 12.5px;
+            font-size: 12px;
         }
 
         table.tufe-table th, table.tufe-table td {
-            padding: 8px 10px;
+            padding: 6px 8px;
             border-bottom: 1px solid var(--border);
             text-align: center;
         }
@@ -726,11 +742,250 @@
             font-weight: 700;
         }
 
-        .info-note {
+        /* Gömülü Vardiya Çizelgesi Stilleri */
+        .auth-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .auth-tab {
+            padding: 8px;
+            border-radius: 10px;
+            border: 1.5px solid var(--primary);
+            background: #fff;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 12.5px;
+            cursor: pointer;
+        }
+
+        .auth-tab.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .consent-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
             font-size: 11.5px;
+            color: var(--text);
+            margin: 8px 0;
+            line-height: 1.35;
+        }
+
+        .link-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 800;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 0;
+            font-size: 11.5px;
+        }
+
+        .primary-action-btn {
+            width: 100%;
+            padding: 9px 12px;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .primary-action-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .secondary-action-btn {
+            padding: 7px 10px;
+            border-radius: 9px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 11.5px;
+            cursor: pointer;
+        }
+
+        .danger-action-btn {
+            padding: 7px 10px;
+            border-radius: 9px;
+            border: 1px solid #fecdd3;
+            background: #fff1f2;
+            color: var(--danger);
+            font-weight: 700;
+            font-size: 11.5px;
+            cursor: pointer;
+        }
+
+        .shift-user-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: #f4f6ff;
+            border: 1px solid #dce2f9;
+            border-radius: 12px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .shift-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .shift-stat {
+            background: #f8f9fd;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 7px 8px;
+            text-align: center;
+        }
+
+        .shift-stat-lbl {
+            font-size: 10px;
+            font-weight: 700;
             color: var(--muted);
-            line-height: 1.45;
-            margin-top: 8px;
+        }
+
+        .shift-stat-val {
+            margin-top: 2px;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .shift-days-list {
+            max-height: 360px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            padding: 6px;
+            background: #fafbff;
+        }
+
+        .shift-day-row {
+            display: grid;
+            grid-template-columns: 78px 1fr 74px;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 4px;
+            border-bottom: 1px solid #eef1f8;
+            font-size: 12px;
+        }
+
+        .shift-day-row:last-child {
+            border-bottom: none;
+        }
+
+        .shift-day-label {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .shift-day-code {
+            font-size: 10px;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        /* Aydınlatma & Kullanım Bilgilendirme Modal Katmanı */
+        .info-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.58);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+            z-index: 2000;
+        }
+
+        .info-modal-backdrop.open {
+            display: flex;
+        }
+
+        .info-modal-card {
+            background: #fff;
+            border-radius: 18px;
+            max-width: 540px;
+            width: 100%;
+            max-height: 84vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 44px rgba(15, 23, 42, 0.28);
+            overflow: hidden;
+        }
+
+        .info-modal-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: #fff;
+            padding: 13px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .info-modal-title {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .info-modal-close {
+            background: rgba(255, 255, 255, 0.18);
+            border: none;
+            color: #fff;
+            border-radius: 8px;
+            padding: 5px 9px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .info-modal-body {
+            padding: 14px 16px;
+            overflow-y: auto;
+            font-size: 12.5px;
+            line-height: 1.52;
+            color: var(--text);
+        }
+
+        .info-modal-body p {
+            margin: 0 0 8px;
+        }
+
+        .info-modal-body ul {
+            margin: 4px 0 10px 18px;
+            padding: 0;
+        }
+
+        .info-modal-body li {
+            margin-bottom: 5px;
+        }
+
+        .info-modal-footer {
+            padding: 11px 16px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            background: #f8fafc;
         }
 
         .bottom-nav {
@@ -743,9 +998,9 @@
             border-top: 1px solid var(--border);
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            padding: 7px 4px 10px;
+            padding: 6px 3px 8px;
             z-index: 999;
-            box-shadow: 0 -6px 22px rgba(24, 32, 68, 0.08);
+            box-shadow: 0 -6px 20px rgba(24, 32, 68, 0.08);
         }
 
         .nav-btn {
@@ -754,13 +1009,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
-            font-size: 10.5px;
+            gap: 2px;
+            font-size: 10px;
             font-weight: 700;
             color: var(--muted);
             cursor: pointer;
-            padding: 5px 2px;
-            border-radius: 12px;
+            padding: 4px 2px;
+            border-radius: 10px;
         }
 
         .nav-btn.active {
@@ -769,17 +1024,8 @@
         }
 
         .nav-icon {
-            font-size: 17px;
+            font-size: 16px;
             line-height: 1;
-        }
-
-        @media (max-width: 520px) {
-            .kpi-grid, .three-col {
-                grid-template-columns: 1fr;
-            }
-            .two-col, .output-grid {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
@@ -797,7 +1043,7 @@
                 </div>
             </div>
             <div class="header-actions">
-                <a href="vardiya.html" class="icon-btn shift-btn">📅 Vardiya</a>
+                <button type="button" class="icon-btn shift-btn" onclick="vardiyaEkraninaGit()">📅 Vardiya</button>
                 <button type="button" class="icon-btn" id="refreshBtn" title="Verileri Yenile">↻ Yenile</button>
                 <a href="yonetim.html" class="icon-btn">⚙ Panel</a>
             </div>
@@ -805,7 +1051,7 @@
         <div class="status-strip">
             <div>
                 <span class="status-dot" id="statusDot"></span>
-                <span id="statusText">Canlı veri senkronize ediliyor...</span>
+                <span id="statusText">Aktif</span>
             </div>
             <span id="lastSyncText">-</span>
         </div>
@@ -813,31 +1059,31 @@
 
     <main class="container">
 
-        <!-- 1. ÖZET & DUYURU -->
+        <!-- 1. ANASAYFA -->
         <section id="view-home" class="view active">
-            <a href="vardiya.html" class="quick-shift-card">
+            <button type="button" class="quick-shift-card" onclick="vardiyaEkraninaGit()">
                 <div>
                     <p class="quick-shift-title">Kişisel Vardiya Çizelgesi</p>
                     <p class="quick-shift-desc">Aylık vardiya girişi, gece/mesai/çalışma saatleri ve hesap işlemleri.</p>
                 </div>
-                <span class="quick-shift-cta">Vardiya Sayfası →</span>
-            </a>
+                <span class="quick-shift-cta">Vardiya Çizelgesi →</span>
+            </button>
 
             <div class="kpi-grid">
                 <div class="kpi-card">
                     <div class="kpi-label">ASGARİ ÜCRET</div>
                     <div class="kpi-value" id="kpiAsgari">-</div>
-                    <div class="kpi-sub">Brüt Referans</div>
+                    <div class="kpi-sub">Brüt</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-label">GECE SAAT ÜCRETİ</div>
                     <div class="kpi-value" id="kpiGece">-</div>
-                    <div class="kpi-sub">Saatlik Değer</div>
+                    <div class="kpi-sub">Saatlik</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-label">SON AYLIK TÜFE</div>
                     <div class="kpi-value" id="kpiTufe">-</div>
-                    <div class="kpi-sub" id="kpiTufeAy">Enflasyon</div>
+                    <div class="kpi-sub" id="kpiTufeAy">TÜFE</div>
                 </div>
             </div>
 
@@ -857,16 +1103,12 @@
             </div>
         </section>
 
-        <!-- 2. MAAŞ HESAPLAMA (Gece ücreti, GVI ve DVI yönetim.html'den) -->
+        <!-- 2. MAAŞ HESAPLAMA -->
         <section id="view-calc" class="view">
             <div class="card">
                 <div class="card-title-row">
                     <h2 class="card-title">Maaş Hesaplama</h2>
                     <span class="badge green" id="calcParamKaynagi">Panel Verisi</span>
-                </div>
-
-                <div class="meta-hint-bar" id="calcParamBilgi">
-                    Gece birim ücreti, GVI ve DVI yönetim panelindeki ayarlarla eşleniyor...
                 </div>
 
                 <div class="two-col">
@@ -901,7 +1143,7 @@
 
                 <div class="two-col">
                     <div class="field-group">
-                        <label class="field-label" for="gece-zammi">Gece Zammı (Sa):</label>
+                        <label class="field-label" for="gece-zammi">Gece Çalışma (Sa):</label>
                         <input type="number" id="gece-zammi" class="input-control" value="0" oninput="hesapla()">
                     </div>
                     <div class="field-group">
@@ -945,14 +1187,14 @@
 
                 <div class="output-grid">
                     <div class="output-box">
-                        <div class="output-label">Vergi İstisnası (GVI + DVI)</div>
+                        <div class="output-label">Vergi İstisnası</div>
                         <div id="vergi-istisnasi" class="output-val">0,00</div>
                         <div id="gvi-dvi-detay" class="output-sub">GVI: 0,00 | DVI: 0,00</div>
                     </div>
                     <div class="output-box">
                         <div class="output-label">Sendika Kesintisi</div>
                         <div id="sendika-kesinti" class="output-val">0,00</div>
-                        <div id="gece-birim-detay" class="output-sub">Gece Birim: 0,00 TL</div>
+                        <div id="gece-birim-detay" class="output-sub">Gece: 0,00 TL/sa</div>
                     </div>
                     <div class="output-box">
                         <div class="output-label">Vakıf Net Tutar</div>
@@ -978,7 +1220,7 @@
             <div class="card">
                 <div class="card-title-row">
                     <h2 class="card-title">Fark Hesaplaması</h2>
-                    <span class="badge amber">Fark & Ortalama</span>
+                    <span class="badge amber" id="diffPanelRozet">Panel Bağlı</span>
                 </div>
 
                 <div class="mode-switch">
@@ -1024,7 +1266,7 @@
 
                     <div class="social-box">
                         <h3>Sosyal Yardım Seçenekleri (Senede 1 Defa)</h3>
-                        <div class="two-col" style="margin-bottom:8px;">
+                        <div class="two-col" style="margin-bottom:5px;">
                             <div class="field-group" style="margin:0;">
                                 <label class="field-label" for="yillik_servis">Servis Ücreti</label>
                                 <select id="yillik_servis" class="select-control" onchange="yillikOrtalamaHesapla()">
@@ -1038,7 +1280,7 @@
                             </div>
                         </div>
                         <div id="cocukListesi"></div>
-                        <div id="sosyalDurumNotu" class="info-note">Sosyal yardım verileri kontrol ediliyor...</div>
+                        <div id="sosyalDurumNotu" class="info-note">Vergi dilimleri ve sosyal yardımlar yönetim panelinden okunur.</div>
                     </div>
 
                     <div class="result-dark-box">
@@ -1052,16 +1294,12 @@
             </div>
         </section>
 
-        <!-- 4. SOSYAL YARDIMLAR -->
+        <!-- 4. YARDIMLAR -->
         <section id="view-benefits" class="view">
             <div class="card">
                 <div class="card-title-row">
-                    <h2 class="card-title">Sosyal Yardımlar</h2>
-                    <span class="badge" id="sosyalBaslikRozet">2025 / 2026</span>
-                </div>
-
-                <div class="period-banner" id="sosyalDonemAciklama">
-                    Dönemler: 1. Sütun (2025) — 2. Sütun (2026)
+                    <h2 class="card-title">Yardımlar</h2>
+                    <span class="badge" id="sosyalBaslikRozet">2026 / 2027</span>
                 </div>
 
                 <div class="field-group">
@@ -1105,12 +1343,171 @@
             </div>
         </section>
 
+        <!-- 6. GÖMÜLÜ VARDİYA ÇİZELGESİ -->
+        <section id="view-shift" class="view">
+            <div id="vardiyaGirisKart" class="card">
+                <div class="card-title-row">
+                    <h2 class="card-title">Vardiya Çizelgesi Giriş / Üyelik</h2>
+                    <button type="button" class="secondary-action-btn" onclick="bilgilendirmeModalAc()">Kullanım Rehberi</button>
+                </div>
+
+                <div class="auth-tabs">
+                    <button type="button" id="tabVardiyaGiris" class="auth-tab active" onclick="vardiyaAuthSekme('giris')">Giriş Yap</button>
+                    <button type="button" id="tabVardiyaUye" class="auth-tab" onclick="vardiyaAuthSekme('uye')">Üye Ol</button>
+                </div>
+
+                <!-- GİRİŞ FORMU -->
+                <form id="vardiyaGirisForm">
+                    <div class="field-group">
+                        <label class="field-label" for="vGirisKullanici">Kullanıcı Adı veya E-posta</label>
+                        <input type="text" id="vGirisKullanici" class="input-control" required placeholder="Kullanıcı adınız veya e-postanız">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="vGirisSifre">Parola</label>
+                        <input type="password" id="vGirisSifre" class="input-control" required placeholder="Parolanız">
+                    </div>
+                    <div class="consent-line">
+                        <input type="checkbox" id="vGirisAydinlatma" checked>
+                        <label for="vGirisAydinlatma" style="margin:0; font-weight:600;">
+                            <button type="button" class="link-btn" onclick="aydinlatmaModalAc()">Aydınlatma Metni</button> kapsamında vardiya verilerimin işlenmesini onaylıyorum.
+                        </label>
+                    </div>
+                    <button type="submit" id="vGirisBtn" class="primary-action-btn">Giriş Yap</button>
+                </form>
+
+                <!-- ÜYE OL FORMU -->
+                <form id="vardiyaUyeForm" style="display:none;">
+                    <div class="field-group">
+                        <label class="field-label" for="vUyeAdSoyad">Ad Soyad / Kullanıcı Adı</label>
+                        <input type="text" id="vUyeAdSoyad" class="input-control" required placeholder="Adınız Soyadınız">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="vUyeEmail">E-posta</label>
+                        <input type="email" id="vUyeEmail" class="input-control" required placeholder="ornek@eposta.com">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="vUyeSifre">Parola</label>
+                        <input type="password" id="vUyeSifre" class="input-control" required minlength="4" placeholder="En az 4 karakter">
+                    </div>
+                    <div class="consent-line">
+                        <input type="checkbox" id="vUyeAydinlatma" required>
+                        <label for="vUyeAydinlatma" style="margin:0; font-weight:600;">
+                            <button type="button" class="link-btn" onclick="aydinlatmaModalAc()">Aydınlatma Metni</button>’ni okudum ve kabul ediyorum.
+                        </label>
+                    </div>
+                    <button type="submit" id="vUyeBtn" class="primary-action-btn">Üye Ol</button>
+                </form>
+            </div>
+
+            <div id="vardiyaPanelKart" class="card" style="display:none;">
+                <div class="card-title-row">
+                    <h2 class="card-title">Kişisel Vardiya Çizelgesi</h2>
+                    <div style="display:flex; gap:5px;">
+                        <button type="button" class="secondary-action-btn" onclick="bilgilendirmeModalAc()">ℹ Rehber</button>
+                        <button type="button" class="danger-action-btn" onclick="vardiyaCikisYap()">Çıkış</button>
+                    </div>
+                </div>
+
+                <div class="shift-user-bar">
+                    <span>Kullanıcı: <strong id="vAktifKullaniciAdi">-</strong></span>
+                    <span id="vKayitDurumu" style="color:#047857; font-weight:700;">Hazır</span>
+                </div>
+
+                <div class="two-col">
+                    <div class="field-group">
+                        <label class="field-label" for="vYil">Yıl</label>
+                        <select id="vYil" class="select-control" onchange="vardiyaAyVerisiniYukle()">
+                            <option value="2025">2025</option>
+                            <option value="2026" selected>2026</option>
+                            <option value="2027">2027</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="vAy">Ay</label>
+                        <select id="vAy" class="select-control" onchange="vardiyaAyVerisiniYukle()">
+                            <option value="1">Ocak</option><option value="2">Şubat</option><option value="3">Mart</option>
+                            <option value="4">Nisan</option><option value="5">Mayıs</option><option value="6">Haziran</option>
+                            <option value="7">Temmuz</option><option value="8">Ağustos</option><option value="9">Eylül</option>
+                            <option value="10">Ekim</option><option value="11">Kasım</option><option value="12">Aralık</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="shift-summary-grid">
+                    <div class="shift-stat">
+                        <div class="shift-stat-lbl">ÇALIŞMA SAATİ</div>
+                        <div class="shift-stat-val" id="vToplamCalisma">0,0 sa</div>
+                    </div>
+                    <div class="shift-stat">
+                        <div class="shift-stat-lbl">GECE SAATİ</div>
+                        <div class="shift-stat-val" id="vToplamGece">0,0 sa</div>
+                    </div>
+                    <div class="shift-stat">
+                        <div class="shift-stat-lbl">FAZLA MESAİ</div>
+                        <div class="shift-stat-val" id="vToplamMesai">0,0 sa</div>
+                    </div>
+                    <div class="shift-stat">
+                        <div class="shift-stat-lbl">TAHMİNİ NET MAAŞ</div>
+                        <div class="shift-stat-val" id="vTahminiNet">0,00 TL</div>
+                    </div>
+                </div>
+
+                <div class="shift-days-list" id="vGunlerListesi"></div>
+
+                <div class="two-col" style="margin-top:8px;">
+                    <button type="button" id="vKaydetBtn" class="primary-action-btn" onclick="vardiyaAyVerisiniKaydet()">Vardiyayı Kaydet</button>
+                    <button type="button" class="secondary-action-btn" style="padding:9px 12px;" onclick="vardiyaMaasAktar()">Maaş Hesaba Aktar</button>
+                </div>
+            </div>
+        </section>
+
     </main>
+
+    <!-- TEK AYDINLATMA METNİ MODAL EKRANI -->
+    <div id="aydinlatmaModal" class="info-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="aydinlatmaBaslik">
+        <div class="info-modal-card">
+            <div class="info-modal-header">
+                <h3 id="aydinlatmaBaslik" class="info-modal-title">Kişisel Verilerin İşlenmesine İlişkin Aydınlatma Metni</h3>
+                <button type="button" class="info-modal-close" onclick="aydinlatmaModalKapat()">✕</button>
+            </div>
+            <div class="info-modal-body">
+                <p><strong>1. Veri Sorumlusu:</strong> BordroApp kapsamında oluşturulan kişisel vardiya çizelgesi ve hesaplama modülleri, kullanıcı hesabınıza özel aylık kayıtların tutulması amacıyla işletilmektedir.</p>
+                <p><strong>2. İşlenen Veriler:</strong> Üyelik ve giriş sırasında sağladığınız ad/kullanıcı adı, e-posta bilgisi ile aylık vardiya girişleriniz (çalışma günü/kodu, gece saati, fazla mesai saati) işlenmektedir.</p>
+                <p><strong>3. İşleme Amacı ve Saklama:</strong> Verileriniz yalnızca seçtiğiniz yıl ve ay bazında kişisel vardiya çizelgenizi görüntülemek, kaydetmek ve maaş/fark hesaplamalarını kolaylaştırmak için saklanır; izniniz dışında üçüncü kişilerle paylaşılmaz.</p>
+                <p><strong>4. Haklarınız:</strong> Kayıtlı vardiya verilerinizi uygulama üzerinden güncelleyebilir, oturumunuzu kapatabilir veya hesabınıza ilişkin taleplerinizi iletebilirsiniz.</p>
+            </div>
+            <div class="info-modal-footer">
+                <button type="button" class="primary-action-btn" style="width:auto; padding:8px 16px;" onclick="aydinlatmaOnaylaVeKapat()">Anladım, Onaylıyorum</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÜYELİK SONRASI KULLANIM BİLGİLENDİRME MODAL EKRANI -->
+    <div id="bilgilendirmeModal" class="info-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="bilgilendirmeBaslik">
+        <div class="info-modal-card">
+            <div class="info-modal-header">
+                <h3 id="bilgilendirmeBaslik" class="info-modal-title">Üyelik Tamamlandı — Kullanım Bilgilendirmesi</h3>
+                <button type="button" class="info-modal-close" onclick="bilgilendirmeModalKapat()">✕</button>
+            </div>
+            <div class="info-modal-body">
+                <p>BordroApp vardiya çizelgesine hoş geldiniz. Kayıtlarınız mevcut kullanıcı verilerinizle birlikte güvenli şekilde senkronize edilir.</p>
+                <ul>
+                    <li><strong>1. Yıl ve Ay Seçimi:</strong> Üst kısımdan <em>Yıl</em> ve <em>Ay</em> seçerek ilgili ayın gün listesini açın; daha önce kaydedilmiş veriniz varsa otomatik yüklenir.</li>
+                    <li><strong>2. Vardiya Kodu ve Mesai Girişi:</strong> Her gün için vardiya durumunu seçin; gece çalışma veya fazla mesai varsa saat alanına girin. Üstteki özet kutuları anlık güncellenir.</li>
+                    <li><strong>3. Kaydetme ve Maaş Aktarımı:</strong> Değişiklikleri kalıcı olarak saklamak için <strong>Vardiyayı Kaydet</strong> butonuna basın. Toplam saatleri <em>Maaş Hesaplama</em> ekranına taşımak için <strong>Maaş Hesaba Aktar</strong> seçeneğini kullanabilirsiniz.</li>
+                    <li><strong>4. Diğer Modüller:</strong> Alt menüden <em>Anasayfa</em>, <em>Maaş</em>, <em>Fark</em>, <em>Yardımlar</em> ve <em>TÜFE</em> ekranları arasında tek dokunuşla geçiş yapabilirsiniz.</li>
+                </ul>
+            </div>
+            <div class="info-modal-footer">
+                <button type="button" class="primary-action-btn" style="width:auto; padding:8px 16px;" onclick="bilgilendirmeModalKapat()">Vardiya Çizelgesine Geç</button>
+            </div>
+        </div>
+    </div>
 
     <nav class="bottom-nav">
         <button type="button" class="nav-btn active" data-target="view-home" onclick="ekranDegistir(this)">
             <span class="nav-icon">🏠</span>
-            <span>Özet</span>
+            <span>Anasayfa</span>
         </button>
         <button type="button" class="nav-btn" data-target="view-calc" onclick="ekranDegistir(this)">
             <span class="nav-icon">🧮</span>
@@ -1132,7 +1529,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
@@ -1146,7 +1543,8 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const CACHE_KEY = "bordroapp_mobil_v4";
+        const CACHE_KEY = "bordroapp_mobil_v7";
+        const VARDIYA_OTURUM_KEY = "bordroapp_vardiya_oturum_v1";
 
         const ayVerileri = {
             1: { ad: "Ocak", gun: 31, gv: 4211.33, dv: 250.70 },
@@ -1186,7 +1584,7 @@
             { id: "gece_zammi", adi: "Gece Zammı Ücreti" }
         ];
 
-        const vergiDilimleri = [
+        const varsayilanDilimler = [
             { limit: 158000, oran: 0.15, etiket: "%15" },
             { limit: 330000, oran: 0.20, etiket: "%20" },
             { limit: 1200000, oran: 0.27, etiket: "%27" },
@@ -1198,6 +1596,7 @@
         let aySayaci = 0;
         let cocukSayaci = 0;
         let globalIkinci6AyOran = 0;
+        let aktifVardiyaKullanici = null;
 
         function sayiParse(val) {
             if (val === undefined || val === null || val === "") return NaN;
@@ -1214,7 +1613,6 @@
             return n.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
-        // yonetim.html -> formuller.geceCalismaSaatUcreti
         function geceBirimUcretiAl() {
             const formul = aktifVeri.formuller || {};
             const panelDegeri = sayiParse(formul.geceCalismaSaatUcreti);
@@ -1224,7 +1622,6 @@
             return { tutar: 30, kaynak: "varsayılan" };
         }
 
-        // yonetim.html -> formuller.aylikIstisnalar[ayIdx] (gelirVergisiIstisnasi & damgaVergisiIstisnasi)
         function ayIstisnalariAl(ayNum) {
             const ayIdx = String(parseInt(ayNum, 10) - 1);
             const varsayilan = ayVerileri[ayNum] || { gv: 0, dv: 0 };
@@ -1245,6 +1642,36 @@
             };
         }
 
+        function aktifVergiDilimleriAl() {
+            const formul = aktifVeri.formuller || {};
+            const oranlar = formul.gelirVergisiOranlari || {};
+            const sinirlar = formul.gelirVergisiSinirlari || {};
+
+            const o1 = sayiParse(oranlar.d1);
+            const o2 = sayiParse(oranlar.d2);
+            const o3 = sayiParse(oranlar.d3);
+            const o4 = sayiParse(oranlar.d4);
+
+            const s1 = sayiParse(sinirlar.s1);
+            const s2 = sayiParse(sinirlar.s2);
+            const s3 = sayiParse(sinirlar.s3);
+
+            const panelVar = ![o1, o2, o3, o4, s1, s2, s3].some(Number.isNaN);
+            if (!panelVar) {
+                return { dilimler: varsayilanDilimler, kaynak: "varsayılan" };
+            }
+
+            return {
+                kaynak: "yonetim.html",
+                dilimler: [
+                    { limit: s1, oran: o1 / 100, etiket: `%${o1}` },
+                    { limit: Math.max(s1, s2), oran: o2 / 100, etiket: `%${o2}` },
+                    { limit: Math.max(s1, s2, s3), oran: o3 / 100, etiket: `%${o3}` },
+                    { limit: Infinity, oran: o4 / 100, etiket: `%${o4}` }
+                ]
+            };
+        }
+
         function otomatikAyAyarla() {
             const simdi = new Date();
             let ay = simdi.getMonth() + 1;
@@ -1254,6 +1681,7 @@
                 if (ay < 1) ay = 12;
             }
             document.getElementById("month").value = String(ay);
+            document.getElementById("vAy").value = String(ay);
         }
 
         window.ayAyariYap = function() {
@@ -1308,14 +1736,11 @@
             document.getElementById("sendika-kesinti").innerText = f2(sendika);
             document.getElementById("vergi-istisnasi").innerText = f2(istisnaBilgi.gv + istisnaBilgi.dv);
             document.getElementById("gvi-dvi-detay").innerText = `GVI: ${f2(istisnaBilgi.gv)} | DVI: ${f2(istisnaBilgi.dv)}`;
-            document.getElementById("gece-birim-detay").innerText = `Gece Birim: ${f2(geceBilgi.tutar)} TL`;
+            document.getElementById("gece-birim-detay").innerText = `Gece: ${f2(geceBilgi.tutar)} TL/sa`;
             document.getElementById("vakif-net-tutar").innerText = f2(vakifNetTutar);
             document.getElementById("net-ikramiye").innerText = f2(ikramiyeNet);
             document.getElementById("net-maas").innerText = f2(net) + " TL";
 
-            const ayAdi = (ayVerileri[ay] && ayVerileri[ay].ad) ? ayVerileri[ay].ad : ay;
-            document.getElementById("calcParamBilgi").innerText =
-                `${ayAdi} — Gece Birim: ${f2(geceBilgi.tutar)} TL (${geceBilgi.kaynak}) • GVI: ${f2(istisnaBilgi.gv)} TL • DVI: ${f2(istisnaBilgi.dv)} TL (${istisnaBilgi.kaynak})`;
             document.getElementById("calcParamKaynagi").innerText =
                 (geceBilgi.kaynak === "yonetim.html" && istisnaBilgi.kaynak === "yonetim.html")
                     ? "Panel Güncel"
@@ -1388,6 +1813,16 @@
             hesaplaFark();
         };
 
+        function sosyalDegerAl(key) {
+            const kayit = sosyalKayitlari[key];
+            if (!kayit) return NaN;
+            const v2 = sayiParse(kayit._yil2);
+            if (!Number.isNaN(v2)) return v2;
+            const v1 = sayiParse(kayit._yil1);
+            if (!Number.isNaN(v1)) return v1;
+            return NaN;
+        }
+
         window.hesaplaFark = function() {
             const eskiSU = parseFloat(document.getElementById("eski_su").value) || 0;
             const yeniSU = parseFloat(document.getElementById("yeni_su").value) || 0;
@@ -1402,7 +1837,8 @@
             const suFark = yeniSU - eskiSU;
             const vo = parseFloat(document.getElementById("vergi_dilimi").value);
             const sabitBayramFarki = 2492.24;
-            const geceZammiBirimFark = 7.19;
+            const panelGeceZammi = sosyalDegerAl("gece_zammi");
+            const geceZammiBirimFark = !Number.isNaN(panelGeceZammi) ? panelGeceZammi : 7.19;
 
             let toplamNet = 0;
             const ikrBrut = suFark * 225;
@@ -1473,23 +1909,13 @@
             }
         };
 
-        function sosyalDegerAl(key) {
-            const kayit = sosyalKayitlari[key];
-            if (!kayit) return 0;
-            const v2 = sayiParse(kayit._yil2);
-            if (!Number.isNaN(v2)) return v2;
-            const v1 = sayiParse(kayit._yil1);
-            if (!Number.isNaN(v1)) return v1;
-            return 0;
-        }
-
         function nettenBruteCevir(netTutar, dilimOrani) {
             if (netTutar <= 0) return 0;
             const carpan = 0.85 * (1 - dilimOrani) - 0.00759;
             return carpan > 0 ? netTutar / carpan : netTutar;
         }
 
-        function kumulatifVergiHesapla(matrahOnceki, matrahArtisi) {
+        function kumulatifVergiHesapla(matrahOnceki, matrahArtisi, dilimler) {
             if (matrahArtisi <= 0) {
                 return { vergi: 0, yeniMatrah: matrahOnceki, dilimler: [] };
             }
@@ -1499,7 +1925,7 @@
             let toplamVergi = 0;
             const kullanilanDilimler = [];
 
-            for (const dilim of vergiDilimleri) {
+            for (const dilim of dilimler) {
                 if (kalan <= 0) break;
                 if (mevcut >= dilim.limit) continue;
 
@@ -1518,10 +1944,24 @@
             };
         }
 
+        function dilimBul(kumulatif, dilimler) {
+            for (const d of dilimler) {
+                if (kumulatif <= d.limit) return { oran: d.oran, etiket: d.etiket };
+            }
+            return dilimler[dilimler.length - 1];
+        }
+
         window.yillikOrtalamaHesapla = function() {
             const su = parseFloat(document.getElementById("yillik_saat_ucreti").value) || 0;
             const ortalamaEl = document.getElementById("ortalama_aylik_maas");
             const aciklamaEl = document.getElementById("vergi_dilimi_aciklama");
+            const notEl = document.getElementById("sosyalDurumNotu");
+
+            const dilimBilgi = aktifVergiDilimleriAl();
+            const dilimler = dilimBilgi.dilimler;
+            notEl.innerText = `Vergi dilimleri ve GVI/DVI (${dilimBilgi.kaynak}) ile hesaplanır.`;
+            document.getElementById("diffPanelRozet").innerText =
+                dilimBilgi.kaynak === "yonetim.html" ? "Panel Bağlı" : "Varsayılan";
 
             if (su <= 0) {
                 ortalamaEl.innerText = "0,00 TL";
@@ -1530,7 +1970,8 @@
             }
 
             const servisVar = document.getElementById("yillik_servis").value === "1";
-            const servisBrut = servisVar ? sosyalDegerAl("servis") : 0;
+            const servisRaw = sosyalDegerAl("servis");
+            const servisBrut = servisVar && !Number.isNaN(servisRaw) ? servisRaw : 0;
 
             const ramazanNet = sosyalDegerAl("ram_bayrami");
             const kurbanNet = sosyalDegerAl("kur_bayrami");
@@ -1539,12 +1980,14 @@
 
             let cocukYardimBrutToplam = 0;
             document.querySelectorAll("#cocukListesi select").forEach(sel => {
-                cocukYardimBrutToplam += sosyalDegerAl(sel.value);
+                const cVal = sosyalDegerAl(sel.value);
+                if (!Number.isNaN(cVal)) cocukYardimBrutToplam += cVal;
             });
 
             let kumulatifMatrah = 0;
             let yillikToplamNet = 0;
-            const dilimAylari = { "%15": [], "%20": [], "%27": [], "%35": [] };
+            const dilimAylari = {};
+            dilimler.forEach(d => { dilimAylari[d.etiket] = []; });
 
             for (let ay = 1; ay <= 12; ay++) {
                 const info = ayVerileri[ay];
@@ -1559,12 +2002,12 @@
                 }
 
                 let ekSosyalBrut = 0;
-                const tahminiDilim = kumulatifMatrah < 158000 ? 0.15 : (kumulatifMatrah < 330000 ? 0.20 : (kumulatifMatrah < 1200000 ? 0.27 : 0.35));
+                const tahmini = dilimBul(kumulatifMatrah, dilimler);
 
-                if (ay === 3) ekSosyalBrut += nettenBruteCevir(ramazanNet, tahminiDilim);
-                if (ay === 5) ekSosyalBrut += nettenBruteCevir(kurbanNet, tahminiDilim);
-                if (ay === 6) ekSosyalBrut += nettenBruteCevir(izinNet, tahminiDilim);
-                if (ay === 10) ekSosyalBrut += nettenBruteCevir(yakacakNet, tahminiDilim);
+                if (ay === 3 && !Number.isNaN(ramazanNet)) ekSosyalBrut += nettenBruteCevir(ramazanNet, tahmini.oran);
+                if (ay === 5 && !Number.isNaN(kurbanNet)) ekSosyalBrut += nettenBruteCevir(kurbanNet, tahmini.oran);
+                if (ay === 6 && !Number.isNaN(izinNet)) ekSosyalBrut += nettenBruteCevir(izinNet, tahmini.oran);
+                if (ay === 10 && !Number.isNaN(yakacakNet)) ekSosyalBrut += nettenBruteCevir(yakacakNet, tahmini.oran);
 
                 brut += ekSosyalBrut;
 
@@ -1572,7 +2015,7 @@
                 const issizlik = brut * 0.01;
                 const aylikMatrah = Math.max(0, brut - sgk - issizlik - sendika);
 
-                const gvSonuc = kumulatifVergiHesapla(kumulatifMatrah, aylikMatrah);
+                const gvSonuc = kumulatifVergiHesapla(kumulatifMatrah, aylikMatrah, dilimler);
                 kumulatifMatrah = gvSonuc.yeniMatrah;
 
                 let gv = gvSonuc.vergi - istisna.gv;
@@ -1584,35 +2027,31 @@
                 const netAy = brut - sgk - issizlik - gv - dv - sendika;
                 yillikToplamNet += netAy;
 
-                const aktifDilim = gvSonuc.dilimler.length > 0
+                const aktifEtiket = gvSonuc.dilimler.length > 0
                     ? gvSonuc.dilimler[gvSonuc.dilimler.length - 1]
-                    : (kumulatifMatrah <= 158000 ? "%15" : (kumulatifMatrah <= 330000 ? "%20" : (kumulatifMatrah <= 1200000 ? "%27" : "%35")));
+                    : dilimBul(kumulatifMatrah, dilimler).etiket;
 
-                dilimAylari[aktifDilim].push(info.ad);
+                if (!dilimAylari[aktifEtiket]) dilimAylari[aktifEtiket] = [];
+                dilimAylari[aktifEtiket].push(info.ad);
             }
 
             ortalamaEl.innerText = formatTL(yillikToplamNet / 12);
 
-            const satirlar = [];
-            for (const oran of ["%15", "%20", "%27", "%35"]) {
-                const ayListesi = dilimAylari[oran];
-                if (ayListesi.length > 0) {
-                    satirlar.push(`<strong>${oran} Vergi Dilimi:</strong> ${ayListesi.join(", ")}`);
-                } else {
-                    satirlar.push(`<strong>${oran} Vergi Dilimi:</strong> Bu yıl girilmedi`);
-                }
-            }
+            const satirlar = dilimler.map(d => {
+                const ayListesi = dilimAylari[d.etiket] || [];
+                return ayListesi.length > 0
+                    ? `<strong>${d.etiket} Vergi Dilimi:</strong> ${ayListesi.join(", ")}`
+                    : `<strong>${d.etiket} Vergi Dilimi:</strong> Bu yıl girilmedi`;
+            });
             aciklamaEl.innerHTML = satirlar.join("<br>");
         };
 
         function sosyalYardimlariCiz() {
             const arama = (document.getElementById("yardimAramaInput").value || "").toLocaleLowerCase("tr").trim();
-            const yil1 = aktifVeri.yil1 || "2025";
-            const yil2 = aktifVeri.yil2 || "2026";
+            const yil1 = aktifVeri.yil1 || "2026";
+            const yil2 = aktifVeri.yil2 || "2027";
 
             document.getElementById("sosyalBaslikRozet").innerText = `${yil1} / ${yil2}`;
-            document.getElementById("sosyalDonemAciklama").innerText =
-                `Dönemler: 1. Sütun (${yil1}) — 2. Sütun (${yil2})`;
 
             const listeEl = document.getElementById("sosyalYardimListe");
             listeEl.innerHTML = "";
@@ -1630,8 +2069,14 @@
                 row.innerHTML = `
                     <div class="benefit-name">${item.adi}</div>
                     <div class="benefit-cols">
-                        <span class="col-chip">${v1}</span>
-                        <span class="col-chip current">${v2}</span>
+                        <div class="col-stack">
+                            <span class="col-year-head">${yil1}</span>
+                            <span class="col-chip">${v1}</span>
+                        </div>
+                        <div class="col-stack">
+                            <span class="col-year-head">${yil2}</span>
+                            <span class="col-chip current">${v2}</span>
+                        </div>
                     </div>
                 `;
                 listeEl.appendChild(row);
@@ -1720,6 +2165,345 @@
             `;
         });
 
+        // --- TEK AYDINLATMA & BİLGİLENDİRME EKRANLARI ---
+        window.aydinlatmaModalAc = function() {
+            document.getElementById("aydinlatmaModal").classList.add("open");
+        };
+
+        window.aydinlatmaModalKapat = function() {
+            document.getElementById("aydinlatmaModal").classList.remove("open");
+        };
+
+        window.aydinlatmaOnaylaVeKapat = function() {
+            document.getElementById("vGirisAydinlatma").checked = true;
+            document.getElementById("vUyeAydinlatma").checked = true;
+            aydinlatmaModalKapat();
+        };
+
+        window.bilgilendirmeModalAc = function() {
+            document.getElementById("bilgilendirmeModal").classList.add("open");
+        };
+
+        window.bilgilendirmeModalKapat = function() {
+            document.getElementById("bilgilendirmeModal").classList.remove("open");
+        };
+
+        // --- GÖMÜLÜ VARDİYA ÇİZELGESİ (MEVCUT KULLANICI & VERİLER KORUNARAK) ---
+        window.vardiyaEkraninaGit = function() {
+            document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+            document.getElementById("view-shift").classList.add("active");
+            document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            if (aktifVardiyaKullanici) {
+                vardiyaAyVerisiniYukle();
+            }
+        };
+
+        window.vardiyaAuthSekme = function(sekme) {
+            const gBtn = document.getElementById("tabVardiyaGiris");
+            const uBtn = document.getElementById("tabVardiyaUye");
+            const gForm = document.getElementById("vardiyaGirisForm");
+            const uForm = document.getElementById("vardiyaUyeForm");
+
+            if (sekme === "uye") {
+                uBtn.classList.add("active");
+                gBtn.classList.remove("active");
+                uForm.style.display = "block";
+                gForm.style.display = "none";
+            } else {
+                gBtn.classList.add("active");
+                uBtn.classList.remove("active");
+                gForm.style.display = "block";
+                uForm.style.display = "none";
+            }
+        };
+
+        function vardiyaOturumAktiflestir(kullaniciObj, yeniUyeMi = false) {
+            aktifVardiyaKullanici = kullaniciObj;
+            localStorage.setItem(VARDIYA_OTURUM_KEY, JSON.stringify(kullaniciObj));
+            document.getElementById("vardiyaGirisKart").style.display = "none";
+            document.getElementById("vardiyaPanelKart").style.display = "block";
+            document.getElementById("vAktifKullaniciAdi").innerText =
+                kullaniciObj.adSoyad || kullaniciObj.kullaniciAdi || kullaniciObj.email || kullaniciObj.uid;
+            vardiyaAyVerisiniYukle();
+            if (yeniUyeMi) {
+                bilgilendirmeModalAc();
+            }
+        }
+
+        window.vardiyaCikisYap = function() {
+            aktifVardiyaKullanici = null;
+            localStorage.removeItem(VARDIYA_OTURUM_KEY);
+            document.getElementById("vardiyaPanelKart").style.display = "none";
+            document.getElementById("vardiyaGirisKart").style.display = "block";
+        };
+
+        document.getElementById("vardiyaGirisForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            if (!document.getElementById("vGirisAydinlatma").checked) {
+                alert("Devam etmek için Aydınlatma Metni onayını işaretleyin.");
+                return;
+            }
+
+            const giris = document.getElementById("vGirisKullanici").value.trim();
+            const sifre = document.getElementById("vGirisSifre").value.trim();
+            const btn = document.getElementById("vGirisBtn");
+            btn.disabled = true;
+
+            try {
+                const usersRef = collection(db, "vardiya_kullanicilar");
+                const byEmail = await getDocs(query(usersRef, where("email", "==", giris)));
+                let bulunan = null;
+
+                byEmail.forEach((docSnap) => {
+                    const d = docSnap.data() || {};
+                    if ((d.sifre || d.parola) === sifre) {
+                        bulunan = { uid: docSnap.id, ...d };
+                    }
+                });
+
+                if (!bulunan) {
+                    const byUser = await getDocs(query(usersRef, where("kullaniciAdi", "==", giris)));
+                    byUser.forEach((docSnap) => {
+                        const d = docSnap.data() || {};
+                        if ((d.sifre || d.parola) === sifre) {
+                            bulunan = { uid: docSnap.id, ...d };
+                        }
+                    });
+                }
+
+                if (!bulunan) {
+                    alert("Kullanıcı/e-posta veya parola hatalı!");
+                    return;
+                }
+
+                vardiyaOturumAktiflestir(bulunan, false);
+            } catch (err) {
+                console.error("Vardiya giriş hatası:", err);
+                alert("Giriş yapılamadı: " + err.message);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        document.getElementById("vardiyaUyeForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            if (!document.getElementById("vUyeAydinlatma").checked) {
+                alert("Üyelik için Aydınlatma Metni’ni kabul etmelisiniz.");
+                return;
+            }
+
+            const adSoyad = document.getElementById("vUyeAdSoyad").value.trim();
+            const email = document.getElementById("vUyeEmail").value.trim().toLowerCase();
+            const sifre = document.getElementById("vUyeSifre").value.trim();
+            const btn = document.getElementById("vUyeBtn");
+            btn.disabled = true;
+
+            try {
+                const usersRef = collection(db, "vardiya_kullanicilar");
+                const mevcutSnap = await getDocs(query(usersRef, where("email", "==", email)));
+                if (!mevcutSnap.empty) {
+                    alert("Bu e-posta adresi ile zaten üyelik bulunuyor. Giriş Yap sekmesini kullanın.");
+                    return;
+                }
+
+                const docId = email.replace(/[^a-zA-Z0-9._-]/g, "_") + "_" + Date.now().toString(36);
+                const yeniKayit = {
+                    adSoyad: adSoyad,
+                    kullaniciAdi: adSoyad,
+                    email: email,
+                    sifre: sifre,
+                    aydinlatmaOnay: true,
+                    olusturulmaTarihi: new Date().toISOString()
+                };
+
+                await setDoc(doc(db, "vardiya_kullanicilar", docId), yeniKayit);
+                vardiyaOturumAktiflestir({ uid: docId, ...yeniKayit }, true);
+            } catch (err) {
+                console.error("Üyelik hatası:", err);
+                alert("Üyelik oluşturulamadı: " + err.message);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        function vardiyaBelgeIdAl() {
+            const yil = document.getElementById("vYil").value;
+            const ay = String(document.getElementById("vAy").value).padStart(2, "0");
+            const uid = encodeURIComponent(aktifVardiyaKullanici.uid || aktifVardiyaKullanici.email);
+            return `${uid}_${yil}_${ay}`;
+        }
+
+        function vardiyaGunSatirlariniCiz(gunSayisi, kayitliGunler = {}) {
+            const yil = parseInt(document.getElementById("vYil").value, 10);
+            const ay = parseInt(document.getElementById("vAy").value, 10);
+            const listeEl = document.getElementById("vGunlerListesi");
+            const gunAdlari = ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"];
+            listeEl.innerHTML = "";
+
+            for (let g = 1; g <= gunSayisi; g++) {
+                const tarih = new Date(yil, ay - 1, g);
+                const gunAdi = gunAdlari[tari.getDay()];
+                const d = kayitliGunler[g] || {};
+                const kod = d.kod || (tari.getDay() === 0 ? "T" : "N");
+                const gece = d.gece !== undefined ? d.gece : 0;
+                const mesai = d.mesai !== undefined ? d.mesai : 0;
+
+                const row = document.createElement("div");
+                row.className = "shift-day-row";
+                row.innerHTML = `
+                    <div class="shift-day-label">
+                        <div>${g} ${gunAdi}</div>
+                        <div class="shift-day-code">Kod: ${kod}</div>
+                    </div>
+                    <select class="select-control" style="padding:5px 6px; font-size:11.5px;" data-v-gun="${g}" data-v-alan="kod" onchange="vardiyaOzetiHesapla()">
+                        <option value="N" ${kod==="N"?"selected":""}>Normal (7,5 sa)</option>
+                        <option value="G" ${kod==="G"?"selected":""}>Gece Vardiyası</option>
+                        <option value="T" ${kod==="T"?"selected":""}>Hafta Tatili</option>
+                        <option value="İ" ${kod==="İ"?"selected":""}>İzinli</option>
+                        <option value="R" ${kod==="R"?"selected":""}>Raporlu</option>
+                        <option value="B" ${kod==="B"?"selected":""}>Bayram</option>
+                    </select>
+                    <div style="display:flex; gap:3px;">
+                        <input type="number" step="0.5" min="0" title="Gece Saati" placeholder="Gece" class="input-control" style="padding:5px 4px; font-size:11px; text-align:center;" data-v-gun="${g}" data-v-alan="gece" value="${gece}" oninput="vardiyaOzetiHesapla()">
+                        <input type="number" step="0.5" min="0" title="Mesai Saati" placeholder="FM" class="input-control" style="padding:5px 4px; font-size:11px; text-align:center;" data-v-gun="${g}" data-v-alan="mesai" value="${mesai}" oninput="vardiyaOzetiHesapla()">
+                    </div>
+                `;
+                listeEl.appendChild(row);
+            }
+            vardiyaOzetiHesapla();
+        }
+
+        window.vardiyaOzetiHesapla = function() {
+            const ay = document.getElementById("vAy").value;
+            let calismaSaat = 0;
+            let geceSaat = 0;
+            let mesaiSaat = 0;
+
+            const gunSelects = document.querySelectorAll('#vGunlerListesi select[data-v-alan="kod"]');
+            gunSelects.forEach(sel => {
+                const g = sel.getAttribute("data-v-gun");
+                const kod = sel.value;
+                const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
+                const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
+                const gz = parseFloat(geceInp && geceInp.value) || 0;
+                const fm = parseFloat(mesaiInp && mesaiInp.value) || 0;
+
+                if (kod === "N" || kod === "G") {
+                    calismaSaat += 7.5;
+                }
+                geceSaat += gz;
+                mesaiSaat += fm;
+            });
+
+            document.getElementById("vToplamCalisma").innerText = calismaSaat.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) + " sa";
+            document.getElementById("vToplamGece").innerText = geceSaat.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) + " sa";
+            document.getElementById("vToplamMesai").innerText = mesaiSaat.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) + " sa";
+
+            const su = parseFloat(document.getElementById("saat-ucreti").value) || 0;
+            const geceBirim = geceBirimUcretiAl().tutar;
+            const istisna = ayIstisnalariAl(ay);
+            const vo = parseFloat(document.getElementById("tax-rate").value) || 0.15;
+
+            const brut = (su * calismaSaat) + (mesaiSaat * su * 2) + (geceSaat * geceBirim);
+            const sgk = brut * 0.14;
+            const issizlik = brut * 0.01;
+            const sendika = su * 7;
+            let gv = Math.max(0, brut - sgk - issizlik - sendika) * vo - istisna.gv;
+            if (gv < 0) gv = 0;
+            let dv = (brut * 0.00759) - istisna.dv;
+            if (dv < 0) dv = 0;
+            const net = Math.max(0, brut - sgk - issizlik - gv - dv - sendika);
+
+            document.getElementById("vTahminiNet").innerText = formatTL(net);
+        };
+
+        window.vardiyaAyVerisiniYukle = async function() {
+            if (!aktifVardiyaKullanici) return;
+            const yil = parseInt(document.getElementById("vYil").value, 10);
+            const ay = parseInt(document.getElementById("vAy").value, 10);
+            const gunSayisi = new Date(yil, ay, 0).getDate();
+            const durumEl = document.getElementById("vKayitDurumu");
+            durumEl.innerText = "Yükleniyor...";
+
+            try {
+                const snap = await getDoc(doc(db, "vardiya_kayitlari", vardiyaBelgeIdAl()));
+                const kayitli = snap.exists() ? (snap.data().gunler || {}) : {};
+                vardiyaGunSatirlariniCiz(gunSayisi, kayitli);
+                durumEl.innerText = snap.exists() ? "Kayıtlı veri yüklendi" : "Yeni ay çizelgesi";
+            } catch (err) {
+                console.error("Vardiya yükleme hatası:", err);
+                vardiyaGunSatirlariniCiz(gunSayisi, {});
+                durumEl.innerText = "Çevrimdışı görünüm";
+            }
+        };
+
+        window.vardiyaAyVerisiniKaydet = async function() {
+            if (!aktifVardiyaKullanici) return;
+            const btn = document.getElementById("vKaydetBtn");
+            const durumEl = document.getElementById("vKayitDurumu");
+            btn.disabled = true;
+            durumEl.innerText = "Kaydediliyor...";
+
+            const gunler = {};
+            const gunSelects = document.querySelectorAll('#vGunlerListesi select[data-v-alan="kod"]');
+            gunSelects.forEach(sel => {
+                const g = sel.getAttribute("data-v-gun");
+                const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
+                const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
+                gunler[g] = {
+                    kod: sel.value,
+                    gece: parseFloat(geceInp && geceInp.value) || 0,
+                    mesai: parseFloat(mesaiInp && mesaiInp.value) || 0
+                };
+            });
+
+            try {
+                await setDoc(doc(db, "vardiya_kayitlari", vardiyaBelgeIdAl()), {
+                    uid: aktifVardiyaKullanici.uid || aktifVardiyaKullanici.email,
+                    email: aktifVardiyaKullanici.email || "",
+                    yil: parseInt(document.getElementById("vYil").value, 10),
+                    ay: parseInt(document.getElementById("vAy").value, 10),
+                    gunler: gunler,
+                    guncellemeTarihi: new Date().toISOString()
+                }, { merge: true });
+                durumEl.innerText = "Kaydedildi";
+                alert("Vardiya çizelgesi kaydedildi.");
+            } catch (err) {
+                console.error("Vardiya kayıt hatası:", err);
+                durumEl.innerText = "Kayıt hatası";
+                alert("Kaydedilemedi: " + err.message);
+            } finally {
+                btn.disabled = false;
+            }
+        };
+
+        window.vardiyaMaasAktar = function() {
+            const ay = document.getElementById("vAy").value;
+            let calismaSaat = 0;
+            let geceSaat = 0;
+            let mesaiSaat = 0;
+
+            document.querySelectorAll('#vGunlerListesi select[data-v-alan="kod"]').forEach(sel => {
+                const g = sel.getAttribute("data-v-gun");
+                if (sel.value === "N" || sel.value === "G") calismaSaat += 7.5;
+                const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
+                const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
+                geceSaat += parseFloat(geceInp && geceInp.value) || 0;
+                mesaiSaat += parseFloat(mesaiInp && mesaiInp.value) || 0;
+            });
+
+            document.getElementById("month").value = String(ay);
+            document.getElementById("calisma-gun-saati").value = calismaSaat;
+            document.getElementById("gece-zammi").value = geceSaat;
+            document.getElementById("fm-100").value = mesaiSaat;
+            hesapla();
+
+            const maasBtn = document.querySelector('.nav-btn[data-target="view-calc"]');
+            if (maasBtn) ekranDegistir(maasBtn);
+        };
+
+        // --- GENEL VERİ YÜKLEME ---
         function arayuzuGuncelle(data) {
             aktifVeri = data || {};
             sosyalKayitlari = aktifVeri.sosyal || {};
@@ -1749,7 +2533,9 @@
             enfTablosunuCiz();
             sosyalYardimlariCiz();
             hesapla();
+            hesaplaFark();
             yillikOrtalamaHesapla();
+            if (aktifVardiyaKullanici) vardiyaOzetiHesapla();
         }
 
         async function verileriGetir(canli = true) {
@@ -1776,7 +2562,7 @@
                     localStorage.setItem(CACHE_KEY, JSON.stringify({ data: freshData, savedAt: saat }));
                     arayuzuGuncelle(freshData);
                     dot.classList.remove("offline");
-                    statusText.innerText = "Firestore ile güncel";
+                    statusText.innerText = "Aktif";
                     syncText.innerText = saat;
                 } else {
                     dot.classList.add("offline");
@@ -1785,7 +2571,7 @@
             } catch (err) {
                 console.error("Veri çekme hatası:", err);
                 dot.classList.add("offline");
-                statusText.innerText = "Çevrimdışı / Önbellek modu";
+                statusText.innerText = "Çevrimdışı";
             }
         }
 
@@ -1806,6 +2592,21 @@
         ayEkle(232.5, 0, 0, 0, 0, 0, 0);
         ayEkle(210, 0, 0, 0, 0, 0, 0);
         ayEkle(232.5, 0, 0, 0, 0, 0, 0);
+
+        const kayitliOturum = localStorage.getItem(VARDIYA_OTURUM_KEY);
+        if (kayitliOturum) {
+            try {
+                const parsedOturum = JSON.parse(kayitliOturum);
+                if (parsedOturum && (parsedOturum.uid || parsedOturum.email)) {
+                    aktifVardiyaKullanici = parsedOturum;
+                    document.getElementById("vardiyaGirisKart").style.display = "none";
+                    document.getElementById("vardiyaPanelKart").style.display = "block";
+                    document.getElementById("vAktifKullaniciAdi").innerText =
+                        parsedOturum.adSoyad || parsedOturum.kullaniciAdi || parsedOturum.email || parsedOturum.uid;
+                }
+            } catch (_) {}
+        }
+
         verileriGetir(true);
     </script>
 </body>
