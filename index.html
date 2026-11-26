@@ -795,13 +795,13 @@
 
         .primary-action-btn {
             width: 100%;
-            padding: 9px 12px;
+            padding: 10px 12px;
             border: none;
-            border-radius: 10px;
-            background: var(--primary);
+            border-radius: 11px;
+            background: #5b21b6;
             color: #fff;
             font-weight: 800;
-            font-size: 13px;
+            font-size: 13.5px;
             cursor: pointer;
         }
 
@@ -832,106 +832,273 @@
             cursor: pointer;
         }
 
-        .shift-user-bar {
+        /* VARDİYA ÇİZELGESİ GÖRSEL DÜZENİ */
+        .shift-header-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 8px;
-            flex-wrap: wrap;
-            background: #f4f6ff;
-            border: 1px solid #dce2f9;
-            border-radius: 12px;
-            padding: 8px 10px;
-            margin-bottom: 8px;
-            font-size: 12px;
+            margin-bottom: 10px;
         }
 
-        .shift-summary-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 6px;
-            margin-bottom: 8px;
-        }
-
-        .shift-stat {
-            background: #f8f9fd;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 7px 8px;
-            text-align: center;
-        }
-
-        .shift-stat-lbl {
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--muted);
-        }
-
-        .shift-stat-val {
-            margin-top: 2px;
-            font-size: 14px;
+        .shift-main-title {
+            margin: 0;
+            font-size: 19px;
             font-weight: 800;
-            color: var(--primary-dark);
+            color: var(--text);
+        }
+
+        .shift-year-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .shift-year-select {
+            padding: 6px 10px;
+            border-radius: 9px;
+            border: 1.4px solid #cbd5e1;
+            font-size: 13px;
+            font-weight: 800;
+            background: #fff;
+            color: var(--text);
+        }
+
+        .hesabim-trigger-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 8px 4px 10px;
+            border-bottom: 2px solid #cbd5e1;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .hesabim-link-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #b91c1c;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .hesabim-link-btn strong {
+            color: var(--text);
+        }
+
+        .loaded-badge {
+            font-size: 13px;
+            font-weight: 700;
+            color: #475569;
+            white-space: nowrap;
+        }
+
+        .shift-summary-3 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 7px;
+            margin: 10px 0 12px;
+        }
+
+        .shift-box-dark {
+            background: #1e293b;
+            color: #fff;
+            border-radius: 12px;
+            padding: 10px 6px;
+            text-align: center;
+            min-width: 0;
+        }
+
+        .shift-box-green {
+            background: #059669;
+            color: #fff;
+            border-radius: 12px;
+            padding: 10px 6px;
+            text-align: center;
+            min-width: 0;
+        }
+
+        .shift-box-purple {
+            background: #6d28d9;
+            color: #fff;
+            border-radius: 12px;
+            padding: 10px 6px;
+            text-align: center;
+            min-width: 0;
+        }
+
+        .shift-box-lbl {
+            font-size: 8.5px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            opacity: 0.92;
+            text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .shift-box-val {
+            margin-top: 4px;
+            font-size: 17px;
+            font-weight: 800;
+            line-height: 1.1;
+            white-space: nowrap;
         }
 
         .shift-days-list {
-            max-height: 360px;
-            overflow-y: auto;
-            border: 1px solid var(--border);
-            border-radius: 11px;
-            padding: 6px;
-            background: #fafbff;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
-        .shift-day-row {
+        .day-card-item {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 10px;
             display: grid;
-            grid-template-columns: 72px 1fr 158px;
+            grid-template-columns: 74px 1fr;
+            gap: 10px;
             align-items: center;
-            gap: 5px;
-            padding: 6px 4px;
-            border-bottom: 1px solid #eef1f8;
-            font-size: 12px;
         }
 
-        .shift-day-row:last-child {
-            border-bottom: none;
+        .day-meta-col {
+            border-right: 1px solid #e2e8f0;
+            padding-right: 6px;
         }
 
-        .shift-day-label {
+        .day-num {
+            font-size: 15px;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.15;
+        }
+
+        .day-date {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .day-name {
+            font-size: 11.5px;
+            color: #475569;
             font-weight: 700;
-            line-height: 1.2;
+            margin-top: 2px;
         }
 
-        .shift-day-code {
-            font-size: 10px;
-            color: var(--muted);
-            font-weight: 700;
+        .day-controls-col {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 0;
         }
 
-        .shift-hours-box {
+        .shift-radios-row {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 3px;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 4px;
+            align-items: center;
+            text-align: center;
         }
 
-        .shift-hour-col {
+        .shift-opt-cell {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1px;
+            gap: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #1e293b;
+            cursor: pointer;
+            padding: 3px 1px;
+            border-radius: 8px;
         }
 
-        .shift-hour-lbl {
-            font-size: 8px;
+        .shift-opt-cell.izin-box {
+            border: 1.4px solid #eab308;
+            background: #fefce8;
+        }
+
+        .shift-opt-cell.tatil-box {
+            border: 1.4px solid #fb7185;
+            background: #fff1f2;
+        }
+
+        .shift-opt-cell input[type="radio"] {
+            margin: 0;
+            width: 15px;
+            height: 15px;
+            accent-color: #1e293b;
+            cursor: pointer;
+        }
+
+        .day-extra-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .extra-field {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11.5px;
             font-weight: 700;
-            color: var(--muted);
-            line-height: 1;
+            color: #1e293b;
+            min-width: 0;
+        }
+
+        .extra-input {
+            width: 100%;
+            min-width: 0;
+            padding: 5px 7px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            text-align: center;
+            color: #0f172a;
+            background: #fff;
+        }
+
+        /* HESABIM PENCERESİ */
+        .account-info-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 11px;
+            margin-bottom: 12px;
+        }
+
+        .account-info-line {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 5px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 12.5px;
+        }
+
+        .account-info-line:last-child {
+            border-bottom: none;
         }
 
         .delete-account-box {
-            margin-top: 10px;
-            padding: 9px 10px;
-            border-radius: 12px;
+            margin-top: 12px;
+            padding: 11px;
+            border-radius: 13px;
             border: 1px solid #fecdd3;
             background: #fff8f9;
         }
@@ -1493,7 +1660,7 @@
         <section id="view-shift" class="view">
             <div id="vardiyaGirisKart" class="card">
                 <div class="card-title-row">
-                    <h2 class="card-title">Vardiya Çizelgesi Giriş / Üyelik</h2>
+                    <h2 class="card-title">Kişisel Vardiya Çizelgesi Giriş / Üyelik</h2>
                     <button type="button" class="secondary-action-btn" onclick="bilgilendirmeModalAc()">Rehber</button>
                 </div>
 
@@ -1549,78 +1716,119 @@
             </div>
 
             <div id="vardiyaPanelKart" class="card" style="display:none;">
-                <div class="card-title-row">
-                    <h2 class="card-title">Kişisel Vardiya Çizelgesi</h2>
-                    <div style="display:flex; gap:5px;">
-                        <button type="button" class="secondary-action-btn" onclick="bilgilendirmeModalAc()">ℹ Rehber</button>
-                        <button type="button" class="danger-action-btn" onclick="vardiyaCikisYap()">Çıkış</button>
-                    </div>
-                </div>
-
-                <div class="shift-user-bar">
-                    <div>
-                        <div>Ad Soyad: <strong id="vAktifAdSoyad">-</strong></div>
-                        <div style="font-size:11px; color:var(--muted);">E-posta: <span id="vAktifKullaniciAdi">-</span></div>
-                    </div>
-                    <span id="vKayitDurumu" style="color:#047857; font-weight:700;">Hazır</span>
-                </div>
-
-                <div class="two-col">
-                    <div class="field-group">
-                        <label class="field-label" for="vYil">Yıl</label>
-                        <select id="vYil" class="select-control" onchange="vardiyaAyVerisiniYukle()">
+                <div class="shift-header-bar">
+                    <h2 class="shift-main-title">Kişisel Vardiya Çizelgesi</h2>
+                    <div class="shift-year-box">
+                        <span>Yıl:</span>
+                        <select id="vYil" class="shift-year-select" onchange="vardiyaAyVerisiniYukle()">
                             <option value="2025">2025</option>
                             <option value="2026" selected>2026</option>
                             <option value="2027">2027</option>
                         </select>
+                        <button type="button" class="danger-action-btn" onclick="vardiyaCikisYap()">Çıkış</button>
                     </div>
+                </div>
+
+                <div class="hesabim-trigger-row">
+                    <button type="button" class="hesabim-link-btn" onclick="hesabimEkraniniAc()">
+                        Hesabım — <strong id="vAktifAdSoyad">-</strong>
+                    </button>
+                    <span class="loaded-badge" id="vKayitDurumu">Yükleniyor...</span>
+                </div>
+
+                <div class="two-col" style="gap:10px;">
                     <div class="field-group">
-                        <label class="field-label" for="vAy">Ay</label>
+                        <label class="field-label" for="vAy" style="font-size:12px; color:#1e293b;">Ay Seçin (12 Ay)</label>
                         <select id="vAy" class="select-control" onchange="vardiyaAyVerisiniYukle()">
                             <option value="1">Ocak</option><option value="2">Şubat</option><option value="3">Mart</option>
                             <option value="4">Nisan</option><option value="5">Mayıs</option><option value="6">Haziran</option>
                             <option value="7">Temmuz</option><option value="8">Ağustos</option><option value="9">Eylül</option>
-                            <option value="10">Ekim</option><option value="11">Kasım</option><option value="12">Aralık</option>
+                            <option value="10">Ekim</option><option value="11" selected>Kasım</option><option value="12">Aralık</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="vHaftaTatili" style="font-size:12px; color:#1e293b;">Hafta Tatili Günü</label>
+                        <select id="vHaftaTatili" class="select-control" onchange="vardiyaHaftaTatiliUygula()">
+                            <option value="0">Pazar</option>
+                            <option value="1">Pazartesi</option>
+                            <option value="2">Salı</option>
+                            <option value="3">Çarşamba</option>
+                            <option value="4">Perşembe</option>
+                            <option value="5">Cuma</option>
+                            <option value="6" selected>Cumartesi</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="shift-summary-grid">
-                    <div class="shift-stat">
-                        <div class="shift-stat-lbl">ÇALIŞMA</div>
-                        <div class="shift-stat-val" id="vToplamCalisma">0,0 sa</div>
+                <div class="shift-summary-3">
+                    <div class="shift-box-dark">
+                        <div class="shift-box-lbl">TOPLAM GECE ÇALIŞMASI</div>
+                        <div class="shift-box-val" id="vToplamGece">0 Sa</div>
                     </div>
-                    <div class="shift-stat">
-                        <div class="shift-stat-lbl">FAZLA MESAİ</div>
-                        <div class="shift-stat-val" id="vToplamMesai">0,0 sa</div>
+                    <div class="shift-box-green">
+                        <div class="shift-box-lbl">TOPLAM MESAİ</div>
+                        <div class="shift-box-val" id="vToplamMesai">0 Sa</div>
                     </div>
-                    <div class="shift-stat">
-                        <div class="shift-stat-lbl">İZİN / TATİL</div>
-                        <div class="shift-stat-val" id="vToplamIzinTatil">0 gün</div>
-                    </div>
-                    <div class="shift-stat">
-                        <div class="shift-stat-lbl">EKSİK SAAT</div>
-                        <div class="shift-stat-val" id="vToplamEksik">0,0 sa</div>
+                    <div class="shift-box-purple">
+                        <div class="shift-box-lbl">AYLIK TOPLAM ÇALIŞMA SAATİ</div>
+                        <div class="shift-box-val" id="vToplamCalisma">0 Sa</div>
                     </div>
                 </div>
 
                 <div class="shift-days-list" id="vGunlerListesi"></div>
 
-                <div class="two-col" style="margin-top:8px;">
-                    <button type="button" id="vKaydetBtn" class="primary-action-btn" onclick="vardiyaAyVerisiniKaydet()">Vardiyayı Kaydet</button>
-                    <button type="button" class="secondary-action-btn" style="padding:9px 12px;" onclick="vardiyaMaasAktar()">Maaş Hesaba Aktar</button>
+                <button type="button" id="vKaydetBtn" class="primary-action-btn" onclick="vardiyaAyVerisiniKaydet()">Çizelgeyi Kaydet</button>
+                <button type="button" class="secondary-action-btn" style="width:100%; margin-top:8px; padding:9px 12px;" onclick="vardiyaMaasAktar()">Toplamları Maaş Hesaplamaya Aktar</button>
+            </div>
+
+            <!-- HESABIM EKRANI (BİLGİLER + ŞİFRE DEĞİŞTİR + HESABIMI SİL) -->
+            <div id="vardiyaHesabimKart" class="card" style="display:none;">
+                <div class="card-title-row">
+                    <h2 class="card-title">Hesabım</h2>
+                    <div style="display:flex; gap:5px;">
+                        <button type="button" class="secondary-action-btn" onclick="cizelgeyeGeriDon()">← Çizelge</button>
+                        <button type="button" class="danger-action-btn" onclick="vardiyaCikisYap()">Çıkış</button>
+                    </div>
                 </div>
+
+                <div class="account-info-card">
+                    <div class="account-info-line">
+                        <span style="color:var(--muted); font-weight:700;">Ad Soyad</span>
+                        <strong id="hesapDetayAdSoyad">-</strong>
+                    </div>
+                    <div class="account-info-line">
+                        <span style="color:var(--muted); font-weight:700;">E-posta</span>
+                        <strong id="hesapDetayEmail">-</strong>
+                    </div>
+                    <div class="account-info-line">
+                        <span style="color:var(--muted); font-weight:700;">Kayıt Tarihi</span>
+                        <strong id="hesapDetayTarih">-</strong>
+                    </div>
+                </div>
+
+                <form id="sifreDegistirForm" class="account-info-card" style="background:#fff;">
+                    <div class="card-title" style="margin-bottom:8px;">Şifre Değiştir</div>
+                    <div class="field-group">
+                        <label class="field-label" for="yeniSifreInput">Yeni Şifre</label>
+                        <input type="password" id="yeniSifreInput" class="input-control" required minlength="4" placeholder="Yeni şifrenizi girin">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="yeniSifreTekrarInput">Yeni Şifre (Tekrar)</label>
+                        <input type="password" id="yeniSifreTekrarInput" class="input-control" required minlength="4" placeholder="Yeni şifreyi tekrar girin">
+                    </div>
+                    <button type="submit" id="sifreDegistirBtn" class="primary-action-btn">Şifreyi Güncelle</button>
+                </form>
 
                 <div class="delete-account-box">
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
                         <div>
-                            <div style="font-size:12px; font-weight:800; color:#9f1239;">Hesabımı Sil</div>
-                            <div style="font-size:10.5px; color:var(--muted);">Hesabınız ve vardiya kayıtlarınız kalıcı olarak silinir.</div>
+                            <div style="font-size:13px; font-weight:800; color:#9f1239;">Hesabımı Sil</div>
+                            <div style="font-size:11px; color:var(--muted);">Hesabınız ve tüm vardiya kayıtlarınız kalıcı olarak silinir.</div>
                         </div>
                         <button type="button" class="danger-action-btn" onclick="hesapSilmeOnayAc()">Hesabımı Sil</button>
                     </div>
                     <div id="hesapSilOnayKutusu" class="delete-confirm-row" style="display:none;">
-                        <span>Hesabınızı silmek istiyor musunuz?</span>
+                        <span>Hesabınızı kalıcı olarak silmek istiyor musunuz?</span>
                         <div style="display:flex; gap:6px;">
                             <button type="button" id="hesapSilEvetBtn" class="danger-action-btn" onclick="hesabimiKaliciSil(true)">Evet</button>
                             <button type="button" class="secondary-action-btn" onclick="hesabimiKaliciSil(false)">Hayır</button>
@@ -1792,9 +2000,9 @@
             </div>
             <div class="info-modal-body">
                 <p><strong>1. Veri Sorumlusu:</strong> BordroApp kapsamında oluşturulan kişisel vardiya çizelgesi ve hesaplama modülleri, kullanıcı hesabınıza özel aylık kayıtların tutulması amacıyla işletilmektedir.</p>
-                <p><strong>2. İşlenen Veriler:</strong> Üyelik sırasında sağladığınız ad soyad, e-posta adresi ile aylık vardiya girişleriniz (vardiya kodu, çalışma saati, fazla mesai saati, eksik saat, gece saati) işlenmektedir.</p>
+                <p><strong>2. İşlenen Veriler:</strong> Üyelik sırasında sağladığınız ad soyad, e-posta adresi ile aylık vardiya girişleriniz (vardiya/izin/tatil seçimi, çalışma saati, fazla mesai, eksik saat, gece saati) işlenmektedir.</p>
                 <p><strong>3. İşleme Amacı ve Saklama:</strong> Verileriniz yalnızca seçtiğiniz yıl ve ay bazında kişisel vardiya çizelgenizi görüntülemek, kaydetmek ve maaş/fark hesaplamalarını kolaylaştırmak için saklanır; izniniz dışında üçüncü kişilerle paylaşılmaz.</p>
-                <p><strong>4. Haklarınız:</strong> Kayıtlı vardiya verilerinizi uygulama üzerinden güncelleyebilir, oturumunuzu kapatabilir veya hesabınızı silebilirsiniz.</p>
+                <p><strong>4. Haklarınız:</strong> Kayıtlı vardiya verilerinizi güncelleyebilir, <strong>Hesabım</strong> ekranından şifrenizi değiştirebilir veya <strong>Hesabımı Sil</strong> seçeneğiyle hesabınızı silebilirsiniz.</p>
             </div>
             <div class="info-modal-footer">
                 <button type="button" class="primary-action-btn" style="width:auto; padding:8px 16px;" onclick="aydinlatmaOnaylaVeKapat()">Anladım, Onaylıyorum</button>
@@ -1810,12 +2018,11 @@
                 <button type="button" class="info-modal-close" onclick="bilgilendirmeModalKapat()">✕</button>
             </div>
             <div class="info-modal-body">
-                <p>BordroApp vardiya çizelgesine hoş geldiniz. Kayıtlarınız hesabınızla senkronize edilir.</p>
+                <p>BordroApp kişisel vardiya çizelgesine hoş geldiniz. Kayıtlarınız hesabınızla senkronize edilir.</p>
                 <ul>
-                    <li><strong>1. Yıl ve Ay Seçimi:</strong> Üst kısımdan <em>Yıl</em> ve <em>Ay</em> seçerek ilgili ayın gün listesini açın; daha önce kaydedilmiş veriniz varsa otomatik yüklenir.</li>
-                    <li><strong>2. Vardiya, İzin, Tatil, Mesai ve Eksik Saat:</strong> Her gün için vardiya/izin/tatil durumunu seçin; <em>Çalışma</em>, <em>Mesai</em>, <em>Eksik</em> ve <em>Gece</em> saatlerini girin. Üstteki özet kutuları anlık güncellenir.</li>
-                    <li><strong>3. Kaydetme ve Maaş Aktarımı:</strong> Değişiklikleri saklamak için <strong>Vardiyayı Kaydet</strong> butonuna basın. Toplam saatleri <em>Maaş Hesaplama</em> ekranına taşımak için <strong>Maaş Hesaba Aktar</strong> seçeneğini kullanabilirsiniz.</li>
-                    <li><strong>4. Hesap Silme:</strong> İsterseniz alt kısımdaki <strong>Hesabımı Sil</strong> alanından <strong>Evet / Hayır</strong> onayı ile hesabınızı silebilirsiniz.</li>
+                    <li><strong>1. Yıl, Ay ve Hafta Tatili:</strong> Üst kısımdan <em>Yıl</em>, <em>Ay Seçin (12 Ay)</em> ve <em>Hafta Tatili Günü</em> seçerek ilgili ayın günlerini görüntüleyin.</li>
+                    <li><strong>2. Vardiya, İzin, Tatil, Mesai ve Eksik Saat:</strong> Her gün için <em>1.Vardiya</em>, <em>2.Vardiya</em>, <em>3.Vardiya</em>, <em>İzin</em> veya <em>H.tatili</em> seçin; <em>F.mesai</em> ve <em>Eksik saat</em> alanlarını doldurun.</li>
+                    <li><strong>3. Kaydetme ve Hesabım:</strong> Çizelgeyi saklamak için <strong>Çizelgeyi Kaydet</strong> butonuna basın. <strong>Hesabım</strong> alanından bilgilerinizi görebilir, şifrenizi değiştirebilir veya <strong>Hesabımı Sil</strong> ile hesabınızı silebilirsiniz.</li>
                 </ul>
             </div>
             <div class="info-modal-footer">
@@ -1827,7 +2034,7 @@
     <nav class="bottom-nav">
         <button type="button" class="nav-btn active" data-target="view-home" onclick="ekranDegistir(this)">
             <span class="nav-icon">🏠</span>
-            <span>Anasayfa</span>
+            <span>Ana Sayfa</span>
         </button>
         <button type="button" class="nav-btn" data-target="view-calc" onclick="ekranDegistir(this)">
             <span class="nav-icon">🧮</span>
@@ -1839,18 +2046,18 @@
         </button>
         <button type="button" class="nav-btn" data-target="view-benefits" onclick="ekranDegistir(this)">
             <span class="nav-icon">🎁</span>
-            <span>Yardımlar</span>
+            <span>Sosyal</span>
         </button>
         <button type="button" class="nav-btn" data-target="view-inflation" onclick="ekranDegistir(this)">
             <span class="nav-icon">📈</span>
-            <span>TÜFE</span>
+            <span>Enflasyon</span>
         </button>
     </nav>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, deleteUser, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword, deleteUser, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
@@ -1865,7 +2072,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const CACHE_KEY = "bordroapp_mobil_v14";
+        const CACHE_KEY = "bordroapp_mobil_v15";
         const VARDIYA_OTURUM_KEY = "bordroapp_vardiya_oturum_v1";
         const VARDIYA_YEREL_KAYIT_KEY = "bordroapp_vardiya_kayitlari_v1";
         const ADMIN_OTURUM_KEY = "bordroapp_admin_oturum_v1";
@@ -2510,16 +2717,98 @@
             document.getElementById("bilgilendirmeModal").classList.remove("open");
         };
 
-        // --- VARDİYA ÇİZELGESİ ---
+        // --- VARDİYA ÇİZELGESİ & HESABIM ---
         window.vardiyaEkraninaGit = function() {
             document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
             document.getElementById("view-shift").classList.add("active");
             document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
             window.scrollTo({ top: 0, behavior: "smooth" });
             if (aktifVardiyaKullanici) {
+                document.getElementById("vardiyaGirisKart").style.display = "none";
+                document.getElementById("vardiyaHesabimKart").style.display = "none";
+                document.getElementById("vardiyaPanelKart").style.display = "block";
                 vardiyaAyVerisiniYukle();
             }
         };
+
+        window.hesabimEkraniniAc = async function() {
+            if (!aktifVardiyaKullanici) return;
+            document.getElementById("vardiyaPanelKart").style.display = "none";
+            document.getElementById("vardiyaGirisKart").style.display = "none";
+            document.getElementById("vardiyaHesabimKart").style.display = "block";
+            document.getElementById("hesapSilOnayKutusu").style.display = "none";
+
+            document.getElementById("hesapDetayAdSoyad").innerText = aktifVardiyaKullanici.adSoyad || "-";
+            document.getElementById("hesapDetayEmail").innerText = aktifVardiyaKullanici.email || "-";
+            document.getElementById("hesapDetayTarih").innerText = aktifVardiyaKullanici.kayitTarihi || "-";
+
+            const kayitliUser = await eskiFirestoreKullaniciBul(aktifVardiyaKullanici.email);
+            if (kayitliUser) {
+                const ad = kayitliUser.adSoyad || aktifVardiyaKullanici.adSoyad || "-";
+                const ep = kayitliUser.email || aktifVardiyaKullanici.email || "-";
+                const rawDate = kayitliUser.olusturulmaTarihi || kayitliUser.createdAt || kayitliUser.tarih || "";
+                const tarihStr = rawDate && !Number.isNaN(Date.parse(rawDate))
+                    ? new Date(rawDate).toLocaleDateString("tr-TR")
+                    : (aktifVardiyaKullanici.kayitTarihi || "-");
+
+                aktifVardiyaKullanici.adSoyad = ad;
+                aktifVardiyaKullanici.email = ep;
+                aktifVardiyaKullanici.kayitTarihi = tarihStr;
+                localStorage.setItem(VARDIYA_OTURUM_KEY, JSON.stringify(aktifVardiyaKullanici));
+
+                document.getElementById("vAktifAdSoyad").innerText = ad;
+                document.getElementById("hesapDetayAdSoyad").innerText = ad;
+                document.getElementById("hesapDetayEmail").innerText = ep;
+                document.getElementById("hesapDetayTarih").innerText = tarihStr;
+            }
+        };
+
+        window.cizelgeyeGeriDon = function() {
+            document.getElementById("vardiyaHesabimKart").style.display = "none";
+            document.getElementById("vardiyaPanelKart").style.display = "block";
+        };
+
+        document.getElementById("sifreDegistirForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            if (!aktifVardiyaKullanici) return;
+
+            const yeniSifre = document.getElementById("yeniSifreInput").value.trim();
+            const tekrarSifre = document.getElementById("yeniSifreTekrarInput").value.trim();
+            const btn = document.getElementById("sifreDegistirBtn");
+
+            if (yeniSifre.length < 4) {
+                alert("Yeni şifre en az 4 karakter olmalıdır.");
+                return;
+            }
+            if (yeniSifre !== tekrarSifre) {
+                alert("Girilen yeni şifreler birbiriyle uyuşmuyor.");
+                return;
+            }
+
+            btn.disabled = true;
+            try {
+                if (auth.currentUser) {
+                    await updatePassword(auth.currentUser, yeniSifre);
+                }
+                const docId = aktifVardiyaKullanici.uid || String(aktifVardiyaKullanici.email || "").replace(/[^a-zA-Z0-9._-]/g, "_");
+                if (docId) {
+                    try {
+                        await setDoc(doc(db, "vardiya_kullanicilar", docId), {
+                            sifre: yeniSifre,
+                            sifreGuncellemeTarihi: new Date().toISOString()
+                        }, { merge: true });
+                    } catch (_) {}
+                }
+                document.getElementById("yeniSifreInput").value = "";
+                document.getElementById("yeniSifreTekrarInput").value = "";
+                alert("Şifreniz başarıyla güncellendi.");
+            } catch (err) {
+                console.error("Şifre değiştirme hatası:", err);
+                alert("Şifre güncellenemedi. Güvenlik gereği yeniden giriş yapmanız gerekebilir: " + err.message);
+            } finally {
+                btn.disabled = false;
+            }
+        });
 
         window.vardiyaAuthSekme = function(sekme) {
             const gBtn = document.getElementById("tabVardiyaGiris");
@@ -2624,19 +2913,25 @@
         }
 
         function vardiyaOturumAktiflestir(kullaniciObj, yeniUyeMi = false) {
+            const rawTarih = kullaniciObj.kayitTarihi || kullaniciObj.olusturulmaTarihi || "";
+            const tarihEtiket = rawTarih && !Number.isNaN(Date.parse(rawTarih))
+                ? new Date(rawTarih).toLocaleDateString("tr-TR")
+                : (rawTarih || new Date().toLocaleDateString("tr-TR"));
+
             const normalObj = {
                 uid: kullaniciObj.uid || kullaniciObj.email,
                 authUid: kullaniciObj.authUid || "",
                 email: kullaniciObj.email || "",
-                adSoyad: kullaniciObj.adSoyad || kullaniciObj.email || "Kullanıcı"
+                adSoyad: kullaniciObj.adSoyad || kullaniciObj.email || "Kullanıcı",
+                kayitTarihi: tarihEtiket
             };
             aktifVardiyaKullanici = normalObj;
             localStorage.setItem(VARDIYA_OTURUM_KEY, JSON.stringify(normalObj));
             document.getElementById("vardiyaGirisKart").style.display = "none";
+            document.getElementById("vardiyaHesabimKart").style.display = "none";
             document.getElementById("vardiyaPanelKart").style.display = "block";
             document.getElementById("hesapSilOnayKutusu").style.display = "none";
             document.getElementById("vAktifAdSoyad").innerText = normalObj.adSoyad;
-            document.getElementById("vAktifKullaniciAdi").innerText = normalObj.email || normalObj.uid;
             vardiyaAyVerisiniYukle();
             if (yeniUyeMi) {
                 bilgilendirmeModalAc();
@@ -2648,6 +2943,7 @@
             aktifVardiyaKullanici = null;
             localStorage.removeItem(VARDIYA_OTURUM_KEY);
             document.getElementById("hesapSilOnayKutusu").style.display = "none";
+            document.getElementById("vardiyaHesabimKart").style.display = "none";
             document.getElementById("vardiyaPanelKart").style.display = "none";
             document.getElementById("vardiyaGirisKart").style.display = "block";
         };
@@ -2667,7 +2963,8 @@
                         uid: (mevcutDoc && mevcutDoc.uid) || cred.user.uid,
                         authUid: cred.user.uid,
                         email: email,
-                        adSoyad: (mevcutDoc && mevcutDoc.adSoyad) || cred.user.displayName || email.split("@")[0]
+                        adSoyad: (mevcutDoc && mevcutDoc.adSoyad) || cred.user.displayName || email.split("@")[0],
+                        kayitTarihi: (mevcutDoc && mevcutDoc.olusturulmaTarihi) || ""
                     };
                     try {
                         await setDoc(doc(db, "vardiya_kullanicilar", oturumObj.uid), {
@@ -2688,7 +2985,8 @@
                         vardiyaOturumAktiflestir({
                             uid: eskiUser.uid,
                             email: email,
-                            adSoyad: eskiUser.adSoyad || email.split("@")[0]
+                            adSoyad: eskiUser.adSoyad || email.split("@")[0],
+                            kayitTarihi: eskiUser.olusturulmaTarihi || ""
                         }, false);
                         return;
                     }
@@ -2757,7 +3055,6 @@
                 const hedefEmail = String(aktifVardiyaKullanici.email || "").trim().toLowerCase();
                 const hedefUid = String(aktifVardiyaKullanici.uid || "").trim().toLowerCase();
 
-                // Kullanıcının vardiya kayıtlarını Firestore'dan sil
                 try {
                     const kayitlarSnap = await getDocs(collection(db, "vardiya_kayitlari"));
                     const silmeIslemleri = [];
@@ -2773,7 +3070,6 @@
                     await Promise.allSettled(silmeIslemleri);
                 } catch (_) {}
 
-                // Kullanıcı belgesini sil
                 try {
                     const userSnap = await getDocs(collection(db, "vardiya_kullanicilar"));
                     const userSilmeleri = [];
@@ -2787,7 +3083,6 @@
                     await Promise.allSettled(userSilmeleri);
                 } catch (_) {}
 
-                // Yerel kayıtlardan temizle
                 try {
                     const yerelRaw = JSON.parse(localStorage.getItem(VARDIYA_YEREL_KAYIT_KEY) || "{}");
                     Object.keys(yerelRaw).forEach(anahtar => {
@@ -2799,7 +3094,6 @@
                     localStorage.setItem(VARDIYA_YEREL_KAYIT_KEY, JSON.stringify(yerelRaw));
                 } catch (_) {}
 
-                // Firebase Auth kullanıcısını silmeye çalış
                 if (auth.currentUser) {
                     try {
                         await deleteUser(auth.currentUser);
@@ -2811,6 +3105,7 @@
                 aktifVardiyaKullanici = null;
                 localStorage.removeItem(VARDIYA_OTURUM_KEY);
                 document.getElementById("hesapSilOnayKutusu").style.display = "none";
+                document.getElementById("vardiyaHesabimKart").style.display = "none";
                 document.getElementById("vardiyaPanelKart").style.display = "none";
                 document.getElementById("vardiyaGirisKart").style.display = "block";
                 alert("Hesabınız ve vardiya kayıtlarınız silindi.");
@@ -2842,11 +3137,11 @@
             return [...new Set(adaylar)];
         }
 
-        function yerelVardiyaOku(adayIdler) {
+        function yerelVardiyaBelgeOku(adayIdler) {
             try {
                 const depo = JSON.parse(localStorage.getItem(VARDIYA_YEREL_KAYIT_KEY) || "{}");
                 for (const id of adayIdler) {
-                    if (depo[id]) return belgeGunMapCikar(depo[id]);
+                    if (depo[id]) return depo[id];
                 }
             } catch (_) {}
             return null;
@@ -2875,110 +3170,122 @@
             return null;
         }
 
-        function vardiyaGunSatirlariniCiz(gunSayisi, kayitliGunler = {}) {
+        function vardiyaGunSatirlariniCiz(gunSayisi, kayitliGunler = {}, haftaTatiliGunNo = 6) {
             const yil = parseInt(document.getElementById("vYil").value, 10);
             const ay = parseInt(document.getElementById("vAy").value, 10);
             const listeEl = document.getElementById("vGunlerListesi");
-            const gunAdlari = ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"];
+            const gunAdlari = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+            const ayPadded = String(ay).padStart(2, "0");
             listeEl.innerHTML = "";
 
             for (let g = 1; g <= gunSayisi; g++) {
                 const tarih = new Date(yil, ay - 1, g);
-                const gunAdi = gunAdlari[tari.getDay()];
-                const d = kayitliGunler[g] || kayitliGunler[String(g)] || kayitliGunler[String(g).padStart(2, "0")] || {};
-                const kod = d.kod || d.vardiya || (tari.getDay() === 0 ? "T" : "N");
-                const izinTatilKodlari = new Set(["T", "RT", "Yİ", "Mİ", "Üİ", "R", "B"]);
-                const varsayilanCalisma = izinTatilKodlari.has(kod) ? 0 : 7.5;
-                const calisma = d.calisma !== undefined ? d.calisma : (d.calismaSaati !== undefined ? d.calismaSaati : varsayilanCalisma);
-                const mesai = d.mesai !== undefined ? d.mesai : (d.fazlaMesai !== undefined ? d.fazlaMesai : "");
-                const eksik = d.eksik !== undefined ? d.eksik : (d.eksikSaat !== undefined ? d.eksikSaat : "");
-                const gece = d.gece !== undefined ? d.gece : (d.geceSaat !== undefined ? d.geceSaat : "");
+                const gunHaftaIdx = tarih.getDay();
+                const gunAdi = gunAdlari[gunHaftaIdx];
+                const gunPadded = String(g).padStart(2, "0");
+                const tarihKisa = `${gunPadded}.${ayPadded}.${yil}`;
 
-                const row = document.createElement("div");
-                row.className = "shift-day-row";
-                row.innerHTML = `
-                    <div class="shift-day-label">
-                        <div>${g} ${gunAdi}</div>
-                        <div class="shift-day-code">Durum: ${kod}</div>
+                const d = kayitliGunler[g] || kayitliGunler[String(g)] || kayitliGunler[gunPadded] || {};
+                const varsayilanSecim = gunHaftaIdx === haftaTatiliGunNo ? "tatil" : "v1";
+                const secim = d.secim || (d.kod === "G" ? "v2" : d.kod === "Ü" ? "v3" : (d.kod === "Yİ" || d.kod === "Mİ" || d.kod === "Üİ" || d.kod === "R") ? "izin" : (d.kod === "T" || d.kod === "RT" || d.kod === "B") ? "tatil" : varsayilanSecim);
+
+                const fMesai = d.mesai !== undefined && d.mesai !== null && d.mesai !== 0 ? d.mesai : (d.fMesai !== undefined && d.fMesai !== null && d.fMesai !== 0 ? d.fMesai : "");
+                const eksikSaat = d.eksik !== undefined && d.eksik !== null && d.eksik !== 0 ? d.eksik : (d.eksikSaat !== undefined && d.eksikSaat !== null && d.eksikSaat !== 0 ? d.eksikSaat : "");
+
+                const card = document.createElement("div");
+                card.className = "day-card-item";
+                card.innerHTML = `
+                    <div class="day-meta-col">
+                        <div class="day-num">${g}.gün</div>
+                        <div class="day-date">${tarihKisa}</div>
+                        <div class="day-name">${gunAdi}</div>
                     </div>
-                    <select class="select-control" style="padding:5px 4px; font-size:10.5px;" data-v-gun="${g}" data-v-alan="kod" onchange="vardiyaKodDegisti(${g}, this.value)">
-                        <option value="N" ${kod==="N"?"selected":""}>Normal (N)</option>
-                        <option value="G" ${kod==="G"?"selected":""}>Gece Vard. (G)</option>
-                        <option value="T" ${kod==="T"?"selected":""}>Hafta Tatili (T)</option>
-                        <option value="RT" ${kod==="RT"?"selected":""}>Resmi Tatil (RT)</option>
-                        <option value="Yİ" ${kod==="Yİ"?"selected":""}>Yıllık İzin (Yİ)</option>
-                        <option value="Mİ" ${kod==="Mİ"?"selected":""}>Mazeret İzin (Mİ)</option>
-                        <option value="Üİ" ${kod==="Üİ"?"selected":""}>Ücretsiz İzin (Üİ)</option>
-                        <option value="R" ${kod==="R"?"selected":""}>Raporlu (R)</option>
-                        <option value="B" ${kod==="B"?"selected":""}>Bayram (B)</option>
-                    </select>
-                    <div class="shift-hours-box">
-                        <div class="shift-hour-col">
-                            <span class="shift-hour-lbl">Çalışma</span>
-                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10px; text-align:center;" data-v-gun="${g}" data-v-alan="calisma" value="${calisma}" oninput="vardiyaOzetiHesapla()">
+                    <div class="day-controls-col">
+                        <div class="shift-radios-row">
+                            <label class="shift-opt-cell">
+                                <span>1.Vardiya</span>
+                                <input type="radio" name="v_secim_${g}" value="v1" ${secim==="v1"?"checked":""} onchange="vardiyaOzetiHesapla()">
+                            </label>
+                            <label class="shift-opt-cell">
+                                <span>2.Vardiya</span>
+                                <input type="radio" name="v_secim_${g}" value="v2" ${secim==="v2"?"checked":""} onchange="vardiyaOzetiHesapla()">
+                            </label>
+                            <label class="shift-opt-cell">
+                                <span>3.Vardiya</span>
+                                <input type="radio" name="v_secim_${g}" value="v3" ${secim==="v3"?"checked":""} onchange="vardiyaOzetiHesapla()">
+                            </label>
+                            <label class="shift-opt-cell izin-box">
+                                <span>İzin</span>
+                                <input type="radio" name="v_secim_${g}" value="izin" ${secim==="izin"?"checked":""} onchange="vardiyaOzetiHesapla()">
+                            </label>
+                            <label class="shift-opt-cell tatil-box">
+                                <span>H.tatili</span>
+                                <input type="radio" name="v_secim_${g}" value="tatil" ${secim==="tatil"?"checked":""} onchange="vardiyaOzetiHesapla()">
+                            </label>
                         </div>
-                        <div class="shift-hour-col">
-                            <span class="shift-hour-lbl">Mesai</span>
-                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10px; text-align:center;" data-v-gun="${g}" data-v-alan="mesai" value="${mesai}" oninput="vardiyaOzetiHesapla()">
-                        </div>
-                        <div class="shift-hour-col">
-                            <span class="shift-hour-lbl">Eksik</span>
-                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10px; text-align:center;" data-v-gun="${g}" data-v-alan="eksik" value="${eksik}" oninput="vardiyaOzetiHesapla()">
-                        </div>
-                        <div class="shift-hour-col">
-                            <span class="shift-hour-lbl">Gece</span>
-                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10px; text-align:center;" data-v-gun="${g}" data-v-alan="gece" value="${gece}" oninput="vardiyaOzetiHesapla()">
+                        <div class="day-extra-row">
+                            <div class="extra-field">
+                                <span>F.mesai</span>
+                                <input type="number" step="0.5" min="0" class="extra-input" data-v-gun="${g}" data-v-alan="mesai" value="${fMesai}" oninput="vardiyaOzetiHesapla()">
+                            </div>
+                            <div class="extra-field">
+                                <span>Eksik saat</span>
+                                <input type="number" step="0.5" min="0" class="extra-input" data-v-gun="${g}" data-v-alan="eksik" value="${eksikSaat}" oninput="vardiyaOzetiHesapla()">
+                            </div>
                         </div>
                     </div>
                 `;
-                listeEl.appendChild(row);
+                listeEl.appendChild(card);
             }
             vardiyaOzetiHesapla();
         }
 
-        window.vardiyaKodDegisti = function(gun, yeniKod) {
-            const izinTatilKodlari = new Set(["T", "RT", "Yİ", "Mİ", "Üİ", "R", "B"]);
-            const calismaInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${gun}"][data-v-alan="calisma"]`);
-            if (calismaInp) {
-                calismaInp.value = izinTatilKodlari.has(yeniKod) ? 0 : 7.5;
+        window.vardiyaHaftaTatiliUygula = function() {
+            const yil = parseInt(document.getElementById("vYil").value, 10);
+            const ay = parseInt(document.getElementById("vAy").value, 10);
+            const gunSayisi = new Date(yil, ay, 0).getDate();
+            const tatilIdx = parseInt(document.getElementById("vHaftaTatili").value, 10);
+
+            for (let g = 1; g <= gunSayisi; g++) {
+                const gunIdx = new Date(yil, ay - 1, g).getDay();
+                const hedefDeger = gunIdx === tatilIdx ? "tatil" : "v1";
+                const radio = document.querySelector(`input[name="v_secim_${g}"][value="${hedefDeger}"]`);
+                if (radio) radio.checked = true;
             }
             vardiyaOzetiHesapla();
         };
 
         window.vardiyaOzetiHesapla = function() {
-            let calismaSaat = 0;
-            let mesaiSaat = 0;
-            let eksikSaat = 0;
-            let izinTatilGun = 0;
+            const yil = parseInt(document.getElementById("vYil").value, 10);
+            const ay = parseInt(document.getElementById("vAy").value, 10);
+            const gunSayisi = new Date(yil, ay, 0).getDate();
 
-            const izinTatilKodlari = new Set(["T", "RT", "Yİ", "Mİ", "Üİ", "R", "B"]);
-            const gunSelects = document.querySelectorAll('#vGunlerListesi select[data-v-alan="kod"]');
-            gunSelects.forEach(sel => {
-                const g = sel.getAttribute("data-v-gun");
-                const kod = sel.value;
-                const kodEtiket = sel.parentElement && sel.parentElement.querySelector(".shift-day-code");
-                if (kodEtiket) kodEtiket.innerText = "Durum: " + kod;
+            let toplamGece = 0;
+            let toplamMesai = 0;
+            let toplamCalisma = 0;
 
-                const calismaInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="calisma"]`);
-                const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
-                const eksikInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="eksik"]`);
+            for (let g = 1; g <= gunSayisi; g++) {
+                const secili = document.querySelector(`input[name="v_secim_${g}"]:checked`);
+                const secim = secili ? secili.value : "v1";
+                const mesaiInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="mesai"]`);
+                const eksikInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="eksik"]`);
 
-                const cs = parseFloat(calismaInp && calismaInp.value) || 0;
-                const fm = parseFloat(mesaiInp && mesaiInp.value) || 0;
-                const ek = parseFloat(eksikInp && eksikInp.value) || 0;
+                const mesaiVal = parseFloat(mesaiInp && mesaiInp.value) || 0;
+                const eksikVal = parseFloat(eksikInp && eksikInp.value) || 0;
 
-                calismaSaat += cs;
-                if (izinTatilKodlari.has(kod)) {
-                    izinTatilGun += 1;
+                if (secim === "v1" || secim === "v2" || secim === "v3") {
+                    const gunCalisma = Math.max(0, 7.5 - eksikVal);
+                    toplamCalisma += gunCalisma;
+                    if (secim === "v2" || secim === "v3") {
+                        toplamGece += gunCalisma;
+                    }
                 }
-                mesaiSaat += fm;
-                eksikSaat += ek;
-            });
+                toplamMesai += mesaiVal;
+            }
 
-            document.getElementById("vToplamCalisma").innerText = calismaSaat.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) + " sa";
-            document.getElementById("vToplamMesai").innerText = mesaiSaat.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) + " sa";
-            document.getElementById("vToplamIzinTatil").innerText = izinTatilGun + " gün";
-            document.getElementById("vToplamEksik").innerText = eksikSaat.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) + " sa";
+            document.getElementById("vToplamGece").innerText = Math.round(toplamGece * 10) / 10 + " Sa";
+            document.getElementById("vToplamMesai").innerText = Math.round(toplamMesai * 10) / 10 + " Sa";
+            document.getElementById("vToplamCalisma").innerText = Math.round(toplamCalisma * 10) / 10 + " Sa";
         };
 
         window.vardiyaAyVerisiniYukle = async function() {
@@ -2988,21 +3295,30 @@
             const gunSayisi = new Date(yil, ay, 0).getDate();
             const durumEl = document.getElementById("vKayitDurumu");
             const adayIdler = vardiyaBelgeIdAdaylariAl();
+            const ayEtiket = `${yil}-${String(ay).padStart(2, "0")}`;
 
-            const yerelGunler = yerelVardiyaOku(adayIdler);
-            vardiyaGunSatirlariniCiz(gunSayisi, yerelGunler || {});
-            durumEl.innerText = yerelGunler ? "Yerel veri yüklendi" : "Yükleniyor...";
+            const yerelBelge = yerelVardiyaBelgeOku(adayIdler);
+            const yerelGunler = yerelBelge ? belgeGunMapCikar(yerelBelge) : null;
+            const yerelTatil = yerelBelge && yerelBelge.haftaTatili !== undefined ? parseInt(yerelBelge.haftaTatili, 10) : 6;
+            if (yerelBelge && yerelBelge.haftaTatili !== undefined) {
+                document.getElementById("vHaftaTatili").value = String(yerelTatil);
+            }
+            vardiyaGunSatirlariniCiz(gunSayisi, yerelGunler || {}, yerelTatil);
+            durumEl.innerText = yerelGunler ? `${ayEtiket} yüklendi` : "Yükleniyor...";
 
             try {
+                let bulunanBelge = null;
                 let bulunanGunler = null;
 
                 for (const belgeId of adayIdler) {
                     const snap = await getDoc(doc(db, "vardiya_kayitlari", belgeId));
                     if (snap.exists()) {
-                        const extracted = belgeGunMapCikar(snap.data());
+                        const raw = snap.data();
+                        const extracted = belgeGunMapCikar(raw);
                         if (extracted) {
+                            bulunanBelge = raw;
                             bulunanGunler = extracted;
-                            yerelVardiyaYaz(belgeId, snap.data());
+                            yerelVardiyaYaz(belgeId, raw);
                             break;
                         }
                     }
@@ -3030,6 +3346,7 @@
                         if (kullaniciEslesiyor && kayitYil === yil && kayitAy === ay) {
                             const extracted = belgeGunMapCikar(d);
                             if (extracted) {
+                                bulunanBelge = d;
                                 bulunanGunler = extracted;
                                 yerelVardiyaYaz(docSnap.id, d);
                             }
@@ -3038,17 +3355,16 @@
                 }
 
                 if (bulunanGunler) {
-                    vardiyaGunSatirlariniCiz(gunSayisi, bulunanGunler);
-                    durumEl.style.color = "#047857";
-                    durumEl.innerText = "Kayıtlı veri yüklendi";
+                    const tatilIdx = bulunanBelge && bulunanBelge.haftaTatili !== undefined ? parseInt(bulunanBelge.haftaTatili, 10) : 6;
+                    document.getElementById("vHaftaTatili").value = String(tatilIdx);
+                    vardiyaGunSatirlariniCiz(gunSayisi, bulunanGunler, tatilIdx);
+                    durumEl.innerText = `${ayEtiket} yüklendi`;
                 } else if (!yerelGunler) {
-                    durumEl.style.color = "var(--muted)";
-                    durumEl.innerText = "Kayıtlı vardiya yok";
+                    durumEl.innerText = `${ayEtiket} hazır`;
                 }
             } catch (err) {
                 console.error("Vardiya yükleme hatası:", err);
-                durumEl.style.color = yerelGunler ? "#047857" : "var(--danger)";
-                durumEl.innerText = yerelGunler ? "Yerel kayıt yüklendi" : ("Okuma hatası: " + (err.code || err.message));
+                durumEl.innerText = yerelGunler ? `${ayEtiket} yüklendi` : "Yüklenemedi";
             }
         };
 
@@ -3059,32 +3375,44 @@
             btn.disabled = true;
             durumEl.innerText = "Kaydediliyor...";
 
+            const yil = parseInt(document.getElementById("vYil").value, 10);
+            const ay = parseInt(document.getElementById("vAy").value, 10);
+            const haftaTatili = parseInt(document.getElementById("vHaftaTatili").value, 10);
+            const gunSayisi = new Date(yil, ay, 0).getDate();
+            const ayEtiket = `${yil}-${String(ay).padStart(2, "0")}`;
+
             const gunler = {};
-            const gunSelects = document.querySelectorAll('#vGunlerListesi select[data-v-alan="kod"]');
-            gunSelects.forEach(sel => {
-                const g = sel.getAttribute("data-v-gun");
-                const calismaInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="calisma"]`);
-                const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
-                const eksikInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="eksik"]`);
-                const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
+            for (let g = 1; g <= gunSayisi; g++) {
+                const secili = document.querySelector(`input[name="v_secim_${g}"]:checked`);
+                const secim = secili ? secili.value : "v1";
+                const mesaiInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="mesai"]`);
+                const eksikInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="eksik"]`);
+                const mesaiVal = parseFloat(mesaiInp && mesaiInp.value) || 0;
+                const eksikVal = parseFloat(eksikInp && eksikInp.value) || 0;
+                const calismaVal = (secim === "v1" || secim === "v2" || secim === "v3") ? Math.max(0, 7.5 - eksikVal) : 0;
+                const geceVal = (secim === "v2" || secim === "v3") ? calismaVal : 0;
+                const kodMap = { v1: "N", v2: "G", v3: "Ü", izin: "Yİ", tatil: "T" };
+
                 gunler[g] = {
-                    kod: sel.value,
-                    calisma: parseFloat(calismaInp && calismaInp.value) || 0,
-                    mesai: parseFloat(mesaiInp && mesaiInp.value) || 0,
-                    eksik: parseFloat(eksikInp && eksikInp.value) || 0,
-                    gece: parseFloat(geceInp && geceInp.value) || 0
+                    secim: secim,
+                    kod: kodMap[secim] || "N",
+                    calisma: calismaVal,
+                    mesai: mesaiVal,
+                    eksik: eksikVal,
+                    gece: geceVal
                 };
-            });
+            }
 
             const adayIdler = vardiyaBelgeIdAdaylariAl();
-            const anaBelgeId = adayIdler[0] || `${encodeURIComponent(aktifVardiyaKullanici.email || "user")}_${document.getElementById("vYil").value}_${String(document.getElementById("vAy").value).padStart(2, "0")}`;
+            const anaBelgeId = adayIdler[0] || `${encodeURIComponent(aktifVardiyaKullanici.email || "user")}_${yil}_${String(ay).padStart(2, "0")}`;
 
             const kayitObj = {
                 uid: aktifVardiyaKullanici.uid || aktifVardiyaKullanici.email,
                 email: aktifVardiyaKullanici.email || "",
                 adSoyad: aktifVardiyaKullanici.adSoyad || "",
-                yil: parseInt(document.getElementById("vYil").value, 10),
-                ay: parseInt(document.getElementById("vAy").value, 10),
+                yil: yil,
+                ay: ay,
+                haftaTatili: haftaTatili,
                 gunler: gunler,
                 guncellemeTarihi: new Date().toISOString()
             };
@@ -3093,13 +3421,11 @@
 
             try {
                 await setDoc(doc(db, "vardiya_kayitlari", anaBelgeId), kayitObj, { merge: true });
-                durumEl.style.color = "#047857";
-                durumEl.innerText = "Kaydedildi";
+                durumEl.innerText = `${ayEtiket} kaydedildi`;
                 alert("Vardiya çizelgesi kaydedildi.");
             } catch (err) {
                 console.error("Vardiya kayıt hatası:", err);
-                durumEl.style.color = "#b45309";
-                durumEl.innerText = "Cihaza kaydedildi";
+                durumEl.innerText = `${ayEtiket} cihazda`;
                 alert("Bulut kaydı yapılamadı ama veriler cihazınıza kaydedildi: " + err.message);
             } finally {
                 btn.disabled = false;
@@ -3107,26 +3433,37 @@
         };
 
         window.vardiyaMaasAktar = function() {
-            const ay = document.getElementById("vAy").value;
-            let calismaSaat = 0;
-            let geceSaat = 0;
-            let mesaiSaat = 0;
+            const yil = parseInt(document.getElementById("vYil").value, 10);
+            const ay = parseInt(document.getElementById("vAy").value, 10);
+            const gunSayisi = new Date(yil, ay, 0).getDate();
 
-            document.querySelectorAll('#vGunlerListesi select[data-v-alan="kod"]').forEach(sel => {
-                const g = sel.getAttribute("data-v-gun");
-                const calismaInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="calisma"]`);
-                const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
-                const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
+            let toplamGece = 0;
+            let toplamMesai = 0;
+            let toplamCalisma = 0;
 
-                calismaSaat += parseFloat(calismaInp && calismaInp.value) || 0;
-                geceSaat += parseFloat(geceInp && geceInp.value) || 0;
-                mesaiSaat += parseFloat(mesaiInp && mesaiInp.value) || 0;
-            });
+            for (let g = 1; g <= gunSayisi; g++) {
+                const secili = document.querySelector(`input[name="v_secim_${g}"]:checked`);
+                const secim = secili ? secili.value : "v1";
+                const mesaiInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="mesai"]`);
+                const eksikInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="eksik"]`);
+
+                const mesaiVal = parseFloat(mesaiInp && mesaiInp.value) || 0;
+                const eksikVal = parseFloat(eksikInp && eksikInp.value) || 0;
+
+                if (secim === "v1" || secim === "v2" || secim === "v3") {
+                    const gunCalisma = Math.max(0, 7.5 - eksikVal);
+                    toplamCalisma += gunCalisma;
+                    if (secim === "v2" || secim === "v3") {
+                        toplamGece += gunCalisma;
+                    }
+                }
+                toplamMesai += mesaiVal;
+            }
 
             document.getElementById("month").value = String(ay);
-            document.getElementById("calisma-gun-saati").value = calismaSaat;
-            document.getElementById("gece-zammi").value = geceSaat;
-            document.getElementById("fm-100").value = mesaiSaat;
+            document.getElementById("calisma-gun-saati").value = toplamCalisma;
+            document.getElementById("gece-zammi").value = toplamGece;
+            document.getElementById("fm-100").value = toplamMesai;
             hesapla();
 
             const maasBtn = document.querySelector('.nav-btn[data-target="view-calc"]');
@@ -3589,9 +3926,9 @@
                 if (parsedOturum && (parsedOturum.uid || parsedOturum.email)) {
                     aktifVardiyaKullanici = parsedOturum;
                     document.getElementById("vardiyaGirisKart").style.display = "none";
+                    document.getElementById("vardiyaHesabimKart").style.display = "none";
                     document.getElementById("vardiyaPanelKart").style.display = "block";
                     document.getElementById("vAktifAdSoyad").innerText = parsedOturum.adSoyad || parsedOturum.email || parsedOturum.uid;
-                    document.getElementById("vAktifKullaniciAdi").innerText = parsedOturum.email || parsedOturum.uid;
                     vardiyaAyVerisiniYukle();
                 }
             } catch (_) {}
