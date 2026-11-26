@@ -217,61 +217,44 @@
             color: #b45309;
         }
 
-        .home-entry-row {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-
         .quick-entry-card {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 6px;
+            gap: 8px;
             background: linear-gradient(135deg, #f4f2ff 0%, #e9fbf6 100%);
             border: 1px solid #d8dcf5;
             border-radius: var(--radius-md);
-            padding: 10px;
+            padding: 11px 12px;
             color: var(--text);
             cursor: pointer;
             width: 100%;
             text-align: left;
-            min-width: 0;
-        }
-
-        .quick-entry-card.admin-tone {
-            background: linear-gradient(135deg, #fffbeb 0%, #f4f2ff 100%);
-            border-color: #fde68a;
+            margin-bottom: 10px;
         }
 
         .quick-shift-title {
-            font-size: 12.5px;
+            font-size: 13px;
             font-weight: 800;
             margin: 0 0 2px;
         }
 
         .quick-shift-desc {
-            font-size: 10.5px;
+            font-size: 11px;
             color: var(--muted);
             margin: 0;
-            line-height: 1.25;
         }
 
         .quick-shift-cta {
             background: var(--primary);
             color: #fff;
-            font-size: 10.5px;
+            font-size: 11px;
             font-weight: 700;
-            padding: 6px 8px;
+            padding: 6px 10px;
             border-radius: 9px;
             white-space: nowrap;
             border: none;
             flex-shrink: 0;
-        }
-
-        .quick-entry-card.admin-tone .quick-shift-cta {
-            background: #b45309;
         }
 
         .banner-wrap {
@@ -639,7 +622,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 6px;
+            gap: 8px;
             padding: 7px 0;
             border-bottom: 1px solid var(--border);
         }
@@ -657,29 +640,15 @@
 
         .benefit-cols {
             display: flex;
-            gap: 3px;
-            align-items: flex-end;
-            flex-shrink: 0;
-        }
-
-        .col-stack {
-            display: flex;
-            flex-direction: column;
+            gap: 5px;
             align-items: center;
-            gap: 2px;
-        }
-
-        .col-year-head {
-            font-size: 9.5px;
-            font-weight: 800;
-            color: var(--muted);
-            line-height: 1;
+            flex-shrink: 0;
         }
 
         .col-chip {
             font-size: 11.5px;
             font-weight: 700;
-            padding: 4px 6px;
+            padding: 4px 7px;
             border-radius: 7px;
             background: #f3f5fa;
             color: var(--text);
@@ -1194,7 +1163,6 @@
                 <span class="status-dot" id="statusDot"></span>
                 <span id="statusText">Aktif güncelleme zamanı: -</span>
             </div>
-            <span id="lastSyncText">-</span>
         </div>
     </header>
 
@@ -1202,22 +1170,13 @@
 
         <!-- 1. ANASAYFA -->
         <section id="view-home" class="view active">
-            <div class="home-entry-row">
-                <button type="button" class="quick-entry-card" onclick="vardiyaEkraninaGit()">
-                    <div>
-                        <p class="quick-shift-title">Vardiya Çizelgesi</p>
-                        <p class="quick-shift-desc">E-posta ile giriş, kayıt ve çizelge</p>
-                    </div>
-                    <span class="quick-shift-cta">Aç →</span>
-                </button>
-                <button type="button" class="quick-entry-card admin-tone" onclick="yonetimEkraninaGit()">
-                    <div>
-                        <p class="quick-shift-title">Yönetim Paneli</p>
-                        <p class="quick-shift-desc">Duyuru, haklar, TÜFE, formül & kullanıcılar</p>
-                    </div>
-                    <span class="quick-shift-cta">Panel →</span>
-                </button>
-            </div>
+            <button type="button" class="quick-entry-card" onclick="vardiyaEkraninaGit()">
+                <div>
+                    <p class="quick-shift-title">Vardiya Çizelgesi</p>
+                    <p class="quick-shift-desc">E-posta ile giriş, kayıt ve çizelge</p>
+                </div>
+                <span class="quick-shift-cta">Aç →</span>
+            </button>
 
             <div class="kpi-grid">
                 <div class="kpi-card">
@@ -1243,12 +1202,12 @@
                     <span class="badge green">Güncel</span>
                 </div>
                 <div class="banner-wrap" id="duyuruGorselKutusu">
-                    <div class="banner-placeholder">Duyuru görseli yükleniyor...</div>
+                    <div class="banner-placeholder">Henüz duyuru görseli eklenmemiş.</div>
                 </div>
                 <div class="announcement-list">
-                    <div class="announcement-item" id="duyuruSatir1">Duyuru satırı yükleniyor...</div>
-                    <div class="announcement-item" id="duyuruSatir2">Duyuru satırı yükleniyor...</div>
-                    <div class="announcement-item" id="duyuruSatir3">Duyuru satırı yükleniyor...</div>
+                    <div class="announcement-item" id="duyuruSatir1">Güncel duyuru bulunmuyor.</div>
+                    <div class="announcement-item" id="duyuruSatir2">Detaylar güncellenebilir.</div>
+                    <div class="announcement-item" id="duyuruSatir3">Tüm veriler senkronize edilir.</div>
                 </div>
             </div>
         </section>
@@ -1258,7 +1217,6 @@
             <div class="card">
                 <div class="card-title-row">
                     <h2 class="card-title">Maaş Hesaplama</h2>
-                    <span class="badge green" id="calcParamKaynagi">Panel Verisi</span>
                 </div>
 
                 <div class="two-col">
@@ -1283,55 +1241,55 @@
                 <div class="two-col">
                     <div class="field-group">
                         <label class="field-label" for="saat-ucreti">Saat Ücreti:</label>
-                        <input type="number" id="saat-ucreti" class="input-control" step="0.01" value="0" oninput="hesapla()">
+                        <input type="number" id="saat-ucreti" class="input-control" step="0.01" placeholder="0" oninput="hesapla()">
                     </div>
                     <div class="field-group">
                         <label class="field-label" for="calisma-gun-saati">Aylık Çalışma Saati:</label>
-                        <input type="number" id="calisma-gun-saati" class="input-control" value="0" oninput="hesapla()">
+                        <input type="number" id="calisma-gun-saati" class="input-control" placeholder="0" oninput="hesapla()">
                     </div>
                 </div>
 
                 <div class="two-col">
                     <div class="field-group">
                         <label class="field-label" for="gece-zammi">Gece Çalışma (Sa):</label>
-                        <input type="number" id="gece-zammi" class="input-control" value="0" oninput="hesapla()">
+                        <input type="number" id="gece-zammi" class="input-control" placeholder="0" oninput="hesapla()">
                     </div>
                     <div class="field-group">
                         <label class="field-label" for="fm-100">Fazla Mesai (Sa):</label>
-                        <input type="number" id="fm-100" class="input-control" value="0" oninput="hesapla()">
+                        <input type="number" id="fm-100" class="input-control" placeholder="0" oninput="hesapla()">
                     </div>
                 </div>
 
                 <div class="two-col">
                     <div class="field-group">
                         <label class="field-label" for="ulusal-100">Ulusal Bayram (Sa):</label>
-                        <input type="number" id="ulusal-100" class="input-control" value="0" oninput="hesapla()">
+                        <input type="number" id="ulusal-100" class="input-control" placeholder="0" oninput="hesapla()">
                     </div>
                     <div class="field-group">
                         <label class="field-label" for="dini-150">Dini Bayram (Sa):</label>
-                        <input type="number" id="dini-150" class="input-control" value="0" oninput="hesapla()">
+                        <input type="number" id="dini-150" class="input-control" placeholder="0" oninput="hesapla()">
                     </div>
                 </div>
 
                 <div class="two-col">
                     <div class="field-group">
                         <label class="field-label" for="resmi-200">Resmi Tatil FM (Sa):</label>
-                        <input type="number" id="resmi-200" class="input-control" value="0" oninput="hesapla()">
+                        <input type="number" id="resmi-200" class="input-control" placeholder="0" oninput="hesapla()">
                     </div>
                     <div class="field-group">
                         <label class="field-label" for="yol-ucreti">Yol Ücreti (Brüt):</label>
-                        <input type="number" id="yol-ucreti" class="input-control" value="0" oninput="hesapla()">
+                        <input type="number" id="yol-ucreti" class="input-control" placeholder="0" oninput="hesapla()">
                     </div>
                 </div>
 
                 <div class="two-col">
                     <div class="field-group">
                         <label class="field-label" for="bes-kesintisi">Net BES Kesintisi (TL):</label>
-                        <input type="number" id="bes-kesintisi" class="input-control" value="0" oninput="hesapla()">
+                        <input type="number" id="bes-kesintisi" class="input-control" placeholder="0" oninput="hesapla()">
                     </div>
                     <div class="field-group">
                         <label class="field-label" for="vakif-yuzde">Vakıf Kesintisi %:</label>
-                        <input type="number" id="vakif-yuzde" class="input-control" value="0" oninput="hesapla()">
+                        <input type="number" id="vakif-yuzde" class="input-control" placeholder="0" oninput="hesapla()">
                     </div>
                 </div>
 
@@ -1370,7 +1328,6 @@
             <div class="card">
                 <div class="card-title-row">
                     <h2 class="card-title">Fark Hesaplaması</h2>
-                    <span class="badge amber" id="diffPanelRozet">Panel Bağlı</span>
                 </div>
 
                 <div class="mode-switch">
@@ -1430,7 +1387,6 @@
                             </div>
                         </div>
                         <div id="cocukListesi"></div>
-                        <div id="sosyalDurumNotu" class="info-note">Vergi dilimleri ve sosyal yardımlar yönetim panelinden okunur.</div>
                     </div>
 
                     <div class="result-dark-box">
@@ -1486,7 +1442,7 @@
                             </tr>
                         </thead>
                         <tbody id="enfBody">
-                            <tr><td colspan="3" style="text-align:center;">Yükleniyor...</td></tr>
+                            <tr><td colspan="3" style="text-align:center;">-</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1506,7 +1462,6 @@
                     <button type="button" id="tabVardiyaUye" class="auth-tab" onclick="vardiyaAuthSekme('uye')">Üye Ol</button>
                 </div>
 
-                <!-- GİRİŞ FORMU: Sadece E-posta + Parola + Şifremi Unuttum (E-posta onaylı link gönderir) -->
                 <form id="vardiyaGirisForm">
                     <div class="field-group">
                         <label class="field-label" for="vGirisEmail">E-posta</label>
@@ -1530,7 +1485,6 @@
                     <button type="submit" id="vGirisBtn" class="primary-action-btn">Giriş Yap</button>
                 </form>
 
-                <!-- ÜYE OL FORMU: Sadece E-posta + Parola + Aydınlatma Metni -->
                 <form id="vardiyaUyeForm" style="display:none;">
                     <div class="field-group">
                         <label class="field-label" for="vUyeEmail">E-posta</label>
@@ -1614,10 +1568,31 @@
 
         <!-- 7. GÖMÜLÜ YÖNETİM PANELİ -->
         <section id="view-admin" class="view">
-            <div class="card">
+            <div id="adminGirisKart" class="card">
+                <div class="card-title-row">
+                    <h2 class="card-title">Yönetim Paneli Girişi</h2>
+                    <span class="badge amber">Yetkili Giriş</span>
+                </div>
+                <form id="adminGirisForm">
+                    <div class="field-group">
+                        <label class="field-label" for="admGirisKullanici">Kullanıcı Adı</label>
+                        <input type="text" id="admGirisKullanici" class="input-control" required placeholder="Yönetici kullanıcı adı">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="admGirisSifre">Şifre</label>
+                        <input type="password" id="admGirisSifre" class="input-control" required placeholder="Yönetici şifresi">
+                    </div>
+                    <button type="submit" id="admGirisBtn" class="primary-action-btn">Panele Gir</button>
+                </form>
+            </div>
+
+            <div id="adminIcerikKart" class="card" style="display:none;">
                 <div class="card-title-row">
                     <h2 class="card-title">Yönetim Paneli</h2>
-                    <span class="badge amber" id="adminDurumRozet">Hazır</span>
+                    <div style="display:flex; gap:5px; align-items:center;">
+                        <span class="badge amber" id="adminDurumRozet">Hazır</span>
+                        <button type="button" class="danger-action-btn" onclick="adminCikisYap()">Çıkış</button>
+                    </div>
                 </div>
 
                 <div class="admin-tabs">
@@ -1628,7 +1603,6 @@
                     <button type="button" id="atab-kullanici" class="admin-tab" onclick="adminSekmeAc('kullanici')">Kullanıcılar</button>
                 </div>
 
-                <!-- DUYURU + DOSYA YÜKLE + URL + ÖNİZLEME -->
                 <div id="apanel-duyuru" class="admin-panel active">
                     <div class="field-group">
                         <label class="field-label" for="admDuyuru1">Duyuru Satırı 1</label>
@@ -1658,7 +1632,6 @@
                     <button type="button" class="primary-action-btn" onclick="adminAyarKaydet('duyuru')">Duyuruları Kaydet</button>
                 </div>
 
-                <!-- SOSYAL HAKLAR -->
                 <div id="apanel-sosyal" class="admin-panel">
                     <div class="two-col">
                         <div class="field-group">
@@ -1674,13 +1647,11 @@
                     <button type="button" class="primary-action-btn" onclick="adminAyarKaydet('sosyal')">Sosyal Hakları Kaydet</button>
                 </div>
 
-                <!-- ENFLASYON -->
                 <div id="apanel-enf" class="admin-panel">
                     <div class="admin-list-box" id="admEnfListe"></div>
                     <button type="button" class="primary-action-btn" onclick="adminAyarKaydet('enf')">Enflasyon Tablosunu Kaydet</button>
                 </div>
 
-                <!-- FORMÜL + 12 AY TEK TEK GVİ VE DVİ -->
                 <div id="apanel-formul" class="admin-panel">
                     <div class="two-col">
                         <div class="field-group">
@@ -1733,14 +1704,13 @@
                     <button type="button" class="primary-action-btn" onclick="adminAyarKaydet('formul')">Formülleri Kaydet</button>
                 </div>
 
-                <!-- KULLANICILAR -->
                 <div id="apanel-kullanici" class="admin-panel">
                     <div class="card-title-row" style="margin-bottom:6px;">
                         <span class="field-label" style="margin:0;">Kayıtlı Kullanıcılar</span>
                         <button type="button" class="secondary-action-btn" onclick="adminKullanicilariYukle()">Listeyi Yenile</button>
                     </div>
                     <div class="admin-list-box" id="admKullaniciListe">
-                        <div class="banner-placeholder">Kullanıcılar yükleniyor...</div>
+                        <div class="banner-placeholder">Henüz kullanıcı listelenmedi.</div>
                     </div>
                 </div>
             </div>
@@ -1830,8 +1800,14 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const CACHE_KEY = "bordroapp_mobil_v9";
+        const CACHE_KEY = "bordroapp_mobil_v11";
         const VARDIYA_OTURUM_KEY = "bordroapp_vardiya_oturum_v1";
+        const ADMIN_OTURUM_KEY = "bordroapp_admin_oturum_v1";
+
+        const VARSAYILAN_ADMIN = {
+            kullaniciAdi: "admin",
+            sifre: "1234"
+        };
 
         const ayVerileri = {
             1: { ad: "Ocak", gun: 31, gv: 4211.33, dv: 250.70 },
@@ -1884,6 +1860,7 @@
         let cocukSayaci = 0;
         let globalIkinci6AyOran = 0;
         let aktifVardiyaKullanici = null;
+        let adminGirisYapildiMi = sessionStorage.getItem(ADMIN_OTURUM_KEY) === "1";
 
         function sayiParse(val) {
             if (val === undefined || val === null || val === "") return NaN;
@@ -1903,7 +1880,6 @@
         function guncelleDurumZamani(saatStr, cevrimdisi = false) {
             const dot = document.getElementById("statusDot");
             const statusText = document.getElementById("statusText");
-            const syncText = document.getElementById("lastSyncText");
             const simdiSaat = saatStr || new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
             if (cevrimdisi) {
                 dot.classList.add("offline");
@@ -1912,7 +1888,6 @@
                 dot.classList.remove("offline");
                 statusText.innerText = `Aktif güncelleme zamanı: ${simdiSaat}`;
             }
-            syncText.innerText = simdiSaat;
         }
 
         function geceBirimUcretiAl() {
@@ -1934,13 +1909,9 @@
             const panelGv = sayiParse(kayit.gelirVergisiIstisnasi);
             const panelDv = sayiParse(kayit.damgaVergisiIstisnasi);
 
-            const gvVar = !Number.isNaN(panelGv);
-            const dvVar = !Number.isNaN(panelDv);
-
             return {
-                gv: gvVar ? panelGv : varsayilan.gv,
-                dv: dvVar ? panelDv : varsayilan.dv,
-                kaynak: (gvVar || dvVar) ? "panel" : "varsayılan"
+                gv: !Number.isNaN(panelGv) ? panelGv : varsayilan.gv,
+                dv: !Number.isNaN(panelDv) ? panelDv : varsayilan.dv
             };
         }
 
@@ -1960,18 +1931,15 @@
 
             const panelVar = ![o1, o2, o3, o4, s1, s2, s3].some(Number.isNaN);
             if (!panelVar) {
-                return { dilimler: varsayilanDilimler, kaynak: "varsayılan" };
+                return varsayilanDilimler;
             }
 
-            return {
-                kaynak: "panel",
-                dilimler: [
-                    { limit: s1, oran: o1 / 100, etiket: `%${o1}` },
-                    { limit: Math.max(s1, s2), oran: o2 / 100, etiket: `%${o2}` },
-                    { limit: Math.max(s1, s2, s3), oran: o3 / 100, etiket: `%${o3}` },
-                    { limit: Infinity, oran: o4 / 100, etiket: `%${o4}` }
-                ]
-            };
+            return [
+                { limit: s1, oran: o1 / 100, etiket: `%${o1}` },
+                { limit: Math.max(s1, s2), oran: o2 / 100, etiket: `%${o2}` },
+                { limit: Math.max(s1, s2, s3), oran: o3 / 100, etiket: `%${o3}` },
+                { limit: Infinity, oran: o4 / 100, etiket: `%${o4}` }
+            ];
         }
 
         function otomatikAyAyarla() {
@@ -1988,7 +1956,10 @@
 
         window.ayAyariYap = function() {
             const ay = document.getElementById("month").value;
-            document.getElementById("calisma-gun-saati").value = ayVerileri[ay].gun * 7.5;
+            const csInp = document.getElementById("calisma-gun-saati");
+            if (csInp.value !== "") {
+                csInp.value = ayVerileri[ay].gun * 7.5;
+            }
             hesapla();
         };
 
@@ -2042,11 +2013,6 @@
             document.getElementById("vakif-net-tutar").innerText = f2(vakifNetTutar);
             document.getElementById("net-ikramiye").innerText = f2(ikramiyeNet);
             document.getElementById("net-maas").innerText = f2(net) + " TL";
-
-            document.getElementById("calcParamKaynagi").innerText =
-                (geceBilgi.kaynak === "panel" && istisnaBilgi.kaynak === "panel")
-                    ? "Panel Güncel"
-                    : "Karma / Varsayılan";
         };
 
         window.modDegistir = function(mod) {
@@ -2257,13 +2223,8 @@
             const su = parseFloat(document.getElementById("yillik_saat_ucreti").value) || 0;
             const ortalamaEl = document.getElementById("ortalama_aylik_maas");
             const aciklamaEl = document.getElementById("vergi_dilimi_aciklama");
-            const notEl = document.getElementById("sosyalDurumNotu");
 
-            const dilimBilgi = aktifVergiDilimleriAl();
-            const dilimler = dilimBilgi.dilimler;
-            notEl.innerText = `Vergi dilimleri ve GVİ/DVİ (${dilimBilgi.kaynak}) ile hesaplanır.`;
-            document.getElementById("diffPanelRozet").innerText =
-                dilimBilgi.kaynak === "panel" ? "Panel Bağlı" : "Varsayılan";
+            const dilimler = aktifVergiDilimleriAl();
 
             if (su <= 0) {
                 ortalamaEl.innerText = "0,00 TL";
@@ -2371,14 +2332,8 @@
                 row.innerHTML = `
                     <div class="benefit-name">${item.adi}</div>
                     <div class="benefit-cols">
-                        <div class="col-stack">
-                            <span class="col-year-head">${yil1}</span>
-                            <span class="col-chip">${v1}</span>
-                        </div>
-                        <div class="col-stack">
-                            <span class="col-year-head">${yil2}</span>
-                            <span class="col-chip current">${v2}</span>
-                        </div>
+                        <span class="col-chip">${v1}</span>
+                        <span class="col-chip current">${v2}</span>
                     </div>
                 `;
                 listeEl.appendChild(row);
@@ -2489,7 +2444,7 @@
             document.getElementById("bilgilendirmeModal").classList.remove("open");
         };
 
-        // --- VARDİYA ÇİZELGESİ: E-POSTA KAYIT / GİRİŞ / E-POSTA ONAYLI ŞİFRE SIFIRLAMA ---
+        // --- VARDİYA ÇİZELGESİ ---
         window.vardiyaEkraninaGit = function() {
             document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
             document.getElementById("view-shift").classList.add("active");
@@ -2498,15 +2453,6 @@
             if (aktifVardiyaKullanici) {
                 vardiyaAyVerisiniYukle();
             }
-        };
-
-        window.yonetimEkraninaGit = function() {
-            document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-            document.getElementById("view-admin").classList.add("active");
-            document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            adminFormlariniDoldur();
-            adminKullanicilariYukle();
         };
 
         window.vardiyaAuthSekme = function(sekme) {
@@ -2582,8 +2528,9 @@
             tum.forEach(docSnap => {
                 if (bulunan) return;
                 const data = docSnap.data() || {};
-                if (String(data.email || "").trim().toLowerCase() === kucuk) {
-                    bulunan = { uid: docSnap.id, ...data };
+                const ep = String(data.email || data.eposta || docSnap.id || "").trim().toLowerCase();
+                if (ep === kucuk) {
+                    bulunan = { uid: docSnap.id, email: data.email || data.eposta || kucuk, ...data };
                 }
             });
             return bulunan;
@@ -2616,7 +2563,6 @@
             btn.disabled = true;
 
             try {
-                // 1. Firebase Authentication girişi dene (mail onaylı şifre değişiklikleri burada geçerlidir)
                 try {
                     const cred = await signInWithEmailAndPassword(auth, email, sifre);
                     const mevcutDoc = await eskiFirestoreKullaniciBul(email);
@@ -2635,7 +2581,6 @@
                     vardiyaOturumAktiflestir(oturumObj, false);
                     return;
                 } catch (authErr) {
-                    // 2. Eski vardiya.html kayıtları için Firestore kontrolü ve otomatik Auth eşitlemesi
                     const eskiUser = await eskiFirestoreKullaniciBul(email);
                     if (eskiUser && eskiKayitSifreEslesiyorMu(eskiUser, sifre)) {
                         try {
@@ -2689,11 +2634,41 @@
             }
         });
 
-        function vardiyaBelgeIdAl() {
-            const yil = document.getElementById("vYil").value;
+        function vardiyaBelgeIdAdaylariAl() {
+            const yil = String(document.getElementById("vYil").value);
             const ay = String(document.getElementById("vAy").value).padStart(2, "0");
-            const uid = encodeURIComponent(aktifVardiyaKullanici.uid || aktifVardiyaKullanici.email);
-            return `${uid}_${yil}_${ay}`;
+            const ayHam = String(document.getElementById("vAy").value);
+            const adaylar = [];
+
+            if (aktifVardiyaKullanici && aktifVardiyaKullanici.uid) {
+                adaylar.push(`${aktifVardiyaKullanici.uid}_${yil}_${ay}`);
+                adaylar.push(`${encodeURIComponent(aktifVardiyaKullanici.uid)}_${yil}_${ay}`);
+                adaylar.push(`${aktifVardiyaKullanici.uid}_${yil}_${ayHam}`);
+            }
+            if (aktifVardiyaKullanici && aktifVardiyaKullanici.email) {
+                const em = String(aktifVardiyaKullanici.email).trim().toLowerCase();
+                const safeEm = em.replace(/[^a-zA-Z0-9._-]/g, "_");
+                adaylar.push(`${em}_${yil}_${ay}`);
+                adaylar.push(`${safeEm}_${yil}_${ay}`);
+                adaylar.push(`${em}_${yil}_${ayHam}`);
+                adaylar.push(`${safeEm}_${yil}_${ayHam}`);
+            }
+            return [...new Set(adaylar)];
+        }
+
+        function belgeGunMapCikar(rawData) {
+            if (!rawData || typeof rawData !== "object") return null;
+            const adayMap = rawData.gunler || rawData.days || rawData.kayitlar || rawData.vardiya || null;
+            if (adayMap && typeof adayMap === "object" && !Array.isArray(adayMap)) {
+                return adayMap;
+            }
+            const gunKeys = Object.keys(rawData).filter(k => /^\d{1,2}$/.test(k));
+            if (gunKeys.length > 0) {
+                const map = {};
+                gunKeys.forEach(k => { map[k] = rawData[k]; });
+                return map;
+            }
+            return null;
         }
 
         function vardiyaGunSatirlariniCiz(gunSayisi, kayitliGunler = {}) {
@@ -2706,10 +2681,10 @@
             for (let g = 1; g <= gunSayisi; g++) {
                 const tarih = new Date(yil, ay - 1, g);
                 const gunAdi = gunAdlari[tari.getDay()];
-                const d = kayitliGunler[g] || {};
-                const kod = d.kod || (tari.getDay() === 0 ? "T" : "N");
-                const gece = d.gece !== undefined ? d.gece : 0;
-                const mesai = d.mesai !== undefined ? d.mesai : 0;
+                const d = kayitliGunler[g] || kayitliGunler[String(g)] || {};
+                const kod = d.kod || d.vardiya || (tari.getDay() === 0 ? "T" : "N");
+                const gece = d.gece !== undefined ? d.gece : (d.geceSaat !== undefined ? d.geceSaat : 0);
+                const mesai = d.mesai !== undefined ? d.mesai : (d.fazlaMesai !== undefined ? d.fazlaMesai : 0);
 
                 const row = document.createElement("div");
                 row.className = "shift-day-row";
@@ -2746,6 +2721,9 @@
             gunSelects.forEach(sel => {
                 const g = sel.getAttribute("data-v-gun");
                 const kod = sel.value;
+                const kodEtiket = sel.parentElement && sel.parentElement.querySelector(".shift-day-code");
+                if (kodEtiket) kodEtiket.innerText = "Kod: " + kod;
+
                 const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
                 const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
                 const gz = parseFloat(geceInp && geceInp.value) || 0;
@@ -2786,16 +2764,61 @@
             const ay = parseInt(document.getElementById("vAy").value, 10);
             const gunSayisi = new Date(yil, ay, 0).getDate();
             const durumEl = document.getElementById("vKayitDurumu");
-            durumEl.innerText = "Yükleniyor...";
+
+            vardiyaGunSatirlariniCiz(gunSayisi, {});
+            durumEl.innerText = "Hazır";
 
             try {
-                const snap = await getDoc(doc(db, "vardiya_kayitlari", vardiyaBelgeIdAl()));
-                const kayitli = snap.exists() ? (snap.data().gunler || {}) : {};
-                vardiyaGunSatirlariniCiz(gunSayisi, kayitli);
-                durumEl.innerText = snap.exists() ? "Kayıtlı veri yüklendi" : "Yeni ay çizelgesi";
+                let bulunanGunler = null;
+                const adayIdler = vardiyaBelgeIdAdaylariAl();
+
+                for (const belgeId of adayIdler) {
+                    const snap = await getDoc(doc(db, "vardiya_kayitlari", belgeId));
+                    if (snap.exists()) {
+                        const extracted = belgeGunMapCikar(snap.data());
+                        if (extracted) {
+                            bulunanGunler = extracted;
+                            break;
+                        }
+                    }
+                }
+
+                if (!bulunanGunler) {
+                    const tumKayitlarSnap = await getDocs(collection(db, "vardiya_kayitlari"));
+                    const hedefEmail = String(aktifVardiyaKullanici.email || "").trim().toLowerCase();
+                    const hedefUid = String(aktifVardiyaKullanici.uid || "").trim().toLowerCase();
+
+                    tumKayitlarSnap.forEach(docSnap => {
+                        if (bulunanGunler) return;
+                        const d = docSnap.data() || {};
+                        const kayitYil = parseInt(d.yil, 10);
+                        const kayitAy = parseInt(d.ay, 10);
+                        const kayitEmail = String(d.email || d.eposta || "").trim().toLowerCase();
+                        const kayitUid = String(d.uid || d.userId || "").trim().toLowerCase();
+
+                        const kullaniciEslesiyor =
+                            (hedefEmail && kayitEmail === hedefEmail) ||
+                            (hedefUid && kayitUid === hedefUid) ||
+                            (hedefEmail && docSnap.id.toLowerCase().includes(hedefEmail)) ||
+                            (hedefUid && docSnap.id.toLowerCase().includes(hedefUid));
+
+                        if (kullaniciEslesiyor && kayitYil === yil && kayitAy === ay) {
+                            const extracted = belgeGunMapCikar(d);
+                            if (extracted) {
+                                bulunanGunler = extracted;
+                            }
+                        }
+                    });
+                }
+
+                if (bulunanGunler) {
+                    vardiyaGunSatirlariniCiz(gunSayisi, bulunanGunler);
+                    durumEl.innerText = "Kayıtlı veri yüklendi";
+                } else {
+                    durumEl.innerText = "Kayıtlı vardiya yok";
+                }
             } catch (err) {
                 console.error("Vardiya yükleme hatası:", err);
-                vardiyaGunSatirlariniCiz(gunSayisi, {});
                 durumEl.innerText = "Çevrimdışı görünüm";
             }
         };
@@ -2820,8 +2843,11 @@
                 };
             });
 
+            const adayIdler = vardiyaBelgeIdAdaylariAl();
+            const anaBelgeId = adayIdler[0] || `${encodeURIComponent(aktifVardiyaKullanici.email || "user")}_${document.getElementById("vYil").value}_${String(document.getElementById("vAy").value).padStart(2, "0")}`;
+
             try {
-                await setDoc(doc(db, "vardiya_kayitlari", vardiyaBelgeIdAl()), {
+                await setDoc(doc(db, "vardiya_kayitlari", anaBelgeId), {
                     uid: aktifVardiyaKullanici.uid || aktifVardiyaKullanici.email,
                     email: aktifVardiyaKullanici.email || "",
                     yil: parseInt(document.getElementById("vYil").value, 10),
@@ -2865,8 +2891,71 @@
             if (maasBtn) ekranDegistir(maasBtn);
         };
 
-        // --- GÖMÜLÜ YÖNETİM PANELİ ---
+        // --- YÖNETİM PANELİ GİRİŞ KONTROLÜ ---
+        function adminGorunumunuSenkronizeEt() {
+            const girisKart = document.getElementById("adminGirisKart");
+            const icerikKart = document.getElementById("adminIcerikKart");
+            if (adminGirisYapildiMi) {
+                girisKart.style.display = "none";
+                icerikKart.style.display = "block";
+                adminFormlariniDoldur();
+                adminKullanicilariYukle();
+            } else {
+                girisKart.style.display = "block";
+                icerikKart.style.display = "none";
+            }
+        }
+
+        window.yonetimEkraninaGit = function() {
+            document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+            document.getElementById("view-admin").classList.add("active");
+            document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            adminGorunumunuSenkronizeEt();
+        };
+
+        window.adminCikisYap = function() {
+            adminGirisYapildiMi = false;
+            sessionStorage.removeItem(ADMIN_OTURUM_KEY);
+            document.getElementById("admGirisSifre").value = "";
+            adminGorunumunuSenkronizeEt();
+        };
+
+        document.getElementById("adminGirisForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const girilenKadi = document.getElementById("admGirisKullanici").value.trim();
+            const girilenSifre = document.getElementById("admGirisSifre").value;
+            const btn = document.getElementById("admGirisBtn");
+            btn.disabled = true;
+
+            let beklenenKadi = VARSAYILAN_ADMIN.kullaniciAdi;
+            let beklenenSifre = VARSAYILAN_ADMIN.sifre;
+
+            try {
+                const snap = await getDoc(doc(db, "ayarlar", "yonetici"));
+                if (snap.exists()) {
+                    const data = snap.data() || {};
+                    if (data.kullaniciAdi) beklenenKadi = String(data.kullaniciAdi).trim();
+                    if (data.sifre !== undefined && data.sifre !== "") beklenenSifre = String(data.sifre);
+                }
+            } catch (_) {}
+
+            btn.disabled = false;
+
+            if (girilenKadi === beklenenKadi && girilenSifre === beklenenSifre) {
+                adminGirisYapildiMi = true;
+                sessionStorage.setItem(ADMIN_OTURUM_KEY, "1");
+                adminGorunumunuSenkronizeEt();
+            } else {
+                alert("Kullanıcı adı veya şifre hatalı!");
+            }
+        });
+
         window.adminSekmeAc = function(sekme) {
+            if (!adminGirisYapildiMi) {
+                adminGorunumunuSenkronizeEt();
+                return;
+            }
             document.querySelectorAll(".admin-tab").forEach(t => t.classList.remove("active"));
             document.querySelectorAll(".admin-panel").forEach(p => p.classList.remove("active"));
             const tab = document.getElementById("atab-" + sekme);
@@ -2980,6 +3069,10 @@
         }
 
         window.adminAyarKaydet = async function(bolum) {
+            if (!adminGirisYapildiMi) {
+                alert("Önce panel girişi yapmalısınız.");
+                return;
+            }
             const rozet = document.getElementById("adminDurumRozet");
             rozet.innerText = "Kaydediliyor...";
 
@@ -3055,25 +3148,50 @@
         };
 
         window.adminKullanicilariYukle = async function() {
+            if (!adminGirisYapildiMi) return;
             const listeEl = document.getElementById("admKullaniciListe");
-            listeEl.innerHTML = `<div class="banner-placeholder">Kullanıcılar yükleniyor...</div>`;
+            listeEl.innerHTML = `<div class="banner-placeholder">Kullanıcılar listeleniyor...</div>`;
 
             try {
+                const kullaniciMap = new Map();
                 const snap = await getDocs(collection(db, "vardiya_kullanicilar"));
-                if (snap.empty) {
+                snap.forEach(docSnap => {
+                    const u = docSnap.data() || {};
+                    const ep = u.email || u.eposta || docSnap.id;
+                    const key = String(ep).trim().toLowerCase();
+                    const tarih = u.olusturulmaTarihi || u.sonGirisTarihi
+                        ? new Date(u.olusturulmaTarihi || u.sonGirisTarihi).toLocaleDateString("tr-TR")
+                        : "-";
+                    kullaniciMap.set(key, { email: ep, tarih: tarih });
+                });
+
+                if (kullaniciMap.size === 0) {
+                    const kayitSnap = await getDocs(collection(db, "vardiya_kayitlari"));
+                    kayitSnap.forEach(docSnap => {
+                        const k = docSnap.data() || {};
+                        const ep = k.email || k.eposta || k.uid;
+                        if (ep) {
+                            const key = String(ep).trim().toLowerCase();
+                            if (!kullaniciMap.has(key)) {
+                                const tarih = k.guncellemeTarihi ? new Date(k.guncellemeTarihi).toLocaleDateString("tr-TR") : "-";
+                                kullaniciMap.set(key, { email: ep, tarih: tarih });
+                            }
+                        }
+                    });
+                }
+
+                if (kullaniciMap.size === 0) {
                     listeEl.innerHTML = `<div class="banner-placeholder">Kayıtlı kullanıcı bulunamadı.</div>`;
                     return;
                 }
+
                 listeEl.innerHTML = "";
-                snap.forEach(docSnap => {
-                    const u = docSnap.data() || {};
-                    const ep = u.email || docSnap.id;
-                    const tarih = u.olusturulmaTarihi ? new Date(u.olusturulmaTarihi).toLocaleDateString("tr-TR") : "-";
+                kullaniciMap.forEach(u => {
                     const card = document.createElement("div");
                     card.className = "user-item-card";
                     card.innerHTML = `
-                        <div style="font-weight:800;">${ep}</div>
-                        <div style="color:var(--muted); font-size:11px;">Kayıt Tarihi: ${tarih}</div>
+                        <div style="font-weight:800;">${u.email}</div>
+                        <div style="color:var(--muted); font-size:11px;">Tarih: ${u.tarih}</div>
                     `;
                     listeEl.appendChild(card);
                 });
@@ -3100,8 +3218,8 @@
                 : "-";
 
             document.getElementById("duyuruSatir1").innerText = aktifVeri.duyuru1 || "Güncel duyuru bulunmuyor.";
-            document.getElementById("duyuruSatir2").innerText = aktifVeri.duyuru2 || "Detaylar panel üzerinden güncellenebilir.";
-            document.getElementById("duyuruSatir3").innerText = aktifVeri.duyuru3 || "Tüm veriler merkezden senkronize edilir.";
+            document.getElementById("duyuruSatir2").innerText = aktifVeri.duyuru2 || "Detaylar güncellenebilir.";
+            document.getElementById("duyuruSatir3").innerText = aktifVeri.duyuru3 || "Tüm veriler senkronize edilir.";
 
             const gorselKutusu = document.getElementById("duyuruGorselKutusu");
             if (aktifVeri.duyuruFoto && aktifVeri.duyuruFoto.trim() !== "") {
@@ -3160,7 +3278,7 @@
         document.getElementById("refreshBtn").addEventListener("click", () => verileriGetir(true));
 
         otomatikAyAyarla();
-        ayAyariYap();
+        hesapla();
         ayEkle(232.5, 0, 0, 0, 0, 0, 0);
         ayEkle(210, 0, 0, 0, 0, 0, 0);
         ayEkle(232.5, 0, 0, 0, 0, 0, 0);
@@ -3174,6 +3292,7 @@
                     document.getElementById("vardiyaGirisKart").style.display = "none";
                     document.getElementById("vardiyaPanelKart").style.display = "block";
                     document.getElementById("vAktifKullaniciAdi").innerText = parsedOturum.email || parsedOturum.uid;
+                    vardiyaAyVerisiniYukle();
                 }
             } catch (_) {}
         }
