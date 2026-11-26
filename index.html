@@ -885,7 +885,7 @@
 
         .shift-day-row {
             display: grid;
-            grid-template-columns: 74px 1fr 122px;
+            grid-template-columns: 72px 1fr 158px;
             align-items: center;
             gap: 5px;
             padding: 6px 4px;
@@ -910,7 +910,7 @@
 
         .shift-hours-box {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 3px;
         }
 
@@ -922,10 +922,30 @@
         }
 
         .shift-hour-lbl {
-            font-size: 8.5px;
+            font-size: 8px;
             font-weight: 700;
             color: var(--muted);
             line-height: 1;
+        }
+
+        .delete-account-box {
+            margin-top: 10px;
+            padding: 9px 10px;
+            border-radius: 12px;
+            border: 1px solid #fecdd3;
+            background: #fff8f9;
+        }
+
+        .delete-confirm-row {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            font-weight: 700;
+            color: #9f1239;
         }
 
         .admin-tabs {
@@ -1507,6 +1527,10 @@
 
                 <form id="vardiyaUyeForm" style="display:none;">
                     <div class="field-group">
+                        <label class="field-label" for="vUyeAdSoyad">Ad Soyad</label>
+                        <input type="text" id="vUyeAdSoyad" class="input-control" required placeholder="Adınız Soyadınız">
+                    </div>
+                    <div class="field-group">
                         <label class="field-label" for="vUyeEmail">E-posta</label>
                         <input type="email" id="vUyeEmail" class="input-control" required placeholder="ornek@eposta.com">
                     </div>
@@ -1534,7 +1558,10 @@
                 </div>
 
                 <div class="shift-user-bar">
-                    <span>E-posta: <strong id="vAktifKullaniciAdi">-</strong></span>
+                    <div>
+                        <div>Ad Soyad: <strong id="vAktifAdSoyad">-</strong></div>
+                        <div style="font-size:11px; color:var(--muted);">E-posta: <span id="vAktifKullaniciAdi">-</span></div>
+                    </div>
                     <span id="vKayitDurumu" style="color:#047857; font-weight:700;">Hazır</span>
                 </div>
 
@@ -1582,6 +1609,23 @@
                 <div class="two-col" style="margin-top:8px;">
                     <button type="button" id="vKaydetBtn" class="primary-action-btn" onclick="vardiyaAyVerisiniKaydet()">Vardiyayı Kaydet</button>
                     <button type="button" class="secondary-action-btn" style="padding:9px 12px;" onclick="vardiyaMaasAktar()">Maaş Hesaba Aktar</button>
+                </div>
+
+                <div class="delete-account-box">
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+                        <div>
+                            <div style="font-size:12px; font-weight:800; color:#9f1239;">Hesabımı Sil</div>
+                            <div style="font-size:10.5px; color:var(--muted);">Hesabınız ve vardiya kayıtlarınız kalıcı olarak silinir.</div>
+                        </div>
+                        <button type="button" class="danger-action-btn" onclick="hesapSilmeOnayAc()">Hesabımı Sil</button>
+                    </div>
+                    <div id="hesapSilOnayKutusu" class="delete-confirm-row" style="display:none;">
+                        <span>Hesabınızı silmek istiyor musunuz?</span>
+                        <div style="display:flex; gap:6px;">
+                            <button type="button" id="hesapSilEvetBtn" class="danger-action-btn" onclick="hesabimiKaliciSil(true)">Evet</button>
+                            <button type="button" class="secondary-action-btn" onclick="hesabimiKaliciSil(false)">Hayır</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1748,9 +1792,9 @@
             </div>
             <div class="info-modal-body">
                 <p><strong>1. Veri Sorumlusu:</strong> BordroApp kapsamında oluşturulan kişisel vardiya çizelgesi ve hesaplama modülleri, kullanıcı hesabınıza özel aylık kayıtların tutulması amacıyla işletilmektedir.</p>
-                <p><strong>2. İşlenen Veriler:</strong> Üyelik sırasında sağladığınız e-posta adresi ile aylık vardiya girişleriniz (vardiya kodu, gece saati, fazla mesai saati, eksik saat) işlenmektedir.</p>
+                <p><strong>2. İşlenen Veriler:</strong> Üyelik sırasında sağladığınız ad soyad, e-posta adresi ile aylık vardiya girişleriniz (vardiya kodu, çalışma saati, fazla mesai saati, eksik saat, gece saati) işlenmektedir.</p>
                 <p><strong>3. İşleme Amacı ve Saklama:</strong> Verileriniz yalnızca seçtiğiniz yıl ve ay bazında kişisel vardiya çizelgenizi görüntülemek, kaydetmek ve maaş/fark hesaplamalarını kolaylaştırmak için saklanır; izniniz dışında üçüncü kişilerle paylaşılmaz.</p>
-                <p><strong>4. Haklarınız:</strong> Kayıtlı vardiya verilerinizi uygulama üzerinden güncelleyebilir, oturumunuzu kapatabilir veya hesabınıza ilişkin taleplerinizi iletebilirsiniz.</p>
+                <p><strong>4. Haklarınız:</strong> Kayıtlı vardiya verilerinizi uygulama üzerinden güncelleyebilir, oturumunuzu kapatabilir veya hesabınızı silebilirsiniz.</p>
             </div>
             <div class="info-modal-footer">
                 <button type="button" class="primary-action-btn" style="width:auto; padding:8px 16px;" onclick="aydinlatmaOnaylaVeKapat()">Anladım, Onaylıyorum</button>
@@ -1766,12 +1810,12 @@
                 <button type="button" class="info-modal-close" onclick="bilgilendirmeModalKapat()">✕</button>
             </div>
             <div class="info-modal-body">
-                <p>BordroApp vardiya çizelgesine hoş geldiniz. Kayıtlarınız e-posta hesabınızla güvenli şekilde senkronize edilir.</p>
+                <p>BordroApp vardiya çizelgesine hoş geldiniz. Kayıtlarınız hesabınızla senkronize edilir.</p>
                 <ul>
                     <li><strong>1. Yıl ve Ay Seçimi:</strong> Üst kısımdan <em>Yıl</em> ve <em>Ay</em> seçerek ilgili ayın gün listesini açın; daha önce kaydedilmiş veriniz varsa otomatik yüklenir.</li>
-                    <li><strong>2. Vardiya, İzin, Tatil, Mesai ve Eksik Saat:</strong> Her gün için vardiya/izin/tatil durumunu seçin; <em>Mesai</em>, <em>Eksik Saat</em> ve <em>Gece</em> saatlerini girin. Üstteki özet kutuları anlık güncellenir.</li>
-                    <li><strong>3. Kaydetme ve Maaş Aktarımı:</strong> Değişiklikleri kalıcı olarak saklamak için <strong>Vardiyayı Kaydet</strong> butonuna basın. Toplam saatleri <em>Maaş Hesaplama</em> ekranına taşımak için <strong>Maaş Hesaba Aktar</strong> seçeneğini kullanabilirsiniz.</li>
-                    <li><strong>4. Diğer Modüller:</strong> Alt menüden <em>Anasayfa</em>, <em>Maaş</em>, <em>Fark</em>, <em>Yardımlar</em> ve <em>TÜFE</em> ekranları arasında tek dokunuşla geçiş yapabilirsiniz.</li>
+                    <li><strong>2. Vardiya, İzin, Tatil, Mesai ve Eksik Saat:</strong> Her gün için vardiya/izin/tatil durumunu seçin; <em>Çalışma</em>, <em>Mesai</em>, <em>Eksik</em> ve <em>Gece</em> saatlerini girin. Üstteki özet kutuları anlık güncellenir.</li>
+                    <li><strong>3. Kaydetme ve Maaş Aktarımı:</strong> Değişiklikleri saklamak için <strong>Vardiyayı Kaydet</strong> butonuna basın. Toplam saatleri <em>Maaş Hesaplama</em> ekranına taşımak için <strong>Maaş Hesaba Aktar</strong> seçeneğini kullanabilirsiniz.</li>
+                    <li><strong>4. Hesap Silme:</strong> İsterseniz alt kısımdaki <strong>Hesabımı Sil</strong> alanından <strong>Evet / Hayır</strong> onayı ile hesabınızı silebilirsiniz.</li>
                 </ul>
             </div>
             <div class="info-modal-footer">
@@ -1805,8 +1849,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, deleteUser, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
@@ -1821,8 +1865,9 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const CACHE_KEY = "bordroapp_mobil_v13";
+        const CACHE_KEY = "bordroapp_mobil_v14";
         const VARDIYA_OTURUM_KEY = "bordroapp_vardiya_oturum_v1";
+        const VARDIYA_YEREL_KAYIT_KEY = "bordroapp_vardiya_kayitlari_v1";
         const ADMIN_OTURUM_KEY = "bordroapp_admin_oturum_v1";
 
         const VARSAYILAN_ADMIN = {
@@ -2520,7 +2565,7 @@
             try {
                 await sendPasswordResetEmail(auth, email);
                 durumEl.style.color = "#047857";
-                durumEl.innerText = "Şifre sıfırlama bağlantısı e-postanıza gönderildi. Maildeki bağlantıya tıklayarak şifrenizi değiştirebilirsiniz.";
+                durumEl.innerText = "Şifre sıfırlama bağlantısı e-postanıza gönderildi.";
             } catch (err) {
                 console.error("Şifre sıfırlama e-posta hatası:", err);
                 durumEl.style.color = "var(--danger)";
@@ -2543,6 +2588,11 @@
             return "";
         }
 
+        function kullaniciAdSoyadCikar(data = {}) {
+            const aday = data.adSoyad || data.ad_soyad || data.fullName || data.name || data.isimSoyisim || data.isim || "";
+            return aday ? String(aday).trim() : "";
+        }
+
         async function eskiFirestoreKullaniciBul(email) {
             const kucuk = String(email || "").trim().toLowerCase();
             if (!kucuk) return null;
@@ -2550,7 +2600,8 @@
                 const snap = await getDocs(query(collection(db, "vardiya_kullanicilar"), where("email", "==", kucuk)));
                 if (!snap.empty) {
                     const d = snap.docs[0];
-                    return { uid: d.id, email: kullaniciEpostaCikar(d.id, d.data()) || kucuk, ...d.data() };
+                    const raw = d.data() || {};
+                    return { uid: d.id, email: kullaniciEpostaCikar(d.id, raw) || kucuk, adSoyad: kullaniciAdSoyadCikar(raw), ...raw };
                 }
             } catch (_) {}
 
@@ -2562,7 +2613,7 @@
                     const data = docSnap.data() || {};
                     const ep = kullaniciEpostaCikar(docSnap.id, data).toLowerCase();
                     if (ep === kucuk || String(docSnap.id).toLowerCase() === kucuk) {
-                        bulunan = { uid: docSnap.id, email: ep || kucuk, ...data };
+                        bulunan = { uid: docSnap.id, email: ep || kucuk, adSoyad: kullaniciAdSoyadCikar(data), ...data };
                     }
                 });
                 return bulunan;
@@ -2573,20 +2624,30 @@
         }
 
         function vardiyaOturumAktiflestir(kullaniciObj, yeniUyeMi = false) {
-            aktifVardiyaKullanici = kullaniciObj;
-            localStorage.setItem(VARDIYA_OTURUM_KEY, JSON.stringify(kullaniciObj));
+            const normalObj = {
+                uid: kullaniciObj.uid || kullaniciObj.email,
+                authUid: kullaniciObj.authUid || "",
+                email: kullaniciObj.email || "",
+                adSoyad: kullaniciObj.adSoyad || kullaniciObj.email || "Kullanıcı"
+            };
+            aktifVardiyaKullanici = normalObj;
+            localStorage.setItem(VARDIYA_OTURUM_KEY, JSON.stringify(normalObj));
             document.getElementById("vardiyaGirisKart").style.display = "none";
             document.getElementById("vardiyaPanelKart").style.display = "block";
-            document.getElementById("vAktifKullaniciAdi").innerText = kullaniciObj.email || kullaniciObj.uid;
+            document.getElementById("hesapSilOnayKutusu").style.display = "none";
+            document.getElementById("vAktifAdSoyad").innerText = normalObj.adSoyad;
+            document.getElementById("vAktifKullaniciAdi").innerText = normalObj.email || normalObj.uid;
             vardiyaAyVerisiniYukle();
             if (yeniUyeMi) {
                 bilgilendirmeModalAc();
             }
         }
 
-        window.vardiyaCikisYap = function() {
+        window.vardiyaCikisYap = async function() {
+            try { await signOut(auth); } catch (_) {}
             aktifVardiyaKullanici = null;
             localStorage.removeItem(VARDIYA_OTURUM_KEY);
+            document.getElementById("hesapSilOnayKutusu").style.display = "none";
             document.getElementById("vardiyaPanelKart").style.display = "none";
             document.getElementById("vardiyaGirisKart").style.display = "block";
         };
@@ -2605,11 +2666,13 @@
                     const oturumObj = {
                         uid: (mevcutDoc && mevcutDoc.uid) || cred.user.uid,
                         authUid: cred.user.uid,
-                        email: email
+                        email: email,
+                        adSoyad: (mevcutDoc && mevcutDoc.adSoyad) || cred.user.displayName || email.split("@")[0]
                     };
                     try {
                         await setDoc(doc(db, "vardiya_kullanicilar", oturumObj.uid), {
                             email: email,
+                            adSoyad: oturumObj.adSoyad,
                             authUid: cred.user.uid,
                             sonGirisTarihi: new Date().toISOString()
                         }, { merge: true });
@@ -2622,10 +2685,14 @@
                         try {
                             await createUserWithEmailAndPassword(auth, email, sifre);
                         } catch (_) {}
-                        vardiyaOturumAktiflestir({ uid: eskiUser.uid, email: email }, false);
+                        vardiyaOturumAktiflestir({
+                            uid: eskiUser.uid,
+                            email: email,
+                            adSoyad: eskiUser.adSoyad || email.split("@")[0]
+                        }, false);
                         return;
                     }
-                    alert("E-posta veya parola hatalı! Şifrenizi unuttuysanız 'Şifremi Unuttum' ile e-postanıza sıfırlama bağlantısı gönderebilirsiniz.");
+                    alert("E-posta veya parola hatalı!");
                 }
             } finally {
                 btn.disabled = false;
@@ -2639,6 +2706,7 @@
                 return;
             }
 
+            const adSoyad = document.getElementById("vUyeAdSoyad").value.trim();
             const email = document.getElementById("vUyeEmail").value.trim().toLowerCase();
             const sifre = document.getElementById("vUyeSifre").value.trim();
             const btn = document.getElementById("vUyeBtn");
@@ -2648,6 +2716,7 @@
                 const cred = await createUserWithEmailAndPassword(auth, email, sifre);
                 const docId = email.replace(/[^a-zA-Z0-9._-]/g, "_");
                 const yeniKayit = {
+                    adSoyad: adSoyad,
                     email: email,
                     authUid: cred.user.uid,
                     aydinlatmaOnay: true,
@@ -2668,6 +2737,89 @@
             }
         });
 
+        // --- HESABIMI SİL (EVET / HAYIR) ---
+        window.hesapSilmeOnayAc = function() {
+            const kutu = document.getElementById("hesapSilOnayKutusu");
+            kutu.style.display = kutu.style.display === "flex" ? "none" : "flex";
+        };
+
+        window.hesabimiKaliciSil = async function(onaylandiMi) {
+            if (!onaylandiMi) {
+                document.getElementById("hesapSilOnayKutusu").style.display = "none";
+                return;
+            }
+            if (!aktifVardiyaKullanici) return;
+
+            const evetBtn = document.getElementById("hesapSilEvetBtn");
+            evetBtn.disabled = true;
+
+            try {
+                const hedefEmail = String(aktifVardiyaKullanici.email || "").trim().toLowerCase();
+                const hedefUid = String(aktifVardiyaKullanici.uid || "").trim().toLowerCase();
+
+                // Kullanıcının vardiya kayıtlarını Firestore'dan sil
+                try {
+                    const kayitlarSnap = await getDocs(collection(db, "vardiya_kayitlari"));
+                    const silmeIslemleri = [];
+                    kayitlarSnap.forEach(docSnap => {
+                        const d = docSnap.data() || {};
+                        const kEmail = kullaniciEpostaCikar(docSnap.id, d).toLowerCase();
+                        const kUid = String(d.uid || d.userId || "").trim().toLowerCase();
+                        if ((hedefEmail && (kEmail === hedefEmail || docSnap.id.toLowerCase().includes(hedefEmail))) ||
+                            (hedefUid && (kUid === hedefUid || docSnap.id.toLowerCase().includes(hedefUid)))) {
+                            silmeIslemleri.push(deleteDoc(doc(db, "vardiya_kayitlari", docSnap.id)));
+                        }
+                    });
+                    await Promise.allSettled(silmeIslemleri);
+                } catch (_) {}
+
+                // Kullanıcı belgesini sil
+                try {
+                    const userSnap = await getDocs(collection(db, "vardiya_kullanicilar"));
+                    const userSilmeleri = [];
+                    userSnap.forEach(docSnap => {
+                        const d = docSnap.data() || {};
+                        const uEmail = kullaniciEpostaCikar(docSnap.id, d).toLowerCase();
+                        if ((hedefEmail && uEmail === hedefEmail) || (hedefUid && docSnap.id.toLowerCase() === hedefUid)) {
+                            userSilmeleri.push(deleteDoc(doc(db, "vardiya_kullanicilar", docSnap.id)));
+                        }
+                    });
+                    await Promise.allSettled(userSilmeleri);
+                } catch (_) {}
+
+                // Yerel kayıtlardan temizle
+                try {
+                    const yerelRaw = JSON.parse(localStorage.getItem(VARDIYA_YEREL_KAYIT_KEY) || "{}");
+                    Object.keys(yerelRaw).forEach(anahtar => {
+                        if ((hedefEmail && anahtar.toLowerCase().includes(hedefEmail)) ||
+                            (hedefUid && anahtar.toLowerCase().includes(hedefUid))) {
+                            delete yerelRaw[anahtar];
+                        }
+                    });
+                    localStorage.setItem(VARDIYA_YEREL_KAYIT_KEY, JSON.stringify(yerelRaw));
+                } catch (_) {}
+
+                // Firebase Auth kullanıcısını silmeye çalış
+                if (auth.currentUser) {
+                    try {
+                        await deleteUser(auth.currentUser);
+                    } catch (_) {
+                        try { await signOut(auth); } catch (_) {}
+                    }
+                }
+
+                aktifVardiyaKullanici = null;
+                localStorage.removeItem(VARDIYA_OTURUM_KEY);
+                document.getElementById("hesapSilOnayKutusu").style.display = "none";
+                document.getElementById("vardiyaPanelKart").style.display = "none";
+                document.getElementById("vardiyaGirisKart").style.display = "block";
+                alert("Hesabınız ve vardiya kayıtlarınız silindi.");
+            } finally {
+                evetBtn.disabled = false;
+            }
+        };
+
+        // --- VARDİYA VERİ YÖNETİMİ (KAYIT + YÜKLEME + ÖZET) ---
         function vardiyaBelgeIdAdaylariAl() {
             const yil = String(document.getElementById("vYil").value);
             const ay = String(document.getElementById("vAy").value).padStart(2, "0");
@@ -2688,6 +2840,24 @@
                 adaylar.push(`${safeEm}_${yil}_${ayHam}`);
             }
             return [...new Set(adaylar)];
+        }
+
+        function yerelVardiyaOku(adayIdler) {
+            try {
+                const depo = JSON.parse(localStorage.getItem(VARDIYA_YEREL_KAYIT_KEY) || "{}");
+                for (const id of adayIdler) {
+                    if (depo[id]) return belgeGunMapCikar(depo[id]);
+                }
+            } catch (_) {}
+            return null;
+        }
+
+        function yerelVardiyaYaz(belgeId, veriObj) {
+            try {
+                const depo = JSON.parse(localStorage.getItem(VARDIYA_YEREL_KAYIT_KEY) || "{}");
+                depo[belgeId] = veriObj;
+                localStorage.setItem(VARDIYA_YEREL_KAYIT_KEY, JSON.stringify(depo));
+            } catch (_) {}
         }
 
         function belgeGunMapCikar(rawData) {
@@ -2717,6 +2887,9 @@
                 const gunAdi = gunAdlari[tari.getDay()];
                 const d = kayitliGunler[g] || kayitliGunler[String(g)] || kayitliGunler[String(g).padStart(2, "0")] || {};
                 const kod = d.kod || d.vardiya || (tari.getDay() === 0 ? "T" : "N");
+                const izinTatilKodlari = new Set(["T", "RT", "Yİ", "Mİ", "Üİ", "R", "B"]);
+                const varsayilanCalisma = izinTatilKodlari.has(kod) ? 0 : 7.5;
+                const calisma = d.calisma !== undefined ? d.calisma : (d.calismaSaati !== undefined ? d.calismaSaati : varsayilanCalisma);
                 const mesai = d.mesai !== undefined ? d.mesai : (d.fazlaMesai !== undefined ? d.fazlaMesai : "");
                 const eksik = d.eksik !== undefined ? d.eksik : (d.eksikSaat !== undefined ? d.eksikSaat : "");
                 const gece = d.gece !== undefined ? d.gece : (d.geceSaat !== undefined ? d.geceSaat : "");
@@ -2728,29 +2901,33 @@
                         <div>${g} ${gunAdi}</div>
                         <div class="shift-day-code">Durum: ${kod}</div>
                     </div>
-                    <select class="select-control" style="padding:5px 6px; font-size:11px;" data-v-gun="${g}" data-v-alan="kod" onchange="vardiyaOzetiHesapla()">
-                        <option value="N" ${kod==="N"?"selected":""}>Normal Vardiya (N)</option>
-                        <option value="G" ${kod==="G"?"selected":""}>Gece Vardiyası (G)</option>
+                    <select class="select-control" style="padding:5px 4px; font-size:10.5px;" data-v-gun="${g}" data-v-alan="kod" onchange="vardiyaKodDegisti(${g}, this.value)">
+                        <option value="N" ${kod==="N"?"selected":""}>Normal (N)</option>
+                        <option value="G" ${kod==="G"?"selected":""}>Gece Vard. (G)</option>
                         <option value="T" ${kod==="T"?"selected":""}>Hafta Tatili (T)</option>
                         <option value="RT" ${kod==="RT"?"selected":""}>Resmi Tatil (RT)</option>
                         <option value="Yİ" ${kod==="Yİ"?"selected":""}>Yıllık İzin (Yİ)</option>
-                        <option value="Mİ" ${kod==="Mİ"?"selected":""}>Mazeret İzni (Mİ)</option>
+                        <option value="Mİ" ${kod==="Mİ"?"selected":""}>Mazeret İzin (Mİ)</option>
                         <option value="Üİ" ${kod==="Üİ"?"selected":""}>Ücretsiz İzin (Üİ)</option>
                         <option value="R" ${kod==="R"?"selected":""}>Raporlu (R)</option>
                         <option value="B" ${kod==="B"?"selected":""}>Bayram (B)</option>
                     </select>
                     <div class="shift-hours-box">
                         <div class="shift-hour-col">
+                            <span class="shift-hour-lbl">Çalışma</span>
+                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10px; text-align:center;" data-v-gun="${g}" data-v-alan="calisma" value="${calisma}" oninput="vardiyaOzetiHesapla()">
+                        </div>
+                        <div class="shift-hour-col">
                             <span class="shift-hour-lbl">Mesai</span>
-                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10.5px; text-align:center;" data-v-gun="${g}" data-v-alan="mesai" value="${mesai}" oninput="vardiyaOzetiHesapla()">
+                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10px; text-align:center;" data-v-gun="${g}" data-v-alan="mesai" value="${mesai}" oninput="vardiyaOzetiHesapla()">
                         </div>
                         <div class="shift-hour-col">
                             <span class="shift-hour-lbl">Eksik</span>
-                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10.5px; text-align:center;" data-v-gun="${g}" data-v-alan="eksik" value="${eksik}" oninput="vardiyaOzetiHesapla()">
+                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10px; text-align:center;" data-v-gun="${g}" data-v-alan="eksik" value="${eksik}" oninput="vardiyaOzetiHesapla()">
                         </div>
                         <div class="shift-hour-col">
                             <span class="shift-hour-lbl">Gece</span>
-                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10.5px; text-align:center;" data-v-gun="${g}" data-v-alan="gece" value="${gece}" oninput="vardiyaOzetiHesapla()">
+                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10px; text-align:center;" data-v-gun="${g}" data-v-alan="gece" value="${gece}" oninput="vardiyaOzetiHesapla()">
                         </div>
                     </div>
                 `;
@@ -2758,6 +2935,15 @@
             }
             vardiyaOzetiHesapla();
         }
+
+        window.vardiyaKodDegisti = function(gun, yeniKod) {
+            const izinTatilKodlari = new Set(["T", "RT", "Yİ", "Mİ", "Üİ", "R", "B"]);
+            const calismaInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${gun}"][data-v-alan="calisma"]`);
+            if (calismaInp) {
+                calismaInp.value = izinTatilKodlari.has(yeniKod) ? 0 : 7.5;
+            }
+            vardiyaOzetiHesapla();
+        };
 
         window.vardiyaOzetiHesapla = function() {
             let calismaSaat = 0;
@@ -2773,18 +2959,18 @@
                 const kodEtiket = sel.parentElement && sel.parentElement.querySelector(".shift-day-code");
                 if (kodEtiket) kodEtiket.innerText = "Durum: " + kod;
 
+                const calismaInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="calisma"]`);
                 const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
                 const eksikInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="eksik"]`);
 
+                const cs = parseFloat(calismaInp && calismaInp.value) || 0;
                 const fm = parseFloat(mesaiInp && mesaiInp.value) || 0;
                 const ek = parseFloat(eksikInp && eksikInp.value) || 0;
 
-                if (kod === "N" || kod === "G") {
-                    calismaSaat += Math.max(0, 7.5 - ek);
-                } else if (izinTatilKodlari.has(kod)) {
+                calismaSaat += cs;
+                if (izinTatilKodlari.has(kod)) {
                     izinTatilGun += 1;
                 }
-
                 mesaiSaat += fm;
                 eksikSaat += ek;
             });
@@ -2801,13 +2987,14 @@
             const ay = parseInt(document.getElementById("vAy").value, 10);
             const gunSayisi = new Date(yil, ay, 0).getDate();
             const durumEl = document.getElementById("vKayitDurumu");
+            const adayIdler = vardiyaBelgeIdAdaylariAl();
 
-            vardiyaGunSatirlariniCiz(gunSayisi, {});
-            durumEl.innerText = "Yükleniyor...";
+            const yerelGunler = yerelVardiyaOku(adayIdler);
+            vardiyaGunSatirlariniCiz(gunSayisi, yerelGunler || {});
+            durumEl.innerText = yerelGunler ? "Yerel veri yüklendi" : "Yükleniyor...";
 
             try {
                 let bulunanGunler = null;
-                const adayIdler = vardiyaBelgeIdAdaylariAl();
 
                 for (const belgeId of adayIdler) {
                     const snap = await getDoc(doc(db, "vardiya_kayitlari", belgeId));
@@ -2815,6 +3002,7 @@
                         const extracted = belgeGunMapCikar(snap.data());
                         if (extracted) {
                             bulunanGunler = extracted;
+                            yerelVardiyaYaz(belgeId, snap.data());
                             break;
                         }
                     }
@@ -2843,6 +3031,7 @@
                             const extracted = belgeGunMapCikar(d);
                             if (extracted) {
                                 bulunanGunler = extracted;
+                                yerelVardiyaYaz(docSnap.id, d);
                             }
                         }
                     });
@@ -2852,14 +3041,14 @@
                     vardiyaGunSatirlariniCiz(gunSayisi, bulunanGunler);
                     durumEl.style.color = "#047857";
                     durumEl.innerText = "Kayıtlı veri yüklendi";
-                } else {
+                } else if (!yerelGunler) {
                     durumEl.style.color = "var(--muted)";
                     durumEl.innerText = "Kayıtlı vardiya yok";
                 }
             } catch (err) {
                 console.error("Vardiya yükleme hatası:", err);
-                durumEl.style.color = "var(--danger)";
-                durumEl.innerText = "Okuma hatası: " + (err.code || err.message);
+                durumEl.style.color = yerelGunler ? "#047857" : "var(--danger)";
+                durumEl.innerText = yerelGunler ? "Yerel kayıt yüklendi" : ("Okuma hatası: " + (err.code || err.message));
             }
         };
 
@@ -2874,11 +3063,13 @@
             const gunSelects = document.querySelectorAll('#vGunlerListesi select[data-v-alan="kod"]');
             gunSelects.forEach(sel => {
                 const g = sel.getAttribute("data-v-gun");
+                const calismaInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="calisma"]`);
                 const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
                 const eksikInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="eksik"]`);
                 const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
                 gunler[g] = {
                     kod: sel.value,
+                    calisma: parseFloat(calismaInp && calismaInp.value) || 0,
                     mesai: parseFloat(mesaiInp && mesaiInp.value) || 0,
                     eksik: parseFloat(eksikInp && eksikInp.value) || 0,
                     gece: parseFloat(geceInp && geceInp.value) || 0
@@ -2888,23 +3079,28 @@
             const adayIdler = vardiyaBelgeIdAdaylariAl();
             const anaBelgeId = adayIdler[0] || `${encodeURIComponent(aktifVardiyaKullanici.email || "user")}_${document.getElementById("vYil").value}_${String(document.getElementById("vAy").value).padStart(2, "0")}`;
 
+            const kayitObj = {
+                uid: aktifVardiyaKullanici.uid || aktifVardiyaKullanici.email,
+                email: aktifVardiyaKullanici.email || "",
+                adSoyad: aktifVardiyaKullanici.adSoyad || "",
+                yil: parseInt(document.getElementById("vYil").value, 10),
+                ay: parseInt(document.getElementById("vAy").value, 10),
+                gunler: gunler,
+                guncellemeTarihi: new Date().toISOString()
+            };
+
+            yerelVardiyaYaz(anaBelgeId, kayitObj);
+
             try {
-                await setDoc(doc(db, "vardiya_kayitlari", anaBelgeId), {
-                    uid: aktifVardiyaKullanici.uid || aktifVardiyaKullanici.email,
-                    email: aktifVardiyaKullanici.email || "",
-                    yil: parseInt(document.getElementById("vYil").value, 10),
-                    ay: parseInt(document.getElementById("vAy").value, 10),
-                    gunler: gunler,
-                    guncellemeTarihi: new Date().toISOString()
-                }, { merge: true });
+                await setDoc(doc(db, "vardiya_kayitlari", anaBelgeId), kayitObj, { merge: true });
                 durumEl.style.color = "#047857";
                 durumEl.innerText = "Kaydedildi";
                 alert("Vardiya çizelgesi kaydedildi.");
             } catch (err) {
                 console.error("Vardiya kayıt hatası:", err);
-                durumEl.style.color = "var(--danger)";
-                durumEl.innerText = "Kayıt hatası";
-                alert("Kaydedilemedi: " + err.message);
+                durumEl.style.color = "#b45309";
+                durumEl.innerText = "Cihaza kaydedildi";
+                alert("Bulut kaydı yapılamadı ama veriler cihazınıza kaydedildi: " + err.message);
             } finally {
                 btn.disabled = false;
             }
@@ -2918,14 +3114,11 @@
 
             document.querySelectorAll('#vGunlerListesi select[data-v-alan="kod"]').forEach(sel => {
                 const g = sel.getAttribute("data-v-gun");
+                const calismaInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="calisma"]`);
                 const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
-                const eksikInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="eksik"]`);
                 const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
 
-                const ek = parseFloat(eksikInp && eksikInp.value) || 0;
-                if (sel.value === "N" || sel.value === "G") {
-                    calismaSaat += Math.max(0, 7.5 - ek);
-                }
+                calismaSaat += parseFloat(calismaInp && calismaInp.value) || 0;
                 geceSaat += parseFloat(geceInp && geceInp.value) || 0;
                 mesaiSaat += parseFloat(mesaiInp && mesaiInp.value) || 0;
             });
@@ -3250,12 +3443,13 @@
                     snap.forEach(docSnap => {
                         const u = docSnap.data() || {};
                         const ep = kullaniciEpostaCikar(docSnap.id, u) || docSnap.id;
+                        const adSoyad = kullaniciAdSoyadCikar(u) || "-";
                         const key = String(ep).trim().toLowerCase();
                         const hamTarih = u.olusturulmaTarihi || u.sonGirisTarihi || u.createdAt || u.tarih || "";
                         const tarih = hamTarih && !Number.isNaN(Date.parse(hamTarih))
                             ? new Date(hamTarih).toLocaleDateString("tr-TR")
                             : (typeof hamTarih === "string" && hamTarih ? hamTarih : "-");
-                        kullaniciMap.set(key, { email: ep, tarih: tarih, kaynak: "vardiya_kullanicilar" });
+                        kullaniciMap.set(key, { adSoyad, email: ep, tarih, kaynak: "vardiya_kullanicilar" });
                     });
                 } catch (err) {
                     kullaniciKoleksiyonHatasi = err.code || err.message;
@@ -3266,14 +3460,18 @@
                     kayitSnap.forEach(docSnap => {
                         const k = docSnap.data() || {};
                         const ep = kullaniciEpostaCikar("", k) || k.uid || k.userId || "";
+                        const adSoyad = kullaniciAdSoyadCikar(k);
                         if (ep) {
                             const key = String(ep).trim().toLowerCase();
-                            if (!kullaniciMap.has(key)) {
-                                const hamTarih = k.guncellemeTarihi || k.updatedAt || k.tarih || "";
-                                const tarih = hamTarih && !Number.isNaN(Date.parse(hamTarih))
-                                    ? new Date(hamTarih).toLocaleDateString("tr-TR")
-                                    : "-";
-                                kullaniciMap.set(key, { email: ep, tarih: tarih, kaynak: "vardiya_kayitlari" });
+                            const mevcut = kullaniciMap.get(key);
+                            const hamTarih = k.guncellemeTarihi || k.updatedAt || k.tarih || "";
+                            const tarih = hamTarih && !Number.isNaN(Date.parse(hamTarih))
+                                ? new Date(hamTarih).toLocaleDateString("tr-TR")
+                                : "-";
+                            if (!mevcut) {
+                                kullaniciMap.set(key, { adSoyad: adSoyad || "-", email: ep, tarih, kaynak: "vardiya_kayitlari" });
+                            } else if (mevcut.adSoyad === "-" && adSoyad) {
+                                mevcut.adSoyad = adSoyad;
                             }
                         }
                     });
@@ -3290,7 +3488,8 @@
                     const card = document.createElement("div");
                     card.className = "user-item-card";
                     card.innerHTML = `
-                        <div style="font-weight:800;">${u.email}</div>
+                        <div style="font-weight:800;">${u.adSoyad}</div>
+                        <div style="font-size:11.5px; font-weight:600;">${u.email}</div>
                         <div style="color:var(--muted); font-size:11px;">Tarih: ${u.tarih} · ${u.kaynak}</div>
                     `;
                     listeEl.appendChild(card);
@@ -3391,6 +3590,7 @@
                     aktifVardiyaKullanici = parsedOturum;
                     document.getElementById("vardiyaGirisKart").style.display = "none";
                     document.getElementById("vardiyaPanelKart").style.display = "block";
+                    document.getElementById("vAktifAdSoyad").innerText = parsedOturum.adSoyad || parsedOturum.email || parsedOturum.uid;
                     document.getElementById("vAktifKullaniciAdi").innerText = parsedOturum.email || parsedOturum.uid;
                     vardiyaAyVerisiniYukle();
                 }
