@@ -1582,6 +1582,7 @@
                         <label class="field-label" for="admGirisSifre">Şifre</label>
                         <input type="password" id="admGirisSifre" class="input-control" required placeholder="Yönetici şifresi">
                     </div>
+                    <div id="admGirisHata" style="margin-bottom:8px; font-size:11.5px; color:var(--danger); font-weight:700; display:none;"></div>
                     <button type="submit" id="admGirisBtn" class="primary-action-btn">Panele Gir</button>
                 </form>
             </div>
@@ -1800,7 +1801,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const CACHE_KEY = "bordroapp_mobil_v11";
+        const CACHE_KEY = "bordroapp_mobil_v12";
         const VARDIYA_OTURUM_KEY = "bordroapp_vardiya_oturum_v1";
         const ADMIN_OTURUM_KEY = "bordroapp_admin_oturum_v1";
 
@@ -1860,7 +1861,7 @@
         let cocukSayaci = 0;
         let globalIkinci6AyOran = 0;
         let aktifVardiyaKullanici = null;
-        let adminGirisYapildiMi = sessionStorage.getItem(ADMIN_OTURUM_KEY) === "1";
+        let adminGirisYapildiMi = localStorage.getItem(ADMIN_OTURUM_KEY) === "1" || sessionStorage.getItem(ADMIN_OTURUM_KEY) === "1";
 
         function sayiParse(val) {
             if (val === undefined || val === null || val === "") return NaN;
@@ -2510,30 +2511,45 @@
         };
 
         function eskiKayitSifreEslesiyorMu(kayit, girilenSifre) {
-            const adaylar = [kayit.sifre, kayit.parola, kayit.password].filter(v => v !== undefined && v !== null);
+            const adaylar = [kayit.sifre, kayit.parola, kayit.password, kayit.pass].filter(v => v !== undefined && v !== null);
             if (adaylar.length === 0) return false;
             return adaylar.some(a => String(a) === String(girilenSifre) || String(a).trim() === String(girilenSifre).trim());
+        }
+
+        function kullaniciEpostaCikar(docId, data = {}) {
+            const aday = data.email || data.eposta || data.mail || data.userEmail || data.kullaniciEmail || data.kullaniciAdi || data.username || "";
+            if (aday && String(aday).trim() !== "") return String(aday).trim();
+            if (docId && docId.includes("@")) return docId.trim();
+            return "";
         }
 
         async function eskiFirestoreKullaniciBul(email) {
             const kucuk = String(email || "").trim().toLowerCase();
             if (!kucuk) return null;
-            const snap = await getDocs(query(collection(db, "vardiya_kullanicilar"), where("email", "==", kucuk)));
-            if (!snap.empty) {
-                const d = snap.docs[0];
-                return { uid: d.id, ...d.data() };
-            }
-            const tum = await getDocs(collection(db, "vardiya_kullanicilar"));
-            let bulunan = null;
-            tum.forEach(docSnap => {
-                if (bulunan) return;
-                const data = docSnap.data() || {};
-                const ep = String(data.email || data.eposta || docSnap.id || "").trim().toLowerCase();
-                if (ep === kucuk) {
-                    bulunan = { uid: docSnap.id, email: data.email || data.eposta || kucuk, ...data };
+            try {
+                const snap = await getDocs(query(collection(db, "vardiya_kullanicilar"), where("email", "==", kucuk)));
+                if (!snap.empty) {
+                    const d = snap.docs[0];
+                    return { uid: d.id, email: kullaniciEpostaCikar(d.id, d.data()) || kucuk, ...d.data() };
                 }
-            });
-            return bulunan;
+            } catch (_) {}
+
+            try {
+                const tum = await getDocs(collection(db, "vardiya_kullanicilar"));
+                let bulunan = null;
+                tum.forEach(docSnap => {
+                    if (bulunan) return;
+                    const data = docSnap.data() || {};
+                    const ep = kullaniciEpostaCikar(docSnap.id, data).toLowerCase();
+                    if (ep === kucuk || String(docSnap.id).toLowerCase() === kucuk) {
+                        bulunan = { uid: docSnap.id, email: ep || kucuk, ...data };
+                    }
+                });
+                return bulunan;
+            } catch (err) {
+                console.warn("vardiya_kullanicilar okunamadı:", err);
+                return null;
+            }
         }
 
         function vardiyaOturumAktiflestir(kullaniciObj, yeniUyeMi = false) {
@@ -2571,13 +2587,13 @@
                         authUid: cred.user.uid,
                         email: email
                     };
-                    await setDoc(doc(db, "vardiya_kullanicilar", oturumObj.uid), {
-                        email: email,
-                        authUid: cred.user.uid,
-                        sifre: sifre,
-                        parola: sifre,
-                        sonGirisTarihi: new Date().toISOString()
-                    }, { merge: true });
+                    try {
+                        await setDoc(doc(db, "vardiya_kullanicilar", oturumObj.uid), {
+                            email: email,
+                            authUid: cred.user.uid,
+                            sonGirisTarihi: new Date().toISOString()
+                        }, { merge: true });
+                    } catch (_) {}
                     vardiyaOturumAktiflestir(oturumObj, false);
                     return;
                 } catch (authErr) {
@@ -2614,8 +2630,6 @@
                 const yeniKayit = {
                     email: email,
                     authUid: cred.user.uid,
-                    sifre: sifre,
-                    parola: sifre,
                     aydinlatmaOnay: true,
                     olusturulmaTarihi: new Date().toISOString()
                 };
@@ -2681,7 +2695,7 @@
             for (let g = 1; g <= gunSayisi; g++) {
                 const tarih = new Date(yil, ay - 1, g);
                 const gunAdi = gunAdlari[tari.getDay()];
-                const d = kayitliGunler[g] || kayitliGunler[String(g)] || {};
+                const d = kayitliGunler[g] || kayitliGunler[String(g)] || kayitliGunler[String(g).padStart(2, "0")] || {};
                 const kod = d.kod || d.vardiya || (tari.getDay() === 0 ? "T" : "N");
                 const gece = d.gece !== undefined ? d.gece : (d.geceSaat !== undefined ? d.geceSaat : 0);
                 const mesai = d.mesai !== undefined ? d.mesai : (d.fazlaMesai !== undefined ? d.fazlaMesai : 0);
@@ -2766,7 +2780,7 @@
             const durumEl = document.getElementById("vKayitDurumu");
 
             vardiyaGunSatirlariniCiz(gunSayisi, {});
-            durumEl.innerText = "Hazır";
+            durumEl.innerText = "Yükleniyor...";
 
             try {
                 let bulunanGunler = null;
@@ -2791,10 +2805,10 @@
                     tumKayitlarSnap.forEach(docSnap => {
                         if (bulunanGunler) return;
                         const d = docSnap.data() || {};
-                        const kayitYil = parseInt(d.yil, 10);
-                        const kayitAy = parseInt(d.ay, 10);
-                        const kayitEmail = String(d.email || d.eposta || "").trim().toLowerCase();
-                        const kayitUid = String(d.uid || d.userId || "").trim().toLowerCase();
+                        const kayitYil = parseInt(d.yil ?? d.year ?? yil, 10);
+                        const kayitAy = parseInt(d.ay ?? d.month ?? ay, 10);
+                        const kayitEmail = kullaniciEpostaCikar(docSnap.id, d).toLowerCase();
+                        const kayitUid = String(d.uid || d.userId || d.kullaniciId || "").trim().toLowerCase();
 
                         const kullaniciEslesiyor =
                             (hedefEmail && kayitEmail === hedefEmail) ||
@@ -2813,13 +2827,16 @@
 
                 if (bulunanGunler) {
                     vardiyaGunSatirlariniCiz(gunSayisi, bulunanGunler);
+                    durumEl.style.color = "#047857";
                     durumEl.innerText = "Kayıtlı veri yüklendi";
                 } else {
+                    durumEl.style.color = "var(--muted)";
                     durumEl.innerText = "Kayıtlı vardiya yok";
                 }
             } catch (err) {
                 console.error("Vardiya yükleme hatası:", err);
-                durumEl.innerText = "Çevrimdışı görünüm";
+                durumEl.style.color = "var(--danger)";
+                durumEl.innerText = "Okuma hatası: " + (err.code || err.message);
             }
         };
 
@@ -2855,10 +2872,12 @@
                     gunler: gunler,
                     guncellemeTarihi: new Date().toISOString()
                 }, { merge: true });
+                durumEl.style.color = "#047857";
                 durumEl.innerText = "Kaydedildi";
                 alert("Vardiya çizelgesi kaydedildi.");
             } catch (err) {
                 console.error("Vardiya kayıt hatası:", err);
+                durumEl.style.color = "var(--danger)";
                 durumEl.innerText = "Kayıt hatası";
                 alert("Kaydedilemedi: " + err.message);
             } finally {
@@ -2916,38 +2935,82 @@
 
         window.adminCikisYap = function() {
             adminGirisYapildiMi = false;
+            localStorage.removeItem(ADMIN_OTURUM_KEY);
             sessionStorage.removeItem(ADMIN_OTURUM_KEY);
             document.getElementById("admGirisSifre").value = "";
+            document.getElementById("admGirisHata").style.display = "none";
             adminGorunumunuSenkronizeEt();
         };
+
+        function belgeAdminKimligiEslesiyorMu(docId, data, girilenKadi, girilenSifre) {
+            const d = data || {};
+            const kadiAdaylari = [
+                d.kullaniciAdi, d.kullanici_adi, d.username, d.kadi, d.user, d.ad, d.email, d.eposta, docId
+            ].filter(v => v !== undefined && v !== null).map(v => String(v).trim().toLowerCase());
+
+            const sifreAdaylari = [
+                d.sifre, d.parola, d.password, d.pass, d.pin
+            ].filter(v => v !== undefined && v !== null).map(v => String(v).trim());
+
+            const kadiEslesiyor = kadiAdaylari.includes(String(girilenKadi).trim().toLowerCase());
+            if (!kadiEslesiyor) return false;
+
+            // Eğer belge içinde şifre alanı varsa eşleşmeli; şifre alanı hiç yoksa yalnızca kullanıcı adı/ID eşleşmesi kabul edilir
+            if (sifreAdaylari.length === 0) return true;
+            return sifreAdaylari.includes(String(girilenSifre).trim());
+        }
 
         document.getElementById("adminGirisForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             const girilenKadi = document.getElementById("admGirisKullanici").value.trim();
-            const girilenSifre = document.getElementById("admGirisSifre").value;
+            const girilenSifre = document.getElementById("admGirisSifre").value.trim();
             const btn = document.getElementById("admGirisBtn");
+            const hataEl = document.getElementById("admGirisHata");
             btn.disabled = true;
+            hataEl.style.display = "none";
 
-            let beklenenKadi = VARSAYILAN_ADMIN.kullaniciAdi;
-            let beklenenSifre = VARSAYILAN_ADMIN.sifre;
+            let yetkiliMi = false;
+            let hataDetayi = "";
 
             try {
-                const snap = await getDoc(doc(db, "ayarlar", "yonetici"));
-                if (snap.exists()) {
-                    const data = snap.data() || {};
-                    if (data.kullaniciAdi) beklenenKadi = String(data.kullaniciAdi).trim();
-                    if (data.sifre !== undefined && data.sifre !== "") beklenenSifre = String(data.sifre);
+                // 1) Firestore 'admins' koleksiyonunu kontrol et
+                const adminsSnap = await getDocs(collection(db, "admins"));
+                adminsSnap.forEach(docSnap => {
+                    if (yetkiliMi) return;
+                    if (belgeAdminKimligiEslesiyorMu(docSnap.id, docSnap.data(), girilenKadi, girilenSifre)) {
+                        yetkiliMi = true;
+                    }
+                });
+
+                // 2) Bulunamazsa 'ayarlar/yonetici' belgesini kontrol et
+                if (!yetkiliMi) {
+                    const yoneticiSnap = await getDoc(doc(db, "ayarlar", "yonetici"));
+                    if (yoneticiSnap.exists()) {
+                        if (belgeAdminKimligiEslesiyorMu(yoneticiSnap.id, yoneticiSnap.data(), girilenKadi, girilenSifre)) {
+                            yetkiliMi = true;
+                        }
+                    }
                 }
-            } catch (_) {}
+            } catch (err) {
+                console.error("Admin koleksiyonu okuma hatası:", err);
+                hataDetayi = ` (Firestore: ${err.code || err.message})`;
+            }
+
+            // 3) Varsayılan yerel yetkili kontrolü
+            if (!yetkiliMi && girilenKadi === VARSAYILAN_ADMIN.kullaniciAdi && girilenSifre === VARSAYILAN_ADMIN.sifre) {
+                yetkiliMi = true;
+            }
 
             btn.disabled = false;
 
-            if (girilenKadi === beklenenKadi && girilenSifre === beklenenSifre) {
+            if (yetkiliMi) {
                 adminGirisYapildiMi = true;
+                localStorage.setItem(ADMIN_OTURUM_KEY, "1");
                 sessionStorage.setItem(ADMIN_OTURUM_KEY, "1");
                 adminGorunumunuSenkronizeEt();
             } else {
-                alert("Kullanıcı adı veya şifre hatalı!");
+                hataEl.style.display = "block";
+                hataEl.innerText = "Kullanıcı adı veya şifre hatalı!" + hataDetayi;
             }
         });
 
@@ -3154,34 +3217,45 @@
 
             try {
                 const kullaniciMap = new Map();
-                const snap = await getDocs(collection(db, "vardiya_kullanicilar"));
-                snap.forEach(docSnap => {
-                    const u = docSnap.data() || {};
-                    const ep = u.email || u.eposta || docSnap.id;
-                    const key = String(ep).trim().toLowerCase();
-                    const tarih = u.olusturulmaTarihi || u.sonGirisTarihi
-                        ? new Date(u.olusturulmaTarihi || u.sonGirisTarihi).toLocaleDateString("tr-TR")
-                        : "-";
-                    kullaniciMap.set(key, { email: ep, tarih: tarih });
-                });
+                let kullaniciKoleksiyonHatasi = "";
 
-                if (kullaniciMap.size === 0) {
+                try {
+                    const snap = await getDocs(collection(db, "vardiya_kullanicilar"));
+                    snap.forEach(docSnap => {
+                        const u = docSnap.data() || {};
+                        const ep = kullaniciEpostaCikar(docSnap.id, u) || docSnap.id;
+                        const key = String(ep).trim().toLowerCase();
+                        const hamTarih = u.olusturulmaTarihi || u.sonGirisTarihi || u.createdAt || u.tarih || "";
+                        const tarih = hamTarih && !Number.isNaN(Date.parse(hamTarih))
+                            ? new Date(hamTarih).toLocaleDateString("tr-TR")
+                            : (typeof hamTarih === "string" && hamTarih ? hamTarih : "-");
+                        kullaniciMap.set(key, { email: ep, tarih: tarih, kaynak: "vardiya_kullanicilar" });
+                    });
+                } catch (err) {
+                    kullaniciKoleksiyonHatasi = err.code || err.message;
+                }
+
+                try {
                     const kayitSnap = await getDocs(collection(db, "vardiya_kayitlari"));
                     kayitSnap.forEach(docSnap => {
                         const k = docSnap.data() || {};
-                        const ep = k.email || k.eposta || k.uid;
+                        const ep = kullaniciEpostaCikar("", k) || k.uid || k.userId || "";
                         if (ep) {
                             const key = String(ep).trim().toLowerCase();
                             if (!kullaniciMap.has(key)) {
-                                const tarih = k.guncellemeTarihi ? new Date(k.guncellemeTarihi).toLocaleDateString("tr-TR") : "-";
-                                kullaniciMap.set(key, { email: ep, tarih: tarih });
+                                const hamTarih = k.guncellemeTarihi || k.updatedAt || k.tarih || "";
+                                const tarih = hamTarih && !Number.isNaN(Date.parse(hamTarih))
+                                    ? new Date(hamTarih).toLocaleDateString("tr-TR")
+                                    : "-";
+                                kullaniciMap.set(key, { email: ep, tarih: tarih, kaynak: "vardiya_kayitlari" });
                             }
                         }
                     });
-                }
+                } catch (_) {}
 
                 if (kullaniciMap.size === 0) {
-                    listeEl.innerHTML = `<div class="banner-placeholder">Kayıtlı kullanıcı bulunamadı.</div>`;
+                    const ekNot = kullaniciKoleksiyonHatasi ? `<br><small style="color:var(--danger);">Not: ${kullaniciKoleksiyonHatasi}</small>` : "";
+                    listeEl.innerHTML = `<div class="banner-placeholder">Kayıtlı kullanıcı bulunamadı.${ekNot}</div>`;
                     return;
                 }
 
@@ -3191,13 +3265,13 @@
                     card.className = "user-item-card";
                     card.innerHTML = `
                         <div style="font-weight:800;">${u.email}</div>
-                        <div style="color:var(--muted); font-size:11px;">Tarih: ${u.tarih}</div>
+                        <div style="color:var(--muted); font-size:11px;">Tarih: ${u.tarih} · ${u.kaynak}</div>
                     `;
                     listeEl.appendChild(card);
                 });
             } catch (err) {
                 console.error("Kullanıcı listeleme hatası:", err);
-                listeEl.innerHTML = `<div class="banner-placeholder">Kullanıcılar alınamadı: ${err.message}</div>`;
+                listeEl.innerHTML = `<div class="banner-placeholder">Kullanıcılar alınamadı: ${err.code || err.message}</div>`;
             }
         };
 
