@@ -875,7 +875,7 @@
         }
 
         .shift-days-list {
-            max-height: 340px;
+            max-height: 360px;
             overflow-y: auto;
             border: 1px solid var(--border);
             border-radius: 11px;
@@ -885,10 +885,10 @@
 
         .shift-day-row {
             display: grid;
-            grid-template-columns: 78px 1fr 74px;
+            grid-template-columns: 74px 1fr 122px;
             align-items: center;
-            gap: 6px;
-            padding: 5px 4px;
+            gap: 5px;
+            padding: 6px 4px;
             border-bottom: 1px solid #eef1f8;
             font-size: 12px;
         }
@@ -906,6 +906,26 @@
             font-size: 10px;
             color: var(--muted);
             font-weight: 700;
+        }
+
+        .shift-hours-box {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 3px;
+        }
+
+        .shift-hour-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+        }
+
+        .shift-hour-lbl {
+            font-size: 8.5px;
+            font-weight: 700;
+            color: var(--muted);
+            line-height: 1;
         }
 
         .admin-tabs {
@@ -1173,7 +1193,7 @@
             <button type="button" class="quick-entry-card" onclick="vardiyaEkraninaGit()">
                 <div>
                     <p class="quick-shift-title">Vardiya Çizelgesi</p>
-                    <p class="quick-shift-desc">E-posta ile giriş, kayıt ve çizelge</p>
+                    <p class="quick-shift-desc">Vardiya, izin, tatil, mesai ve eksik saat takibi</p>
                 </div>
                 <span class="quick-shift-cta">Aç →</span>
             </button>
@@ -1540,20 +1560,20 @@
 
                 <div class="shift-summary-grid">
                     <div class="shift-stat">
-                        <div class="shift-stat-lbl">ÇALIŞMA SAATİ</div>
+                        <div class="shift-stat-lbl">ÇALIŞMA</div>
                         <div class="shift-stat-val" id="vToplamCalisma">0,0 sa</div>
-                    </div>
-                    <div class="shift-stat">
-                        <div class="shift-stat-lbl">GECE SAATİ</div>
-                        <div class="shift-stat-val" id="vToplamGece">0,0 sa</div>
                     </div>
                     <div class="shift-stat">
                         <div class="shift-stat-lbl">FAZLA MESAİ</div>
                         <div class="shift-stat-val" id="vToplamMesai">0,0 sa</div>
                     </div>
                     <div class="shift-stat">
-                        <div class="shift-stat-lbl">TAHMİNİ NET MAAŞ</div>
-                        <div class="shift-stat-val" id="vTahminiNet">0,00 TL</div>
+                        <div class="shift-stat-lbl">İZİN / TATİL</div>
+                        <div class="shift-stat-val" id="vToplamIzinTatil">0 gün</div>
+                    </div>
+                    <div class="shift-stat">
+                        <div class="shift-stat-lbl">EKSİK SAAT</div>
+                        <div class="shift-stat-val" id="vToplamEksik">0,0 sa</div>
                     </div>
                 </div>
 
@@ -1728,7 +1748,7 @@
             </div>
             <div class="info-modal-body">
                 <p><strong>1. Veri Sorumlusu:</strong> BordroApp kapsamında oluşturulan kişisel vardiya çizelgesi ve hesaplama modülleri, kullanıcı hesabınıza özel aylık kayıtların tutulması amacıyla işletilmektedir.</p>
-                <p><strong>2. İşlenen Veriler:</strong> Üyelik sırasında sağladığınız e-posta adresi ile aylık vardiya girişleriniz (vardiya kodu, gece saati, fazla mesai saati) işlenmektedir.</p>
+                <p><strong>2. İşlenen Veriler:</strong> Üyelik sırasında sağladığınız e-posta adresi ile aylık vardiya girişleriniz (vardiya kodu, gece saati, fazla mesai saati, eksik saat) işlenmektedir.</p>
                 <p><strong>3. İşleme Amacı ve Saklama:</strong> Verileriniz yalnızca seçtiğiniz yıl ve ay bazında kişisel vardiya çizelgenizi görüntülemek, kaydetmek ve maaş/fark hesaplamalarını kolaylaştırmak için saklanır; izniniz dışında üçüncü kişilerle paylaşılmaz.</p>
                 <p><strong>4. Haklarınız:</strong> Kayıtlı vardiya verilerinizi uygulama üzerinden güncelleyebilir, oturumunuzu kapatabilir veya hesabınıza ilişkin taleplerinizi iletebilirsiniz.</p>
             </div>
@@ -1749,7 +1769,7 @@
                 <p>BordroApp vardiya çizelgesine hoş geldiniz. Kayıtlarınız e-posta hesabınızla güvenli şekilde senkronize edilir.</p>
                 <ul>
                     <li><strong>1. Yıl ve Ay Seçimi:</strong> Üst kısımdan <em>Yıl</em> ve <em>Ay</em> seçerek ilgili ayın gün listesini açın; daha önce kaydedilmiş veriniz varsa otomatik yüklenir.</li>
-                    <li><strong>2. Vardiya Kodu ve Mesai Girişi:</strong> Her gün için vardiya durumunu seçin; gece çalışma veya fazla mesai varsa saat alanına girin. Üstteki özet kutuları anlık güncellenir.</li>
+                    <li><strong>2. Vardiya, İzin, Tatil, Mesai ve Eksik Saat:</strong> Her gün için vardiya/izin/tatil durumunu seçin; <em>Mesai</em>, <em>Eksik Saat</em> ve <em>Gece</em> saatlerini girin. Üstteki özet kutuları anlık güncellenir.</li>
                     <li><strong>3. Kaydetme ve Maaş Aktarımı:</strong> Değişiklikleri kalıcı olarak saklamak için <strong>Vardiyayı Kaydet</strong> butonuna basın. Toplam saatleri <em>Maaş Hesaplama</em> ekranına taşımak için <strong>Maaş Hesaba Aktar</strong> seçeneğini kullanabilirsiniz.</li>
                     <li><strong>4. Diğer Modüller:</strong> Alt menüden <em>Anasayfa</em>, <em>Maaş</em>, <em>Fark</em>, <em>Yardımlar</em> ve <em>TÜFE</em> ekranları arasında tek dokunuşla geçiş yapabilirsiniz.</li>
                 </ul>
@@ -1801,7 +1821,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const CACHE_KEY = "bordroapp_mobil_v12";
+        const CACHE_KEY = "bordroapp_mobil_v13";
         const VARDIYA_OTURUM_KEY = "bordroapp_vardiya_oturum_v1";
         const ADMIN_OTURUM_KEY = "bordroapp_admin_oturum_v1";
 
@@ -2697,27 +2717,41 @@
                 const gunAdi = gunAdlari[tari.getDay()];
                 const d = kayitliGunler[g] || kayitliGunler[String(g)] || kayitliGunler[String(g).padStart(2, "0")] || {};
                 const kod = d.kod || d.vardiya || (tari.getDay() === 0 ? "T" : "N");
-                const gece = d.gece !== undefined ? d.gece : (d.geceSaat !== undefined ? d.geceSaat : 0);
-                const mesai = d.mesai !== undefined ? d.mesai : (d.fazlaMesai !== undefined ? d.fazlaMesai : 0);
+                const mesai = d.mesai !== undefined ? d.mesai : (d.fazlaMesai !== undefined ? d.fazlaMesai : "");
+                const eksik = d.eksik !== undefined ? d.eksik : (d.eksikSaat !== undefined ? d.eksikSaat : "");
+                const gece = d.gece !== undefined ? d.gece : (d.geceSaat !== undefined ? d.geceSaat : "");
 
                 const row = document.createElement("div");
                 row.className = "shift-day-row";
                 row.innerHTML = `
                     <div class="shift-day-label">
                         <div>${g} ${gunAdi}</div>
-                        <div class="shift-day-code">Kod: ${kod}</div>
+                        <div class="shift-day-code">Durum: ${kod}</div>
                     </div>
-                    <select class="select-control" style="padding:5px 6px; font-size:11.5px;" data-v-gun="${g}" data-v-alan="kod" onchange="vardiyaOzetiHesapla()">
-                        <option value="N" ${kod==="N"?"selected":""}>Normal (7,5 sa)</option>
-                        <option value="G" ${kod==="G"?"selected":""}>Gece Vardiyası</option>
-                        <option value="T" ${kod==="T"?"selected":""}>Hafta Tatili</option>
-                        <option value="İ" ${kod==="İ"?"selected":""}>İzinli</option>
-                        <option value="R" ${kod==="R"?"selected":""}>Raporlu</option>
-                        <option value="B" ${kod==="B"?"selected":""}>Bayram</option>
+                    <select class="select-control" style="padding:5px 6px; font-size:11px;" data-v-gun="${g}" data-v-alan="kod" onchange="vardiyaOzetiHesapla()">
+                        <option value="N" ${kod==="N"?"selected":""}>Normal Vardiya (N)</option>
+                        <option value="G" ${kod==="G"?"selected":""}>Gece Vardiyası (G)</option>
+                        <option value="T" ${kod==="T"?"selected":""}>Hafta Tatili (T)</option>
+                        <option value="RT" ${kod==="RT"?"selected":""}>Resmi Tatil (RT)</option>
+                        <option value="Yİ" ${kod==="Yİ"?"selected":""}>Yıllık İzin (Yİ)</option>
+                        <option value="Mİ" ${kod==="Mİ"?"selected":""}>Mazeret İzni (Mİ)</option>
+                        <option value="Üİ" ${kod==="Üİ"?"selected":""}>Ücretsiz İzin (Üİ)</option>
+                        <option value="R" ${kod==="R"?"selected":""}>Raporlu (R)</option>
+                        <option value="B" ${kod==="B"?"selected":""}>Bayram (B)</option>
                     </select>
-                    <div style="display:flex; gap:3px;">
-                        <input type="number" step="0.5" min="0" title="Gece Saati" placeholder="Gece" class="input-control" style="padding:5px 4px; font-size:11px; text-align:center;" data-v-gun="${g}" data-v-alan="gece" value="${gece}" oninput="vardiyaOzetiHesapla()">
-                        <input type="number" step="0.5" min="0" title="Mesai Saati" placeholder="FM" class="input-control" style="padding:5px 4px; font-size:11px; text-align:center;" data-v-gun="${g}" data-v-alan="mesai" value="${mesai}" oninput="vardiyaOzetiHesapla()">
+                    <div class="shift-hours-box">
+                        <div class="shift-hour-col">
+                            <span class="shift-hour-lbl">Mesai</span>
+                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10.5px; text-align:center;" data-v-gun="${g}" data-v-alan="mesai" value="${mesai}" oninput="vardiyaOzetiHesapla()">
+                        </div>
+                        <div class="shift-hour-col">
+                            <span class="shift-hour-lbl">Eksik</span>
+                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10.5px; text-align:center;" data-v-gun="${g}" data-v-alan="eksik" value="${eksik}" oninput="vardiyaOzetiHesapla()">
+                        </div>
+                        <div class="shift-hour-col">
+                            <span class="shift-hour-lbl">Gece</span>
+                            <input type="number" step="0.5" min="0" placeholder="0" class="input-control" style="padding:4px 2px; font-size:10.5px; text-align:center;" data-v-gun="${g}" data-v-alan="gece" value="${gece}" oninput="vardiyaOzetiHesapla()">
+                        </div>
                     </div>
                 `;
                 listeEl.appendChild(row);
@@ -2726,50 +2760,39 @@
         }
 
         window.vardiyaOzetiHesapla = function() {
-            const ay = document.getElementById("vAy").value;
             let calismaSaat = 0;
-            let geceSaat = 0;
             let mesaiSaat = 0;
+            let eksikSaat = 0;
+            let izinTatilGun = 0;
 
+            const izinTatilKodlari = new Set(["T", "RT", "Yİ", "Mİ", "Üİ", "R", "B"]);
             const gunSelects = document.querySelectorAll('#vGunlerListesi select[data-v-alan="kod"]');
             gunSelects.forEach(sel => {
                 const g = sel.getAttribute("data-v-gun");
                 const kod = sel.value;
                 const kodEtiket = sel.parentElement && sel.parentElement.querySelector(".shift-day-code");
-                if (kodEtiket) kodEtiket.innerText = "Kod: " + kod;
+                if (kodEtiket) kodEtiket.innerText = "Durum: " + kod;
 
-                const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
                 const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
-                const gz = parseFloat(geceInp && geceInp.value) || 0;
+                const eksikInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="eksik"]`);
+
                 const fm = parseFloat(mesaiInp && mesaiInp.value) || 0;
+                const ek = parseFloat(eksikInp && eksikInp.value) || 0;
 
                 if (kod === "N" || kod === "G") {
-                    calismaSaat += 7.5;
+                    calismaSaat += Math.max(0, 7.5 - ek);
+                } else if (izinTatilKodlari.has(kod)) {
+                    izinTatilGun += 1;
                 }
-                geceSaat += gz;
+
                 mesaiSaat += fm;
+                eksikSaat += ek;
             });
 
             document.getElementById("vToplamCalisma").innerText = calismaSaat.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) + " sa";
-            document.getElementById("vToplamGece").innerText = geceSaat.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) + " sa";
             document.getElementById("vToplamMesai").innerText = mesaiSaat.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) + " sa";
-
-            const su = parseFloat(document.getElementById("saat-ucreti").value) || 0;
-            const geceBirim = geceBirimUcretiAl().tutar;
-            const istisna = ayIstisnalariAl(ay);
-            const vo = parseFloat(document.getElementById("tax-rate").value) || 0.15;
-
-            const brut = (su * calismaSaat) + (mesaiSaat * su * 2) + (geceSaat * geceBirim);
-            const sgk = brut * 0.14;
-            const issizlik = brut * 0.01;
-            const sendika = su * 7;
-            let gv = Math.max(0, brut - sgk - issizlik - sendika) * vo - istisna.gv;
-            if (gv < 0) gv = 0;
-            let dv = (brut * 0.00759) - istisna.dv;
-            if (dv < 0) dv = 0;
-            const net = Math.max(0, brut - sgk - issizlik - gv - dv - sendika);
-
-            document.getElementById("vTahminiNet").innerText = formatTL(net);
+            document.getElementById("vToplamIzinTatil").innerText = izinTatilGun + " gün";
+            document.getElementById("vToplamEksik").innerText = eksikSaat.toLocaleString("tr-TR", { maximumFractionDigits: 1 }) + " sa";
         };
 
         window.vardiyaAyVerisiniYukle = async function() {
@@ -2851,12 +2874,14 @@
             const gunSelects = document.querySelectorAll('#vGunlerListesi select[data-v-alan="kod"]');
             gunSelects.forEach(sel => {
                 const g = sel.getAttribute("data-v-gun");
-                const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
                 const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
+                const eksikInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="eksik"]`);
+                const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
                 gunler[g] = {
                     kod: sel.value,
-                    gece: parseFloat(geceInp && geceInp.value) || 0,
-                    mesai: parseFloat(mesaiInp && mesaiInp.value) || 0
+                    mesai: parseFloat(mesaiInp && mesaiInp.value) || 0,
+                    eksik: parseFloat(eksikInp && eksikInp.value) || 0,
+                    gece: parseFloat(geceInp && geceInp.value) || 0
                 };
             });
 
@@ -2893,9 +2918,14 @@
 
             document.querySelectorAll('#vGunlerListesi select[data-v-alan="kod"]').forEach(sel => {
                 const g = sel.getAttribute("data-v-gun");
-                if (sel.value === "N" || sel.value === "G") calismaSaat += 7.5;
-                const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
                 const mesaiInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="mesai"]`);
+                const eksikInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="eksik"]`);
+                const geceInp = document.querySelector(`#vGunlerListesi input[data-v-gun="${g}"][data-v-alan="gece"]`);
+
+                const ek = parseFloat(eksikInp && eksikInp.value) || 0;
+                if (sel.value === "N" || sel.value === "G") {
+                    calismaSaat += Math.max(0, 7.5 - ek);
+                }
                 geceSaat += parseFloat(geceInp && geceInp.value) || 0;
                 mesaiSaat += parseFloat(mesaiInp && mesaiInp.value) || 0;
             });
@@ -2955,7 +2985,6 @@
             const kadiEslesiyor = kadiAdaylari.includes(String(girilenKadi).trim().toLowerCase());
             if (!kadiEslesiyor) return false;
 
-            // Eğer belge içinde şifre alanı varsa eşleşmeli; şifre alanı hiç yoksa yalnızca kullanıcı adı/ID eşleşmesi kabul edilir
             if (sifreAdaylari.length === 0) return true;
             return sifreAdaylari.includes(String(girilenSifre).trim());
         }
@@ -2973,7 +3002,6 @@
             let hataDetayi = "";
 
             try {
-                // 1) Firestore 'admins' koleksiyonunu kontrol et
                 const adminsSnap = await getDocs(collection(db, "admins"));
                 adminsSnap.forEach(docSnap => {
                     if (yetkiliMi) return;
@@ -2982,7 +3010,6 @@
                     }
                 });
 
-                // 2) Bulunamazsa 'ayarlar/yonetici' belgesini kontrol et
                 if (!yetkiliMi) {
                     const yoneticiSnap = await getDoc(doc(db, "ayarlar", "yonetici"));
                     if (yoneticiSnap.exists()) {
@@ -2996,7 +3023,6 @@
                 hataDetayi = ` (Firestore: ${err.code || err.message})`;
             }
 
-            // 3) Varsayılan yerel yetkili kontrolü
             if (!yetkiliMi && girilenKadi === VARSAYILAN_ADMIN.kullaniciAdi && girilenSifre === VARSAYILAN_ADMIN.sifre) {
                 yetkiliMi = true;
             }
