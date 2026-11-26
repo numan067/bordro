@@ -939,7 +939,6 @@
             font-weight: 700;
         }
 
-        /* Gömülü Yönetim Paneli Sekmeleri */
         .admin-tabs {
             display: grid;
             grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -998,6 +997,38 @@
 
         .admin-social-row:last-child {
             border-bottom: none;
+        }
+
+        .admin-istisna-row {
+            display: grid;
+            grid-template-columns: 78px 1fr 1fr;
+            gap: 5px;
+            align-items: center;
+            padding: 4px 2px;
+            border-bottom: 1px solid #eef1f8;
+            font-size: 11.5px;
+        }
+
+        .admin-istisna-row:last-child {
+            border-bottom: none;
+        }
+
+        .preview-box {
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 8px;
+            background: #f8fafc;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .preview-box img {
+            max-width: 100%;
+            max-height: 170px;
+            border-radius: 9px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
         }
 
         .user-item-card {
@@ -1175,7 +1206,7 @@
                 <button type="button" class="quick-entry-card" onclick="vardiyaEkraninaGit()">
                     <div>
                         <p class="quick-shift-title">Vardiya Çizelgesi</p>
-                        <p class="quick-shift-desc">Giriş, kayıt ve günlük vardiya çizelgesi</p>
+                        <p class="quick-shift-desc">E-posta ile giriş, kayıt ve çizelge</p>
                     </div>
                     <span class="quick-shift-cta">Aç →</span>
                 </button>
@@ -1308,7 +1339,7 @@
                     <div class="output-box">
                         <div class="output-label">Vergi İstisnası</div>
                         <div id="vergi-istisnasi" class="output-val">0,00</div>
-                        <div id="gvi-dvi-detay" class="output-sub">GVI: 0,00 | DVI: 0,00</div>
+                        <div id="gvi-dvi-detay" class="output-sub">GVİ: 0,00 | DVİ: 0,00</div>
                     </div>
                     <div class="output-box">
                         <div class="output-label">Sendika Kesintisi</div>
@@ -1475,11 +1506,11 @@
                     <button type="button" id="tabVardiyaUye" class="auth-tab" onclick="vardiyaAuthSekme('uye')">Üye Ol</button>
                 </div>
 
-                <!-- GİRİŞ FORMU (Aydınlatma metni yok; Şifremi Unuttum var) -->
+                <!-- GİRİŞ FORMU: Sadece E-posta + Parola + Şifremi Unuttum (E-posta onaylı link gönderir) -->
                 <form id="vardiyaGirisForm">
                     <div class="field-group">
-                        <label class="field-label" for="vGirisKullanici">Kullanıcı Adı veya E-posta</label>
-                        <input type="text" id="vGirisKullanici" class="input-control" required placeholder="Kullanıcı adınız veya e-postanız">
+                        <label class="field-label" for="vGirisEmail">E-posta</label>
+                        <input type="email" id="vGirisEmail" class="input-control" required placeholder="ornek@eposta.com">
                     </div>
                     <div class="field-group">
                         <label class="field-label" for="vGirisSifre">Parola</label>
@@ -1490,24 +1521,17 @@
                     </div>
                     <div id="sifremiUnuttumBox" class="forgot-box">
                         <div class="field-group">
-                            <label class="field-label" for="vSifirlaHedef">E-posta veya Kullanıcı Adı</label>
-                            <input type="text" id="vSifirlaHedef" class="input-control" placeholder="Kayıtlı e-posta veya kullanıcı adı">
+                            <label class="field-label" for="vSifirlaEmail">E-posta Adresi</label>
+                            <input type="email" id="vSifirlaEmail" class="input-control" placeholder="Şifre sıfırlama bağlantısı gönderilecek e-posta">
                         </div>
-                        <div class="field-group">
-                            <label class="field-label" for="vYeniSifre">Yeni Parola</label>
-                            <input type="password" id="vYeniSifre" class="input-control" placeholder="Yeni parolanız (en az 4 karakter)">
-                        </div>
-                        <button type="button" class="secondary-action-btn" style="width:100%;" onclick="parolaSifirlaKaydet()">Parolayı Güncelle</button>
+                        <button type="button" id="vSifirlaBtn" class="secondary-action-btn" style="width:100%;" onclick="epostaSifirlamaBaglantisiGonder()">E-postama Sıfırlama Bağlantısı Gönder</button>
+                        <div id="vSifirlaDurum" style="margin-top:6px; font-size:11px; color:var(--muted); font-weight:600;"></div>
                     </div>
                     <button type="submit" id="vGirisBtn" class="primary-action-btn">Giriş Yap</button>
                 </form>
 
-                <!-- ÜYE OL FORMU (Aydınlatma metni yalnızca burada) -->
+                <!-- ÜYE OL FORMU: Sadece E-posta + Parola + Aydınlatma Metni -->
                 <form id="vardiyaUyeForm" style="display:none;">
-                    <div class="field-group">
-                        <label class="field-label" for="vUyeAdSoyad">Ad Soyad / Kullanıcı Adı</label>
-                        <input type="text" id="vUyeAdSoyad" class="input-control" required placeholder="Adınız Soyadınız">
-                    </div>
                     <div class="field-group">
                         <label class="field-label" for="vUyeEmail">E-posta</label>
                         <input type="email" id="vUyeEmail" class="input-control" required placeholder="ornek@eposta.com">
@@ -1536,7 +1560,7 @@
                 </div>
 
                 <div class="shift-user-bar">
-                    <span>Kullanıcı: <strong id="vAktifKullaniciAdi">-</strong></span>
+                    <span>E-posta: <strong id="vAktifKullaniciAdi">-</strong></span>
                     <span id="vKayitDurumu" style="color:#047857; font-weight:700;">Hazır</span>
                 </div>
 
@@ -1604,7 +1628,7 @@
                     <button type="button" id="atab-kullanici" class="admin-tab" onclick="adminSekmeAc('kullanici')">Kullanıcılar</button>
                 </div>
 
-                <!-- DUYURU -->
+                <!-- DUYURU + DOSYA YÜKLE + URL + ÖNİZLEME -->
                 <div id="apanel-duyuru" class="admin-panel active">
                     <div class="field-group">
                         <label class="field-label" for="admDuyuru1">Duyuru Satırı 1</label>
@@ -1618,9 +1642,18 @@
                         <label class="field-label" for="admDuyuru3">Duyuru Satırı 3</label>
                         <input type="text" id="admDuyuru3" class="input-control">
                     </div>
-                    <div class="field-group">
-                        <label class="field-label" for="admDuyuruFoto">Duyuru Görseli URL</label>
-                        <input type="text" id="admDuyuruFoto" class="input-control" placeholder="https://...">
+                    <div class="two-col">
+                        <div class="field-group">
+                            <label class="field-label" for="admDuyuruDosya">Cihazdan Görsel Yükle</label>
+                            <input type="file" id="admDuyuruDosya" accept="image/*" class="input-control" style="padding:5px; font-size:11px;" onchange="adminGorselDosyaSecildi(this)">
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label" for="admDuyuruFoto">Görsel URL</label>
+                            <input type="text" id="admDuyuruFoto" class="input-control" placeholder="https://..." oninput="adminGorselOnizlemeGuncelle()">
+                        </div>
+                    </div>
+                    <div class="preview-box" id="admGorselOnizleme">
+                        <span style="font-size:11.5px; color:var(--muted);">Görsel önizlemesi</span>
                     </div>
                     <button type="button" class="primary-action-btn" onclick="adminAyarKaydet('duyuru')">Duyuruları Kaydet</button>
                 </div>
@@ -1647,7 +1680,7 @@
                     <button type="button" class="primary-action-btn" onclick="adminAyarKaydet('enf')">Enflasyon Tablosunu Kaydet</button>
                 </div>
 
-                <!-- FORMÜL -->
+                <!-- FORMÜL + 12 AY TEK TEK GVİ VE DVİ -->
                 <div id="apanel-formul" class="admin-panel">
                     <div class="two-col">
                         <div class="field-group">
@@ -1660,16 +1693,6 @@
                         </div>
                     </div>
                     <div class="two-col">
-                        <div class="field-group">
-                            <label class="field-label" for="admGvIstisna">Varsayılan GVI (TL)</label>
-                            <input type="number" step="0.01" id="admGvIstisna" class="input-control">
-                        </div>
-                        <div class="field-group">
-                            <label class="field-label" for="admDvIstisna">Varsayılan DVI (TL)</label>
-                            <input type="number" step="0.01" id="admDvIstisna" class="input-control">
-                        </div>
-                    </div>
-                    <div class="four-row two-col">
                         <div class="field-group">
                             <label class="field-label" for="admOran1">1. Dilim %</label>
                             <input type="number" step="0.1" id="admOran1" class="input-control" value="15">
@@ -1703,6 +1726,10 @@
                         <label class="field-label" for="admOran4">4. Dilim %</label>
                         <input type="number" step="0.1" id="admOran4" class="input-control" value="35">
                     </div>
+
+                    <div class="field-label" style="margin-top:6px;">Aylık GVİ ve DVİ İstisnaları (Tek Tek Düzenleme)</div>
+                    <div class="admin-list-box" id="admIstisnaListe"></div>
+
                     <button type="button" class="primary-action-btn" onclick="adminAyarKaydet('formul')">Formülleri Kaydet</button>
                 </div>
 
@@ -1730,7 +1757,7 @@
             </div>
             <div class="info-modal-body">
                 <p><strong>1. Veri Sorumlusu:</strong> BordroApp kapsamında oluşturulan kişisel vardiya çizelgesi ve hesaplama modülleri, kullanıcı hesabınıza özel aylık kayıtların tutulması amacıyla işletilmektedir.</p>
-                <p><strong>2. İşlenen Veriler:</strong> Üyelik sırasında sağladığınız ad/kullanıcı adı, e-posta bilgisi ile aylık vardiya girişleriniz (vardiya kodu, gece saati, fazla mesai saati) işlenmektedir.</p>
+                <p><strong>2. İşlenen Veriler:</strong> Üyelik sırasında sağladığınız e-posta adresi ile aylık vardiya girişleriniz (vardiya kodu, gece saati, fazla mesai saati) işlenmektedir.</p>
                 <p><strong>3. İşleme Amacı ve Saklama:</strong> Verileriniz yalnızca seçtiğiniz yıl ve ay bazında kişisel vardiya çizelgenizi görüntülemek, kaydetmek ve maaş/fark hesaplamalarını kolaylaştırmak için saklanır; izniniz dışında üçüncü kişilerle paylaşılmaz.</p>
                 <p><strong>4. Haklarınız:</strong> Kayıtlı vardiya verilerinizi uygulama üzerinden güncelleyebilir, oturumunuzu kapatabilir veya hesabınıza ilişkin taleplerinizi iletebilirsiniz.</p>
             </div>
@@ -1748,7 +1775,7 @@
                 <button type="button" class="info-modal-close" onclick="bilgilendirmeModalKapat()">✕</button>
             </div>
             <div class="info-modal-body">
-                <p>BordroApp vardiya çizelgesine hoş geldiniz. Kayıtlarınız mevcut kullanıcı verilerinizle birlikte güvenli şekilde senkronize edilir.</p>
+                <p>BordroApp vardiya çizelgesine hoş geldiniz. Kayıtlarınız e-posta hesabınızla güvenli şekilde senkronize edilir.</p>
                 <ul>
                     <li><strong>1. Yıl ve Ay Seçimi:</strong> Üst kısımdan <em>Yıl</em> ve <em>Ay</em> seçerek ilgili ayın gün listesini açın; daha önce kaydedilmiş veriniz varsa otomatik yüklenir.</li>
                     <li><strong>2. Vardiya Kodu ve Mesai Girişi:</strong> Her gün için vardiya durumunu seçin; gece çalışma veya fazla mesai varsa saat alanına girin. Üstteki özet kutuları anlık güncellenir.</li>
@@ -1788,6 +1815,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
@@ -1801,7 +1829,8 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const CACHE_KEY = "bordroapp_mobil_v8";
+        const auth = getAuth(app);
+        const CACHE_KEY = "bordroapp_mobil_v9";
         const VARDIYA_OTURUM_KEY = "bordroapp_vardiya_oturum_v1";
 
         const ayVerileri = {
@@ -1890,7 +1919,7 @@
             const formul = aktifVeri.formuller || {};
             const panelDegeri = sayiParse(formul.geceCalismaSaatUcreti);
             if (!Number.isNaN(panelDegeri) && panelDegeri >= 0) {
-                return { tutar: panelDegeri, kaynak: "yonetim.html" };
+                return { tutar: panelDegeri, kaynak: "panel" };
             }
             return { tutar: 30, kaynak: "varsayılan" };
         }
@@ -1911,7 +1940,7 @@
             return {
                 gv: gvVar ? panelGv : varsayilan.gv,
                 dv: dvVar ? panelDv : varsayilan.dv,
-                kaynak: (gvVar || dvVar) ? "yonetim.html" : "varsayılan"
+                kaynak: (gvVar || dvVar) ? "panel" : "varsayılan"
             };
         }
 
@@ -1935,7 +1964,7 @@
             }
 
             return {
-                kaynak: "yonetim.html",
+                kaynak: "panel",
                 dilimler: [
                     { limit: s1, oran: o1 / 100, etiket: `%${o1}` },
                     { limit: Math.max(s1, s2), oran: o2 / 100, etiket: `%${o2}` },
@@ -2008,14 +2037,14 @@
 
             document.getElementById("sendika-kesinti").innerText = f2(sendika);
             document.getElementById("vergi-istisnasi").innerText = f2(istisnaBilgi.gv + istisnaBilgi.dv);
-            document.getElementById("gvi-dvi-detay").innerText = `GVI: ${f2(istisnaBilgi.gv)} | DVI: ${f2(istisnaBilgi.dv)}`;
+            document.getElementById("gvi-dvi-detay").innerText = `GVİ: ${f2(istisnaBilgi.gv)} | DVİ: ${f2(istisnaBilgi.dv)}`;
             document.getElementById("gece-birim-detay").innerText = `Gece: ${f2(geceBilgi.tutar)} TL/sa`;
             document.getElementById("vakif-net-tutar").innerText = f2(vakifNetTutar);
             document.getElementById("net-ikramiye").innerText = f2(ikramiyeNet);
             document.getElementById("net-maas").innerText = f2(net) + " TL";
 
             document.getElementById("calcParamKaynagi").innerText =
-                (geceBilgi.kaynak === "yonetim.html" && istisnaBilgi.kaynak === "yonetim.html")
+                (geceBilgi.kaynak === "panel" && istisnaBilgi.kaynak === "panel")
                     ? "Panel Güncel"
                     : "Karma / Varsayılan";
         };
@@ -2232,9 +2261,9 @@
 
             const dilimBilgi = aktifVergiDilimleriAl();
             const dilimler = dilimBilgi.dilimler;
-            notEl.innerText = `Vergi dilimleri ve GVI/DVI (${dilimBilgi.kaynak}) ile hesaplanır.`;
+            notEl.innerText = `Vergi dilimleri ve GVİ/DVİ (${dilimBilgi.kaynak}) ile hesaplanır.`;
             document.getElementById("diffPanelRozet").innerText =
-                dilimBilgi.kaynak === "yonetim.html" ? "Panel Bağlı" : "Varsayılan";
+                dilimBilgi.kaynak === "panel" ? "Panel Bağlı" : "Varsayılan";
 
             if (su <= 0) {
                 ortalamaEl.innerText = "0,00 TL";
@@ -2460,7 +2489,7 @@
             document.getElementById("bilgilendirmeModal").classList.remove("open");
         };
 
-        // --- VARDİYA ÇİZELGESİ & KULLANICI GİRİŞ / ŞİFRE KONTROLÜ ---
+        // --- VARDİYA ÇİZELGESİ: E-POSTA KAYIT / GİRİŞ / E-POSTA ONAYLI ŞİFRE SIFIRLAMA ---
         window.vardiyaEkraninaGit = function() {
             document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
             document.getElementById("view-shift").classList.add("active");
@@ -2502,104 +2531,70 @@
         window.sifremiUnuttumToggle = function() {
             const box = document.getElementById("sifremiUnuttumBox");
             box.classList.toggle("open");
-            const mevcutGiris = document.getElementById("vGirisKullanici").value.trim();
-            if (mevcutGiris && !document.getElementById("vSifirlaHedef").value) {
-                document.getElementById("vSifirlaHedef").value = mevcutGiris;
+            const mevcutEmail = document.getElementById("vGirisEmail").value.trim();
+            if (mevcutEmail && !document.getElementById("vSifirlaEmail").value) {
+                document.getElementById("vSifirlaEmail").value = mevcutEmail;
             }
         };
 
-        function kullaniciSifreEslesiyorMu(kayit, girilenSifre) {
-            const adaylar = [
-                kayit.sifre,
-                kayit.parola,
-                kayit.password,
-                kayit.sifreHash
-            ].filter(v => v !== undefined && v !== null);
+        window.epostaSifirlamaBaglantisiGonder = async function() {
+            const email = document.getElementById("vSifirlaEmail").value.trim().toLowerCase();
+            const durumEl = document.getElementById("vSifirlaDurum");
+            const btn = document.getElementById("vSifirlaBtn");
 
-            if (adaylar.length === 0) return false;
-            const gHam = String(girilenSifre);
-            const gKirpilmis = gHam.trim();
-
-            return adaylar.some(a => {
-                const aStr = String(a);
-                return aStr === gHam || aStr.trim() === gKirpilmis;
-            });
-        }
-
-        async function kullaniciBul(hedef) {
-            const temiz = String(hedef || "").trim();
-            if (!temiz) return null;
-            const kucuk = temiz.toLocaleLowerCase("tr");
-            const usersRef = collection(db, "vardiya_kullanicilar");
-
-            const sorgular = [
-                query(usersRef, where("email", "==", temiz)),
-                query(usersRef, where("email", "==", kucuk)),
-                query(usersRef, where("kullaniciAdi", "==", temiz)),
-                query(usersRef, where("adSoyad", "==", temiz))
-            ];
-
-            for (const q of sorgular) {
-                const snap = await getDocs(q);
-                if (!snap.empty) {
-                    const firstDoc = snap.docs[0];
-                    return { ref: firstDoc.ref, uid: firstDoc.id, ...firstDoc.data() };
-                }
-            }
-
-            const tumSnap = await getDocs(usersRef);
-            let eslesen = null;
-            tumSnap.forEach(d => {
-                if (eslesen) return;
-                const data = d.data() || {};
-                const e = String(data.email || "").trim().toLocaleLowerCase("tr");
-                const k = String(data.kullaniciAdi || "").trim().toLocaleLowerCase("tr");
-                const a = String(data.adSoyad || "").trim().toLocaleLowerCase("tr");
-                if (e === kucuk || k === kucuk || a === kucuk) {
-                    eslesen = { ref: d.ref, uid: d.id, ...data };
-                }
-            });
-            return eslesen;
-        }
-
-        window.parolaSifirlaKaydet = async function() {
-            const hedef = document.getElementById("vSifirlaHedef").value.trim();
-            const yeniSifre = document.getElementById("vYeniSifre").value.trim();
-            if (!hedef || yeniSifre.length < 4) {
-                alert("E-posta/kullanıcı adı ve en az 4 karakterlik yeni parola girin.");
+            if (!email) {
+                alert("Lütfen e-posta adresinizi girin.");
                 return;
             }
 
-            try {
-                const user = await kullaniciBul(hedef);
-                if (!user) {
-                    alert("Bu bilgiyle eşleşen kullanıcı bulunamadı.");
-                    return;
-                }
-                await setDoc(doc(db, "vardiya_kullanicilar", user.uid), {
-                    sifre: yeniSifre,
-                    parola: yeniSifre,
-                    guncellemeTarihi: new Date().toISOString()
-                }, { merge: true });
+            btn.disabled = true;
+            durumEl.innerText = "E-posta gönderiliyor...";
 
-                document.getElementById("vGirisKullanici").value = user.email || user.kullaniciAdi || hedef;
-                document.getElementById("vGirisSifre").value = yeniSifre;
-                document.getElementById("sifremiUnuttumBox").classList.remove("open");
-                document.getElementById("vYeniSifre").value = "";
-                alert("Parolanız güncellendi. Giriş yapabilirsiniz.");
+            try {
+                await sendPasswordResetEmail(auth, email);
+                durumEl.style.color = "#047857";
+                durumEl.innerText = "Şifre sıfırlama bağlantısı e-postanıza gönderildi. Maildeki bağlantıya tıklayarak şifrenizi değiştirebilirsiniz.";
             } catch (err) {
-                console.error("Parola sıfırlama hatası:", err);
-                alert("Parola güncellenemedi: " + err.message);
+                console.error("Şifre sıfırlama e-posta hatası:", err);
+                durumEl.style.color = "var(--danger)";
+                durumEl.innerText = "Bağlantı gönderilemedi: " + (err.message || err.code);
+            } finally {
+                btn.disabled = false;
             }
         };
+
+        function eskiKayitSifreEslesiyorMu(kayit, girilenSifre) {
+            const adaylar = [kayit.sifre, kayit.parola, kayit.password].filter(v => v !== undefined && v !== null);
+            if (adaylar.length === 0) return false;
+            return adaylar.some(a => String(a) === String(girilenSifre) || String(a).trim() === String(girilenSifre).trim());
+        }
+
+        async function eskiFirestoreKullaniciBul(email) {
+            const kucuk = String(email || "").trim().toLowerCase();
+            if (!kucuk) return null;
+            const snap = await getDocs(query(collection(db, "vardiya_kullanicilar"), where("email", "==", kucuk)));
+            if (!snap.empty) {
+                const d = snap.docs[0];
+                return { uid: d.id, ...d.data() };
+            }
+            const tum = await getDocs(collection(db, "vardiya_kullanicilar"));
+            let bulunan = null;
+            tum.forEach(docSnap => {
+                if (bulunan) return;
+                const data = docSnap.data() || {};
+                if (String(data.email || "").trim().toLowerCase() === kucuk) {
+                    bulunan = { uid: docSnap.id, ...data };
+                }
+            });
+            return bulunan;
+        }
 
         function vardiyaOturumAktiflestir(kullaniciObj, yeniUyeMi = false) {
             aktifVardiyaKullanici = kullaniciObj;
             localStorage.setItem(VARDIYA_OTURUM_KEY, JSON.stringify(kullaniciObj));
             document.getElementById("vardiyaGirisKart").style.display = "none";
             document.getElementById("vardiyaPanelKart").style.display = "block";
-            document.getElementById("vAktifKullaniciAdi").innerText =
-                kullaniciObj.adSoyad || kullaniciObj.kullaniciAdi || kullaniciObj.email || kullaniciObj.uid;
+            document.getElementById("vAktifKullaniciAdi").innerText = kullaniciObj.email || kullaniciObj.uid;
             vardiyaAyVerisiniYukle();
             if (yeniUyeMi) {
                 bilgilendirmeModalAc();
@@ -2615,25 +2610,42 @@
 
         document.getElementById("vardiyaGirisForm").addEventListener("submit", async (e) => {
             e.preventDefault();
-            const giris = document.getElementById("vGirisKullanici").value.trim();
+            const email = document.getElementById("vGirisEmail").value.trim().toLowerCase();
             const sifre = document.getElementById("vGirisSifre").value;
             const btn = document.getElementById("vGirisBtn");
             btn.disabled = true;
 
             try {
-                const bulunan = await kullaniciBul(giris);
-                if (!bulunan) {
-                    alert("Kullanıcı veya e-posta bulunamadı!");
+                // 1. Firebase Authentication girişi dene (mail onaylı şifre değişiklikleri burada geçerlidir)
+                try {
+                    const cred = await signInWithEmailAndPassword(auth, email, sifre);
+                    const mevcutDoc = await eskiFirestoreKullaniciBul(email);
+                    const oturumObj = {
+                        uid: (mevcutDoc && mevcutDoc.uid) || cred.user.uid,
+                        authUid: cred.user.uid,
+                        email: email
+                    };
+                    await setDoc(doc(db, "vardiya_kullanicilar", oturumObj.uid), {
+                        email: email,
+                        authUid: cred.user.uid,
+                        sifre: sifre,
+                        parola: sifre,
+                        sonGirisTarihi: new Date().toISOString()
+                    }, { merge: true });
+                    vardiyaOturumAktiflestir(oturumObj, false);
                     return;
+                } catch (authErr) {
+                    // 2. Eski vardiya.html kayıtları için Firestore kontrolü ve otomatik Auth eşitlemesi
+                    const eskiUser = await eskiFirestoreKullaniciBul(email);
+                    if (eskiUser && eskiKayitSifreEslesiyorMu(eskiUser, sifre)) {
+                        try {
+                            await createUserWithEmailAndPassword(auth, email, sifre);
+                        } catch (_) {}
+                        vardiyaOturumAktiflestir({ uid: eskiUser.uid, email: email }, false);
+                        return;
+                    }
+                    alert("E-posta veya parola hatalı! Şifrenizi unuttuysanız 'Şifremi Unuttum' ile e-postanıza sıfırlama bağlantısı gönderebilirsiniz.");
                 }
-                if (!kullaniciSifreEslesiyorMu(bulunan, sifre)) {
-                    alert("Şifre hatalı! Şifremi Unuttum ile yeni parola belirleyebilirsiniz.");
-                    return;
-                }
-                vardiyaOturumAktiflestir(bulunan, false);
-            } catch (err) {
-                console.error("Vardiya giriş hatası:", err);
-                alert("Giriş yapılamadı: " + err.message);
             } finally {
                 btn.disabled = false;
             }
@@ -2646,35 +2658,32 @@
                 return;
             }
 
-            const adSoyad = document.getElementById("vUyeAdSoyad").value.trim();
             const email = document.getElementById("vUyeEmail").value.trim().toLowerCase();
             const sifre = document.getElementById("vUyeSifre").value.trim();
             const btn = document.getElementById("vUyeBtn");
             btn.disabled = true;
 
             try {
-                const mevcut = await kullaniciBul(email);
-                if (mevcut) {
-                    alert("Bu e-posta adresi ile zaten üyelik bulunuyor. Giriş Yap sekmesini kullanın.");
-                    return;
-                }
-
-                const docId = email.replace(/[^a-zA-Z0-9._-]/g, "_") + "_" + Date.now().toString(36);
+                const cred = await createUserWithEmailAndPassword(auth, email, sifre);
+                const docId = email.replace(/[^a-zA-Z0-9._-]/g, "_");
                 const yeniKayit = {
-                    adSoyad: adSoyad,
-                    kullaniciAdi: adSoyad,
                     email: email,
+                    authUid: cred.user.uid,
                     sifre: sifre,
                     parola: sifre,
                     aydinlatmaOnay: true,
                     olusturulmaTarihi: new Date().toISOString()
                 };
 
-                await setDoc(doc(db, "vardiya_kullanicilar", docId), yeniKayit);
+                await setDoc(doc(db, "vardiya_kullanicilar", docId), yeniKayit, { merge: true });
                 vardiyaOturumAktiflestir({ uid: docId, ...yeniKayit }, true);
             } catch (err) {
                 console.error("Üyelik hatası:", err);
-                alert("Üyelik oluşturulamadı: " + err.message);
+                if (err.code === "auth/email-already-in-use") {
+                    alert("Bu e-posta adresi ile zaten üyelik bulunuyor. Giriş Yap sekmesini kullanın.");
+                } else {
+                    alert("Üyelik oluşturulamadı: " + err.message);
+                }
             } finally {
                 btn.disabled = false;
             }
@@ -2867,6 +2876,28 @@
             if (sekme === "kullanici") adminKullanicilariYukle();
         };
 
+        window.adminGorselDosyaSecildi = function(input) {
+            const file = input.files && input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const dataUrl = ev.target && ev.target.result ? String(ev.target.result) : "";
+                document.getElementById("admDuyuruFoto").value = dataUrl;
+                adminGorselOnizlemeGuncelle();
+            };
+            reader.readAsDataURL(file);
+        };
+
+        window.adminGorselOnizlemeGuncelle = function() {
+            const val = (document.getElementById("admDuyuruFoto").value || "").trim();
+            const box = document.getElementById("admGorselOnizleme");
+            if (!val) {
+                box.innerHTML = `<span style="font-size:11.5px; color:var(--muted);">Görsel önizlemesi</span>`;
+                return;
+            }
+            box.innerHTML = `<img src="${val}" alt="Önizleme" onerror="this.parentElement.innerHTML='<span style=\'font-size:11.5px; color:var(--danger);\'>Görsel yüklenemedi</span>'">`;
+        };
+
         function adminFormlariniDoldur() {
             const d = aktifVeri || {};
             const formul = d.formuller || {};
@@ -2874,11 +2905,13 @@
             const sinirlar = formul.gelirVergisiSinirlari || {};
             const sosyal = d.sosyal || {};
             const enf = d.enflasyon || {};
+            const aylikIst = formul.aylikIstisnalar || {};
 
             document.getElementById("admDuyuru1").value = d.duyuru1 || "";
             document.getElementById("admDuyuru2").value = d.duyuru2 || "";
             document.getElementById("admDuyuru3").value = d.duyuru3 || "";
             document.getElementById("admDuyuruFoto").value = d.duyuruFoto || "";
+            adminGorselOnizlemeGuncelle();
 
             document.getElementById("admYil1").value = d.yil1 || "2026";
             document.getElementById("admYil2").value = d.yil2 || "2027";
@@ -2912,9 +2945,6 @@
 
             document.getElementById("admAsgari").value = formul.asgariUcret || "";
             document.getElementById("admGeceSaat").value = formul.geceCalismaSaatUcreti || "";
-            const kasimIstisna = (formul.aylikIstisnalar && (formul.aylikIstisnalar["10"] || formul.aylikIstisnalar[10])) || {};
-            document.getElementById("admGvIstisna").value = kasimIstisna.gelirVergisiIstisnasi || "";
-            document.getElementById("admDvIstisna").value = kasimIstisna.damgaVergisiIstisnasi || "";
 
             document.getElementById("admOran1").value = oranlar.d1 || 15;
             document.getElementById("admOran2").value = oranlar.d2 || 20;
@@ -2924,6 +2954,29 @@
             document.getElementById("admSinir1").value = sinirlar.s1 || 158000;
             document.getElementById("admSinir2").value = sinirlar.s2 || 330000;
             document.getElementById("admSinir3").value = sinirlar.s3 || 1200000;
+
+            const istListe = document.getElementById("admIstisnaListe");
+            istListe.innerHTML = `
+                <div class="admin-istisna-row" style="font-weight:800; color:var(--muted);">
+                    <span>Ay</span>
+                    <span>GVİ (TL)</span>
+                    <span>DVİ (TL)</span>
+                </div>
+            `;
+            for (let m = 1; m <= 12; m++) {
+                const idxKey = String(m - 1);
+                const kayit = aylikIst[idxKey] || aylikIst[m - 1] || {};
+                const gvVal = kayit.gelirVergisiIstisnasi !== undefined ? kayit.gelirVergisiIstisnasi : ayVerileri[m].gv;
+                const dvVal = kayit.damgaVergisiIstisnasi !== undefined ? kayit.damgaVergisiIstisnasi : ayVerileri[m].dv;
+                const row = document.createElement("div");
+                row.className = "admin-istisna-row";
+                row.innerHTML = `
+                    <span style="font-weight:700;">${ayVerileri[m].ad}</span>
+                    <input type="number" step="0.01" class="input-control" style="padding:5px 6px; font-size:11.5px;" data-adm-ist-ay="${idxKey}" data-adm-ist-tip="gv" value="${gvVal}">
+                    <input type="number" step="0.01" class="input-control" style="padding:5px 6px; font-size:11.5px;" data-adm-ist-ay="${idxKey}" data-adm-ist-tip="dv" value="${dvVal}">
+                `;
+                istListe.appendChild(row);
+            }
         }
 
         window.adminAyarKaydet = async function(bolum) {
@@ -2972,16 +3025,17 @@
                         s2: sayiParse(document.getElementById("admSinir2").value) || 330000,
                         s3: sayiParse(document.getElementById("admSinir3").value) || 1200000
                     };
-                    const gvVal = sayiParse(document.getElementById("admGvIstisna").value);
-                    const dvVal = sayiParse(document.getElementById("admDvIstisna").value);
                     guncel.formuller.aylikIstisnalar = guncel.formuller.aylikIstisnalar || {};
                     for (let m = 0; m < 12; m++) {
                         const key = String(m);
-                        const mevcutAy = guncel.formuller.aylikIstisnalar[key] || {};
+                        const gvInp = document.querySelector(`input[data-adm-ist-ay="${key}"][data-adm-ist-tip="gv"]`);
+                        const dvInp = document.querySelector(`input[data-adm-ist-ay="${key}"][data-adm-ist-tip="dv"]`);
+                        const gvParsed = sayiParse(gvInp && gvInp.value);
+                        const dvParsed = sayiParse(dvInp && dvInp.value);
                         guncel.formuller.aylikIstisnalar[key] = {
-                            ...mevcutAy,
-                            gelirVergisiIstisnasi: !Number.isNaN(gvVal) ? gvVal : (mevcutAy.gelirVergisiIstisnasi ?? ayVerileri[m + 1].gv),
-                            damgaVergisiIstisnasi: !Number.isNaN(dvVal) ? dvVal : (mevcutAy.damgaVergisiIstisnasi ?? ayVerileri[m + 1].dv)
+                            ...(guncel.formuller.aylikIstisnalar[key] || {}),
+                            gelirVergisiIstisnasi: !Number.isNaN(gvParsed) ? gvParsed : ayVerileri[m + 1].gv,
+                            damgaVergisiIstisnasi: !Number.isNaN(dvParsed) ? dvParsed : ayVerileri[m + 1].dv
                         };
                     }
                 }
@@ -3013,14 +3067,13 @@
                 listeEl.innerHTML = "";
                 snap.forEach(docSnap => {
                     const u = docSnap.data() || {};
-                    const ad = u.adSoyad || u.kullaniciAdi || docSnap.id;
-                    const ep = u.email || "-";
+                    const ep = u.email || docSnap.id;
                     const tarih = u.olusturulmaTarihi ? new Date(u.olusturulmaTarihi).toLocaleDateString("tr-TR") : "-";
                     const card = document.createElement("div");
                     card.className = "user-item-card";
                     card.innerHTML = `
-                        <div style="font-weight:800;">${ad}</div>
-                        <div style="color:var(--muted); font-size:11px;">E-posta: ${ep} • Kayıt: ${tarih}</div>
+                        <div style="font-weight:800;">${ep}</div>
+                        <div style="color:var(--muted); font-size:11px;">Kayıt Tarihi: ${tarih}</div>
                     `;
                     listeEl.appendChild(card);
                 });
@@ -3120,8 +3173,7 @@
                     aktifVardiyaKullanici = parsedOturum;
                     document.getElementById("vardiyaGirisKart").style.display = "none";
                     document.getElementById("vardiyaPanelKart").style.display = "block";
-                    document.getElementById("vAktifKullaniciAdi").innerText =
-                        parsedOturum.adSoyad || parsedOturum.kullaniciAdi || parsedOturum.email || parsedOturum.uid;
+                    document.getElementById("vAktifKullaniciAdi").innerText = parsedOturum.email || parsedOturum.uid;
                 }
             } catch (_) {}
         }
