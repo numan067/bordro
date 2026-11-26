@@ -18,7 +18,7 @@
             --text: #161b2e;
             --muted: #64708a;
             --border: #e5e9f2;
-            --warn: #f59e0b;
+            --warn: #d97706;
             --warn-soft: #fffbeb;
             --danger: #e11d48;
             --radius-lg: 22px;
@@ -37,14 +37,13 @@
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
-            padding-bottom: 92px;
+            padding-bottom: 96px;
         }
 
-        /* Üst Header */
         .app-header {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 65%, #6a4df5 100%);
             color: #fff;
-            padding: 20px 18px 28px;
+            padding: 18px 16px 26px;
             border-bottom-left-radius: 28px;
             border-bottom-right-radius: 28px;
             box-shadow: 0 12px 28px rgba(76, 47, 208, 0.22);
@@ -54,27 +53,28 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .brand-box {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 11px;
         }
 
         .brand-logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 15px;
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
             background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 21px;
+            font-size: 20px;
             font-weight: 800;
             color: var(--primary-dark);
-            border: 2px solid rgba(255, 255, 255, 0.55);
+            border: 2px solid rgba(255, 255, 255, 0.6);
             box-shadow: 0 6px 16px rgba(15, 23, 42, 0.18);
             overflow: hidden;
             flex-shrink: 0;
@@ -90,44 +90,50 @@
 
         .brand-title {
             margin: 0;
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 800;
             letter-spacing: -0.2px;
         }
 
         .brand-sub {
             margin: 2px 0 0;
-            font-size: 12px;
-            opacity: 0.85;
+            font-size: 11.5px;
+            opacity: 0.86;
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            flex-wrap: wrap;
         }
 
         .icon-btn {
             background: rgba(255, 255, 255, 0.16);
-            border: 1px solid rgba(255, 255, 255, 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.24);
             color: #fff;
-            border-radius: 12px;
-            padding: 8px 11px;
-            font-size: 12px;
+            border-radius: 11px;
+            padding: 7px 10px;
+            font-size: 11.5px;
             font-weight: 700;
             cursor: pointer;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
+        }
+
+        .icon-btn.shift-btn {
+            background: rgba(0, 184, 148, 0.3);
+            border-color: rgba(153, 246, 228, 0.5);
         }
 
         .status-strip {
-            margin-top: 14px;
+            margin-top: 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 11.5px;
+            font-size: 11px;
             background: rgba(0, 0, 0, 0.16);
             padding: 7px 12px;
             border-radius: 999px;
@@ -146,16 +152,15 @@
             background: #fbbf24;
         }
 
-        /* Ana Kapsayıcı */
         .container {
-            max-width: 680px;
+            max-width: 720px;
             margin: -14px auto 0;
-            padding: 0 14px;
+            padding: 0 13px;
         }
 
         .view {
             display: none;
-            animation: fadeIn 0.22s ease;
+            animation: fadeIn 0.2s ease;
         }
 
         .view.active {
@@ -167,7 +172,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Kartlar */
         .card {
             background: var(--card);
             border-radius: var(--radius-lg);
@@ -181,6 +185,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 8px;
             margin-bottom: 12px;
         }
 
@@ -198,6 +203,7 @@
             border-radius: 999px;
             background: #eef1ff;
             color: var(--primary);
+            white-space: nowrap;
         }
 
         .badge.green {
@@ -205,7 +211,47 @@
             color: #047857;
         }
 
-        /* Duyuru Görseli ve Metinleri */
+        .badge.amber {
+            background: var(--warn-soft);
+            color: #b45309;
+        }
+
+        .quick-shift-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: linear-gradient(135deg, #f4f2ff 0%, #e9fbf6 100%);
+            border: 1px solid #d8dcf5;
+            border-radius: var(--radius-md);
+            padding: 13px 14px;
+            margin-bottom: 14px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .quick-shift-title {
+            font-size: 14px;
+            font-weight: 800;
+            margin: 0 0 2px;
+        }
+
+        .quick-shift-desc {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .quick-shift-cta {
+            background: var(--primary);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 8px 12px;
+            border-radius: 11px;
+            white-space: nowrap;
+        }
+
         .banner-wrap {
             border-radius: 16px;
             overflow: hidden;
@@ -245,7 +291,6 @@
             line-height: 1.4;
         }
 
-        /* Metrik Grid */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -262,7 +307,7 @@
         }
 
         .kpi-label {
-            font-size: 11px;
+            font-size: 10.5px;
             color: var(--muted);
             font-weight: 700;
         }
@@ -281,25 +326,24 @@
             font-weight: 700;
         }
 
-        /* Form ve Hesaplayıcı */
         .field-group {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .field-label {
             display: block;
-            font-size: 12.5px;
+            font-size: 11.5px;
             font-weight: 700;
             color: var(--muted);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .input-control, .select-control {
             width: 100%;
-            padding: 11px 13px;
-            border-radius: 12px;
+            padding: 9px 11px;
+            border-radius: 11px;
             border: 1.5px solid #dbe1ef;
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 700;
             color: var(--text);
             background: #fff;
@@ -316,105 +360,269 @@
             gap: 10px;
         }
 
-        /* Görsel Kırılım Çubuğu */
-        .bar-track {
-            width: 100%;
-            height: 14px;
-            border-radius: 999px;
-            background: #edf1f8;
-            overflow: hidden;
-            display: flex;
-            margin: 10px 0 12px;
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
         }
 
-        .bar-net { background: var(--accent); height: 100%; transition: width 0.25s; }
-        .bar-tax { background: var(--primary); height: 100%; transition: width 0.25s; }
-        .bar-sgk { background: var(--warn); height: 100%; transition: width 0.25s; }
-
-        .legend-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            font-size: 12px;
+        .meta-hint-bar {
+            background: #f4f6ff;
+            border: 1px solid #dce2f9;
+            border-radius: 12px;
+            padding: 8px 11px;
+            font-size: 11.5px;
             font-weight: 600;
-            color: var(--muted);
+            color: var(--primary-dark);
+            margin-bottom: 10px;
         }
 
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 5px;
-        }
-
-        .summary-boxes {
+        .output-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
             margin-top: 12px;
         }
 
-        .sum-box {
+        .output-box {
             background: #f8f9fd;
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px;
+            border-radius: 12px;
+            padding: 9px 10px;
+            text-align: center;
         }
 
-        .sum-box.highlight {
-            background: var(--accent-soft);
-            border-color: #99f6e4;
-        }
-
-        .sum-title {
-            font-size: 11.5px;
-            color: var(--muted);
+        .output-label {
+            font-size: 10px;
             font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
         }
 
-        .sum-val {
-            margin-top: 4px;
-            font-size: 16px;
+        .output-val {
+            margin-top: 3px;
+            font-size: 13.5px;
             font-weight: 800;
             color: var(--text);
         }
 
-        /* Dilim Rozetleri */
-        .bracket-pills {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-top: 8px;
+        .output-sub {
+            margin-top: 2px;
+            font-size: 10px;
+            color: var(--muted);
+            font-weight: 600;
         }
 
-        .pill {
-            background: #f8f9fd;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 8px;
+        .net-box {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: #fff;
+            border-radius: 16px;
+            padding: 14px;
             text-align: center;
+            margin-top: 12px;
         }
 
-        .pill-rate {
-            font-size: 14px;
+        .net-label {
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .net-val {
+            font-size: 24px;
+            font-weight: 800;
+            margin-top: 3px;
+        }
+
+        .mode-switch {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .mode-btn {
+            padding: 10px;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            background: #fff;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .sub-panel {
+            display: none;
+        }
+
+        .sub-panel.active {
+            display: block;
+        }
+
+        .month-card {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #fafbff;
+            position: relative;
+        }
+
+        .month-title {
+            font-size: 12.5px;
             font-weight: 800;
             color: var(--primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
         }
 
-        .pill-limit {
-            font-size: 10.5px;
-            color: var(--muted);
-            margin-top: 2px;
+        .btn-remove {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
         }
 
-        /* Sosyal Yardım Listesi */
+        .btn-add-month {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 12px;
+            background: #16a34a;
+            color: #fff;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .social-box {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px;
+            background: #f8fafc;
+            margin-bottom: 12px;
+        }
+
+        .social-box h3 {
+            margin: 0 0 8px;
+            font-size: 13px;
+            color: var(--text);
+        }
+
+        .child-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .child-row select {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 12.5px;
+            font-weight: 600;
+            background: #fff;
+        }
+
+        .btn-child-add {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 9px;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-child-del {
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            border-radius: 9px;
+            padding: 8px 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .result-dark-box {
+            background: #1e293b;
+            color: #fff;
+            border-radius: 16px;
+            padding: 14px;
+            margin-top: 12px;
+        }
+
+        .res-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12.5px;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .res-total-label {
+            text-align: center;
+            font-size: 11px;
+            opacity: 0.85;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .res-total-val {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+            color: #34d399;
+            margin-top: 4px;
+        }
+
+        .tax-note-box {
+            margin-top: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .period-banner {
+            background: #f4f6ff;
+            border: 1px solid #dce2f9;
+            border-radius: 12px;
+            padding: 9px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+
         .benefit-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            padding: 11px 0;
+            padding: 10px 0;
             border-bottom: 1px solid var(--border);
         }
 
@@ -434,9 +642,9 @@
         }
 
         .col-chip {
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 700;
-            padding: 5px 9px;
+            padding: 5px 10px;
             border-radius: 9px;
             background: #f3f5fa;
             color: var(--text);
@@ -448,38 +656,74 @@
             color: #047857;
         }
 
-        /* TÜFE Çubuk Grafiği */
-        .tufe-row {
-            display: grid;
-            grid-template-columns: 82px 1fr 56px;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 9px;
-            font-size: 12px;
+        .enf-calc-card {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 14px;
         }
 
-        .tufe-month {
-            font-weight: 700;
-            color: var(--muted);
-        }
-
-        .tufe-bar-bg {
-            height: 12px;
-            background: #edf1f8;
-            border-radius: 999px;
-            overflow: hidden;
-        }
-
-        .tufe-bar-fill {
-            height: 100%;
-            border-radius: 999px;
-            background: linear-gradient(90deg, var(--primary), #7c5dfa);
-            transition: width 0.3s ease;
-        }
-
-        .tufe-val {
-            text-align: right;
+        .enf-calc-title {
+            margin: 0 0 10px;
+            font-size: 14.5px;
             font-weight: 800;
+            color: #b45309;
+        }
+
+        .amber-btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 11px;
+            background: #d97706;
+            color: #fff;
+            font-weight: 800;
+            font-size: 13.5px;
+            cursor: pointer;
+        }
+
+        .enf-result-box {
+            margin-top: 10px;
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 12.5px;
+            color: #78350f;
+            line-height: 1.55;
+            display: none;
+        }
+
+        .tufe-table-wrap {
+            max-height: 310px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        table.tufe-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+        }
+
+        table.tufe-table th, table.tufe-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        table.tufe-table th {
+            background: #d97706;
+            color: #fff;
+            position: sticky;
+            top: 0;
+        }
+
+        table.tufe-table td:first-child {
+            text-align: left;
+            font-weight: 700;
         }
 
         .info-note {
@@ -489,20 +733,19 @@
             margin-top: 8px;
         }
 
-        /* Alt Gezinme Çubuğu */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.96);
+            background: rgba(255, 255, 255, 0.97);
             backdrop-filter: blur(12px);
             border-top: 1px solid var(--border);
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            padding: 8px 6px 10px;
+            grid-template-columns: repeat(5, 1fr);
+            padding: 7px 4px 10px;
             z-index: 999;
-            box-shadow: 0 -6px 22px rgba(24, 32, 68, 0.07);
+            box-shadow: 0 -6px 22px rgba(24, 32, 68, 0.08);
         }
 
         .nav-btn {
@@ -512,11 +755,11 @@
             flex-direction: column;
             align-items: center;
             gap: 3px;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 700;
             color: var(--muted);
             cursor: pointer;
-            padding: 4px 2px;
+            padding: 5px 2px;
             border-radius: 12px;
         }
 
@@ -526,18 +769,15 @@
         }
 
         .nav-icon {
-            font-size: 18px;
+            font-size: 17px;
             line-height: 1;
         }
 
-        @media (max-width: 480px) {
-            .kpi-grid {
+        @media (max-width: 520px) {
+            .kpi-grid, .three-col {
                 grid-template-columns: 1fr;
             }
-            .bracket-pills {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .two-col, .summary-boxes {
+            .two-col, .output-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -549,14 +789,15 @@
         <div class="header-top">
             <div class="brand-box">
                 <div class="brand-logo" id="headerLogoBox">
-                    <img src="Logo.png" alt="BordroApp Logo" onload="this.dataset.loaded='1'" onerror="this.remove(); document.getElementById('headerLogoBox').textContent='B';">
+                    <img src="Logo.png" alt="BordroApp Logo" onload="this.dataset.loaded='1'" onerror="if(!this.dataset.fb1){this.dataset.fb1='1';this.src='logo.png';}else if(!this.dataset.fb2){this.dataset.fb2='1';this.src='logo.jpg';}else{this.remove();document.getElementById('headerLogoBox').textContent='B';}">
                 </div>
                 <div>
                     <h1 class="brand-title">BordroApp</h1>
-                    <p class="brand-sub">Canlı Bordro, İstisna & Sosyal Haklar</p>
+                    <p class="brand-sub">Maaş, Fark, TÜFE & Vardiya Merkezi</p>
                 </div>
             </div>
             <div class="header-actions">
+                <a href="vardiya.html" class="icon-btn shift-btn">📅 Vardiya</a>
                 <button type="button" class="icon-btn" id="refreshBtn" title="Verileri Yenile">↻ Yenile</button>
                 <a href="yonetim.html" class="icon-btn">⚙ Panel</a>
             </div>
@@ -572,8 +813,16 @@
 
     <main class="container">
 
-        <!-- 1. GÖRÜNÜM: ÖZET & DUYURU -->
+        <!-- 1. ÖZET & DUYURU -->
         <section id="view-home" class="view active">
+            <a href="vardiya.html" class="quick-shift-card">
+                <div>
+                    <p class="quick-shift-title">Kişisel Vardiya Çizelgesi</p>
+                    <p class="quick-shift-desc">Aylık vardiya girişi, gece/mesai/çalışma saatleri ve hesap işlemleri.</p>
+                </div>
+                <span class="quick-shift-cta">Vardiya Sayfası →</span>
+            </a>
+
             <div class="kpi-grid">
                 <div class="kpi-card">
                     <div class="kpi-label">ASGARİ ÜCRET</div>
@@ -606,90 +855,215 @@
                     <div class="announcement-item" id="duyuruSatir3">Duyuru satırı yükleniyor...</div>
                 </div>
             </div>
-
-            <div class="card">
-                <div class="card-title-row">
-                    <h2 class="card-title">Aktif Gelir Vergisi Dilimleri</h2>
-                    <span class="badge">Parametrik</span>
-                </div>
-                <div class="bracket-pills" id="dilimOzetKutulari"></div>
-            </div>
         </section>
 
-        <!-- 2. GÖRÜNÜM: HESAPLAYICI -->
+        <!-- 2. MAAŞ HESAPLAMA (Gece ücreti, GVI ve DVI yönetim.html'den) -->
         <section id="view-calc" class="view">
             <div class="card">
                 <div class="card-title-row">
-                    <h2 class="card-title">Bordro & İstisna Hesaplayıcı</h2>
-                    <span class="badge green">Canlı Formül</span>
+                    <h2 class="card-title">Maaş Hesaplama</h2>
+                    <span class="badge green" id="calcParamKaynagi">Panel Verisi</span>
+                </div>
+
+                <div class="meta-hint-bar" id="calcParamBilgi">
+                    Gece birim ücreti, GVI ve DVI yönetim panelindeki ayarlarla eşleniyor...
                 </div>
 
                 <div class="two-col">
                     <div class="field-group">
-                        <label class="field-label" for="brutMaasInput">Aylık Brüt Ücret (TL)</label>
-                        <input type="number" id="brutMaasInput" class="input-control" step="100" min="0" value="55000">
+                        <label class="field-label" for="month">Dönem (Ay)</label>
+                        <select id="month" class="select-control" onchange="ayAyariYap()">
+                            <option value="1">Ocak</option><option value="2">Şubat</option><option value="3">Mart</option>
+                            <option value="4">Nisan</option><option value="5">Mayıs</option><option value="6">Haziran</option>
+                            <option value="7">Temmuz</option><option value="8">Ağustos</option><option value="9">Eylül</option>
+                            <option value="10">Ekim</option><option value="11">Kasım</option><option value="12">Aralık</option>
+                        </select>
                     </div>
                     <div class="field-group">
-                        <label class="field-label" for="aySecici">Dönem (Ay)</label>
-                        <select id="aySecici" class="select-control"></select>
+                        <label class="field-label" for="tax-rate">Vergi Dilimi</label>
+                        <select id="tax-rate" class="select-control" onchange="hesapla()">
+                            <option value="0.15">15</option><option value="0.20">20</option>
+                            <option value="0.27">27</option><option value="0.35">35</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="two-col">
                     <div class="field-group">
-                        <label class="field-label" for="geceSaatInput">Gece Çalışma Saati</label>
-                        <input type="number" id="geceSaatInput" class="input-control" step="0.5" min="0" value="0">
+                        <label class="field-label" for="saat-ucreti">Saat Ücreti:</label>
+                        <input type="number" id="saat-ucreti" class="input-control" step="0.01" value="0" oninput="hesapla()">
                     </div>
                     <div class="field-group">
-                        <label class="field-label" for="oncekiMatrahInput">Önceki Kümülatif Matrah (TL)</label>
-                        <input type="number" id="oncekiMatrahInput" class="input-control" step="1000" min="0" value="0">
+                        <label class="field-label" for="calisma-gun-saati">Aylık Çalışma Saati:</label>
+                        <input type="number" id="calisma-gun-saati" class="input-control" value="0" oninput="hesapla()">
                     </div>
                 </div>
 
-                <div class="bar-track" aria-hidden="true">
-                    <div class="bar-net" id="barNet" style="width: 68%;"></div>
-                    <div class="bar-tax" id="barTax" style="width: 17%;"></div>
-                    <div class="bar-sgk" id="barSgk" style="width: 15%;"></div>
-                </div>
-
-                <div class="legend-row">
-                    <span><i class="dot" style="background: var(--accent);"></i>Tahmini Net</span>
-                    <span><i class="dot" style="background: var(--primary);"></i>Gelir + Damga Vergisi</span>
-                    <span><i class="dot" style="background: var(--warn);"></i>SGK + İşsizlik (%15)</span>
-                </div>
-
-                <div class="summary-boxes">
-                    <div class="sum-box highlight">
-                        <div class="sum-title">TAHMİNİ NET ELE GEÇEN</div>
-                        <div class="sum-val" id="sonucNet">-</div>
+                <div class="two-col">
+                    <div class="field-group">
+                        <label class="field-label" for="gece-zammi">Gece Zammı (Sa):</label>
+                        <input type="number" id="gece-zammi" class="input-control" value="0" oninput="hesapla()">
                     </div>
-                    <div class="sum-box">
-                        <div class="sum-title">TOPLAM VERGİ İSTİSNASI (GVI+DVI)</div>
-                        <div class="sum-val" id="sonucIstisna">-</div>
-                    </div>
-                    <div class="sum-box">
-                        <div class="sum-title">HESAPLANAN GELİR VERGİSİ</div>
-                        <div class="sum-val" id="sonucGv">-</div>
-                    </div>
-                    <div class="sum-box">
-                        <div class="sum-title">GECE MESAİ KATKISI</div>
-                        <div class="sum-val" id="sonucGece">-</div>
+                    <div class="field-group">
+                        <label class="field-label" for="fm-100">Fazla Mesai (Sa):</label>
+                        <input type="number" id="fm-100" class="input-control" value="0" oninput="hesapla()">
                     </div>
                 </div>
 
-                <p class="info-note">
-                    Not: Hesaplama; yönetim panelindeki güncel dilim oranları, üst sınırlar, aylık GVI/DVI istisnaları ve gece saat ücreti verilerine dayalı bilgilendirme amaçlı simülasyondur.
-                </p>
+                <div class="two-col">
+                    <div class="field-group">
+                        <label class="field-label" for="ulusal-100">Ulusal Bayram (Sa):</label>
+                        <input type="number" id="ulusal-100" class="input-control" value="0" oninput="hesapla()">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="dini-150">Dini Bayram (Sa):</label>
+                        <input type="number" id="dini-150" class="input-control" value="0" oninput="hesapla()">
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="field-group">
+                        <label class="field-label" for="resmi-200">Resmi Tatil FM (Sa):</label>
+                        <input type="number" id="resmi-200" class="input-control" value="0" oninput="hesapla()">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="yol-ucreti">Yol Ücreti (Brüt):</label>
+                        <input type="number" id="yol-ucreti" class="input-control" value="0" oninput="hesapla()">
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="field-group">
+                        <label class="field-label" for="bes-kesintisi">Net BES Kesintisi (TL):</label>
+                        <input type="number" id="bes-kesintisi" class="input-control" value="0" oninput="hesapla()">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="vakif-yuzde">Vakıf Kesintisi %:</label>
+                        <input type="number" id="vakif-yuzde" class="input-control" value="0" oninput="hesapla()">
+                    </div>
+                </div>
+
+                <div class="output-grid">
+                    <div class="output-box">
+                        <div class="output-label">Vergi İstisnası (GVI + DVI)</div>
+                        <div id="vergi-istisnasi" class="output-val">0,00</div>
+                        <div id="gvi-dvi-detay" class="output-sub">GVI: 0,00 | DVI: 0,00</div>
+                    </div>
+                    <div class="output-box">
+                        <div class="output-label">Sendika Kesintisi</div>
+                        <div id="sendika-kesinti" class="output-val">0,00</div>
+                        <div id="gece-birim-detay" class="output-sub">Gece Birim: 0,00 TL</div>
+                    </div>
+                    <div class="output-box">
+                        <div class="output-label">Vakıf Net Tutar</div>
+                        <div id="vakif-net-tutar" class="output-val">0,00</div>
+                        <div class="output-sub">Net Kesinti</div>
+                    </div>
+                    <div class="output-box">
+                        <div class="output-label">İkramiye Tutarı</div>
+                        <div id="net-ikramiye" class="output-val">0,00</div>
+                        <div class="output-sub">Net İkramiye</div>
+                    </div>
+                </div>
+
+                <div class="net-box">
+                    <div class="net-label">Ödenecek Net Maaş</div>
+                    <div class="net-val" id="net-maas">0,00 TL</div>
+                </div>
             </div>
         </section>
 
-        <!-- 3. GÖRÜNÜM: SOSYAL HAKLAR -->
+        <!-- 3. FARK & YILLIK ORTALAMA -->
+        <section id="view-diff" class="view">
+            <div class="card">
+                <div class="card-title-row">
+                    <h2 class="card-title">Fark Hesaplaması</h2>
+                    <span class="badge amber">Fark & Ortalama</span>
+                </div>
+
+                <div class="mode-switch">
+                    <button type="button" id="btnModeFark" class="mode-btn active" onclick="modDegistir('fark')">Fark</button>
+                    <button type="button" id="btnModeYillik" class="mode-btn" onclick="modDegistir('yillik')">Yıllık Ortalama</button>
+                </div>
+
+                <div id="panelFark" class="sub-panel active">
+                    <div class="two-col">
+                        <div class="field-group">
+                            <label class="field-label" for="eski_su">Eski Saat Ücreti</label>
+                            <input type="number" id="eski_su" class="input-control" placeholder="Giriniz..." step="0.01" oninput="yeniSaatHesapla()">
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label" for="vergi_dilimi">Vergi Dilimi (%)</label>
+                            <select id="vergi_dilimi" class="select-control" onchange="hesaplaFark()">
+                                <option value="0.15">15</option>
+                                <option value="0.20">20</option>
+                                <option value="0.27">27</option>
+                                <option value="0.35">35</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="yeni_su">
+                    <div id="aylarListesi"></div>
+                    <button type="button" class="btn-add-month" onclick="ayEkle()">+ Ay Ekle</button>
+
+                    <div class="result-dark-box">
+                        <div id="dinamikSonuclar"></div>
+                        <div class="res-line"><span>İkramiye Farkı:</span><span id="res_ikr">0,00 TL</span></div>
+                        <div class="res-line"><span style="color:#34d399; font-weight:700;">Bayram Farkı (Sabit):</span><span>2.492,24 TL</span></div>
+                        <div class="res-total-label">TOPLAM NET FARK</div>
+                        <div class="res-total-val" id="toplam_fark">0,00 TL</div>
+                    </div>
+                </div>
+
+                <div id="panelYillik" class="sub-panel">
+                    <div class="field-group">
+                        <label class="field-label" for="yillik_saat_ucreti">Saat Ücreti (TL)</label>
+                        <input type="number" id="yillik_saat_ucreti" class="input-control" placeholder="Örn: 200.00" step="0.01" oninput="yillikOrtalamaHesapla()">
+                    </div>
+
+                    <div class="social-box">
+                        <h3>Sosyal Yardım Seçenekleri (Senede 1 Defa)</h3>
+                        <div class="two-col" style="margin-bottom:8px;">
+                            <div class="field-group" style="margin:0;">
+                                <label class="field-label" for="yillik_servis">Servis Ücreti</label>
+                                <select id="yillik_servis" class="select-control" onchange="yillikOrtalamaHesapla()">
+                                    <option value="0">Yok</option>
+                                    <option value="1">Var</option>
+                                </select>
+                            </div>
+                            <div class="field-group" style="margin:0;">
+                                <label class="field-label">Çocuk Yardımı</label>
+                                <button type="button" class="btn-child-add" onclick="cocukEkle()">+ Çocuk Ekle</button>
+                            </div>
+                        </div>
+                        <div id="cocukListesi"></div>
+                        <div id="sosyalDurumNotu" class="info-note">Sosyal yardım verileri kontrol ediliyor...</div>
+                    </div>
+
+                    <div class="result-dark-box">
+                        <div class="res-total-label" style="margin-top:0;">ORTALAMA AYLIK MAAŞ</div>
+                        <div class="res-total-val" id="ortalama_aylik_maas">0,00 TL</div>
+                        <div id="vergi_dilimi_aciklama" class="tax-note-box">
+                            Saat ücreti girildiğinde 12 aylık vergi dilimi dağılımı burada gösterilecektir.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SOSYAL YARDIMLAR -->
         <section id="view-benefits" class="view">
             <div class="card">
                 <div class="card-title-row">
-                    <h2 class="card-title">Sosyal Yardımlar Karşılaştırması</h2>
+                    <h2 class="card-title">Sosyal Yardımlar</h2>
                     <span class="badge" id="sosyalBaslikRozet">2025 / 2026</span>
                 </div>
+
+                <div class="period-banner" id="sosyalDonemAciklama">
+                    Dönemler: 1. Sütun (2025) — 2. Sütun (2026)
+                </div>
+
                 <div class="field-group">
                     <input type="text" id="yardimAramaInput" class="input-control" placeholder="Yardım adı ara (Örn: Servis, Bayram, İzin)...">
                 </div>
@@ -697,14 +1071,37 @@
             </div>
         </section>
 
-        <!-- 4. GÖRÜNÜM: ENFLASYON (TÜFE) -->
+        <!-- 5. TÜFE & İKİNCİ 6 AYLIK SAAT ÜCRETİ -->
         <section id="view-inflation" class="view">
+            <div class="enf-calc-card">
+                <h3 class="enf-calc-title">İkinci 6 Aylık Saat Ücreti Hesaplama</h3>
+                <div class="field-group">
+                    <label class="field-label" for="saatUcreti" style="color:#78350f;">Mevcut Saat Ücreti (TL):</label>
+                    <input type="number" id="saatUcreti" class="input-control" step="0.01" placeholder="Örn: 150.00">
+                </div>
+                <button type="button" class="amber-btn" id="hesaplaBtn">Hesapla</button>
+                <div id="sonucBox" class="enf-result-box"></div>
+            </div>
+
             <div class="card">
                 <div class="card-title-row">
-                    <h2 class="card-title">Aylık TÜFE Görünümü (%)</h2>
-                    <span class="badge green">2026</span>
+                    <h2 class="card-title">Enflasyon Takibi (TÜFE)</h2>
+                    <span class="badge amber">2026</span>
                 </div>
-                <div id="tufeGrafikListe"></div>
+                <div class="tufe-table-wrap">
+                    <table class="tufe-table">
+                        <thead>
+                            <tr>
+                                <th>Ay</th>
+                                <th>Aylık TÜFE (%)</th>
+                                <th>Birikimli (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="enfBody">
+                            <tr><td colspan="3" style="text-align:center;">Yükleniyor...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
@@ -717,14 +1114,18 @@
         </button>
         <button type="button" class="nav-btn" data-target="view-calc" onclick="ekranDegistir(this)">
             <span class="nav-icon">🧮</span>
-            <span>Hesapla</span>
+            <span>Maaş</span>
+        </button>
+        <button type="button" class="nav-btn" data-target="view-diff" onclick="ekranDegistir(this)">
+            <span class="nav-icon">⚖️</span>
+            <span>Fark</span>
         </button>
         <button type="button" class="nav-btn" data-target="view-benefits" onclick="ekranDegistir(this)">
             <span class="nav-icon">🎁</span>
             <span>Yardımlar</span>
         </button>
         <button type="button" class="nav-btn" data-target="view-inflation" onclick="ekranDegistir(this)">
-            <span class="nav-icon">📊</span>
+            <span class="nav-icon">📈</span>
             <span>TÜFE</span>
         </button>
     </nav>
@@ -745,7 +1146,28 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const CACHE_KEY = "bordroapp_mobil_cache_v1";
+        const CACHE_KEY = "bordroapp_mobil_v4";
+
+        const ayVerileri = {
+            1: { ad: "Ocak", gun: 31, gv: 4211.33, dv: 250.70 },
+            2: { ad: "Şubat", gun: 28, gv: 4211.33, dv: 250.70 },
+            3: { ad: "Mart", gun: 31, gv: 4211.33, dv: 250.70 },
+            4: { ad: "Nisan", gun: 30, gv: 4211.33, dv: 250.70 },
+            5: { ad: "Mayıs", gun: 31, gv: 4211.33, dv: 250.70 },
+            6: { ad: "Haziran", gun: 30, gv: 4211.33, dv: 250.70 },
+            7: { ad: "Temmuz", gun: 31, gv: 4537.75, dv: 250.70 },
+            8: { ad: "Ağustos", gun: 31, gv: 5615.10, dv: 250.70 },
+            9: { ad: "Eylül", gun: 30, gv: 5615.10, dv: 250.70 },
+            10: { ad: "Ekim", gun: 31, gv: 5615.10, dv: 250.70 },
+            11: { ad: "Kasım", gun: 30, gv: 5615.10, dv: 250.70 },
+            12: { ad: "Aralık", gun: 31, gv: 5615.10, dv: 250.70 }
+        };
+
+        const enfAylar = [
+            "Ocak 2026", "Şubat 2026", "Mart 2026", "Nisan 2026",
+            "Mayıs 2026", "Haziran 2026", "Temmuz 2026", "Ağustos 2026",
+            "Eylül 2026", "Ekim 2026", "Kasım 2026", "Aralık 2026"
+        ];
 
         const sosyalTanimlar = [
             { id: "servis", adi: "Servis Ücreti" },
@@ -764,95 +1186,434 @@
             { id: "gece_zammi", adi: "Gece Zammı Ücreti" }
         ];
 
-        const aylar = [
-            "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
-            "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+        const vergiDilimleri = [
+            { limit: 158000, oran: 0.15, etiket: "%15" },
+            { limit: 330000, oran: 0.20, etiket: "%20" },
+            { limit: 1200000, oran: 0.27, etiket: "%27" },
+            { limit: Infinity, oran: 0.35, etiket: "%35" }
         ];
 
         let aktifVeri = {};
+        let sosyalKayitlari = {};
+        let aySayaci = 0;
+        let cocukSayaci = 0;
+        let globalIkinci6AyOran = 0;
 
-        function tlFormat(val) {
-            const num = Number(val);
-            if (!Number.isFinite(num)) return "-";
-            return num.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺";
+        function sayiParse(val) {
+            if (val === undefined || val === null || val === "") return NaN;
+            const temiz = val.toString().trim().replace(/\s+/g, "").replace(",", ".");
+            const num = parseFloat(temiz);
+            return Number.isFinite(num) ? num : NaN;
         }
 
-        function dilimleriAl(formul) {
-            const o = formul.gelirVergisiOranlari || {};
-            const s = formul.gelirVergisiSinirlari || {};
-            return [
-                { ust: parseFloat(s.s1) || 190000, oran: (parseFloat(o.d1) || 15) / 100 },
-                { ust: parseFloat(s.s2) || 400000, oran: (parseFloat(o.d2) || 20) / 100 },
-                { ust: parseFloat(s.s3) || 1500000, oran: (parseFloat(o.d3) || 27) / 100 },
-                { ust: parseFloat(s.s4) || 5300000, oran: (parseFloat(o.d4) || 35) / 100 },
-                { ust: Infinity, oran: (parseFloat(o.d4) || 35) / 100 }
-            ];
+        function formatTL(n) {
+            return n.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " TL";
         }
 
-        function dilimVergisi(baslangicKum, matrah, dilimler) {
-            let kalan = Math.max(0, matrah);
-            let kum = Math.max(0, baslangicKum);
-            let vergi = 0;
-            for (const d of dilimler) {
-                if (kalan <= 0) break;
-                if (kum >= d.ust) continue;
-                const acik = d.ust === Infinity ? kalan : Math.max(0, d.ust - kum);
-                const pay = Math.min(kalan, acik);
-                vergi += pay * d.oran;
-                kum += pay;
-                kalan -= pay;
-            }
-            return vergi;
+        function f2(n) {
+            return n.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
-        function hesaplaBordro() {
+        // yonetim.html -> formuller.geceCalismaSaatUcreti
+        function geceBirimUcretiAl() {
             const formul = aktifVeri.formuller || {};
-            const brutTemel = parseFloat(document.getElementById("brutMaasInput").value) || 0;
-            const geceSaat = parseFloat(document.getElementById("geceSaatInput").value) || 0;
-            const geceSaatUcret = parseFloat(formul.geceCalismaSaatUcreti) || 0;
-            const geceKatki = geceSaat * geceSaatUcret;
-            const toplamBrut = brutTemel + geceKatki;
-
-            const ayIdx = parseInt(document.getElementById("aySecici").value, 10) || 0;
-            const oncekiMatrah = parseFloat(document.getElementById("oncekiMatrahInput").value) || 0;
-
-            const sgkKesinti = toplamBrut * 0.15;
-            const vergiMatrahi = Math.max(0, toplamBrut - sgkKesinti);
-            const dilimler = dilimleriAl(formul);
-            const hamGelirVergisi = dilimVergisi(oncekiMatrah, vergiMatrahi, dilimler);
-            const hamDamgaVergisi = toplamBrut * 0.00759;
-
-            const ayIstisna = (formul.aylikIstisnalar && formul.aylikIstisnalar[ayIdx]) || {};
-            const gvi = parseFloat(ayIstisna.gelirVergisiIstisnasi) || 0;
-            const dvi = parseFloat(ayIstisna.damgaVergisiIstisnasi) || 0;
-
-            const netGelirVergisi = Math.max(0, hamGelirVergisi - gvi);
-            const netDamgaVergisi = Math.max(0, hamDamgaVergisi - dvi);
-            const toplamVergi = netGelirVergisi + netDamgaVergisi;
-            const tahminiNet = Math.max(0, toplamBrut - sgkKesinti - toplamVergi);
-
-            document.getElementById("sonucNet").innerText = tlFormat(tahminiNet);
-            document.getElementById("sonucIstisna").innerText = tlFormat(gvi + dvi);
-            document.getElementById("sonucGv").innerText = tlFormat(netGelirVergisi);
-            document.getElementById("sonucGece").innerText = tlFormat(geceKatki);
-
-            if (toplamBrut > 0) {
-                const pNet = Math.min(100, Math.max(0, (tahminiNet / toplamBrut) * 100));
-                const pTax = Math.min(100 - pNet, Math.max(0, (toplamVergi / toplamBrut) * 100));
-                const pSgk = Math.max(0, 100 - pNet - pTax);
-                document.getElementById("barNet").style.width = pNet.toFixed(1) + "%";
-                document.getElementById("barTax").style.width = pTax.toFixed(1) + "%";
-                document.getElementById("barSgk").style.width = pSgk.toFixed(1) + "%";
+            const panelDegeri = sayiParse(formul.geceCalismaSaatUcreti);
+            if (!Number.isNaN(panelDegeri) && panelDegeri >= 0) {
+                return { tutar: panelDegeri, kaynak: "yonetim.html" };
             }
+            return { tutar: 30, kaynak: "varsayılan" };
         }
+
+        // yonetim.html -> formuller.aylikIstisnalar[ayIdx] (gelirVergisiIstisnasi & damgaVergisiIstisnasi)
+        function ayIstisnalariAl(ayNum) {
+            const ayIdx = String(parseInt(ayNum, 10) - 1);
+            const varsayilan = ayVerileri[ayNum] || { gv: 0, dv: 0 };
+            const formul = aktifVeri.formuller || {};
+            const aylikMap = formul.aylikIstisnalar || {};
+            const kayit = aylikMap[ayIdx] || aylikMap[parseInt(ayIdx, 10)] || {};
+
+            const panelGv = sayiParse(kayit.gelirVergisiIstisnasi);
+            const panelDv = sayiParse(kayit.damgaVergisiIstisnasi);
+
+            const gvVar = !Number.isNaN(panelGv);
+            const dvVar = !Number.isNaN(panelDv);
+
+            return {
+                gv: gvVar ? panelGv : varsayilan.gv,
+                dv: dvVar ? panelDv : varsayilan.dv,
+                kaynak: (gvVar || dvVar) ? "yonetim.html" : "varsayılan"
+            };
+        }
+
+        function otomatikAyAyarla() {
+            const simdi = new Date();
+            let ay = simdi.getMonth() + 1;
+            const gun = simdi.getDate();
+            if (gun <= 5) {
+                ay -= 1;
+                if (ay < 1) ay = 12;
+            }
+            document.getElementById("month").value = String(ay);
+        }
+
+        window.ayAyariYap = function() {
+            const ay = document.getElementById("month").value;
+            document.getElementById("calisma-gun-saati").value = ayVerileri[ay].gun * 7.5;
+            hesapla();
+        };
+
+        window.hesapla = function() {
+            const su = parseFloat(document.getElementById("saat-ucreti").value) || 0;
+            const gs = parseFloat(document.getElementById("calisma-gun-saati").value) || 0;
+            const gz = parseFloat(document.getElementById("gece-zammi").value) || 0;
+            const fm = parseFloat(document.getElementById("fm-100").value) || 0;
+            const ul = parseFloat(document.getElementById("ulusal-100").value) || 0;
+            const di = parseFloat(document.getElementById("dini-150").value) || 0;
+            const re = parseFloat(document.getElementById("resmi-200").value) || 0;
+            const yol = parseFloat(document.getElementById("yol-ucreti").value) || 0;
+            const bes = parseFloat(document.getElementById("bes-kesintisi").value) || 0;
+            const v_yuzde = parseFloat(document.getElementById("vakif-yuzde").value) || 0;
+            const vo = parseFloat(document.getElementById("tax-rate").value);
+            const ay = document.getElementById("month").value;
+
+            const geceBilgi = geceBirimUcretiAl();
+            const istisnaBilgi = ayIstisnalariAl(ay);
+
+            const vakifNetTutar = (su * gs / 100) * v_yuzde;
+            const mesaiBrut = ((fm + ul) * su * 2) + (di * su * 2.5) + (re * su * 3);
+            const normalBrut = (su * gs) + (gz * geceBilgi.tutar) + yol;
+            const brut = normalBrut + mesaiBrut;
+
+            const sgk = brut * 0.14;
+            const issizlik = brut * 0.01;
+            const sendika = su * 7.00;
+
+            const matrah = brut - sgk - issizlik - sendika;
+            let gv = (matrah * vo) - istisnaBilgi.gv;
+            if (gv < 0) gv = 0;
+
+            let dv = (brut * 0.00759) - istisnaBilgi.dv;
+            if (dv < 0) dv = 0;
+
+            const net = brut - sgk - issizlik - gv - dv - sendika - vakifNetTutar - bes;
+
+            const ikrBrut = su * 30 * 7.5;
+            const ikrSgk = ikrBrut * 0.14;
+            const ikrIssizlik = ikrBrut * 0.01;
+            const ikrMatrah = ikrBrut - ikrSgk - ikrIssizlik;
+            const ikrGv = ikrMatrah * vo;
+            const ikrDv = ikrBrut * 0.00759;
+            const ikramiyeNet = ikrBrut - ikrSgk - ikrIssizlik - ikrGv - ikrDv;
+
+            document.getElementById("sendika-kesinti").innerText = f2(sendika);
+            document.getElementById("vergi-istisnasi").innerText = f2(istisnaBilgi.gv + istisnaBilgi.dv);
+            document.getElementById("gvi-dvi-detay").innerText = `GVI: ${f2(istisnaBilgi.gv)} | DVI: ${f2(istisnaBilgi.dv)}`;
+            document.getElementById("gece-birim-detay").innerText = `Gece Birim: ${f2(geceBilgi.tutar)} TL`;
+            document.getElementById("vakif-net-tutar").innerText = f2(vakifNetTutar);
+            document.getElementById("net-ikramiye").innerText = f2(ikramiyeNet);
+            document.getElementById("net-maas").innerText = f2(net) + " TL";
+
+            const ayAdi = (ayVerileri[ay] && ayVerileri[ay].ad) ? ayVerileri[ay].ad : ay;
+            document.getElementById("calcParamBilgi").innerText =
+                `${ayAdi} — Gece Birim: ${f2(geceBilgi.tutar)} TL (${geceBilgi.kaynak}) • GVI: ${f2(istisnaBilgi.gv)} TL • DVI: ${f2(istisnaBilgi.dv)} TL (${istisnaBilgi.kaynak})`;
+            document.getElementById("calcParamKaynagi").innerText =
+                (geceBilgi.kaynak === "yonetim.html" && istisnaBilgi.kaynak === "yonetim.html")
+                    ? "Panel Güncel"
+                    : "Karma / Varsayılan";
+        };
+
+        window.modDegistir = function(mod) {
+            const btnFark = document.getElementById("btnModeFark");
+            const btnYillik = document.getElementById("btnModeYillik");
+            const panelFark = document.getElementById("panelFark");
+            const panelYillik = document.getElementById("panelYillik");
+
+            if (mod === "yillik") {
+                btnYillik.classList.add("active");
+                btnFark.classList.remove("active");
+                panelYillik.classList.add("active");
+                panelFark.classList.remove("active");
+                yillikOrtalamaHesapla();
+            } else {
+                btnFark.classList.add("active");
+                btnYillik.classList.remove("active");
+                panelFark.classList.add("active");
+                panelYillik.classList.remove("active");
+            }
+        };
+
+        window.ayEkle = function(varsayilanCs = 225, varsayilanFm = 0, varsayilanGz = 0, varsayilanUb = 0, varsayilanDb = 0, varsayilanRfm = 0, varsayilanYol = 0) {
+            aySayaci++;
+            const id = aySayaci;
+            const container = document.getElementById("aylarListesi");
+
+            const card = document.createElement("div");
+            card.className = "month-card";
+            card.id = `ay_card_${id}`;
+            card.innerHTML = `
+                <div class="month-title">${id}. Ay Kalemleri</div>
+                ${id > 1 ? `<button type="button" class="btn-remove" onclick="aySil(${id})">Sil</button>` : ""}
+                <div class="three-col">
+                    <div class="field-group"><label class="field-label">Çalışma (Sa)</label><input type="number" class="input-control" id="h${id}_cs" value="${varsayilanCs}" oninput="hesaplaFark()"></div>
+                    <div class="field-group"><label class="field-label">Fazla Mesai</label><input type="number" class="input-control" id="h${id}_fm" value="${varsayilanFm}" oninput="hesaplaFark()"></div>
+                    <div class="field-group"><label class="field-label">Gece Zammı (Sa)</label><input type="number" class="input-control" id="h${id}_gz" value="${varsayilanGz}" oninput="hesaplaFark()"></div>
+                    <div class="field-group"><label class="field-label">U. Bayram</label><input type="number" class="input-control" id="h${id}_ub" value="${varsayilanUb}" oninput="hesaplaFark()"></div>
+                    <div class="field-group"><label class="field-label">D. Bayram</label><input type="number" class="input-control" id="h${id}_db" value="${varsayilanDb}" oninput="hesaplaFark()"></div>
+                    <div class="field-group"><label class="field-label">R. Tatil FM</label><input type="number" class="input-control" id="h${id}_rfm" value="${varsayilanRfm}" oninput="hesaplaFark()"></div>
+                </div>
+                <div class="field-group" style="margin-bottom:0;">
+                    <label class="field-label">Yol Yardımı</label>
+                    <select id="h${id}_yol" class="select-control" onchange="hesaplaFark()">
+                        <option value="0" ${varsayilanYol==0?"selected":""}>Yok</option>
+                        <option value="1" ${varsayilanYol==1?"selected":""}>Var</option>
+                    </select>
+                </div>
+            `;
+            container.appendChild(card);
+            hesaplaFark();
+        };
+
+        window.aySil = function(id) {
+            const el = document.getElementById(`ay_card_${id}`);
+            if (el) {
+                el.remove();
+                hesaplaFark();
+            }
+        };
+
+        window.yeniSaatHesapla = function() {
+            const eskiSU = parseFloat(document.getElementById("eski_su").value) || 0;
+            const yeniSU = eskiSU * 1.16;
+            document.getElementById("yeni_su").value = yeniSU.toFixed(2);
+            hesaplaFark();
+        };
+
+        window.hesaplaFark = function() {
+            const eskiSU = parseFloat(document.getElementById("eski_su").value) || 0;
+            const yeniSU = parseFloat(document.getElementById("yeni_su").value) || 0;
+
+            if (eskiSU === 0) {
+                document.getElementById("toplam_fark").innerText = "0,00 TL";
+                document.getElementById("res_ikr").innerText = "0,00 TL";
+                document.getElementById("dinamikSonuclar").innerHTML = "";
+                return;
+            }
+
+            const suFark = yeniSU - eskiSU;
+            const vo = parseFloat(document.getElementById("vergi_dilimi").value);
+            const sabitBayramFarki = 2492.24;
+            const geceZammiBirimFark = 7.19;
+
+            let toplamNet = 0;
+            const ikrBrut = suFark * 225;
+            const ikrNet = ikrBrut * (1 - 0.15 - vo - 0.00759);
+            document.getElementById("res_ikr").innerText = formatTL(ikrNet > 0 ? ikrNet : 0);
+
+            const cards = document.querySelectorAll("#panelFark .month-card");
+            let dinamikHtml = "";
+
+            cards.forEach(card => {
+                const idMatch = card.id.match(/ay_card_(\d+)/);
+                if (!idMatch) return;
+                const i = idMatch[1];
+
+                const cs = parseFloat(document.getElementById(`h${i}_cs`).value) || 0;
+                const fm = parseFloat(document.getElementById(`h${i}_fm`).value) || 0;
+                const gz = parseFloat(document.getElementById(`h${i}_gz`).value) || 0;
+                const ub = parseFloat(document.getElementById(`h${i}_ub`).value) || 0;
+                const db = parseFloat(document.getElementById(`h${i}_db`).value) || 0;
+                const rfm = parseFloat(document.getElementById(`h${i}_rfm`).value) || 0;
+                const yolVar = document.getElementById(`h${i}_yol`).value == "1";
+
+                const normalFark = cs * suFark;
+                const mesaiFark = ((fm + ub) * suFark * 2) + (db * suFark * 2.5) + (rfm * suFark * 3);
+                const geceFark = gz * geceZammiBirimFark;
+                const yolFark = yolVar ? 711.13 : 0;
+
+                const brutFark = normalFark + mesaiFark + geceFark + yolFark;
+                const sendikaFark = suFark * 7;
+
+                const netFark = (brutFark - (brutFark * 0.15) - sendikaFark) * (1 - vo) - (brutFark * 0.00759);
+                const gosterilecekNet = netFark > 0 ? netFark : 0;
+
+                dinamikHtml += `<div class="res-line"><span>${i}. Ay Net Fark:</span><span>${formatTL(gosterilecekNet)}</span></div>`;
+                toplamNet += gosterilecekNet;
+            });
+
+            document.getElementById("dinamikSonuclar").innerHTML = dinamikHtml;
+            const finalToplam = toplamNet + (ikrNet > 0 ? ikrNet : 0) + sabitBayramFarki;
+            document.getElementById("toplam_fark").innerText = formatTL(finalToplam);
+        };
+
+        window.cocukEkle = function() {
+            cocukSayaci++;
+            const id = cocukSayaci;
+            const container = document.getElementById("cocukListesi");
+            const row = document.createElement("div");
+            row.className = "child-row";
+            row.id = `cocuk_row_${id}`;
+            row.innerHTML = `
+                <select id="cocuk_kademe_${id}" onchange="yillikOrtalamaHesapla()">
+                    <option value="ana_ilkokul">Ana-İlkokul</option>
+                    <option value="ortaogretim">Ortaöğretim</option>
+                    <option value="lise">Lise</option>
+                    <option value="universite">Üniversite</option>
+                </select>
+                <button type="button" class="btn-child-del" onclick="cocukSil(${id})">✕</button>
+            `;
+            container.appendChild(row);
+            yillikOrtalamaHesapla();
+        };
+
+        window.cocukSil = function(id) {
+            const el = document.getElementById(`cocuk_row_${id}`);
+            if (el) {
+                el.remove();
+                yillikOrtalamaHesapla();
+            }
+        };
+
+        function sosyalDegerAl(key) {
+            const kayit = sosyalKayitlari[key];
+            if (!kayit) return 0;
+            const v2 = sayiParse(kayit._yil2);
+            if (!Number.isNaN(v2)) return v2;
+            const v1 = sayiParse(kayit._yil1);
+            if (!Number.isNaN(v1)) return v1;
+            return 0;
+        }
+
+        function nettenBruteCevir(netTutar, dilimOrani) {
+            if (netTutar <= 0) return 0;
+            const carpan = 0.85 * (1 - dilimOrani) - 0.00759;
+            return carpan > 0 ? netTutar / carpan : netTutar;
+        }
+
+        function kumulatifVergiHesapla(matrahOnceki, matrahArtisi) {
+            if (matrahArtisi <= 0) {
+                return { vergi: 0, yeniMatrah: matrahOnceki, dilimler: [] };
+            }
+
+            let kalan = matrahArtisi;
+            let mevcut = matrahOnceki;
+            let toplamVergi = 0;
+            const kullanilanDilimler = [];
+
+            for (const dilim of vergiDilimleri) {
+                if (kalan <= 0) break;
+                if (mevcut >= dilim.limit) continue;
+
+                const kapasite = dilim.limit - mevcut;
+                const dilimeGiren = Math.min(kalan, kapasite);
+                toplamVergi += dilimeGiren * dilim.oran;
+                mevcut += dilimeGiren;
+                kalan -= dilimeGiren;
+                kullanilanDilimler.push(dilim.etiket);
+            }
+
+            return {
+                vergi: toplamVergi,
+                yeniMatrah: mevcut,
+                dilimler: kullanilanDilimler
+            };
+        }
+
+        window.yillikOrtalamaHesapla = function() {
+            const su = parseFloat(document.getElementById("yillik_saat_ucreti").value) || 0;
+            const ortalamaEl = document.getElementById("ortalama_aylik_maas");
+            const aciklamaEl = document.getElementById("vergi_dilimi_aciklama");
+
+            if (su <= 0) {
+                ortalamaEl.innerText = "0,00 TL";
+                aciklamaEl.innerHTML = "Saat ücreti girildiğinde 12 aylık vergi dilimi dağılımı burada gösterilecektir.";
+                return;
+            }
+
+            const servisVar = document.getElementById("yillik_servis").value === "1";
+            const servisBrut = servisVar ? sosyalDegerAl("servis") : 0;
+
+            const ramazanNet = sosyalDegerAl("ram_bayrami");
+            const kurbanNet = sosyalDegerAl("kur_bayrami");
+            const yakacakNet = sosyalDegerAl("yakacak");
+            const izinNet = sosyalDegerAl("yillik_izin");
+
+            let cocukYardimBrutToplam = 0;
+            document.querySelectorAll("#cocukListesi select").forEach(sel => {
+                cocukYardimBrutToplam += sosyalDegerAl(sel.value);
+            });
+
+            let kumulatifMatrah = 0;
+            let yillikToplamNet = 0;
+            const dilimAylari = { "%15": [], "%20": [], "%27": [], "%35": [] };
+
+            for (let ay = 1; ay <= 12; ay++) {
+                const info = ayVerileri[ay];
+                const istisna = ayIstisnalariAl(ay);
+                const gs = info.gun * 7.5;
+                const sendika = su * 7.00;
+
+                let brut = (su * gs) + servisBrut + cocukYardimBrutToplam;
+
+                if (ay === 4 || ay === 7 || ay === 10) {
+                    brut += su * 30 * 7.5;
+                }
+
+                let ekSosyalBrut = 0;
+                const tahminiDilim = kumulatifMatrah < 158000 ? 0.15 : (kumulatifMatrah < 330000 ? 0.20 : (kumulatifMatrah < 1200000 ? 0.27 : 0.35));
+
+                if (ay === 3) ekSosyalBrut += nettenBruteCevir(ramazanNet, tahminiDilim);
+                if (ay === 5) ekSosyalBrut += nettenBruteCevir(kurbanNet, tahminiDilim);
+                if (ay === 6) ekSosyalBrut += nettenBruteCevir(izinNet, tahminiDilim);
+                if (ay === 10) ekSosyalBrut += nettenBruteCevir(yakacakNet, tahminiDilim);
+
+                brut += ekSosyalBrut;
+
+                const sgk = brut * 0.14;
+                const issizlik = brut * 0.01;
+                const aylikMatrah = Math.max(0, brut - sgk - issizlik - sendika);
+
+                const gvSonuc = kumulatifVergiHesapla(kumulatifMatrah, aylikMatrah);
+                kumulatifMatrah = gvSonuc.yeniMatrah;
+
+                let gv = gvSonuc.vergi - istisna.gv;
+                if (gv < 0) gv = 0;
+
+                let dv = (brut * 0.00759) - istisna.dv;
+                if (dv < 0) dv = 0;
+
+                const netAy = brut - sgk - issizlik - gv - dv - sendika;
+                yillikToplamNet += netAy;
+
+                const aktifDilim = gvSonuc.dilimler.length > 0
+                    ? gvSonuc.dilimler[gvSonuc.dilimler.length - 1]
+                    : (kumulatifMatrah <= 158000 ? "%15" : (kumulatifMatrah <= 330000 ? "%20" : (kumulatifMatrah <= 1200000 ? "%27" : "%35")));
+
+                dilimAylari[aktifDilim].push(info.ad);
+            }
+
+            ortalamaEl.innerText = formatTL(yillikToplamNet / 12);
+
+            const satirlar = [];
+            for (const oran of ["%15", "%20", "%27", "%35"]) {
+                const ayListesi = dilimAylari[oran];
+                if (ayListesi.length > 0) {
+                    satirlar.push(`<strong>${oran} Vergi Dilimi:</strong> ${ayListesi.join(", ")}`);
+                } else {
+                    satirlar.push(`<strong>${oran} Vergi Dilimi:</strong> Bu yıl girilmedi`);
+                }
+            }
+            aciklamaEl.innerHTML = satirlar.join("<br>");
+        };
 
         function sosyalYardimlariCiz() {
             const arama = (document.getElementById("yardimAramaInput").value || "").toLocaleLowerCase("tr").trim();
             const yil1 = aktifVeri.yil1 || "2025";
             const yil2 = aktifVeri.yil2 || "2026";
-            document.getElementById("sosyalBaslikRozet").innerText = `${yil1} / ${yil2}`;
 
-            const sosyalObj = aktifVeri.sosyal || {};
+            document.getElementById("sosyalBaslikRozet").innerText = `${yil1} / ${yil2}`;
+            document.getElementById("sosyalDonemAciklama").innerText =
+                `Dönemler: 1. Sütun (${yil1}) — 2. Sütun (${yil2})`;
+
             const listeEl = document.getElementById("sosyalYardimListe");
             listeEl.innerHTML = "";
 
@@ -860,13 +1621,8 @@
                 item.adi.toLocaleLowerCase("tr").includes(arama)
             );
 
-            if (filtreli.length === 0) {
-                listeEl.innerHTML = `<p class="info-note">Aramayla eşleşen sosyal yardım bulunamadı.</p>`;
-                return;
-            }
-
             filtreli.forEach(item => {
-                const kayit = sosyalObj[item.id] || {};
+                const kayit = sosyalKayitlari[item.id] || {};
                 const v1 = kayit._yil1 || "-";
                 const v2 = kayit._yil2 || "-";
                 const row = document.createElement("div");
@@ -874,69 +1630,109 @@
                 row.innerHTML = `
                     <div class="benefit-name">${item.adi}</div>
                     <div class="benefit-cols">
-                        <span class="col-chip">${yil1}: ${v1}</span>
-                        <span class="col-chip current">${yil2}: ${v2}</span>
+                        <span class="col-chip">${v1}</span>
+                        <span class="col-chip current">${v2}</span>
                     </div>
                 `;
                 listeEl.appendChild(row);
             });
         }
 
-        function tufeCiz() {
-            const enfObj = aktifVeri.enflasyon || {};
-            const listeEl = document.getElementById("tufeGrafikListe");
-            listeEl.innerHTML = "";
+        function enfTablosunuCiz() {
+            const enfData = aktifVeri.enflasyon || {};
+            const tbody = document.getElementById("enfBody");
+            tbody.innerHTML = "";
+
+            let birikimli = 1;
+            let basladi = false;
+            let ikinci6AyBirikimli = 1;
+            let basladi6 = false;
 
             let sonAyAdi = "-";
             let sonAyDeger = "-";
 
-            const degerler = aylar.map((_, idx) => {
-                const raw = enfObj[idx];
-                const num = parseFloat(String(raw || "").replace(",", "."));
-                if (Number.isFinite(num)) {
-                    sonAyAdi = aylar[idx];
-                    sonAyDeger = "%" + num.toFixed(2);
-                    return num;
+            enfAylar.forEach((ay, index) => {
+                const valStr = enfData[index];
+                const aylikVal = (valStr !== undefined && valStr !== "")
+                    ? parseFloat(valStr.toString().replace(",", "."))
+                    : NaN;
+
+                let aylikGosterim = "-";
+                let birikimliGosterim = "-";
+
+                if (!isNaN(aylikVal)) {
+                    aylikGosterim = aylikVal.toFixed(2).replace(".", ",");
+                    sonAyAdi = ay.split(" ")[0];
+                    sonAyDeger = "%" + aylikGosterim;
+
+                    if (!basladi) {
+                        birikimli = 1 + (aylikVal / 100);
+                        basladi = true;
+                    } else {
+                        birikimli = birikimli * (1 + (aylikVal / 100));
+                    }
+                    const birikimliVal = (birikimli - 1) * 100;
+                    birikimliGosterim = birikimliVal.toFixed(2).replace(".", ",");
+
+                    if (index >= 6 && index <= 11) {
+                        if (!basladi6) {
+                            ikinci6AyBirikimli = 1 + (aylikVal / 100);
+                            basladi6 = true;
+                        } else {
+                            ikinci6AyBirikimli = ikinci6AyBirikimli * (1 + (aylikVal / 100));
+                        }
+                    }
                 }
-                return 0;
-            });
 
-            const maxVal = Math.max(5, ...degerler);
-
-            aylar.forEach((ayAd, idx) => {
-                const raw = enfObj[idx];
-                const num = parseFloat(String(raw || "").replace(",", "."));
-                const gecerli = Number.isFinite(num);
-                const oranGenislik = gecerli ? Math.min(100, Math.max(4, (num / maxVal) * 100)) : 0;
-
-                const row = document.createElement("div");
-                row.className = "tufe-row";
-                row.innerHTML = `
-                    <div class="tufe-month">${ayAd}</div>
-                    <div class="tufe-bar-bg">
-                        <div class="tufe-bar-fill" style="width: ${oranGenislik}%;"></div>
-                    </div>
-                    <div class="tufe-val">${gecerli ? "%" + num.toFixed(2) : (raw || "-")}</div>
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${ay}</td>
+                        <td>${aylikGosterim}</td>
+                        <td>${birikimliGosterim}</td>
+                    </tr>
                 `;
-                listeEl.appendChild(row);
             });
 
+            globalIkinci6AyOran = basladi6 ? (ikinci6AyBirikimli - 1) * 100 : 0;
             document.getElementById("kpiTufe").innerText = sonAyDeger;
             document.getElementById("kpiTufeAy").innerText = sonAyAdi;
         }
 
+        document.getElementById("hesaplaBtn").addEventListener("click", () => {
+            const mevcutSaatUcretiInput = document.getElementById("saatUcreti").value;
+            const sonucBox = document.getElementById("sonucBox");
+
+            if (!mevcutSaatUcretiInput || isNaN(mevcutSaatUcretiInput)) {
+                alert("Lütfen geçerli bir mevcut saat ücreti girin!");
+                return;
+            }
+
+            const mevcutUcret = parseFloat(mevcutSaatUcretiInput);
+            const toplamArtisOrani = globalIkinci6AyOran + 2;
+            const yeniUcret = mevcutUcret * (1 + (toplamArtisOrani / 100));
+
+            sonucBox.style.display = "block";
+            sonucBox.innerHTML = `
+                <strong>Temmuz - Aralık Birleşik Enflasyon:</strong> %${globalIkinci6AyOran.toFixed(2).replace(".", ",")}<br>
+                <strong>Not:</strong> Hesaplamaya +2 koyulmuştur.<br>
+                <strong>Toplam Artış Oranı:</strong> %${toplamArtisOrani.toFixed(2).replace(".", ",")}<br>
+                <strong>Yeni Saat Ücreti:</strong> <strong>${yeniUcret.toFixed(2).replace(".", ",")} TL</strong>
+            `;
+        });
+
         function arayuzuGuncelle(data) {
             aktifVeri = data || {};
+            sosyalKayitlari = aktifVeri.sosyal || {};
             const formul = aktifVeri.formuller || {};
 
-            const asgariNum = parseFloat(formul.asgariUcret);
-            document.getElementById("kpiAsgari").innerText = Number.isFinite(asgariNum) && asgariNum > 0
+            const asgariNum = sayiParse(formul.asgariUcret);
+            document.getElementById("kpiAsgari").innerText = !Number.isNaN(asgariNum) && asgariNum > 0
                 ? asgariNum.toLocaleString("tr-TR", { maximumFractionDigits: 0 }) + " ₺"
                 : "-";
 
-            const geceNum = parseFloat(formul.geceCalismaSaatUcreti);
-            document.getElementById("kpiGece").innerText = Number.isFinite(geceNum) && geceNum > 0
-                ? tlFormat(geceNum)
+            const geceBilgi = geceBirimUcretiAl();
+            document.getElementById("kpiGece").innerText = geceBilgi.tutar > 0
+                ? geceBilgi.tutar.toLocaleString("tr-TR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " ₺"
                 : "-";
 
             document.getElementById("duyuruSatir1").innerText = aktifVeri.duyuru1 || "Güncel duyuru bulunmuyor.";
@@ -950,18 +1746,10 @@
                 gorselKutusu.innerHTML = `<div class="banner-placeholder">Henüz duyuru görseli eklenmemiş.</div>`;
             }
 
-            const dilimler = dilimleriAl(formul).slice(0, 4);
-            const dilimKutulari = document.getElementById("dilimOzetKutulari");
-            dilimKutulari.innerHTML = dilimler.map((d, idx) => `
-                <div class="pill">
-                    <div class="pill-rate">%${(d.oran * 100).toFixed(0)}</div>
-                    <div class="pill-limit">${idx + 1}. Dilim · ${Math.round(d.ust).toLocaleString("tr-TR")}</div>
-                </div>
-            `).join("");
-
-            tufeCiz();
+            enfTablosunuCiz();
             sosyalYardimlariCiz();
-            hesaplaBordro();
+            hesapla();
+            yillikOrtalamaHesapla();
         }
 
         async function verileriGetir(canli = true) {
@@ -1010,23 +1798,14 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         };
 
-        const aySecici = document.getElementById("aySecici");
-        aylar.forEach((ay, idx) => {
-            const opt = document.createElement("option");
-            opt.value = idx;
-            opt.textContent = ay + " 2026";
-            aySecici.appendChild(opt);
-        });
-        aySecici.value = String(new Date().getMonth());
-
-        ["brutMaasInput", "aySecici", "geceSaatInput", "oncekiMatrahInput"].forEach(id => {
-            document.getElementById(id).addEventListener("input", hesaplaBordro);
-            document.getElementById(id).addEventListener("change", hesaplaBordro);
-        });
-
         document.getElementById("yardimAramaInput").addEventListener("input", sosyalYardimlariCiz);
         document.getElementById("refreshBtn").addEventListener("click", () => verileriGetir(true));
 
+        otomatikAyAyarla();
+        ayAyariYap();
+        ayEkle(232.5, 0, 0, 0, 0, 0, 0);
+        ayEkle(210, 0, 0, 0, 0, 0, 0);
+        ayEkle(232.5, 0, 0, 0, 0, 0, 0);
         verileriGetir(true);
     </script>
 </body>
