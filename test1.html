@@ -3,163 +3,618 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TEST SİSTEMİ (22.81 Çarpanlı)</title>
+    <title>BordroApp Test 1 — E-posta Onay & Rol</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #fce4ec; margin: 0; padding: 10px; box-sizing: border-box; }
-        .container { background-color: #ffffff; padding: 15px 20px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 100%; max-width: 550px; border-top: 5px solid #d81b60; }
-        h2 { text-align: center; color: #d81b60; margin-bottom: 12px; border-bottom: 2px solid #f06292; padding-bottom: 8px; font-size: 16px; }
-        
-        .top-options { display: flex; gap: 8px; margin-bottom: 12px; }
-        .option-group { flex: 1; display: flex; flex-direction: column; }
-        .option-group label { font-size: 9px; font-weight: bold; color: #777; margin-bottom: 2px; text-transform: uppercase; }
-        .option-group select { padding: 6px; border: 1px solid #ddd; border-radius: 6px; font-size: 12px; background-color: #fff; }
+        :root {
+            --primary: #4c2fd0;
+            --primary-dark: #2e1b87;
+            --accent: #047857;
+            --accent-soft: #e6fbf6;
+            --bg: #f3f5fa;
+            --card: #ffffff;
+            --text: #161b2e;
+            --muted: #64708a;
+            --border: #e5e9f2;
+            --danger: #e11d48;
+            --warn: #b45309;
+            --warn-soft: #fffbeb;
+            --radius: 16px;
+            --shadow: 0 8px 22px rgba(24, 32, 68, 0.06);
+        }
 
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-        .input-group { display: flex; flex-direction: column; }
-        .input-group label { margin-bottom: 2px; font-weight: 600; color: #555; font-size: 9.5px; }
-        .input-group input { padding: 7px; border: 1px solid #ccc; border-radius: 5px; font-size: 12px; background-color: #fafafa; }
-        
-        .output-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
-        .output-group { background: #f9f9f9; padding: 6px; border-radius: 6px; text-align: center; border: 1px solid #eee; }
-        .output-label { font-size: 8px; color: #888; margin-bottom: 1px; text-transform: uppercase; }
-        .output-value { font-size: 11.5px; font-weight: bold; color: #2c3e50; }
-        
-        .net-maas-box { background: linear-gradient(135deg, #d81b60 0%, #ad1457 100%); color: #fff; padding: 12px; border-radius: 10px; text-align: center; margin-top: 12px; }
-        .net-maas-label { font-size: 11px; margin-bottom: 2px; opacity: 0.9; }
-        .net-maas-value { font-size: 26px; font-weight: 800; }
-        
-        .bottom-buttons { display: flex; justify-content: space-between; margin-top: 12px; gap: 8px; }
-        .bottom-buttons button { flex: 1; padding: 9px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 11px; }
-        .btn-default { background-color: #ecf0f1; color: #34495e; }
+        * { box-sizing: border-box; }
 
-        .test-tag { background: #ffeb3b; color: #000; font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
-        @media (max-width: 480px) { .input-grid { grid-template-columns: 1fr; } }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding-bottom: 40px;
+        }
+
+        .gate-wrap {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .gate-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .gate-head {
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .gate-title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .gate-sub {
+            margin: 4px 0 0;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .tab-btn {
+            padding: 9px;
+            border-radius: 10px;
+            border: 1.5px solid var(--primary);
+            background: #fff;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 12.5px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .field {
+            margin-bottom: 10px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .field input, .field select {
+            width: 100%;
+            padding: 9px 10px;
+            border-radius: 10px;
+            border: 1.3px solid #dbe1ef;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text);
+            background: #fff;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 11px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn-primary:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            padding: 8px 11px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            padding: 8px 11px;
+            border-radius: 10px;
+            border: 1px solid #fecdd3;
+            background: #fff1f2;
+            color: var(--danger);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .msg-box {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 11px;
+            font-size: 12px;
+            line-height: 1.45;
+            display: none;
+        }
+
+        .msg-box.warn {
+            display: block;
+            background: var(--warn-soft);
+            border: 1px solid #fde68a;
+            color: var(--warn);
+        }
+
+        .msg-box.err {
+            display: block;
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
+            color: var(--danger);
+        }
+
+        .msg-box.ok {
+            display: block;
+            background: var(--accent-soft);
+            border: 1px solid #a7f3d0;
+            color: var(--accent);
+        }
+
+        /* GİRİŞ YAPILDIKTAN SONRAKİ UYGULAMA */
+        #appShell {
+            display: none;
+        }
+
+        .topbar {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: #fff;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .topbar-title {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .topbar-user {
+            font-size: 11.5px;
+            opacity: 0.9;
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .chip-btn {
+            background: rgba(255,255,255,0.16);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            border-radius: 9px;
+            padding: 6px 10px;
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .wrap {
+            max-width: 720px;
+            margin: 14px auto 0;
+            padding: 0 12px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+        }
+
+        .user-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            background: #fafbff;
+            flex-wrap: wrap;
+        }
+
+        .role-badge {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: #eef1ff;
+            color: var(--primary);
+        }
+
+        .role-badge.admin {
+            background: #fef3c7;
+            color: #92400e;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>TEST SİSTEMİ <span class="test-tag">GECE 22.81</span></h2>
-        
-        <div class="top-options">
-            <div class="option-group">
-                <label>Dönem (Ay)</label>
-                <select id="month" onchange="ayAyariYap()">
-                    <option value="1">Ocak</option><option value="2" selected>Şubat</option><option value="3">Mart</option>
-                    <option value="4">Nisan</option><option value="5">Mayıs</option><option value="6">Haziran</option>
-                    <option value="7">Temmuz</option><option value="8">Ağustos</option><option value="9">Eylül</option>
-                    <option value="10">Ekim</option><option value="11">Kasım</option><option value="12">Aralık</option>
-                </select>
+
+    <!-- SADECE ÜYE VE E-POSTASI ONAYLI KULLANICILAR GEÇEBİLİR -->
+    <div id="authGate" class="gate-wrap">
+        <div class="gate-card">
+            <div class="gate-head">
+                <h1 class="gate-title">BordroApp Giriş</h1>
+                <p class="gate-sub">Sisteme yalnızca onaylı üyeler giriş yapabilir.</p>
             </div>
-            <div class="option-group">
-                <label>Vergi Dilimi</label>
-                <select id="tax-rate" onchange="hesapla()">
-                    <option value="0.15">15</option><option value="0.20">20</option>
-                    <option value="0.27">27</option><option value="0.35">35</option>
-                </select>
+
+            <div class="tabs">
+                <button type="button" id="tabLogin" class="tab-btn active" onclick="sekmeDegistir('login')">Giriş Yap</button>
+                <button type="button" id="tabRegister" class="tab-btn" onclick="sekmeDegistir('register')">Üye Ol</button>
             </div>
-        </div>
-        
-        <div class="input-grid">
-            <div class="input-group"><label>Saat Ücreti:</label><input type="number" id="saat-ucreti" step="0.01" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Aylık Çalışma Saati:</label><input type="number" id="calisma-gun-saati" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Gece Zammı (Sa):</label><input type="number" id="gece-zammi" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Fazla Mesai (Sa):</label><input type="number" id="fm-100" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Ulusal Bayram (Sa):</label><input type="number" id="ulusal-100" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Dini Bayram (Sa):</label><input type="number" id="dini-150" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Resmi Tatil Fazla Mesai (Sa):</label><input type="number" id="resmi-200" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Net BES Kesintisi (TL):</label><input type="number" id="bes-kesintisi" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Vakıf Kesintisi %:</label><input type="number" id="vakif-yuzde" value="0" oninput="hesapla()"></div>
-            <div class="input-group"><label>Yol Ücreti (Brüt):</label><input type="number" id="yol-ucreti" value="0" oninput="hesapla()"></div>
-        </div>
 
-        <div class="output-grid">
-            <div class="output-group"><div class="output-label">Vergi İstisnası</div><div id="vergi-istisnasi" class="output-value">0,00</div></div>
-            <div class="output-group"><div class="output-label">Sendika Kesintisi</div><div id="sendika-kesinti" class="output-value">0,00</div></div>
-            <div class="output-group"><div class="output-label">Vakıf Net Tutar</div><div id="vakif-net-tutar" class="output-value">0,00</div></div>
-            <div class="output-group"><div class="output-label">30 Günlük Net İkramiye</div><div id="net-ikramiye" class="output-value">0,00</div></div>
-        </div>
+            <form id="loginForm">
+                <div class="field">
+                    <label for="loginEmail">E-posta</label>
+                    <input type="email" id="loginEmail" required placeholder="ornek@eposta.com">
+                </div>
+                <div class="field">
+                    <label for="loginPass">Şifre</label>
+                    <input type="password" id="loginPass" required placeholder="Şifreniz">
+                </div>
+                <button type="submit" id="loginBtn" class="btn-primary">Giriş Yap</button>
+            </form>
 
-        <div class="net-maas-box">
-            <div class="net-maas-label">Test Edilen Net Maaş (Eski Oran)</div>
-            <div class="net-maas-value" id="net-maas">0,00 TL</div>
-        </div>
+            <form id="registerForm" style="display:none;">
+                <div class="field">
+                    <label for="regName">Ad Soyad</label>
+                    <input type="text" id="regName" required placeholder="Adınız Soyadınız">
+                </div>
+                <div class="field">
+                    <label for="regEmail">E-posta</label>
+                    <input type="email" id="regEmail" required placeholder="ornek@eposta.com">
+                </div>
+                <div class="field">
+                    <label for="regPass">Şifre</label>
+                    <input type="password" id="regPass" required minlength="6" placeholder="En az 6 karakter">
+                </div>
+                <button type="submit" id="regBtn" class="btn-primary">Üye Ol ve Onay Maili Gönder</button>
+            </form>
 
-        <div class="bottom-buttons">
-            <button class="btn-default" onclick="location.href='index.html'">Ana Sayfa</button>
-            <button class="btn-default" style="background-color: #2563eb; color: white;" onclick="location.href='hesapla.html'">Yeni Sisteme Git (30 TL)</button>
+            <div id="verifyBox" class="msg-box warn" style="display:none;">
+                <div><strong>E-posta onayı gerekli:</strong> Hesabına doğrulama bağlantısı gönderildi. E-postandaki bağlantıya tıkladıktan sonra giriş yapabilirsin.</div>
+                <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+                    <button type="button" id="resendVerifyBtn" class="btn-secondary" onclick="dogrulamaMailiTekrarGonder()">Onay Mailini Tekrar Gönder</button>
+                    <button type="button" class="btn-danger" onclick="bekleyenOturumuKapat()">Kapat</button>
+                </div>
+            </div>
+
+            <div id="gateMsg" class="msg-box"></div>
         </div>
     </div>
 
-    <script>
-        const ayVerileri = {
-            1: { gun: 31, gv: 4211.33, dv: 250.70 }, 2: { gun: 28, gv: 4211.33, dv: 250.70 },
-            3: { gun: 31, gv: 4211.33, dv: 250.70 }, 4: { gun: 30, gv: 4211.33, dv: 250.70 },
-            5: { gun: 31, gv: 4211.33, dv: 250.70 }, 6: { gun: 30, gv: 4211.33, dv: 250.70 },
-            7: { gun: 31, gv: 4537.75, dv: 250.70 }, 8: { gun: 31, gv: 5615.10, dv: 250.70 },
-            9: { gun: 30, gv: 5615.10, dv: 250.70 }, 10: { gun: 31, gv: 5615.10, dv: 250.70 },
-            11: { gun: 30, gv: 5615.10, dv: 250.70 }, 12: { gun: 31, gv: 5615.10, dv: 250.70 }
+    <!-- KORUMALI UYGULAMA ALANI -->
+    <div id="appShell">
+        <header class="topbar">
+            <div>
+                <h2 class="topbar-title">BordroApp Test 1</h2>
+                <div class="topbar-user" id="activeUserInfo">-</div>
+            </div>
+            <div class="topbar-actions">
+                <button type="button" class="chip-btn" onclick="ekranGoster('home')">Ana Ekran</button>
+                <button type="button" id="adminPanelBtn" class="chip-btn" style="display:none;" onclick="ekranGoster('admin')">Yönetim Paneli</button>
+                <button type="button" class="chip-btn" onclick="cikisYap()">Çıkış</button>
+            </div>
+        </header>
+
+        <main class="wrap">
+            <section id="sec-home" class="card">
+                <h3 style="margin:0 0 6px;">Onaylı Üye Alanı</h3>
+                <p style="margin:0; font-size:13px; color:var(--muted);">
+                    Bu alanı yalnızca e-postasını onaylamış kayıtlı üyeler görebilir. Rolün: <strong id="activeRoleText">user</strong>
+                </p>
+            </section>
+
+            <section id="sec-admin" class="card" style="display:none;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Yönetici Yetki Yönetimi</h3>
+                    <button type="button" class="btn-secondary" onclick="kullanicilariListele()">Listeyi Yenile</button>
+                </div>
+                <div id="userListContainer">Yükleniyor...</div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // Kendi Firebase config bilgilerinle aynıdır
+        const firebaseConfig = {
+            apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
+            authDomain: "bordroapp.firebaseapp.com",
+            projectId: "bordroapp",
+            storageBucket: "bordroapp.firebasestorage.app",
+            messagingSenderId: "495208822576",
+            appId: "1:495208822576:web:1c5b9a8e803ef5fcc7baf5",
+            measurementId: "G-6ZRKG9HG9J"
         };
 
-        function ayAyariYap() {
-            const ay = document.getElementById('month').value;
-            document.getElementById('calisma-gun-saati').value = ayVerileri[ay].gun * 7.5;
-            hesapla();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let aktifProfil = null;
+
+        function mesajGoster(tip, metin) {
+            const box = document.getElementById("gateMsg");
+            box.className = "msg-box " + tip;
+            box.innerText = metin;
+            box.style.display = "block";
         }
 
-        function hesapla() {
-            const su = parseFloat(document.getElementById('saat-ucreti').value) || 0;
-            const gs = parseFloat(document.getElementById('calisma-gun-saati').value) || 0;
-            const gz = parseFloat(document.getElementById('gece-zammi').value) || 0;
-            const fm = parseFloat(document.getElementById('fm-100').value) || 0;
-            const ul = parseFloat(document.getElementById('ulusal-100').value) || 0;
-            const di = parseFloat(document.getElementById('dini-150').value) || 0;
-            const re = parseFloat(document.getElementById('resmi-200').value) || 0;
-            const yol = parseFloat(document.getElementById('yol-ucreti').value) || 0;
-            const bes = parseFloat(document.getElementById('bes-kesintisi').value) || 0;
-            const v_yuzde = parseFloat(document.getElementById('vakif-yuzde').value) || 0;
-            const vo = parseFloat(document.getElementById('tax-rate').value);
-            const ay = document.getElementById('month').value;
-            
-            // KAZANÇLAR
-            const mesaiBrut = ((fm + ul) * su * 2) + (di * su * 2.5) + (re * su * 3);
-            
-            // TEST İÇİN ESKİ ÇARPAN: 22.81
-            const normalBrut = (su * gs) + (gz * 22.81) + yol;
-            let brut = normalBrut + mesaiBrut;
-
-            // KESİNTİLER
-            const sgk = brut * 0.14;
-            const issizlik = brut * 0.01;
-            const sendika = su * 7.00; 
-            
-            const matrah = brut - sgk - issizlik - sendika;
-            let gv = (matrah * vo) - ayVerileri[ay].gv;
-            if (gv < 0) gv = 0;
-
-            let dv = (brut * 0.00759) - ayVerileri[ay].dv;
-            if (dv < 0) dv = 0;
-
-            const vakifNetTutar = (su * gs / 100) * v_yuzde;
-            const net = brut - sgk - issizlik - gv - dv - sendika - vakifNetTutar - bes;
-            
-            const ikrBrut = su * 30 * 7.5;
-            const ikrSgk = ikrBrut * 0.14;
-            const ikrIssizlik = ikrBrut * 0.01;
-            const ikrMatrah = ikrBrut - ikrSgk - ikrIssizlik;
-            const ikrGv = ikrMatrah * vo;
-            const ikrDv = ikrBrut * 0.00759;
-            const ikramiyeNet = ikrBrut - ikrSgk - ikrIssizlik - ikrGv - ikrDv;
-
-            const f = (n) => n.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-            document.getElementById('sendika-kesinti').innerText = f(sendika);
-            document.getElementById('vergi-istisnasi').innerText = f(ayVerileri[ay].gv + ayVerileri[ay].dv);
-            document.getElementById('vakif-net-tutar').innerText = f(vakifNetTutar);
-            document.getElementById('net-ikramiye').innerText = f(ikramiyeNet);
-            document.getElementById('net-maas').innerText = f(net) + " TL";
+        function mesajGizle() {
+            const box = document.getElementById("gateMsg");
+            box.style.display = "none";
+            box.innerText = "";
         }
-        
-        window.onload = ayAyariYap;
+
+        window.sekmeDegistir = function(sekme) {
+            mesajGizle();
+            document.getElementById("verifyBox").style.display = "none";
+            const isLogin = sekme === "login";
+            document.getElementById("tabLogin").classList.toggle("active", isLogin);
+            document.getElementById("tabRegister").classList.toggle("active", !isLogin);
+            document.getElementById("loginForm").style.display = isLogin ? "block" : "none";
+            document.getElementById("registerForm").style.display = !isLogin ? "block" : "none";
+        };
+
+        window.dogrulamaMailiTekrarGonder = async function() {
+            const user = auth.currentUser;
+            if (!user) {
+                mesajGoster("err", "Önce e-posta ve şifrenle giriş yapmalısın.");
+                return;
+            }
+            const btn = document.getElementById("resendVerifyBtn");
+            btn.disabled = true;
+            try {
+                await sendEmailVerification(user);
+                mesajGoster("ok", "Doğrulama maili tekrar gönderildi. Gelen kutunu ve spam klasörünü kontrol et.");
+            } catch (err) {
+                mesajGoster("err", "Mail gönderilemedi: " + err.message);
+            } finally {
+                btn.disabled = false;
+            }
+        };
+
+        window.bekleyenOturumuKapat = async function() {
+            await signOut(auth);
+            document.getElementById("verifyBox").style.display = "none";
+            mesajGizle();
+        };
+
+        window.cikisYap = async function() {
+            aktifProfil = null;
+            await signOut(auth);
+        };
+
+        window.ekranGoster = function(ekran) {
+            if (!aktifProfil) return;
+            const adminSec = document.getElementById("sec-admin");
+            const homeSec = document.getElementById("sec-home");
+
+            if (ekran === "admin") {
+                if (aktifProfil.role !== "admin") {
+                    alert("Yönetici yetkin bulunmuyor.");
+                    return;
+                }
+                homeSec.style.display = "none";
+                adminSec.style.display = "block";
+                kullanicilariListele();
+            } else {
+                adminSec.style.display = "none";
+                homeSec.style.display = "block";
+            }
+        };
+
+        async function profilGetirVeyaOlustur(user, adSoyadOverride = "") {
+            const ref = doc(db, "uyeler", user.uid);
+            const snap = await getDoc(ref);
+            if (snap.exists()) {
+                const data = snap.data();
+                return {
+                    uid: user.uid,
+                    email: user.email,
+                    adSoyad: data.adSoyad || adSoyadOverride || user.email,
+                    role: data.role === "admin" ? "admin" : "user"
+                };
+            }
+
+            const yeniProfil = {
+                uid: user.uid,
+                email: user.email,
+                adSoyad: adSoyadOverride || user.email.split("@")[0],
+                role: "user",
+                emailVerified: true,
+                createdAt: new Date().toISOString()
+            };
+            await setDoc(ref, yeniProfil, { merge: true });
+            return yeniProfil;
+        }
+
+        window.kullanicilariListele = async function() {
+            if (!aktifProfil || aktifProfil.role !== "admin") return;
+            const container = document.getElementById("userListContainer");
+            container.innerHTML = "Yükleniyor...";
+
+            try {
+                const snap = await getDocs(collection(db, "uyeler"));
+                if (snap.empty) {
+                    container.innerHTML = "Henüz kayıtlı üye bulunmuyor.";
+                    return;
+                }
+
+                container.innerHTML = "";
+                snap.forEach(docSnap => {
+                    const u = docSnap.data();
+                    const rol = u.role === "admin" ? "admin" : "user";
+                    const row = document.createElement("div");
+                    row.className = "user-row";
+                    row.innerHTML = `
+                        <div>
+                            <div style="font-weight:800;">${u.adSoyad || "-"}</div>
+                            <div style="font-size:12px; color:var(--muted);">${u.email || docSnap.id}</div>
+                        </div>
+                        <div style="display:flex; gap:8px; align-items:center;">
+                            <span class="role-badge ${rol === "admin" ? "admin" : ""}">${rol === "admin" ? "Yönetici" : "Kullanıcı"}</span>
+                            <select onchange="kullaniciRolDegistir('${docSnap.id}', this.value)">
+                                <option value="user" ${rol === "user" ? "selected" : ""}>Kullanıcı</option>
+                                <option value="admin" ${rol === "admin" ? "selected" : ""}>Yönetici</option>
+                            </select>
+                        </div>
+                    `;
+                    container.appendChild(row);
+                });
+            } catch (err) {
+                container.innerHTML = "Kullanıcı listesi alınamadı: " + err.message;
+            }
+        };
+
+        window.kullaniciRolDegistir = async function(uid, yeniRol) {
+            if (!aktifProfil || aktifProfil.role !== "admin") return;
+            try {
+                await setDoc(doc(db, "uyeler", uid), {
+                    role: yeniRol === "admin" ? "admin" : "user",
+                    updatedAt: new Date().toISOString()
+                }, { merge: true });
+                kullanicilariListele();
+                alert("Kullanıcı yetkisi güncellendi.");
+            } catch (err) {
+                alert("Yetki güncellenemedi: " + err.message);
+            }
+        };
+
+        document.getElementById("registerForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            mesajGizle();
+            const adSoyad = document.getElementById("regName").value.trim();
+            const email = document.getElementById("regEmail").value.trim().toLowerCase();
+            const pass = document.getElementById("regPass").value;
+            const btn = document.getElementById("regBtn");
+            btn.disabled = true;
+
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                await setDoc(doc(db, "uyeler", cred.user.uid), {
+                    uid: cred.user.uid,
+                    adSoyad,
+                    email,
+                    role: "user",
+                    emailVerified: false,
+                    createdAt: new Date().toISOString()
+                }, { merge: true });
+
+                await sendEmailVerification(cred.user);
+                document.getElementById("verifyBox").style.display = "block";
+                mesajGoster("ok", "Üyelik oluşturuldu. E-postana onay bağlantısı gönderildi; onayladıktan sonra giriş yapabilirsin.");
+            } catch (err) {
+                mesajGoster("err", "Üyelik hatası: " + err.message);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            mesajGizle();
+            document.getElementById("verifyBox").style.display = "none";
+            const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+            const pass = document.getElementById("loginPass").value;
+            const btn = document.getElementById("loginBtn");
+            btn.disabled = true;
+
+            try {
+                const cred = await signInWithEmailAndPassword(auth, email, pass);
+                await cred.user.reload();
+
+                if (!cred.user.emailVerified) {
+                    document.getElementById("verifyBox").style.display = "block";
+                    return;
+                }
+
+                await setDoc(doc(db, "uyeler", cred.user.uid), {
+                    emailVerified: true,
+                    lastLoginAt: new Date().toISOString()
+                }, { merge: true });
+            } catch (err) {
+                mesajGoster("err", "Giriş başarısız: E-posta veya şifre hatalı.");
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        onAuthStateChanged(auth, async (user) => {
+            const authGate = document.getElementById("authGate");
+            const appShell = document.getElementById("appShell");
+
+            if (!user) {
+                aktifProfil = null;
+                authGate.style.display = "flex";
+                appShell.style.display = "none";
+                return;
+            }
+
+            await user.reload();
+            if (!user.emailVerified) {
+                aktifProfil = null;
+                authGate.style.display = "flex";
+                appShell.style.display = "none";
+                document.getElementById("verifyBox").style.display = "block";
+                return;
+            }
+
+            aktifProfil = await profilGetirVeyaOlustur(user);
+            authGate.style.display = "none";
+            appShell.style.display = "block";
+
+            document.getElementById("activeUserInfo").innerText = `${aktifProfil.adSoyad} (${aktifProfil.email})`;
+            document.getElementById("activeRoleText").innerText = aktifProfil.role === "admin" ? "Yönetici" : "Kullanıcı";
+            document.getElementById("adminPanelBtn").style.display = aktifProfil.role === "admin" ? "inline-block" : "none";
+            ekranGoster("home");
+        });
     </script>
 </body>
 </html>
