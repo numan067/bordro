@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BordroApp - Vardiya Çizelgesi (Test 2)</title>
+    <style>
+        :root {
+            --bg-outer: #071326;
+            --panel-bg: #0c1f3a;
+            --panel-border: rgba(56, 189, 248, 0.28);
+            --cell-bg: rgba(15, 36, 68, 0.72);
+            --cell-hover: rgba(30, 64, 115, 0.88);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-cyan: #22d3ee;
+            --badge-gunduz: #0ea5e9;
+            --badge-vardiya: #22c55e;
+            --badge-gece: #6366f1;
+            --badge-tatil: #f43f5e;
+            --badge-izin: #eab308;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background:
+                radial-gradient(circle at 20% 15%, rgba(14, 165, 233, 0.22), transparent 45%),
+                radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.18), transparent 50%),
+                var(--bg-outer);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 12px;
+        }
+
+        .device-frame {
+            width: 100%;
+            max-width: 780px;
+            background: linear-gradient(165deg, #102a52 0%, var(--panel-bg) 55%, #08172d 100%);
+            border: 1.5px solid var(--panel-border);
+            border-radius: 22px;
+            padding: 16px 18px 20px;
+            box-shadow:
+                0 24px 60px rgba(0, 0, 0, 0.65),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+                0 0 36px rgba(34, 211, 238, 0.12);
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+            margin-bottom: 14px;
+        }
+
+        .brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 16px;
+            color: #ffffff;
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
+        }
+
+        .brand-name {
+            font-size: 17px;
+            font-weight: 800;
+            font-style: italic;
+            letter-spacing: 0.2px;
+            color: #e0f2fe;
+        }
+
+        .top-icons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e1;
+            font-size: 16px;
+        }
+
+        .top-icon-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            color: #e2e8f0;
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .schedule-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 17px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .selectors {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .select-pill {
+            background: rgba(15, 23, 42, 0.78);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            color: #f8fafc;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .select-pill:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .weekday-hdr {
+            text-align: center;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #cbd5e1;
+            padding: 6px 2px;
+        }
+
+        .day-cell {
+            background: var(--cell-bg);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            border-radius: 10px;
+            min-height: 62px;
+            padding: 6px 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+            user-select: none;
+        }
+
+        .day-cell:hover:not(.empty) {
+            background: var(--cell-hover);
+            border-color: rgba(56, 189, 248, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .day-cell.empty {
+            background: rgba(10, 24, 46, 0.35);
+            border-color: transparent;
+            cursor: default;
+        }
+
+        .day-cell.selected {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 1px var(--accent-cyan);
+        }
+
+        .day-number {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-muted);
+            line-height: 1.1;
+        }
+
+        .day-cell.has-shift .day-number {
+            color: #f8fafc;
+        }
+
+        .shift-pill {
+            font-size: 10px;
+            font-weight: 800;
+            color: #ffffff;
+            padding: 2px 7px;
+            border-radius: 6px;
+            line-height: 1.25;
+            white-space: nowrap;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .pill-gunduz {
+            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+        }
+
+        .pill-vardiya {
+            background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+        }
+
+        .pill-gece {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        }
+
+        .pill-tatil {
+            background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+        }
+
+        .pill-izin {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+            color: #1e293b;
+        }
+
+        .summary-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .summary-card {
+            background: rgba(9, 22, 43, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 12px;
+            padding: 11px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .summary-icon {
+            font-size: 22px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .summary-meta {
+            min-width: 0;
+        }
+
+        .summary-label {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #cbd5e1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .summary-value {
+            margin-top: 3px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+
+        .editor-bar {
+            margin-top: 12px;
+            background: rgba(15, 36, 68, 0.65);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 12px;
+        }
+
+        .editor-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .mini-input {
+            width: 72px;
+            background: rgba(9, 22, 43, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            color: #fff;
+            border-radius: 7px;
+            padding: 4px 6px;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .device-frame {
+                padding: 12px 10px 16px;
+                border-radius: 16px;
+            }
+            .schedule-title {
+                font-size: 15px;
+            }
+            .calendar-grid {
+                gap: 4px;
+            }
+            .day-cell {
+                min-height: 54px;
+                padding: 5px 2px;
+                border-radius: 8px;
+            }
+            .shift-pill {
+                font-size: 9px;
+                padding: 2px 4px;
+            }
+            .summary-row {
+                gap: 6px;
+            }
+            .summary-card {
+                padding: 9px 8px;
+                gap: 6px;
+            }
+            .summary-icon {
+                font-size: 17px;
+            }
+            .summary-label {
+                font-size: 10px;
+            }
+            .summary-value {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="device-frame">
+        <div class="top-bar">
+            <div class="brand-wrap">
+                <div class="brand-mark">B</div>
+                <div class="brand-name">BordroApp</div>
+            </div>
+            <div class="top-icons">
+                <button type="button" class="top-icon-btn" title="Profil" onclick="alert('Test 2 vardiya çizelgesi aktif.')">👤</button>
+                <button type="button" class="top-icon-btn" title="Hafta Tatili Sıfırla" onclick="haftaTatiliEsitle()">🔄</button>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <div class="schedule-title">
+                <span>🗓️</span>
+                <span>Vardiya Çizelgesi</span>
+            </div>
+            <div class="selectors">
+                <select id="yilSec" class="select-pill" onchange="takvimiCiz()">
+                    <option value="2025">2025</option>
+                    <option value="2026" selected>2026</option>
+                    <option value="2027">2027</option>
+                </select>
+                <select id="aySec" class="select-pill" onchange="takvimiCiz()">
+                    <option value="0">Ocak</option>
+                    <option value="1">Şubat</option>
+                    <option value="2">Mart</option>
+                    <option value="3">Nisan</option>
+                    <option value="4">Mayıs</option>
+                    <option value="5">Haziran</option>
+                    <option value="6">Temmuz</option>
+                    <option value="7">Ağustos</option>
+                    <option value="8">Eylül</option>
+                    <option value="9">Ekim</option>
+                    <option value="10" selected>Kasım</option>
+                    <option value="11">Aralık</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="calendar-grid" id="takvimIzgara"></div>
+
+        <div class="summary-row">
+            <div class="summary-card">
+                <div class="summary-icon">🌙</div>
+                <div class="summary-meta">
+                    <div class="summary-label">Gece Çalışması</div>
+                    <div class="summary-value" id="ozetGece">0 Saat</div>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">🕒</div>
+                <div class="summary-meta">
+                    <div class="summary-label">Fazla Mesai</div>
+                    <div class="summary-value" id="ozetMesai">0 Saat</div>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">📊</div>
+                <div class="summary-meta">
+                    <div class="summary-label">Toplam Saat</div>
+                    <div class="summary-value" id="ozetToplam">0 Saat</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="editor-bar">
+            <div id="seciliGunBilgi">Günlere tıklayarak vardiya değiştirin (1. gün seçili)</div>
+            <div class="editor-controls">
+                <select id="seciliTur" class="select-pill" style="padding:4px 8px; font-size:12px;" onchange="seciliGunGuncelle()">
+                    <option value="gunduz">Gündüz (7.5s)</option>
+                    <option value="vardiya">Vardiya (7.5s)</option>
+                    <option value="gece">Gece (7.5s + Gece)</option>
+                    <option value="tatil">H.Tatili</option>
+                    <option value="izin">İzin</option>
+                </select>
+                <label>F.Mesai: <input type="number" id="seciliMesai" class="mini-input" min="0" step="0.5" value="0" oninput="seciliGunGuncelle()"></label>
+                <label>Eksik: <input type="number" id="seciliEksik" class="mini-input" min="0" step="0.5" value="0" oninput="seciliGunGuncelle()"></label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TUR_SIRASI = ["gunduz", "vardiya", "gece", "tatil", "izin"];
+        const TUR_BILGI = {
+            gunduz: { etiket: "Gündüz", sinif: "pill-gunduz", saat: 7.5, gece: 0 },
+            vardiya: { etiket: "Vardiya", sinif: "pill-vardiya", saat: 7.5, gece: 4 },
+            gece: { etiket: "Gece", sinif: "pill-gece", saat: 7.5, gece: 6 },
+            tatil: { etiket: "H.Tatili", sinif: "pill-tatil", saat: 0, gece: 0 },
+            izin: { etiket: "İzin", sinif: "pill-izin", saat: 7.5, gece: 0 }
+        };
+
+        const kayitlar = {};
+        let seciliGunNo = 1;
+
+        function donemAnahtari() {
+            const yil = document.getElementById("yilSec").value;
+            const ay = document.getElementById("aySec").value;
+            return `${yil}-${ay}`;
+        }
+
+        function donemVerisiniGetir(yil, ay) {
+            const key = `${yil}-${ay}`;
+            if (kayitlar[key]) return kayitlar[key];
+
+            const gunSayisi = new Date(yil, ay + 1, 0).getDate();
+            const map = {};
+
+            for (let g = 1; g <= gunSayisi; g++) {
+                const tarih = new Date(yil, ay, g);
+                const hGun = tarih.getDay(); // 0: Paz, 1: Pzt ... 6: Cmt
+                let tur = "gunduz";
+                let mesai = 0;
+
+                if (yil === 2026 && ay === 10 && g <= 28) {
+                    const ornekDesen = {
+                        1: "gunduz", 2: "gunduz", 3: "gece", 4: "vardiya", 5: "gunduz",
+                        6: "tatil", 7: "tatil", 8: "gece", 9: "vardiya", 10: "gunduz",
+                        11: "gunduz", 12: "gece", 13: "tatil", 14: "tatil", 15: "vardiya",
+                        16: "gunduz", 17: "gunduz", 18: "gece", 19: "vardiya", 20: "tatil",
+                        21: "tatil"
+                    };
+                    if (ornekDesen[g]) {
+                        tur = ornekDesen[g];
+                    } else {
+                        tur = null;
+                    }
+                    if ([3, 8, 12, 18].includes(g)) mesai = 6;
+                } else if (hGun === 0 || hGun === 6) {
+                    tur = "tatil";
+                }
+
+                map[g] = { tur, mesai, eksik: 0 };
+            }
+
+            kayitlar[key] = map;
+            return map;
+        }
+
+        function haftaTatiliEsitle() {
+            const yil = parseInt(document.getElementById("yilSec").value, 10);
+            const ay = parseInt(document.getElementById("aySec").value, 10);
+            const gunSayisi = new Date(yil, ay + 1, 0).getDate();
+            const map = donemVerisiniGetir(yil, ay);
+
+            for (let g = 1; g <= gunSayisi; g++) {
+                const hGun = new Date(yil, ay, g).getDay();
+                map[g] = {
+                    tur: (hGun === 0 || hGun === 6) ? "tatil" : "gunduz",
+                    mesai: 0,
+                    eksik: 0
+                };
+            }
+            takvimiCiz();
+        }
+
+        function gunTiklandi(gun) {
+            const yil = parseInt(document.getElementById("yilSec").value, 10);
+            const ay = parseInt(document.getElementById("aySec").value, 10);
+            const map = donemVerisiniGetir(yil, ay);
+            const mevcut = map[gun] || { tur: null, mesai: 0, eksik: 0 };
+
+            if (seciliGunNo === gun) {
+                const idx = mevcut.tur ? TUR_SIRASI.indexOf(mevcut.tur) : -1;
+                const sonrakiTur = TUR_SIRASI[(idx + 1) % TUR_SIRASI.length];
+                mevcut.tur = sonrakiTur;
+            } else {
+                seciliGunNo = gun;
+                if (!mevcut.tur) mevcut.tur = "gunduz";
+            }
+
+            map[gun] = mevcut;
+            takvimiCiz();
+        }
+
+        function seciliGunGuncelle() {
+            const yil = parseInt(document.getElementById("yilSec").value, 10);
+            const ay = parseInt(document.getElementById("aySec").value, 10);
+            const map = donemVerisiniGetir(yil, ay);
+            const tur = document.getElementById("seciliTur").value;
+            const mesai = Math.max(0, parseFloat(document.getElementById("seciliMesai").value) || 0);
+            const eksik = Math.max(0, parseFloat(document.getElementById("seciliEksik").value) || 0);
+
+            map[seciliGunNo] = { tur, mesai, eksik };
+            takvimiCiz();
+        }
+
+        function editorSenkronizeEt(map, gunSayisi) {
+            if (seciliGunNo > gunSayisi) seciliGunNo = 1;
+            const ayAd = document.getElementById("aySec").selectedOptions[0].text;
+            const yil = document.getElementById("yilSec").value;
+            const veri = map[seciliGunNo] || { tur: "gunduz", mesai: 0, eksik: 0 };
+
+            document.getElementById("seciliGunBilgi").textContent =
+                `Seçili Gün: ${seciliGunNo} ${ayAd} ${yil} (Aynı güne tekrar basınca vardiya değişir)`;
+            document.getElementById("seciliTur").value = veri.tur || "gunduz";
+            document.getElementById("seciliMesai").value = veri.mesai || 0;
+            document.getElementById("seciliEksik").value = veri.eksik || 0;
+        }
+
+        function takvimiCiz() {
+            const yil = parseInt(document.getElementById("yilSec").value, 10);
+            const ay = parseInt(document.getElementById("aySec").value, 10);
+            const izgara = document.getElementById("takvimIzgara");
+            const gunSayisi = new Date(yil, ay + 1, 0).getDate();
+            const ilkGunPztIdx = (new Date(yil, ay, 1).getDay() + 6) % 7; // Pzt=0 ... Paz=6
+            const map = donemVerisiniGetir(yil, ay);
+
+            izgara.innerHTML = "";
+            ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"].forEach(ad => {
+                const hdr = document.createElement("div");
+                hdr.className = "weekday-hdr";
+                hdr.textContent = ad;
+                izgara.appendChild(hdr);
+            });
+
+            for (let i = 0; i < ilkGunPztIdx; i++) {
+                const bos = document.createElement("div");
+                bos.className = "day-cell empty";
+                izgara.appendChild(bos);
+            }
+
+            let toplamGece = 0;
+            let toplamMesai = 0;
+            let toplamCalisma = 0;
+
+            for (let g = 1; g <= gunSayisi; g++) {
+                const d = map[g] || { tur: null, mesai: 0, eksik: 0 };
+                const cell = document.createElement("div");
+                cell.className = "day-cell" + (d.tur ? " has-shift" : "") + (g === seciliGunNo ? " selected" : "");
+                cell.onclick = () => gunTiklandi(g);
+
+                const numEl = document.createElement("div");
+                numEl.className = "day-number";
+                numEl.textContent = g;
+                cell.appendChild(numEl);
+
+                if (d.tur && TUR_BILGI[d.tur]) {
+                    const info = TUR_BILGI[d.tur];
+                    const pill = document.createElement("div");
+                    pill.className = `shift-pill ${info.sinif}`;
+                    pill.textContent = info.etiket;
+                    cell.appendChild(pill);
+
+                    const gunCalisma = Math.max(0, info.saat - (d.eksik || 0));
+                    toplamCalisma += gunCalisma + (d.mesai || 0);
+                    toplamGece += info.gece;
+                    toplamMesai += (d.mesai || 0);
+                } else if ((d.mesai || 0) > 0) {
+                    toplamMesai += d.mesai;
+                    toplamCalisma += d.mesai;
+                }
+
+                izgara.appendChild(cell);
+            }
+
+            document.getElementById("ozetGece").textContent = `${toplamGece} Saat`;
+            document.getElementById("ozetMesai").textContent = `${toplamMesai} Saat`;
+            document.getElementById("ozetToplam").textContent = `${toplamCalisma} Saat`;
+
+            editorSenkronizeEt(map, gunSayisi);
+        }
+
+        takvimiCiz();
+    </script>
+</body>
+</html>
