@@ -1804,8 +1804,8 @@
                 <div class="shift-days-list" id="vGunlerListesi"></div>
 
                 <button type="button" id="vKaydetBtn" class="primary-action-btn" onclick="vardiyaAyVerisiniKaydet()">Çizelgeyi Kaydet</button>
-                <button type="button" class="excel-action-btn" onclick="vardiyaExceleAktar()">Çizelgeyi Excel'e Aktar</button>
-                <button type="button" class="secondary-action-btn" style="width:100%; margin-top:8px; padding:9px 12px;" onclick="vardiyaMaasAktar()">Maaş Hesaplamaya Aktar</button>
+                <button type="button" id="vExcelBtn" class="excel-action-btn" onclick="vardiyaExceleAktar()">Çizelgeyi Excel'e Aktar</button>
+                <button type="button" id="vMaasAktarBtn" class="secondary-action-btn" style="width:100%; margin-top:8px; padding:9px 12px;" onclick="vardiyaMaasAktar()">Maaş Hesaplamaya Aktar</button>
             </div>
 
             <!-- HESABIM EKRANI -->
@@ -2104,6 +2104,14 @@
         import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword, deleteUser, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
+        window.addEventListener("error", (event) => {
+            console.error("Global Hata:", event.message, event.filename, event.lineno);
+        });
+
+        window.addEventListener("unhandledrejection", (event) => {
+            console.error("Yakalanmayan Promise Hatası:", event.reason);
+        });
+
         const firebaseConfig = {
             apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
             authDomain: "bordroapp.firebaseapp.com",
@@ -2179,6 +2187,15 @@
         let globalIkinci6AyOran = 0;
         let aktifVardiyaKullanici = null;
         let adminGirisYapildiMi = localStorage.getItem(ADMIN_OTURUM_KEY) === "1" || sessionStorage.getItem(ADMIN_OTURUM_KEY) === "1";
+
+        function butonKilidiniAc(btn) {
+            if (!btn) return;
+            btn.disabled = false;
+            btn.classList.remove("disabled", "loading", "active");
+            btn.style.pointerEvents = "auto";
+            btn.style.opacity = "";
+            btn.blur();
+        }
 
         function yilSecenekleriniDoldur() {
             const sel = document.getElementById("vYil");
@@ -2913,7 +2930,7 @@
                 console.error("Şifre değiştirme hatası:", err);
                 alert("Şifre güncellenemedi. Güvenlik gereği yeniden giriş yapmanız gerekebilir: " + err.message);
             } finally {
-                btn.disabled = false;
+                butonKilidiniAc(btn);
             }
         });
 
@@ -2967,7 +2984,7 @@
                 durumEl.style.color = "var(--danger)";
                 durumEl.innerText = "Bağlantı gönderilemedi: " + (err.message || err.code);
             } finally {
-                btn.disabled = false;
+                butonKilidiniAc(btn);
             }
         };
 
@@ -3100,7 +3117,7 @@
                     alert("E-posta veya parola hatalı!");
                 }
             } finally {
-                btn.disabled = false;
+                butonKilidiniAc(btn);
             }
         });
 
@@ -3138,7 +3155,7 @@
                     alert("Üyelik oluşturulamadı: " + err.message);
                 }
             } finally {
-                btn.disabled = false;
+                butonKilidiniAc(btn);
             }
         });
 
@@ -3216,15 +3233,17 @@
                 document.getElementById("vardiyaGirisKart").style.display = "block";
                 alert("Hesabınız ve vardiya kayıtlarınız silindi.");
             } finally {
-                evetBtn.disabled = false;
+                butonKilidiniAc(evetBtn);
             }
         };
 
         // --- VARDİYA VERİ YÖNETİMİ (KAYIT + YÜKLEME + ÖZET + EXCEL) ---
         function vardiyaBelgeIdAdaylariAl() {
-            const yil = String(document.getElementById("vYil").value);
-            const ay = String(document.getElementById("vAy").value).padStart(2, "0");
-            const ayHam = String(document.getElementById("vAy").value);
+            const yilEl = document.getElementById("vYil");
+            const ayEl = document.getElementById("vAy");
+            const yil = String((yilEl && yilEl.value) || new Date().getFullYear());
+            const ayHam = String((ayEl && ayEl.value) || (new Date().getMonth() + 1));
+            const ay = ayHam.padStart(2, "0");
             const adaylar = [];
 
             if (aktifVardiyaKullanici && aktifVardiyaKullanici.uid) {
@@ -3496,10 +3515,15 @@
         };
 
         function mevcutCizelgeVerisiniTopla() {
-            const yil = parseInt(document.getElementById("vYil").value, 10);
-            const ay = parseInt(document.getElementById("vAy").value, 10);
-            const haftaTatili = parseInt(document.getElementById("vHaftaTatili").value, 10);
-            const saatUcreti = parseFloat(document.getElementById("vSaatUcreti").value) || 0;
+            const yilEl = document.getElementById("vYil");
+            const ayEl = document.getElementById("vAy");
+            const tatilEl = document.getElementById("vHaftaTatili");
+            const suEl = document.getElementById("vSaatUcreti");
+
+            const yil = parseInt((yilEl && yilEl.value) || new Date().getFullYear(), 10);
+            const ay = parseInt((ayEl && ayEl.value) || (new Date().getMonth() + 1), 10);
+            const haftaTatili = parseInt((tatilEl && tatilEl.value) || 6, 10);
+            const saatUcreti = parseFloat(suEl && suEl.value) || 0;
             const gunSayisi = new Date(yil, ay, 0).getDate();
             const gunAdlari = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
             const secimAdlari = { v1: "1.Vardiya", v2: "2.Vardiya", v3: "3.Vardiya", izin: "İzin", tatil: "H.tatili" };
@@ -3572,27 +3596,27 @@
             if (btn) btn.disabled = true;
             if (durumEl) durumEl.innerText = "Kaydediliyor...";
 
-            const topla = mevcutCizelgeVerisiniTopla();
-            const ayEtiket = `${topla.yil}-${String(topla.ay).padStart(2, "0")}`;
-            const adayIdler = vardiyaBelgeIdAdaylariAl();
-            const anaBelgeId = adayIdler[0] || `${encodeURIComponent(aktifVardiyaKullanici.email || "user")}_${topla.yil}_${String(topla.ay).padStart(2, "0")}`;
-
-            const kayitObj = {
-                uid: aktifVardiyaKullanici.uid || aktifVardiyaKullanici.email,
-                email: aktifVardiyaKullanici.email || "",
-                adSoyad: aktifVardiyaKullanici.adSoyad || "",
-                yil: topla.yil,
-                ay: topla.ay,
-                haftaTatili: topla.haftaTatili,
-                saatUcreti: topla.saatUcreti,
-                gunler: topla.gunler,
-                guncellemeTarihi: new Date().toISOString()
-            };
-
-            yerelVardiyaYaz(anaBelgeId, kayitObj);
-            vardiyaOzetiHesapla();
-
             try {
+                const topla = mevcutCizelgeVerisiniTopla();
+                const ayEtiket = `${topla.yil}-${String(topla.ay).padStart(2, "0")}`;
+                const adayIdler = vardiyaBelgeIdAdaylariAl();
+                const anaBelgeId = adayIdler[0] || `${encodeURIComponent(aktifVardiyaKullanici.email || "user")}_${topla.yil}_${String(topla.ay).padStart(2, "0")}`;
+
+                const kayitObj = {
+                    uid: aktifVardiyaKullanici.uid || aktifVardiyaKullanici.email,
+                    email: aktifVardiyaKullanici.email || "",
+                    adSoyad: aktifVardiyaKullanici.adSoyad || "",
+                    yil: topla.yil,
+                    ay: topla.ay,
+                    haftaTatili: topla.haftaTatili,
+                    saatUcreti: topla.saatUcreti,
+                    gunler: topla.gunler,
+                    guncellemeTarihi: new Date().toISOString()
+                };
+
+                yerelVardiyaYaz(anaBelgeId, kayitObj);
+                vardiyaOzetiHesapla();
+
                 const yazmaPromise = setDoc(doc(db, "vardiya_kayitlari", anaBelgeId), kayitObj, { merge: true });
                 const zamanAsimiPromise = new Promise((_, reject) =>
                     setTimeout(() => reject(new Error("Bağlantı zaman aşımına uğradı.")), 10000)
@@ -3603,10 +3627,10 @@
                 alert("Vardiya çizelgesi kaydedildi.");
             } catch (err) {
                 console.error("Vardiya kayıt hatası:", err);
-                if (durumEl) durumEl.innerText = `${ayEtiket} cihazda`;
-                alert("Bulut kaydı tamamlanamadı, veriler cihazınıza kaydedildi: " + (err.message || err.code || "Bilinmeyen hata"));
+                if (durumEl) durumEl.innerText = "Cihazda kaydedildi";
+                alert("Bulut kaydı tamamlanamadı, veriler cihazınıza kaydedildi: " + (err && (err.message || err.code) ? (err.message || err.code) : "Bilinmeyen hata"));
             } finally {
-                if (btn) btn.disabled = false;
+                butonKilidiniAc(btn);
             }
         };
 
@@ -3615,79 +3639,80 @@
                 alert("Önce giriş yapmalısınız.");
                 return;
             }
-            const adayIdler = vardiyaBelgeIdAdaylariAl();
-            const yerelKayit = yerelVardiyaBelgeOku(adayIdler);
-            const mevcutTopla = mevcutCizelgeVerisiniTopla();
-
-            const kaynakGunler = yerelKayit ? belgeGunMapCikar(yerelKayit) : null;
-            const yil = (yerelKayit && yerelKayit.yil) || mevcutTopla.yil;
-            const ay = (yerelKayit && yerelKayit.ay) || mevcutTopla.ay;
-            const saatUcreti = (yerelKayit && yerelKayit.saatUcreti !== undefined) ? yerelKayit.saatUcreti : mevcutTopla.saatUcreti;
-            const gunSayisi = new Date(yil, ay, 0).getDate();
-            const gunAdlari = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
-            const secimAdlari = { v1: "1.Vardiya", v2: "2.Vardiya", v3: "3.Vardiya", izin: "İzin", tatil: "H.tatili" };
-
-            let satirHtml = "";
-            let topGece = 0;
-            let topMesai = 0;
-            let topCalisma = 0;
-
-            for (let g = 1; g <= gunSayisi; g++) {
-                const d = (kaynakGunler && (kaynakGunler[g] || kaynakGunler[String(g)])) || mevcutTopla.gunler[g] || {};
-                const secim = d.secim || "v1";
-                const fMesai = parseFloat(d.mesai) || 0;
-                const eksik = parseFloat(d.eksik) || 0;
-                const saatler = gunSaatleriniHesapla(secim, fMesai, eksik);
-                topGece += saatler.gece;
-                topMesai += saatler.mesai;
-                topCalisma += saatler.calisma;
-
-                const tarih = new Date(yil, ay - 1, g);
-                const tarihStr = `${String(g).padStart(2, "0")}.${String(ay).padStart(2, "0")}.${yil}`;
-
-                satirHtml += `
-                    <tr>
-                        <td>${g}.gün</td>
-                        <td>${tarihStr}</td>
-                        <td>${gunAdlari[tarih.getDay()]}</td>
-                        <td>${secimAdlari[secim] || secim}</td>
-                        <td>${saatler.calisma}</td>
-                        <td>${saatler.gece}</td>
-                        <td>${saatler.mesai}</td>
-                        <td>${saatler.eksik}</td>
-                    </tr>
-                `;
-            }
-
-            const excelIcerik = `
-                <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-                <head><meta charset="UTF-8"></head>
-                <body>
-                    <table border="1">
-                        <tr><th colspan="8">Kişisel Vardiya Çizelgesi (${yil}-${String(ay).padStart(2, "0")})</th></tr>
-                        <tr>
-                            <td colspan="2"><strong>Ad Soyad:</strong> ${aktifVardiyaKullanici.adSoyad || "-"}</td>
-                            <td colspan="3"><strong>E-posta:</strong> ${aktifVardiyaKullanici.email || "-"}</td>
-                            <td colspan="3"><strong>Saat Ücreti:</strong> ${saatUcreti || 0} TL</td>
-                        </tr>
-                        <tr>
-                            <th>Gün</th><th>Tarih</th><th>Haftanın Günü</th><th>Vardiya / Durum</th>
-                            <th>Çalışma (Sa)</th><th>Gece (Sa)</th><th>F.Mesai (Sa)</th><th>Eksik (Sa)</th>
-                        </tr>
-                        ${satirHtml}
-                        <tr>
-                            <td colspan="4"><strong>TOPLAM</strong></td>
-                            <td><strong>${topCalisma}</strong></td>
-                            <td><strong>${topGece}</strong></td>
-                            <td><strong>${topMesai}</strong></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </body>
-                </html>
-            `;
-
+            const excelBtn = document.getElementById("vExcelBtn");
             try {
+                const adayIdler = vardiyaBelgeIdAdaylariAl();
+                const yerelKayit = yerelVardiyaBelgeOku(adayIdler);
+                const mevcutTopla = mevcutCizelgeVerisiniTopla();
+
+                const kaynakGunler = yerelKayit ? belgeGunMapCikar(yerelKayit) : null;
+                const yil = (yerelKayit && yerelKayit.yil) || mevcutTopla.yil;
+                const ay = (yerelKayit && yerelKayit.ay) || mevcutTopla.ay;
+                const saatUcreti = (yerelKayit && yerelKayit.saatUcreti !== undefined) ? yerelKayit.saatUcreti : mevcutTopla.saatUcreti;
+                const gunSayisi = new Date(yil, ay, 0).getDate();
+                const gunAdlari = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+                const secimAdlari = { v1: "1.Vardiya", v2: "2.Vardiya", v3: "3.Vardiya", izin: "İzin", tatil: "H.tatili" };
+
+                let satirHtml = "";
+                let topGece = 0;
+                let topMesai = 0;
+                let topCalisma = 0;
+
+                for (let g = 1; g <= gunSayisi; g++) {
+                    const d = (kaynakGunler && (kaynakGunler[g] || kaynakGunler[String(g)])) || mevcutTopla.gunler[g] || {};
+                    const secim = d.secim || "v1";
+                    const fMesai = parseFloat(d.mesai) || 0;
+                    const eksik = parseFloat(d.eksik) || 0;
+                    const saatler = gunSaatleriniHesapla(secim, fMesai, eksik);
+                    topGece += saatler.gece;
+                    topMesai += saatler.mesai;
+                    topCalisma += saatler.calisma;
+
+                    const tarih = new Date(yil, ay - 1, g);
+                    const tarihStr = `${String(g).padStart(2, "0")}.${String(ay).padStart(2, "0")}.${yil}`;
+
+                    satirHtml += `
+                        <tr>
+                            <td>${g}.gün</td>
+                            <td>${tarihStr}</td>
+                            <td>${gunAdlari[tarih.getDay()]}</td>
+                            <td>${secimAdlari[secim] || secim}</td>
+                            <td>${saatler.calisma}</td>
+                            <td>${saatler.gece}</td>
+                            <td>${saatler.mesai}</td>
+                            <td>${saatler.eksik}</td>
+                        </tr>
+                    `;
+                }
+
+                const excelIcerik = `
+                    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+                    <head><meta charset="UTF-8"></head>
+                    <body>
+                        <table border="1">
+                            <tr><th colspan="8">Kişisel Vardiya Çizelgesi (${yil}-${String(ay).padStart(2, "0")})</th></tr>
+                            <tr>
+                                <td colspan="2"><strong>Ad Soyad:</strong> ${aktifVardiyaKullanici.adSoyad || "-"}</td>
+                                <td colspan="3"><strong>E-posta:</strong> ${aktifVardiyaKullanici.email || "-"}</td>
+                                <td colspan="3"><strong>Saat Ücreti:</strong> ${saatUcreti || 0} TL</td>
+                            </tr>
+                            <tr>
+                                <th>Gün</th><th>Tarih</th><th>Haftanın Günü</th><th>Vardiya / Durum</th>
+                                <th>Çalışma (Sa)</th><th>Gece (Sa)</th><th>F.Mesai (Sa)</th><th>Eksik (Sa)</th>
+                            </tr>
+                            ${satirHtml}
+                            <tr>
+                                <td colspan="4"><strong>TOPLAM</strong></td>
+                                <td><strong>${topCalisma}</strong></td>
+                                <td><strong>${topGece}</strong></td>
+                                <td><strong>${topMesai}</strong></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </body>
+                    </html>
+                `;
+
                 const blob = new Blob(["\ufeff" + excelIcerik], { type: "application/vnd.ms-excel;charset=utf-8;" });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
@@ -3697,42 +3722,52 @@
                 document.body.appendChild(a);
                 a.click();
                 setTimeout(() => {
-                    document.body.removeChild(a);
+                    if (a.parentNode) a.parentNode.removeChild(a);
                     URL.revokeObjectURL(url);
-                }, 1000);
+                }, 1500);
             } catch (err) {
                 console.error("Excel aktarım hatası:", err);
                 alert("Excel dosyası oluşturulamadı: " + err.message);
+            } finally {
+                butonKilidiniAc(excelBtn);
             }
         };
 
         window.vardiyaMaasAktar = function() {
-            const topla = mevcutCizelgeVerisiniTopla();
-            const ayEl = document.getElementById("month");
-            const suEl = document.getElementById("saat-ucreti");
-            const csEl = document.getElementById("calisma-gun-saati");
-            const gzEl = document.getElementById("gece-zammi");
-            const fmEl = document.getElementById("fm-100");
+            const maasAktarBtn = document.getElementById("vMaasAktarBtn");
+            try {
+                const topla = mevcutCizelgeVerisiniTopla();
+                const ayEl = document.getElementById("month");
+                const suEl = document.getElementById("saat-ucreti");
+                const csEl = document.getElementById("calisma-gun-saati");
+                const gzEl = document.getElementById("gece-zammi");
+                const fmEl = document.getElementById("fm-100");
 
-            if (ayEl) ayEl.value = String(topla.ay);
-            if (suEl && topla.saatUcreti > 0) suEl.value = topla.saatUcreti;
-            if (csEl) csEl.value = topla.toplamCalisma;
-            if (gzEl) gzEl.value = topla.toplamGece;
-            if (fmEl) fmEl.value = topla.toplamMesai;
+                if (ayEl) ayEl.value = String(topla.ay);
+                if (suEl && topla.saatUcreti > 0) suEl.value = topla.saatUcreti;
+                if (csEl) csEl.value = topla.toplamCalisma;
+                if (gzEl) gzEl.value = topla.toplamGece;
+                if (fmEl) fmEl.value = topla.toplamMesai;
 
-            if (typeof window.hesapla === "function") {
-                window.hesapla();
+                if (typeof window.hesapla === "function") {
+                    window.hesapla();
+                }
+
+                document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+                const calcView = document.getElementById("view-calc");
+                if (calcView) calcView.classList.add("active");
+
+                document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+                const maasBtn = document.querySelector('.nav-btn[data-target="view-calc"]');
+                if (maasBtn) maasBtn.classList.add("active");
+
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            } catch (err) {
+                console.error("Maaş aktarım hatası:", err);
+                alert("Maaş ekranına aktarım yapılamadı: " + err.message);
+            } finally {
+                butonKilidiniAc(maasAktarBtn);
             }
-
-            document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-            const calcView = document.getElementById("view-calc");
-            if (calcView) calcView.classList.add("active");
-
-            document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-            const maasBtn = document.querySelector('.nav-btn[data-target="view-calc"]');
-            if (maasBtn) maasBtn.classList.add("active");
-
-            window.scrollTo({ top: 0, behavior: "smooth" });
         };
 
         // --- YÖNETİM PANELİ GİRİŞ KONTROLÜ ---
@@ -3822,7 +3857,7 @@
                 yetkiliMi = true;
             }
 
-            btn.disabled = false;
+            butonKilidiniAc(btn);
 
             if (yetkiliMi) {
                 adminGirisYapildiMi = true;
