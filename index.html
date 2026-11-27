@@ -1573,7 +1573,6 @@
             line-height: 1;
         }
 
-        /* POP-UP YAZDIRMA / PDF ÇIKTISI */
         @media print {
             body {
                 background: #ffffff !important;
@@ -1809,7 +1808,7 @@
                     <div class="net-val" id="net-maas">0,00 TL</div>
                 </div>
 
-                <button type="button" id="maasYazdirBtn" class="print-action-btn" onclick="bordroPopupAc()">🖨 Yazdır</button>
+                <button type="button" id="maasYazdirBtn" class="print-action-btn" onclick="bordroPopupAc()">👁️ Görüntüle ve Yazdır</button>
             </div>
         </section>
 
@@ -2506,7 +2505,7 @@
                 <p>BordroApp kişisel vardiya çizelgesine hoş geldiniz. Kayıtlarınız hesabınızla senkronize edilir.</p>
                 <ul>
                     <li><strong>1. Yıl, Ay, Hafta Tatili ve Saat Ücreti:</strong> Üst kısımdan <em>Yıl</em>, <em>Ay Seçin (12 Ay)</em>, <em>Hafta Tatili</em> ve <em>Saat Ücreti</em> alanlarını ayarlayın.</li>
-                    <li><strong>2. Gece Çalışması Kuralları:</strong> <em>2.Vardiya</em> 4 saat, <em>3.Vardiya</em> 6 saat gece çalışması sayılır; <em>3.Vardiya</em> gününe girilen fazla mesaide 1 saate +1, 2 saate +2, 3 saate +3, 4 saat ve üzerine +4 saat gece vardiyası eklenir.</li>
+                    <li><strong>2. Gece Çalışması ve Tatil/İzin Kuralları:</strong> Hafta tatilleri kırmızı işaretlenir ve 7.5 saat çalışılmış sayılır; hafta tatilinde fazla mesai 15 saat, eksik saat 2 katı sayılır. İzinli günler sarı görünür ve 7.5 saat sayılır. <em>2.Vardiya</em> 4 saat, <em>3.Vardiya</em> 6 saat gece çalışması sayılır; <em>3.Vardiya</em> gününe girilen fazla mesaide 1 saate +1, 2 saate +2, 3 saate +3, 4 saat ve üzerine +4 saat gece vardiyası eklenir.</li>
                     <li><strong>3. Kayıt, Excel ve Hesabım:</strong> <strong>Çizelgeyi Kaydet</strong>, <strong>Çizelgeyi Excel'e Aktar</strong> ve <strong>Maaş Hesaplamaya Aktar</strong> butonlarını kullanabilir; <strong>Hesabım</strong> alanından şifre değiştirip hesap silebilirsiniz.</li>
                 </ul>
             </div>
@@ -2740,12 +2739,16 @@
             }
             document.getElementById("month").value = String(ay);
             document.getElementById("vAy").value = String(ay);
+            const csInp = document.getElementById("calisma-gun-saati");
+            if (csInp && ayVerileri[ay]) {
+                csInp.value = ayVerileri[ay].gun * 7.5;
+            }
         }
 
         window.ayAyariYap = function() {
             const ay = document.getElementById("month").value;
             const csInp = document.getElementById("calisma-gun-saati");
-            if (csInp.value !== "") {
+            if (csInp && ayVerileri[ay]) {
                 csInp.value = ayVerileri[ay].gun * 7.5;
             }
             hesapla();
@@ -2811,7 +2814,6 @@
             document.getElementById("net-ikramiye").innerText = f2(ikramiyeNet);
             document.getElementById("net-maas").innerText = f2(net) + " TL";
 
-            // Pop-up bordro pusulası alanlarını güncelle (isim, şahıs, bölüm, şirket bilgisi içermez)
             const ayAd = (ayVerileri[ay] && ayVerileri[ay].ad) || ay;
             const yilVal = (document.getElementById("vYil") && document.getElementById("vYil").value) || new Date().getFullYear();
 
@@ -3306,7 +3308,6 @@
             document.getElementById("enfSonucModal").classList.add("open");
         });
 
-        // --- AYDINLATMA (SADECE ÜYE OL) & KULLANIM BİLGİLENDİRME ---
         window.aydinlatmaModalAc = function() {
             document.getElementById("aydinlatmaModal").classList.add("open");
         };
@@ -3328,7 +3329,7 @@
             document.getElementById("bilgilendirmeModal").classList.remove("open");
         };
 
-        // --- VARDİYA ÇİZELGESİ & GECE KURALLARI ---
+        // --- VARDİYA ÇİZELGESİ & GECE / TATİL / İZİN KURALLARI ---
         function mesaiGeceKatkisiHesapla(mesaiSaati) {
             if (mesaiSaati >= 4) return 4;
             if (mesaiSaati >= 3) return 3;
@@ -3337,16 +3338,41 @@
             return 0;
         }
 
-        function gunSaatleriniHesapla(secim, fMesai, eksikSaat) {
-            const isCalisma = (secim === "v1" || secim === "v2" || secim === "v3");
-            const calisma = isCalisma ? Math.max(0, 7.5 - eksikSaat) : 0;
+        function gunSaatleriniHesapla(secim, fMesai, eksikSaat, haftaTatiliMi = false) {
+            let calisma = 0;
             let gece = 0;
+            let efektliMesai = fMesai;
+
+            if (secim === "tatil") {
+                calisma = 7.5;
+            } else if (secim === "izin") {
+                calisma = 7.5;
+            } else {
+                calisma = Math.max(0, 7.5 - eksikSaat);
+            }
+
+            if (haftaTatiliMi) {
+                if (fMesai > 0) {
+                    efektliMesai = fMesai * 15;
+                }
+                if (eksikSaat > 0) {
+                    calisma = Math.max(0, calisma - (eksikSaat * 2));
+                }
+            }
+
             if (secim === "v2") {
                 gece = 4;
             } else if (secim === "v3") {
                 gece = 6 + mesaiGeceKatkisiHesapla(fMesai);
             }
-            return { calisma, gece, mesai: fMesai, eksik: eksikSaat };
+
+            return {
+                calisma,
+                gece,
+                mesai: efektliMesai,
+                hamMesai: fMesai,
+                eksik: eksikSaat
+            };
         }
 
         function gunKartRenkleriniGuncelle(gun) {
@@ -3766,7 +3792,6 @@
             }
         };
 
-        // --- VARDİYA VERİ YÖNETİMİ (KAYIT + YÜKLEME + ÖZET + EXCEL) ---
         function vardiyaBelgeIdAdaylariAl() {
             const yilEl = document.getElementById("vYil");
             const ayEl = document.getElementById("vAy");
@@ -3933,12 +3958,14 @@
             const yil = parseInt(document.getElementById("vYil").value, 10);
             const ay = parseInt(document.getElementById("vAy").value, 10);
             const gunSayisi = new Date(yil, ay, 0).getDate();
+            const tatilIdx = parseInt(document.getElementById("vHaftaTatili").value, 10);
 
             let toplamGece = 0;
             let toplamMesai = 0;
             let toplamCalisma = 0;
 
             for (let g = 1; g <= gunSayisi; g++) {
+                const gunIdx = new Date(yil, ay - 1, g).getDay();
                 const secili = document.querySelector(`input[name="v_secim_${g}"]:checked`);
                 const secim = secili ? secili.value : "v1";
                 const mesaiInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="mesai"]`);
@@ -3946,8 +3973,9 @@
 
                 const mesaiVal = parseFloat(mesaiInp && mesaiInp.value) || 0;
                 const eksikVal = parseFloat(eksikInp && eksikInp.value) || 0;
+                const haftaTatiliMi = (secim === "tatil" || gunIdx === tatilIdx);
 
-                const saatler = gunSaatleriniHesapla(secim, mesaiVal, eksikVal);
+                const saatler = gunSaatleriniHesapla(secim, mesaiVal, eksikVal, haftaTatiliMi);
                 toplamCalisma += saatler.calisma;
                 toplamGece += saatler.gece;
                 toplamMesai += saatler.mesai;
@@ -4065,7 +4093,8 @@
 
             for (let g = 1; g <= gunSayisi; g++) {
                 const tarih = new Date(yil, ay - 1, g);
-                const gunAdi = gunAdlari[tarih.getDay()];
+                const gunIdx = tarih.getDay();
+                const gunAdi = gunAdlari[gunIdx];
                 const tarihKisa = `${String(g).padStart(2, "0")}.${String(ay).padStart(2, "0")}.${yil}`;
 
                 const secili = document.querySelector(`input[name="v_secim_${g}"]:checked`);
@@ -4074,8 +4103,9 @@
                 const eksikInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="eksik"]`);
                 const mesaiVal = parseFloat(mesaiInp && mesaiInp.value) || 0;
                 const eksikVal = parseFloat(eksikInp && eksikInp.value) || 0;
+                const haftaTatiliMi = (secim === "tatil" || gunIdx === haftaTatili);
 
-                const saatler = gunSaatleriniHesapla(secim, mesaiVal, eksikVal);
+                const saatler = gunSaatleriniHesapla(secim, mesaiVal, eksikVal, haftaTatiliMi);
                 toplamCalisma += saatler.calisma;
                 toplamGece += saatler.gece;
                 toplamMesai += saatler.mesai;
@@ -4094,6 +4124,7 @@
                     gun: `${g}.gün`,
                     tarih: tarihKisa,
                     gunAdi,
+                    secim,
                     durum: secimAdlari[secim] || secim,
                     calisma: saatler.calisma,
                     gece: saatler.gece,
@@ -4177,6 +4208,7 @@
                 const kaynakGunler = yerelKayit ? belgeGunMapCikar(yerelKayit) : null;
                 const yil = (yerelKayit && yerelKayit.yil) || mevcutTopla.yil;
                 const ay = (yerelKayit && yerelKayit.ay) || mevcutTopla.ay;
+                const tatilIdx = (yerelKayit && yerelKayit.haftaTatili !== undefined) ? parseInt(yerelKayit.haftaTatili, 10) : mevcutTopla.haftaTatili;
                 const saatUcreti = (yerelKayit && yerelKayit.saatUcreti !== undefined) ? yerelKayit.saatUcreti : mevcutTopla.saatUcreti;
                 const gunSayisi = new Date(yil, ay, 0).getDate();
                 const gunAdlari = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
@@ -4186,56 +4218,100 @@
                 let topGece = 0;
                 let topMesai = 0;
                 let topCalisma = 0;
+                let topEksik = 0;
 
                 for (let g = 1; g <= gunSayisi; g++) {
                     const d = (kaynakGunler && (kaynakGunler[g] || kaynakGunler[String(g)])) || mevcutTopla.gunler[g] || {};
                     const secim = d.secim || "v1";
                     const fMesai = parseFloat(d.mesai) || 0;
                     const eksik = parseFloat(d.eksik) || 0;
-                    const saatler = gunSaatleriniHesapla(secim, fMesai, eksik);
+                    const tarih = new Date(yil, ay - 1, g);
+                    const gunIdx = tarih.getDay();
+                    const haftaTatiliMi = (secim === "tatil" || gunIdx === tatilIdx);
+
+                    const saatler = gunSaatleriniHesapla(secim, fMesai, eksik, haftaTatiliMi);
                     topGece += saatler.gece;
                     topMesai += saatler.mesai;
                     topCalisma += saatler.calisma;
+                    topEksik += saatler.eksik;
 
-                    const tarih = new Date(yil, ay - 1, g);
                     const tarihStr = `${String(g).padStart(2, "0")}.${String(ay).padStart(2, "0")}.${yil}`;
+                    const durumEtiketi = haftaTatiliMi && secim === "tatil" ? "H.tatili" : (secimAdlari[secim] || secim);
+
+                    let satirStil = 'background-color:#ffffff; color:#0f172a;';
+                    if (secim === "tatil" || haftaTatiliMi) {
+                        satirStil = 'background-color:#fecdd3; color:#881337; font-weight:bold;';
+                    } else if (secim === "izin") {
+                        satirStil = 'background-color:#fef08a; color:#713f12; font-weight:bold;';
+                    }
+
+                    const mesaiStil = saatler.mesai > 0
+                        ? 'background-color:#bbf7d0; color:#14532d; font-weight:bold;'
+                        : 'background-color:inherit;';
+
+                    const eksikStil = saatler.eksik > 0
+                        ? 'background-color:#e9d5ff; color:#581c87; font-weight:bold;'
+                        : 'background-color:inherit;';
 
                     satirHtml += `
-                        <tr>
-                            <td>${g}.gün</td>
-                            <td>${tarihStr}</td>
-                            <td>${gunAdlari[tarih.getDay()]}</td>
-                            <td>${secimAdlari[secim] || secim}</td>
-                            <td>${saatler.calisma}</td>
-                            <td>${saatler.gece}</td>
-                            <td>${saatler.mesai}</td>
-                            <td>${saatler.eksik}</td>
+                        <tr style="${satirStil}">
+                            <td style="text-align:center; padding:6px 8px; border:1px solid #cbd5e1;">${g}.gün</td>
+                            <td style="text-align:center; padding:6px 8px; border:1px solid #cbd5e1;">${tarihStr}</td>
+                            <td style="text-align:center; padding:6px 8px; border:1px solid #cbd5e1;">${gunAdlari[gunIdx]}</td>
+                            <td style="text-align:center; padding:6px 8px; border:1px solid #cbd5e1;">${durumEtiketi}</td>
+                            <td style="text-align:right; padding:6px 8px; border:1px solid #cbd5e1;">${saatler.calisma}</td>
+                            <td style="text-align:right; padding:6px 8px; border:1px solid #cbd5e1;">${saatler.gece}</td>
+                            <td style="text-align:right; padding:6px 8px; border:1px solid #cbd5e1; ${mesaiStil}">${saatler.mesai}</td>
+                            <td style="text-align:right; padding:6px 8px; border:1px solid #cbd5e1; ${eksikStil}">${saatler.eksik}</td>
                         </tr>
                     `;
                 }
 
+                const ayAdi = (ayVerileri[ay] && ayVerileri[ay].ad) || ay;
                 const excelIcerik = `
                     <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
                     <head><meta charset="UTF-8"></head>
-                    <body>
-                        <table border="1">
-                            <tr><th colspan="8">Kişisel Vardiya Çizelgesi (${yil}-${String(ay).padStart(2, "0")})</th></tr>
+                    <body style="font-family:Calibri, Arial, sans-serif; background:#ffffff; color:#0f172a;">
+                        <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; width:100%;">
                             <tr>
-                                <td colspan="2"><strong>Ad Soyad:</strong> ${aktifVardiyaKullanici.adSoyad || "-"}</td>
-                                <td colspan="3"><strong>E-posta:</strong> ${aktifVardiyaKullanici.email || "-"}</td>
-                                <td colspan="3"><strong>Saat Ücreti:</strong> ${saatUcreti || 0} TL</td>
+                                <th colspan="8" style="background-color:#2e1b87; color:#ffffff; font-size:16px; padding:12px; text-align:center; border:1px solid #1e1b4b;">
+                                    BORDROAPP — KİŞİSEL VARDİYA ÇİZELGESİ (${ayAdi.toLocaleUpperCase("tr")} ${yil})
+                                </th>
                             </tr>
                             <tr>
-                                <th>Gün</th><th>Tarih</th><th>Haftanın Günü</th><th>Vardiya / Durum</th>
-                                <th>Çalışma (Sa)</th><th>Gece (Sa)</th><th>F.Mesai (Sa)</th><th>Eksik (Sa)</th>
+                                <td colspan="2" style="background-color:#f1f5f9; padding:7px 10px; border:1px solid #cbd5e1;"><strong>Kullanıcı:</strong> ${aktifVardiyaKullanici.adSoyad || "-"}</td>
+                                <td colspan="3" style="background-color:#f1f5f9; padding:7px 10px; border:1px solid #cbd5e1;"><strong>E-posta:</strong> ${aktifVardiyaKullanici.email || "-"}</td>
+                                <td colspan="3" style="background-color:#f1f5f9; padding:7px 10px; border:1px solid #cbd5e1;"><strong>Saat Ücreti:</strong> ${saatUcreti || 0} TL</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="background-color:#dbeafe; color:#1e3a8a; font-weight:bold; text-align:center; padding:7px; border:1px solid #93c5fd;">Toplam Çalışma: ${topCalisma} Sa</td>
+                                <td colspan="2" style="background-color:#e2e8f0; color:#0f172a; font-weight:bold; text-align:center; padding:7px; border:1px solid #94a3b8;">Toplam Gece: ${topGece} Sa</td>
+                                <td colspan="2" style="background-color:#bbf7d0; color:#14532d; font-weight:bold; text-align:center; padding:7px; border:1px solid #86efac;">Toplam Mesai: ${topMesai} Sa</td>
+                                <td colspan="2" style="background-color:#e9d5ff; color:#581c87; font-weight:bold; text-align:center; padding:7px; border:1px solid #d8b4fe;">Toplam Eksik: ${topEksik} Sa</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="background-color:#fecdd3; color:#881337; font-weight:bold; text-align:center; font-size:11px; padding:5px; border:1px solid #fda4af;">Kırmızı: Hafta Tatili</td>
+                                <td colspan="2" style="background-color:#fef08a; color:#713f12; font-weight:bold; text-align:center; font-size:11px; padding:5px; border:1px solid #fde047;">Sarı: İzin</td>
+                                <td colspan="2" style="background-color:#bbf7d0; color:#14532d; font-weight:bold; text-align:center; font-size:11px; padding:5px; border:1px solid #86efac;">Yeşil: Fazla Mesai</td>
+                                <td colspan="2" style="background-color:#e9d5ff; color:#581c87; font-weight:bold; text-align:center; font-size:11px; padding:5px; border:1px solid #d8b4fe;">Açık Mor: Eksik Saat</td>
+                            </tr>
+                            <tr>
+                                <th style="background-color:#4c2fd0; color:#ffffff; padding:8px; border:1px solid #312e81;">Gün</th>
+                                <th style="background-color:#4c2fd0; color:#ffffff; padding:8px; border:1px solid #312e81;">Tarih</th>
+                                <th style="background-color:#4c2fd0; color:#ffffff; padding:8px; border:1px solid #312e81;">Haftanın Günü</th>
+                                <th style="background-color:#4c2fd0; color:#ffffff; padding:8px; border:1px solid #312e81;">Vardiya / Durum</th>
+                                <th style="background-color:#4c2fd0; color:#ffffff; padding:8px; border:1px solid #312e81;">Çalışma (Sa)</th>
+                                <th style="background-color:#4c2fd0; color:#ffffff; padding:8px; border:1px solid #312e81;">Gece (Sa)</th>
+                                <th style="background-color:#047857; color:#ffffff; padding:8px; border:1px solid #065f46;">F.Mesai (Sa)</th>
+                                <th style="background-color:#6b21a8; color:#ffffff; padding:8px; border:1px solid #581c87;">Eksik (Sa)</th>
                             </tr>
                             ${satirHtml}
-                            <tr>
-                                <td colspan="4"><strong>TOPLAM</strong></td>
-                                <td><strong>${topCalisma}</strong></td>
-                                <td><strong>${topGece}</strong></td>
-                                <td><strong>${topMesai}</strong></td>
-                                <td></td>
+                            <tr style="background-color:#e0e7ff; font-weight:bold; color:#1e1b4b;">
+                                <td colspan="4" style="padding:8px 10px; border:1px solid #94a3b8; text-align:right;">AYLIK GENEL TOPLAM</td>
+                                <td style="padding:8px; border:1px solid #94a3b8; text-align:right;">${topCalisma}</td>
+                                <td style="padding:8px; border:1px solid #94a3b8; text-align:right;">${topGece}</td>
+                                <td style="padding:8px; border:1px solid #94a3b8; text-align:right; background-color:#bbf7d0; color:#14532d;">${topMesai}</td>
+                                <td style="padding:8px; border:1px solid #94a3b8; text-align:right; background-color:#e9d5ff; color:#581c87;">${topEksik}</td>
                             </tr>
                         </table>
                     </body>
@@ -4299,7 +4375,6 @@
             }
         };
 
-        // --- YÖNETİM PANELİ GİRİŞ KONTROLÜ ---
         function adminGorunumunuSenkronizeEt() {
             const girisKart = document.getElementById("adminGirisKart");
             const icerikKart = document.getElementById("adminIcerikKart");
@@ -4668,7 +4743,6 @@
             }
         };
 
-        // --- GENEL VERİ YÜKLEME ---
         function arayuzuGuncelle(data) {
             aktifVeri = data || {};
             sosyalKayitlari = aktifVeri.sosyal || {};
