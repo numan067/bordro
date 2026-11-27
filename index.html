@@ -3536,7 +3536,7 @@
 
             for (let g = 1; g <= gunSayisi; g++) {
                 const tarih = new Date(yil, ay - 1, g);
-                const gunAdi = gunAdlari[tari.getDay()];
+                const gunAdi = gunAdlari[tarih.getDay()];
                 const tarihKisa = `${String(g).padStart(2, "0")}.${String(ay).padStart(2, "0")}.${yil}`;
 
                 const secili = document.querySelector(`input[name="v_secim_${g}"]:checked`);
