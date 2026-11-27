@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#3b288c">
     <link rel="icon" type="image/png" href="Logo.png">
     <link rel="apple-touch-icon" href="Logo.png">
-    <title>BordroApp Mobil </title>
+    <title>BordroApp Mobil</title>
     <style>
         :root {
             --primary: #4c2fd0;
@@ -687,23 +687,10 @@
             cursor: pointer;
         }
 
-        .enf-result-box {
-            margin-top: 7px;
-            background: #fef3c7;
-            border: 1px solid #fcd34d;
-            border-radius: 8px;
-            padding: 8px;
-            font-size: 12px;
-            color: #78350f;
-            line-height: 1.45;
-            display: none;
-        }
-
         .tufe-table-wrap {
-            max-height: 300px;
-            overflow-y: auto;
             border: 1px solid var(--border);
             border-radius: 10px;
+            overflow: hidden;
         }
 
         table.tufe-table {
@@ -721,8 +708,6 @@
         table.tufe-table th {
             background: #d97706;
             color: #fff;
-            position: sticky;
-            top: 0;
         }
 
         table.tufe-table td:first-child {
@@ -810,6 +795,19 @@
             cursor: not-allowed;
         }
 
+        .excel-action-btn {
+            width: 100%;
+            margin-top: 8px;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 11px;
+            background: #047857;
+            color: #fff;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
         .secondary-action-btn {
             padding: 7px 10px;
             border-radius: 9px;
@@ -832,7 +830,6 @@
             cursor: pointer;
         }
 
-        /* VARDİYA ÇİZELGESİ GÖRSEL DÜZENİ */
         .shift-header-bar {
             display: flex;
             align-items: center;
@@ -908,7 +905,7 @@
         }
 
         .shift-box-dark {
-            background: #1e293b;
+            background: #0f172a;
             color: #fff;
             border-radius: 12px;
             padding: 10px 6px;
@@ -917,7 +914,7 @@
         }
 
         .shift-box-green {
-            background: #059669;
+            background: #047857;
             color: #fff;
             border-radius: 12px;
             padding: 10px 6px;
@@ -926,7 +923,7 @@
         }
 
         .shift-box-purple {
-            background: #6d28d9;
+            background: #5b21b6;
             color: #fff;
             border-radius: 12px;
             padding: 10px 6px;
@@ -935,10 +932,10 @@
         }
 
         .shift-box-lbl {
-            font-size: 8.5px;
+            font-size: 9px;
             font-weight: 800;
             letter-spacing: 0.2px;
-            opacity: 0.92;
+            color: #f8fafc;
             text-transform: uppercase;
             white-space: nowrap;
             overflow: hidden;
@@ -947,9 +944,10 @@
 
         .shift-box-val {
             margin-top: 4px;
-            font-size: 17px;
-            font-weight: 800;
+            font-size: 18px;
+            font-weight: 900;
             line-height: 1.1;
+            color: #ffffff;
             white-space: nowrap;
         }
 
@@ -969,10 +967,21 @@
             grid-template-columns: 74px 1fr;
             gap: 10px;
             align-items: center;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .day-card-item.izin-aktif {
+            background: #fef08a;
+            border-color: #eab308;
+        }
+
+        .day-card-item.tatil-aktif {
+            background: #fecdd3;
+            border-color: #e11d48;
         }
 
         .day-meta-col {
-            border-right: 1px solid #e2e8f0;
+            border-right: 1px solid rgba(15, 23, 42, 0.14);
             padding-right: 6px;
         }
 
@@ -985,16 +994,21 @@
 
         .day-date {
             font-size: 11px;
-            color: #64748b;
+            color: #475569;
             font-weight: 600;
             margin-top: 2px;
         }
 
         .day-name {
             font-size: 11.5px;
-            color: #475569;
+            color: #334155;
             font-weight: 700;
             margin-top: 2px;
+        }
+
+        .day-card-item.tatil-aktif .day-num,
+        .day-card-item.tatil-aktif .day-name {
+            color: #9f1239;
         }
 
         .day-controls-col {
@@ -1021,18 +1035,32 @@
             font-weight: 700;
             color: #1e293b;
             cursor: pointer;
-            padding: 3px 1px;
+            padding: 4px 2px;
             border-radius: 8px;
+            border: 1.2px solid transparent;
         }
 
         .shift-opt-cell.izin-box {
             border: 1.4px solid #eab308;
-            background: #fefce8;
+            background: #fef9c3;
+        }
+
+        .shift-opt-cell.izin-box.secili {
+            background: #facc15;
+            border-color: #ca8a04;
+            color: #422006;
         }
 
         .shift-opt-cell.tatil-box {
             border: 1.4px solid #fb7185;
-            background: #fff1f2;
+            background: #ffe4e6;
+            color: #be123c;
+        }
+
+        .shift-opt-cell.tatil-box.secili {
+            background: #f43f5e;
+            border-color: #9f1239;
+            color: #ffffff;
         }
 
         .shift-opt-cell input[type="radio"] {
@@ -1073,7 +1101,6 @@
             background: #fff;
         }
 
-        /* HESABIM PENCERESİ */
         .account-info-card {
             background: #f8fafc;
             border: 1px solid var(--border);
@@ -1631,13 +1658,12 @@
                     <input type="number" id="saatUcreti" class="input-control" step="0.01" placeholder="Örn: 150.00">
                 </div>
                 <button type="button" class="amber-btn" id="hesaplaBtn">Hesapla</button>
-                <div id="sonucBox" class="enf-result-box"></div>
             </div>
 
             <div class="card">
                 <div class="card-title-row">
                     <h2 class="card-title">Enflasyon Takibi (TÜFE)</h2>
-                    <span class="badge amber">2026</span>
+                    <span class="badge amber" id="enfDonemRozet">2026</span>
                 </div>
                 <div class="tufe-table-wrap">
                     <table class="tufe-table">
@@ -1720,11 +1746,7 @@
                     <h2 class="shift-main-title">Kişisel Vardiya Çizelgesi</h2>
                     <div class="shift-year-box">
                         <span>Yıl:</span>
-                        <select id="vYil" class="shift-year-select" onchange="vardiyaAyVerisiniYukle()">
-                            <option value="2025">2025</option>
-                            <option value="2026" selected>2026</option>
-                            <option value="2027">2027</option>
-                        </select>
+                        <select id="vYil" class="shift-year-select" onchange="vardiyaAyVerisiniYukle()"></select>
                         <button type="button" class="danger-action-btn" onclick="vardiyaCikisYap()">Çıkış</button>
                     </div>
                 </div>
@@ -1736,10 +1758,10 @@
                     <span class="loaded-badge" id="vKayitDurumu">Yükleniyor...</span>
                 </div>
 
-                <div class="two-col" style="gap:10px;">
+                <div class="three-col" style="gap:6px;">
                     <div class="field-group">
-                        <label class="field-label" for="vAy" style="font-size:12px; color:#1e293b;">Ay Seçin (12 Ay)</label>
-                        <select id="vAy" class="select-control" onchange="vardiyaAyVerisiniYukle()">
+                        <label class="field-label" for="vAy" style="font-size:11px; color:#1e293b;">Ay Seçin (12 Ay)</label>
+                        <select id="vAy" class="select-control" style="padding:7px 5px; font-size:12px;" onchange="vardiyaAyVerisiniYukle()">
                             <option value="1">Ocak</option><option value="2">Şubat</option><option value="3">Mart</option>
                             <option value="4">Nisan</option><option value="5">Mayıs</option><option value="6">Haziran</option>
                             <option value="7">Temmuz</option><option value="8">Ağustos</option><option value="9">Eylül</option>
@@ -1747,8 +1769,8 @@
                         </select>
                     </div>
                     <div class="field-group">
-                        <label class="field-label" for="vHaftaTatili" style="font-size:12px; color:#1e293b;">Hafta Tatili Günü</label>
-                        <select id="vHaftaTatili" class="select-control" onchange="vardiyaHaftaTatiliUygula()">
+                        <label class="field-label" for="vHaftaTatili" style="font-size:11px; color:#1e293b;">Hafta Tatili</label>
+                        <select id="vHaftaTatili" class="select-control" style="padding:7px 5px; font-size:12px;" onchange="vardiyaHaftaTatiliUygula()">
                             <option value="0">Pazar</option>
                             <option value="1">Pazartesi</option>
                             <option value="2">Salı</option>
@@ -1757,6 +1779,10 @@
                             <option value="5">Cuma</option>
                             <option value="6" selected>Cumartesi</option>
                         </select>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label" for="vSaatUcreti" style="font-size:11px; color:#1e293b;">Saat Ücreti (TL)</label>
+                        <input type="number" step="0.01" min="0" id="vSaatUcreti" class="input-control" style="padding:7px 6px; font-size:12px;" placeholder="0.00" oninput="vardiyaAyMetaYerelKaydet()">
                     </div>
                 </div>
 
@@ -1770,7 +1796,7 @@
                         <div class="shift-box-val" id="vToplamMesai">0 Sa</div>
                     </div>
                     <div class="shift-box-purple">
-                        <div class="shift-box-lbl">AYLIK TOPLAM ÇALIŞMA SAATİ</div>
+                        <div class="shift-box-lbl">AYLIK TOPLAM ÇALIŞMA</div>
                         <div class="shift-box-val" id="vToplamCalisma">0 Sa</div>
                     </div>
                 </div>
@@ -1778,10 +1804,11 @@
                 <div class="shift-days-list" id="vGunlerListesi"></div>
 
                 <button type="button" id="vKaydetBtn" class="primary-action-btn" onclick="vardiyaAyVerisiniKaydet()">Çizelgeyi Kaydet</button>
-                <button type="button" class="secondary-action-btn" style="width:100%; margin-top:8px; padding:9px 12px;" onclick="vardiyaMaasAktar()">Toplamları Maaş Hesaplamaya Aktar</button>
+                <button type="button" class="excel-action-btn" onclick="vardiyaExceleAktar()">Çizelgeyi Excel'e Aktar</button>
+                <button type="button" class="secondary-action-btn" style="width:100%; margin-top:8px; padding:9px 12px;" onclick="vardiyaMaasAktar()">Maaş Hesaplamaya Aktar</button>
             </div>
 
-            <!-- HESABIM EKRANI (BİLGİLER + ŞİFRE DEĞİŞTİR + HESABIMI SİL) -->
+            <!-- HESABIM EKRANI -->
             <div id="vardiyaHesabimKart" class="card" style="display:none;">
                 <div class="card-title-row">
                     <h2 class="card-title">Hesabım</h2>
@@ -1921,6 +1948,10 @@
                 </div>
 
                 <div id="apanel-enf" class="admin-panel">
+                    <div class="field-group">
+                        <label class="field-label" for="admEnfSene">Sene / Yıl</label>
+                        <input type="text" id="admEnfSene" class="input-control" placeholder="Örn: 2026">
+                    </div>
                     <div class="admin-list-box" id="admEnfListe"></div>
                     <button type="button" class="primary-action-btn" onclick="adminAyarKaydet('enf')">Enflasyon Tablosunu Kaydet</button>
                 </div>
@@ -1991,6 +2022,20 @@
 
     </main>
 
+    <!-- ENFLASYON HESAPLAMA POP-UP MODAL -->
+    <div id="enfSonucModal" class="info-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="enfModalBaslik">
+        <div class="info-modal-card">
+            <div class="info-modal-header">
+                <h3 id="enfModalBaslik" class="info-modal-title">İkinci 6 Aylık Saat Ücreti Hesaplama Sonucu</h3>
+                <button type="button" class="info-modal-close" onclick="enfModalKapat()">✕</button>
+            </div>
+            <div id="enfModalIcerik" class="info-modal-body"></div>
+            <div class="info-modal-footer">
+                <button type="button" class="primary-action-btn" style="width:auto; padding:8px 16px;" onclick="enfModalKapat()">Tamam</button>
+            </div>
+        </div>
+    </div>
+
     <!-- TEK AYDINLATMA METNİ MODAL EKRANI (YALNIZCA ÜYE OL İÇİN) -->
     <div id="aydinlatmaModal" class="info-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="aydinlatmaBaslik">
         <div class="info-modal-card">
@@ -2000,7 +2045,7 @@
             </div>
             <div class="info-modal-body">
                 <p><strong>1. Veri Sorumlusu:</strong> BordroApp kapsamında oluşturulan kişisel vardiya çizelgesi ve hesaplama modülleri, kullanıcı hesabınıza özel aylık kayıtların tutulması amacıyla işletilmektedir.</p>
-                <p><strong>2. İşlenen Veriler:</strong> Üyelik sırasında sağladığınız ad soyad, e-posta adresi ile aylık vardiya girişleriniz (vardiya/izin/tatil seçimi, çalışma saati, fazla mesai, eksik saat, gece saati) işlenmektedir.</p>
+                <p><strong>2. İşlenen Veriler:</strong> Üyelik sırasında sağladığınız ad soyad, e-posta adresi ile aylık vardiya girişleriniz (vardiya/izin/tatil seçimi, çalışma saati, fazla mesai, eksik saat, saat ücreti) işlenmektedir.</p>
                 <p><strong>3. İşleme Amacı ve Saklama:</strong> Verileriniz yalnızca seçtiğiniz yıl ve ay bazında kişisel vardiya çizelgenizi görüntülemek, kaydetmek ve maaş/fark hesaplamalarını kolaylaştırmak için saklanır; izniniz dışında üçüncü kişilerle paylaşılmaz.</p>
                 <p><strong>4. Haklarınız:</strong> Kayıtlı vardiya verilerinizi güncelleyebilir, <strong>Hesabım</strong> ekranından şifrenizi değiştirebilir veya <strong>Hesabımı Sil</strong> seçeneğiyle hesabınızı silebilirsiniz.</p>
             </div>
@@ -2020,9 +2065,9 @@
             <div class="info-modal-body">
                 <p>BordroApp kişisel vardiya çizelgesine hoş geldiniz. Kayıtlarınız hesabınızla senkronize edilir.</p>
                 <ul>
-                    <li><strong>1. Yıl, Ay ve Hafta Tatili:</strong> Üst kısımdan <em>Yıl</em>, <em>Ay Seçin (12 Ay)</em> ve <em>Hafta Tatili Günü</em> seçerek ilgili ayın günlerini görüntüleyin.</li>
-                    <li><strong>2. Vardiya, İzin, Tatil, Mesai ve Eksik Saat:</strong> Her gün için <em>1.Vardiya</em>, <em>2.Vardiya</em>, <em>3.Vardiya</em>, <em>İzin</em> veya <em>H.tatili</em> seçin; <em>F.mesai</em> ve <em>Eksik saat</em> alanlarını doldurun.</li>
-                    <li><strong>3. Kaydetme ve Hesabım:</strong> Çizelgeyi saklamak için <strong>Çizelgeyi Kaydet</strong> butonuna basın. <strong>Hesabım</strong> alanından bilgilerinizi görebilir, şifrenizi değiştirebilir veya <strong>Hesabımı Sil</strong> ile hesabınızı silebilirsiniz.</li>
+                    <li><strong>1. Yıl, Ay, Hafta Tatili ve Saat Ücreti:</strong> Üst kısımdan <em>Yıl</em>, <em>Ay Seçin (12 Ay)</em>, <em>Hafta Tatili</em> ve <em>Saat Ücreti</em> alanlarını ayarlayın.</li>
+                    <li><strong>2. Gece Çalışması Kuralları:</strong> <em>2.Vardiya</em> 4 saat, <em>3.Vardiya</em> 6 saat gece çalışması sayılır; <em>3.Vardiya</em> gününe girilen fazla mesaide 1 saate +1, 2 saate +2, 3 saate +3, 4 saat ve üzerine +4 saat gece vardiyası eklenir.</li>
+                    <li><strong>3. Kayıt, Excel ve Hesabım:</strong> <strong>Çizelgeyi Kaydet</strong>, <strong>Çizelgeyi Excel'e Aktar</strong> ve <strong>Maaş Hesaplamaya Aktar</strong> butonlarını kullanabilir; <strong>Hesabım</strong> alanından şifre değiştirip hesap silebilirsiniz.</li>
                 </ul>
             </div>
             <div class="info-modal-footer">
@@ -2072,7 +2117,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const CACHE_KEY = "bordroapp_mobil_v15";
+        const CACHE_KEY = "bordroapp_mobil_v16";
         const VARDIYA_OTURUM_KEY = "bordroapp_vardiya_oturum_v1";
         const VARDIYA_YEREL_KAYIT_KEY = "bordroapp_vardiya_kayitlari_v1";
         const ADMIN_OTURUM_KEY = "bordroapp_admin_oturum_v1";
@@ -2098,9 +2143,9 @@
         };
 
         const enfAylar = [
-            "Ocak 2026", "Şubat 2026", "Mart 2026", "Nisan 2026",
-            "Mayıs 2026", "Haziran 2026", "Temmuz 2026", "Ağustos 2026",
-            "Eylül 2026", "Ekim 2026", "Kasım 2026", "Aralık 2026"
+            "Ocak", "Şubat", "Mart", "Nisan",
+            "Mayıs", "Haziran", "Temmuz", "Ağustos",
+            "Eylül", "Ekim", "Kasım", "Aralık"
         ];
 
         const sosyalTanimlar = [
@@ -2134,6 +2179,19 @@
         let globalIkinci6AyOran = 0;
         let aktifVardiyaKullanici = null;
         let adminGirisYapildiMi = localStorage.getItem(ADMIN_OTURUM_KEY) === "1" || sessionStorage.getItem(ADMIN_OTURUM_KEY) === "1";
+
+        function yilSecenekleriniDoldur() {
+            const sel = document.getElementById("vYil");
+            if (!sel) return;
+            sel.innerHTML = "";
+            for (let y = 2025; y <= 2037; y++) {
+                const opt = document.createElement("option");
+                opt.value = String(y);
+                opt.textContent = String(y);
+                if (y === 2026) opt.selected = true;
+                sel.appendChild(opt);
+            }
+        }
 
         function sayiParse(val) {
             if (val === undefined || val === null || val === "") return NaN;
@@ -2169,7 +2227,7 @@
             if (!Number.isNaN(panelDegeri) && panelDegeri >= 0) {
                 return { tutar: panelDegeri, kaynak: "panel" };
             }
-            return { tutar: 30, kaynak: "varsayılan" };
+            return { tutar: 0, kaynak: "varsayılan" };
         }
 
         function ayIstisnalariAl(ayNum) {
@@ -2615,6 +2673,9 @@
 
         function enfTablosunuCiz() {
             const enfData = aktifVeri.enflasyon || {};
+            const seneEtiket = (aktifVeri.enflasyonSene || aktifVeri.yil1 || "2026").toString().trim();
+            document.getElementById("enfDonemRozet").innerText = seneEtiket;
+
             const tbody = document.getElementById("enfBody");
             tbody.innerHTML = "";
 
@@ -2637,7 +2698,7 @@
 
                 if (!isNaN(aylikVal)) {
                     aylikGosterim = aylikVal.toFixed(2).replace(".", ",");
-                    sonAyAdi = ay.split(" ")[0];
+                    sonAyAdi = ay;
                     sonAyDeger = "%" + aylikGosterim;
 
                     if (!basladi) {
@@ -2673,9 +2734,13 @@
             document.getElementById("kpiTufeAy").innerText = sonAyAdi;
         }
 
+        window.enfModalKapat = function() {
+            document.getElementById("enfSonucModal").classList.remove("open");
+        };
+
         document.getElementById("hesaplaBtn").addEventListener("click", () => {
             const mevcutSaatUcretiInput = document.getElementById("saatUcreti").value;
-            const sonucBox = document.getElementById("sonucBox");
+            const modalIcerik = document.getElementById("enfModalIcerik");
 
             if (!mevcutSaatUcretiInput || isNaN(mevcutSaatUcretiInput)) {
                 alert("Lütfen geçerli bir mevcut saat ücreti girin!");
@@ -2686,13 +2751,13 @@
             const toplamArtisOrani = globalIkinci6AyOran + 2;
             const yeniUcret = mevcutUcret * (1 + (toplamArtisOrani / 100));
 
-            sonucBox.style.display = "block";
-            sonucBox.innerHTML = `
-                <strong>Temmuz - Aralık Birleşik Enflasyon:</strong> %${globalIkinci6AyOran.toFixed(2).replace(".", ",")}<br>
-                <strong>Not:</strong> Hesaplamaya +2 koyulmuştur.<br>
-                <strong>Toplam Artış Oranı:</strong> %${toplamArtisOrani.toFixed(2).replace(".", ",")}<br>
-                <strong>Yeni Saat Ücreti:</strong> <strong>${yeniUcret.toFixed(2).replace(".", ",")} TL</strong>
+            modalIcerik.innerHTML = `
+                <p><strong>Temmuz - Aralık Birleşik Enflasyon:</strong> %${globalIkinci6AyOran.toFixed(2).replace(".", ",")}</p>
+                <p><strong>Not:</strong> Hesaplamaya +2 eklenmiştir.</p>
+                <p><strong>Toplam Artış Oranı:</strong> %${toplamArtisOrani.toFixed(2).replace(".", ",")}</p>
+                <p style="font-size:14px;"><strong>Yeni Saat Ücreti:</strong> <strong>${yeniUcret.toFixed(2).replace(".", ",")} TL</strong></p>
             `;
+            document.getElementById("enfSonucModal").classList.add("open");
         });
 
         // --- AYDINLATMA (SADECE ÜYE OL) & KULLANIM BİLGİLENDİRME ---
@@ -2717,7 +2782,49 @@
             document.getElementById("bilgilendirmeModal").classList.remove("open");
         };
 
-        // --- VARDİYA ÇİZELGESİ & HESABIM ---
+        // --- VARDİYA ÇİZELGESİ & GECE KURALLARI ---
+        function mesaiGeceKatkisiHesapla(mesaiSaati) {
+            if (mesaiSaati >= 4) return 4;
+            if (mesaiSaati >= 3) return 3;
+            if (mesaiSaati >= 2) return 2;
+            if (mesaiSaati >= 1) return 1;
+            return 0;
+        }
+
+        function gunSaatleriniHesapla(secim, fMesai, eksikSaat) {
+            const isCalisma = (secim === "v1" || secim === "v2" || secim === "v3");
+            const calisma = isCalisma ? Math.max(0, 7.5 - eksikSaat) : 0;
+            let gece = 0;
+            if (secim === "v2") {
+                gece = 4;
+            } else if (secim === "v3") {
+                gece = 6 + mesaiGeceKatkisiHesapla(fMesai);
+            }
+            return { calisma, gece, mesai: fMesai, eksik: eksikSaat };
+        }
+
+        function gunKartRenkleriniGuncelle(gun) {
+            const card = document.getElementById(`day_card_${gun}`);
+            const secili = document.querySelector(`input[name="v_secim_${gun}"]:checked`);
+            const secim = secili ? secili.value : "v1";
+
+            if (card) {
+                card.classList.remove("izin-aktif", "tatil-aktif");
+                if (secim === "izin") card.classList.add("izin-aktif");
+                if (secim === "tatil") card.classList.add("tatil-aktif");
+            }
+
+            const labels = document.querySelectorAll(`#day_card_${gun} .shift-opt-cell`);
+            labels.forEach(lbl => {
+                const inp = lbl.querySelector('input[type="radio"]');
+                if (inp && inp.checked) {
+                    lbl.classList.add("secili");
+                } else {
+                    lbl.classList.remove("secili");
+                }
+            });
+        }
+
         window.vardiyaEkraninaGit = function() {
             document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
             document.getElementById("view-shift").classList.add("active");
@@ -3035,7 +3142,6 @@
             }
         });
 
-        // --- HESABIMI SİL (EVET / HAYIR) ---
         window.hesapSilmeOnayAc = function() {
             const kutu = document.getElementById("hesapSilOnayKutusu");
             kutu.style.display = kutu.style.display === "flex" ? "none" : "flex";
@@ -3114,7 +3220,7 @@
             }
         };
 
-        // --- VARDİYA VERİ YÖNETİMİ (KAYIT + YÜKLEME + ÖZET) ---
+        // --- VARDİYA VERİ YÖNETİMİ (KAYIT + YÜKLEME + ÖZET + EXCEL) ---
         function vardiyaBelgeIdAdaylariAl() {
             const yil = String(document.getElementById("vYil").value);
             const ay = String(document.getElementById("vAy").value).padStart(2, "0");
@@ -3155,6 +3261,17 @@
             } catch (_) {}
         }
 
+        window.vardiyaAyMetaYerelKaydet = function() {
+            if (!aktifVardiyaKullanici) return;
+            const adayIdler = vardiyaBelgeIdAdaylariAl();
+            const anaBelgeId = adayIdler[0];
+            if (!anaBelgeId) return;
+            const mevcut = yerelVardiyaBelgeOku(adayIdler) || {};
+            mevcut.haftaTatili = parseInt(document.getElementById("vHaftaTatili").value, 10);
+            mevcut.saatUcreti = parseFloat(document.getElementById("vSaatUcreti").value) || 0;
+            yerelVardiyaYaz(anaBelgeId, mevcut);
+        };
+
         function belgeGunMapCikar(rawData) {
             if (!rawData || typeof rawData !== "object") return null;
             const adayMap = rawData.gunler || rawData.days || rawData.kayitlar || rawData.vardiya || null;
@@ -3194,6 +3311,7 @@
 
                 const card = document.createElement("div");
                 card.className = "day-card-item";
+                card.id = `day_card_${g}`;
                 card.innerHTML = `
                     <div class="day-meta-col">
                         <div class="day-num">${g}.gün</div>
@@ -3204,23 +3322,23 @@
                         <div class="shift-radios-row">
                             <label class="shift-opt-cell">
                                 <span>1.Vardiya</span>
-                                <input type="radio" name="v_secim_${g}" value="v1" ${secim==="v1"?"checked":""} onchange="vardiyaOzetiHesapla()">
+                                <input type="radio" name="v_secim_${g}" value="v1" ${secim==="v1"?"checked":""} onchange="vardiyaGunDegisti(${g})">
                             </label>
                             <label class="shift-opt-cell">
                                 <span>2.Vardiya</span>
-                                <input type="radio" name="v_secim_${g}" value="v2" ${secim==="v2"?"checked":""} onchange="vardiyaOzetiHesapla()">
+                                <input type="radio" name="v_secim_${g}" value="v2" ${secim==="v2"?"checked":""} onchange="vardiyaGunDegisti(${g})">
                             </label>
                             <label class="shift-opt-cell">
                                 <span>3.Vardiya</span>
-                                <input type="radio" name="v_secim_${g}" value="v3" ${secim==="v3"?"checked":""} onchange="vardiyaOzetiHesapla()">
+                                <input type="radio" name="v_secim_${g}" value="v3" ${secim==="v3"?"checked":""} onchange="vardiyaGunDegisti(${g})">
                             </label>
                             <label class="shift-opt-cell izin-box">
                                 <span>İzin</span>
-                                <input type="radio" name="v_secim_${g}" value="izin" ${secim==="izin"?"checked":""} onchange="vardiyaOzetiHesapla()">
+                                <input type="radio" name="v_secim_${g}" value="izin" ${secim==="izin"?"checked":""} onchange="vardiyaGunDegisti(${g})">
                             </label>
                             <label class="shift-opt-cell tatil-box">
                                 <span>H.tatili</span>
-                                <input type="radio" name="v_secim_${g}" value="tatil" ${secim==="tatil"?"checked":""} onchange="vardiyaOzetiHesapla()">
+                                <input type="radio" name="v_secim_${g}" value="tatil" ${secim==="tatil"?"checked":""} onchange="vardiyaGunDegisti(${g})">
                             </label>
                         </div>
                         <div class="day-extra-row">
@@ -3236,9 +3354,15 @@
                     </div>
                 `;
                 listeEl.appendChild(card);
+                gunKartRenkleriniGuncelle(g);
             }
             vardiyaOzetiHesapla();
         }
+
+        window.vardiyaGunDegisti = function(gun) {
+            gunKartRenkleriniGuncelle(gun);
+            vardiyaOzetiHesapla();
+        };
 
         window.vardiyaHaftaTatiliUygula = function() {
             const yil = parseInt(document.getElementById("vYil").value, 10);
@@ -3251,8 +3375,10 @@
                 const hedefDeger = gunIdx === tatilIdx ? "tatil" : "v1";
                 const radio = document.querySelector(`input[name="v_secim_${g}"][value="${hedefDeger}"]`);
                 if (radio) radio.checked = true;
+                gunKartRenkleriniGuncelle(g);
             }
             vardiyaOzetiHesapla();
+            vardiyaAyMetaYerelKaydet();
         };
 
         window.vardiyaOzetiHesapla = function() {
@@ -3273,19 +3399,15 @@
                 const mesaiVal = parseFloat(mesaiInp && mesaiInp.value) || 0;
                 const eksikVal = parseFloat(eksikInp && eksikInp.value) || 0;
 
-                if (secim === "v1" || secim === "v2" || secim === "v3") {
-                    const gunCalisma = Math.max(0, 7.5 - eksikVal);
-                    toplamCalisma += gunCalisma;
-                    if (secim === "v2" || secim === "v3") {
-                        toplamGece += gunCalisma;
-                    }
-                }
-                toplamMesai += mesaiVal;
+                const saatler = gunSaatleriniHesapla(secim, mesaiVal, eksikVal);
+                toplamCalisma += saatler.calisma;
+                toplamGece += saatler.gece;
+                toplamMesai += saatler.mesai;
             }
 
-            document.getElementById("vToplamGece").innerText = Math.round(toplamGece * 10) / 10 + " Sa";
-            document.getElementById("vToplamMesai").innerText = Math.round(toplamMesai * 10) / 10 + " Sa";
-            document.getElementById("vToplamCalisma").innerText = Math.round(toplamCalisma * 10) / 10 + " Sa";
+            document.getElementById("vToplamGece").innerText = (Math.round(toplamGece * 10) / 10) + " Sa";
+            document.getElementById("vToplamMesai").innerText = (Math.round(toplamMesai * 10) / 10) + " Sa";
+            document.getElementById("vToplamCalisma").innerText = (Math.round(toplamCalisma * 10) / 10) + " Sa";
         };
 
         window.vardiyaAyVerisiniYukle = async function() {
@@ -3300,9 +3422,11 @@
             const yerelBelge = yerelVardiyaBelgeOku(adayIdler);
             const yerelGunler = yerelBelge ? belgeGunMapCikar(yerelBelge) : null;
             const yerelTatil = yerelBelge && yerelBelge.haftaTatili !== undefined ? parseInt(yerelBelge.haftaTatili, 10) : 6;
+            const yerelSaatUcreti = yerelBelge && yerelBelge.saatUcreti !== undefined ? yerelBelge.saatUcreti : "";
             if (yerelBelge && yerelBelge.haftaTatili !== undefined) {
                 document.getElementById("vHaftaTatili").value = String(yerelTatil);
             }
+            document.getElementById("vSaatUcreti").value = yerelSaatUcreti || "";
             vardiyaGunSatirlariniCiz(gunSayisi, yerelGunler || {}, yerelTatil);
             durumEl.innerText = yerelGunler ? `${ayEtiket} yüklendi` : "Yükleniyor...";
 
@@ -3357,6 +3481,9 @@
                 if (bulunanGunler) {
                     const tatilIdx = bulunanBelge && bulunanBelge.haftaTatili !== undefined ? parseInt(bulunanBelge.haftaTatili, 10) : 6;
                     document.getElementById("vHaftaTatili").value = String(tatilIdx);
+                    if (bulunanBelge && bulunanBelge.saatUcreti !== undefined && bulunanBelge.saatUcreti !== "") {
+                        document.getElementById("vSaatUcreti").value = bulunanBelge.saatUcreti;
+                    }
                     vardiyaGunSatirlariniCiz(gunSayisi, bulunanGunler, tatilIdx);
                     durumEl.innerText = `${ayEtiket} yüklendi`;
                 } else if (!yerelGunler) {
@@ -3368,6 +3495,73 @@
             }
         };
 
+        function mevcutCizelgeVerisiniTopla() {
+            const yil = parseInt(document.getElementById("vYil").value, 10);
+            const ay = parseInt(document.getElementById("vAy").value, 10);
+            const haftaTatili = parseInt(document.getElementById("vHaftaTatili").value, 10);
+            const saatUcreti = parseFloat(document.getElementById("vSaatUcreti").value) || 0;
+            const gunSayisi = new Date(yil, ay, 0).getDate();
+            const gunAdlari = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+            const secimAdlari = { v1: "1.Vardiya", v2: "2.Vardiya", v3: "3.Vardiya", izin: "İzin", tatil: "H.tatili" };
+
+            const gunler = {};
+            const satirlar = [];
+            let toplamGece = 0;
+            let toplamMesai = 0;
+            let toplamCalisma = 0;
+
+            for (let g = 1; g <= gunSayisi; g++) {
+                const tarih = new Date(yil, ay - 1, g);
+                const gunAdi = gunAdlari[tari.getDay()];
+                const tarihKisa = `${String(g).padStart(2, "0")}.${String(ay).padStart(2, "0")}.${yil}`;
+
+                const secili = document.querySelector(`input[name="v_secim_${g}"]:checked`);
+                const secim = secili ? secili.value : "v1";
+                const mesaiInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="mesai"]`);
+                const eksikInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="eksik"]`);
+                const mesaiVal = parseFloat(mesaiInp && mesaiInp.value) || 0;
+                const eksikVal = parseFloat(eksikInp && eksikInp.value) || 0;
+
+                const saatler = gunSaatleriniHesapla(secim, mesaiVal, eksikVal);
+                toplamCalisma += saatler.calisma;
+                toplamGece += saatler.gece;
+                toplamMesai += saatler.mesai;
+
+                const kodMap = { v1: "N", v2: "G", v3: "Ü", izin: "Yİ", tatil: "T" };
+                gunler[g] = {
+                    secim: secim,
+                    kod: kodMap[secim] || "N",
+                    calisma: saatler.calisma,
+                    mesai: saatler.mesai,
+                    eksik: saatler.eksik,
+                    gece: saatler.gece
+                };
+
+                satirlar.push({
+                    gun: `${g}.gün`,
+                    tarih: tarihKisa,
+                    gunAdi,
+                    durum: secimAdlari[secim] || secim,
+                    calisma: saatler.calisma,
+                    gece: saatler.gece,
+                    mesai: saatler.mesai,
+                    eksik: saatler.eksik
+                });
+            }
+
+            return {
+                yil,
+                ay,
+                haftaTatili,
+                saatUcreti,
+                gunler,
+                satirlar,
+                toplamGece,
+                toplamMesai,
+                toplamCalisma
+            };
+        }
+
         window.vardiyaAyVerisiniKaydet = async function() {
             if (!aktifVardiyaKullanici) return;
             const btn = document.getElementById("vKaydetBtn");
@@ -3375,45 +3569,20 @@
             btn.disabled = true;
             durumEl.innerText = "Kaydediliyor...";
 
-            const yil = parseInt(document.getElementById("vYil").value, 10);
-            const ay = parseInt(document.getElementById("vAy").value, 10);
-            const haftaTatili = parseInt(document.getElementById("vHaftaTatili").value, 10);
-            const gunSayisi = new Date(yil, ay, 0).getDate();
-            const ayEtiket = `${yil}-${String(ay).padStart(2, "0")}`;
-
-            const gunler = {};
-            for (let g = 1; g <= gunSayisi; g++) {
-                const secili = document.querySelector(`input[name="v_secim_${g}"]:checked`);
-                const secim = secili ? secili.value : "v1";
-                const mesaiInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="mesai"]`);
-                const eksikInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="eksik"]`);
-                const mesaiVal = parseFloat(mesaiInp && mesaiInp.value) || 0;
-                const eksikVal = parseFloat(eksikInp && eksikInp.value) || 0;
-                const calismaVal = (secim === "v1" || secim === "v2" || secim === "v3") ? Math.max(0, 7.5 - eksikVal) : 0;
-                const geceVal = (secim === "v2" || secim === "v3") ? calismaVal : 0;
-                const kodMap = { v1: "N", v2: "G", v3: "Ü", izin: "Yİ", tatil: "T" };
-
-                gunler[g] = {
-                    secim: secim,
-                    kod: kodMap[secim] || "N",
-                    calisma: calismaVal,
-                    mesai: mesaiVal,
-                    eksik: eksikVal,
-                    gece: geceVal
-                };
-            }
-
+            const topla = mevcutCizelgeVerisiniTopla();
+            const ayEtiket = `${topla.yil}-${String(topla.ay).padStart(2, "0")}`;
             const adayIdler = vardiyaBelgeIdAdaylariAl();
-            const anaBelgeId = adayIdler[0] || `${encodeURIComponent(aktifVardiyaKullanici.email || "user")}_${yil}_${String(ay).padStart(2, "0")}`;
+            const anaBelgeId = adayIdler[0] || `${encodeURIComponent(aktifVardiyaKullanici.email || "user")}_${topla.yil}_${String(topla.ay).padStart(2, "0")}`;
 
             const kayitObj = {
                 uid: aktifVardiyaKullanici.uid || aktifVardiyaKullanici.email,
                 email: aktifVardiyaKullanici.email || "",
                 adSoyad: aktifVardiyaKullanici.adSoyad || "",
-                yil: yil,
-                ay: ay,
-                haftaTatili: haftaTatili,
-                gunler: gunler,
+                yil: topla.yil,
+                ay: topla.ay,
+                haftaTatili: topla.haftaTatili,
+                saatUcreti: topla.saatUcreti,
+                gunler: topla.gunler,
                 guncellemeTarihi: new Date().toISOString()
             };
 
@@ -3432,38 +3601,100 @@
             }
         };
 
-        window.vardiyaMaasAktar = function() {
-            const yil = parseInt(document.getElementById("vYil").value, 10);
-            const ay = parseInt(document.getElementById("vAy").value, 10);
-            const gunSayisi = new Date(yil, ay, 0).getDate();
+        window.vardiyaExceleAktar = function() {
+            if (!aktifVardiyaKullanici) return;
+            const adayIdler = vardiyaBelgeIdAdaylariAl();
+            const yerelKayit = yerelVardiyaBelgeOku(adayIdler);
+            const mevcutTopla = mevcutCizelgeVerisiniTopla();
 
-            let toplamGece = 0;
-            let toplamMesai = 0;
-            let toplamCalisma = 0;
+            const kaynakGunler = yerelKayit ? belgeGunMapCikar(yerelKayit) : null;
+            const yil = (yerelKayit && yerelKayit.yil) || mevcutTopla.yil;
+            const ay = (yerelKayit && yerelKayit.ay) || mevcutTopla.ay;
+            const saatUcreti = (yerelKayit && yerelKayit.saatUcreti !== undefined) ? yerelKayit.saatUcreti : mevcutTopla.saatUcreti;
+            const gunSayisi = new Date(yil, ay, 0).getDate();
+            const gunAdlari = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+            const secimAdlari = { v1: "1.Vardiya", v2: "2.Vardiya", v3: "3.Vardiya", izin: "İzin", tatil: "H.tatili" };
+
+            let satirHtml = "";
+            let topGece = 0;
+            let topMesai = 0;
+            let topCalisma = 0;
 
             for (let g = 1; g <= gunSayisi; g++) {
-                const secili = document.querySelector(`input[name="v_secim_${g}"]:checked`);
-                const secim = secili ? secili.value : "v1";
-                const mesaiInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="mesai"]`);
-                const eksikInp = document.querySelector(`.extra-input[data-v-gun="${g}"][data-v-alan="eksik"]`);
+                const d = (kaynakGunler && (kaynakGunler[g] || kaynakGunler[String(g)])) || mevcutTopla.gunler[g] || {};
+                const secim = d.secim || "v1";
+                const fMesai = parseFloat(d.mesai) || 0;
+                const eksik = parseFloat(d.eksik) || 0;
+                const saatler = gunSaatleriniHesapla(secim, fMesai, eksik);
+                topGece += saatler.gece;
+                topMesai += saatler.mesai;
+                topCalisma += saatler.calisma;
 
-                const mesaiVal = parseFloat(mesaiInp && mesaiInp.value) || 0;
-                const eksikVal = parseFloat(eksikInp && eksikInp.value) || 0;
+                const tarih = new Date(yil, ay - 1, g);
+                const tarihStr = `${String(g).padStart(2, "0")}.${String(ay).padStart(2, "0")}.${yil}`;
 
-                if (secim === "v1" || secim === "v2" || secim === "v3") {
-                    const gunCalisma = Math.max(0, 7.5 - eksikVal);
-                    toplamCalisma += gunCalisma;
-                    if (secim === "v2" || secim === "v3") {
-                        toplamGece += gunCalisma;
-                    }
-                }
-                toplamMesai += mesaiVal;
+                satirHtml += `
+                    <tr>
+                        <td>${g}.gün</td>
+                        <td>${tarihStr}</td>
+                        <td>${gunAdlari[tarih.getDay()]}</td>
+                        <td>${secimAdlari[secim] || secim}</td>
+                        <td>${saatler.calisma}</td>
+                        <td>${saatler.gece}</td>
+                        <td>${saatler.mesai}</td>
+                        <td>${saatler.eksik}</td>
+                    </tr>
+                `;
             }
 
-            document.getElementById("month").value = String(ay);
-            document.getElementById("calisma-gun-saati").value = toplamCalisma;
-            document.getElementById("gece-zammi").value = toplamGece;
-            document.getElementById("fm-100").value = toplamMesai;
+            const excelIcerik = `
+                <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+                <head><meta charset="UTF-8"></head>
+                <body>
+                    <table border="1">
+                        <tr><th colspan="8">Kişisel Vardiya Çizelgesi (${yil}-${String(ay).padStart(2, "0")})</th></tr>
+                        <tr>
+                            <td colspan="2"><strong>Ad Soyad:</strong> ${aktifVardiyaKullanici.adSoyad || "-"}</td>
+                            <td colspan="3"><strong>E-posta:</strong> ${aktifVardiyaKullanici.email || "-"}</td>
+                            <td colspan="3"><strong>Saat Ücreti:</strong> ${saatUcreti || 0} TL</td>
+                        </tr>
+                        <tr>
+                            <th>Gün</th><th>Tarih</th><th>Haftanın Günü</th><th>Vardiya / Durum</th>
+                            <th>Çalışma (Sa)</th><th>Gece (Sa)</th><th>F.Mesai (Sa)</th><th>Eksik (Sa)</th>
+                        </tr>
+                        ${satirHtml}
+                        <tr>
+                            <td colspan="4"><strong>TOPLAM</strong></td>
+                            <td><strong>${topCalisma}</strong></td>
+                            <td><strong>${topGece}</strong></td>
+                            <td><strong>${topMesai}</strong></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </body>
+                </html>
+            `;
+
+            const blob = new Blob(["\ufeff" + excelIcerik], { type: "application/vnd.ms-excel;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `vardiya_${yil}_${String(ay).padStart(2, "0")}.xls`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+
+        window.vardiyaMaasAktar = function() {
+            const topla = mevcutCizelgeVerisiniTopla();
+            document.getElementById("month").value = String(topla.ay);
+            if (topla.saatUcreti > 0) {
+                document.getElementById("saat-ucreti").value = topla.saatUcreti;
+            }
+            document.getElementById("calisma-gun-saati").value = topla.toplamCalisma;
+            document.getElementById("gece-zammi").value = topla.toplamGece;
+            document.getElementById("fm-100").value = topla.toplamMesai;
             hesapla();
 
             const maasBtn = document.querySelector('.nav-btn[data-target="view-calc"]');
@@ -3638,6 +3869,7 @@
                 sosyalListe.appendChild(row);
             });
 
+            document.getElementById("admEnfSene").value = d.enflasyonSene || "";
             const enfListe = document.getElementById("admEnfListe");
             enfListe.innerHTML = "";
             enfAylar.forEach((ayAd, idx) => {
@@ -3719,6 +3951,7 @@
                         };
                     });
                 } else if (bolum === "enf") {
+                    guncel.enflasyonSene = document.getElementById("admEnfSene").value.trim();
                     enfAylar.forEach((_, idx) => {
                         const inp = document.querySelector(`input[data-adm-enf-idx="${idx}"]`);
                         if (inp) guncel.enflasyon[idx] = inp.value.trim();
@@ -3913,6 +4146,7 @@
         document.getElementById("yardimAramaInput").addEventListener("input", sosyalYardimlariCiz);
         document.getElementById("refreshBtn").addEventListener("click", () => verileriGetir(true));
 
+        yilSecenekleriniDoldur();
         otomatikAyAyarla();
         hesapla();
         ayEkle(232.5, 0, 0, 0, 0, 0, 0);
