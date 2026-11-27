@@ -446,35 +446,83 @@
             margin-top: 2px;
         }
 
-        /* BORDRO PUSULASI ÇIKTI ALANI */
-        .bordro-slip-card {
-            margin-top: 12px;
-            background: #ffffff;
-            border: 1.5px solid #94a3b8;
-            border-radius: 12px;
-            padding: 10px;
-            overflow-x: auto;
+        .print-action-btn {
+            width: 100%;
+            margin-top: 8px;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 11px;
+            background: #1d4ed8;
+            color: #fff;
+            font-weight: 800;
+            font-size: 13.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
-        .bordro-top-banner {
+        .pdf-save-btn {
+            padding: 8px 13px;
+            border: none;
+            border-radius: 9px;
+            background: #047857;
+            color: #fff;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .popup-print-btn {
+            padding: 8px 13px;
+            border: none;
+            border-radius: 9px;
+            background: #1d4ed8;
+            color: #fff;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* BORDRO POP-UP GÖRÜNTÜLEME */
+        .bordro-modal-card {
+            background: #ffffff;
+            border-radius: 16px;
+            max-width: 780px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 22px 50px rgba(15, 23, 42, 0.35);
+            overflow: hidden;
+        }
+
+        .bordro-popup-header {
+            background: #ffffff;
+            border-bottom: 2px solid #2563eb;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
-            border-bottom: 2px solid #1e3a8a;
-            padding-bottom: 8px;
-            margin-bottom: 8px;
+            gap: 10px;
         }
 
         .bordro-brand-left {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 9px;
         }
 
         .bordro-brand-logo {
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 8px;
             border: 1px solid #cbd5e1;
             background: #fff;
@@ -483,8 +531,8 @@
             justify-content: center;
             overflow: hidden;
             flex-shrink: 0;
-            font-weight: 800;
-            color: #1e3a8a;
+            font-weight: 900;
+            color: #1d4ed8;
         }
 
         .bordro-brand-logo img {
@@ -496,42 +544,44 @@
         }
 
         .bordro-brand-title {
-            font-size: 14px;
+            font-size: 14.5px;
             font-weight: 900;
             color: #0f172a;
             line-height: 1.1;
         }
 
         .bordro-brand-url {
-            font-size: 10.5px;
+            font-size: 11px;
             font-weight: 700;
             color: #1d4ed8;
             margin-top: 2px;
         }
 
-        .bordro-period-tag {
-            font-size: 11px;
-            font-weight: 800;
-            color: #0f172a;
-            background: #dbeafe;
-            border: 1px solid #93c5fd;
-            padding: 4px 8px;
-            border-radius: 6px;
-            white-space: nowrap;
+        .bordro-popup-body {
+            padding: 10px 12px;
+            overflow: auto;
+            background: #f1f5f9;
+        }
+
+        .bordro-paper {
+            background: #ffffff;
+            border: 1px solid #94a3b8;
+            padding: 6px;
+            overflow-x: auto;
         }
 
         table.bordro-sheet {
             width: 100%;
             border-collapse: collapse;
-            font-size: 9.5px;
+            font-size: 9px;
             color: #0f172a;
-            min-width: 540px;
+            min-width: 600px;
         }
 
         table.bordro-sheet th,
         table.bordro-sheet td {
             border: 1px solid #64748b;
-            padding: 3px 5px;
+            padding: 3px 4px;
             vertical-align: middle;
         }
 
@@ -540,7 +590,7 @@
             color: #ffffff;
             font-weight: 800;
             text-align: center;
-            font-size: 9.5px;
+            font-size: 9px;
             letter-spacing: 0.3px;
             text-transform: uppercase;
         }
@@ -550,7 +600,7 @@
             color: #0f172a;
             font-weight: 800;
             text-align: center;
-            font-size: 9px;
+            font-size: 8.5px;
         }
 
         .b-lbl {
@@ -583,24 +633,18 @@
             color: #ffffff;
             text-align: center;
             font-weight: 900;
-            font-size: 11.5px;
+            font-size: 11px;
         }
 
-        .print-action-btn {
-            width: 100%;
-            margin-top: 10px;
-            padding: 10px 12px;
-            border: none;
-            border-radius: 11px;
-            background: #1d4ed8;
-            color: #fff;
-            font-weight: 800;
-            font-size: 13.5px;
-            cursor: pointer;
+        .bordro-popup-footer {
+            padding: 10px 14px;
+            border-top: 1px solid var(--border);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: #f8fafc;
         }
 
         .mode-switch {
@@ -1412,7 +1456,7 @@
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 14px;
+            padding: 12px;
             z-index: 2000;
         }
 
@@ -1529,7 +1573,7 @@
             line-height: 1;
         }
 
-        /* YAZDIRMA ÖNİZLEME / PDF ÇIKTI MODU */
+        /* POP-UP YAZDIRMA / PDF ÇIKTISI */
         @media print {
             body {
                 background: #ffffff !important;
@@ -1539,46 +1583,46 @@
                 print-color-adjust: exact !important;
             }
 
-            .app-header,
-            .bottom-nav,
-            #view-calc .card > .card-title-row,
-            #view-calc .card > .two-col,
-            #view-calc .card > .output-grid,
-            #view-calc .card > .net-box,
-            #maasYazdirBtn,
-            .info-modal-backdrop {
+            body > *:not(#bordroPopupModal) {
                 display: none !important;
             }
 
-            .container {
-                max-width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-
-            #view-calc {
+            #bordroPopupModal {
+                position: static !important;
                 display: block !important;
-            }
-
-            #view-calc .card {
-                border: none !important;
-                box-shadow: none !important;
+                background: #ffffff !important;
                 padding: 0 !important;
-                margin: 0 !important;
+                backdrop-filter: none !important;
             }
 
-            .bordro-slip-card {
-                margin-top: 0 !important;
-                border: 1px solid #64748b !important;
+            .bordro-modal-card {
+                max-width: 100% !important;
+                max-height: none !important;
+                box-shadow: none !important;
                 border-radius: 0 !important;
-                padding: 6px !important;
+            }
+
+            .bordro-popup-footer,
+            .bordro-popup-close-btn {
+                display: none !important;
+            }
+
+            .bordro-popup-body {
+                padding: 0 !important;
+                background: #ffffff !important;
+                overflow: visible !important;
+            }
+
+            .bordro-paper {
+                border: none !important;
+                padding: 0 !important;
                 overflow: visible !important;
             }
 
             table.bordro-sheet {
                 min-width: 0 !important;
                 width: 100% !important;
-                font-size: 8.5px !important;
+                font-size: 8px !important;
             }
         }
     </style>
@@ -1765,160 +1809,7 @@
                     <div class="net-val" id="net-maas">0,00 TL</div>
                 </div>
 
-                <!-- BORDRO ÇIKTI ALANI -->
-                <div class="bordro-slip-card" id="bordroCiktiAlani">
-                    <div class="bordro-top-banner">
-                        <div class="bordro-brand-left">
-                            <div class="bordro-brand-logo" id="bordroLogoBox">
-                                <img src="Logo.png" alt="BordroApp Logo" onload="this.dataset.loaded='1'" onerror="if(!this.dataset.fb1){this.dataset.fb1='1';this.src='logo.png';}else if(!this.dataset.fb2){this.dataset.fb2='1';this.src='logo.jpg';}else{this.remove();document.getElementById('bordroLogoBox').textContent='B';}">
-                            </div>
-                            <div>
-                                <div class="bordro-brand-title">BordroApp</div>
-                                <div class="bordro-brand-url">bordroapp.web.app</div>
-                            </div>
-                        </div>
-                        <div class="bordro-period-tag" id="bDonemEtiket">Dönem: -</div>
-                    </div>
-
-                    <table class="bordro-sheet">
-                        <tr>
-                            <td class="b-lbl">Vergi Dilimi</td>
-                            <td class="b-val-c" id="bVergiDilimi">%15</td>
-                            <td class="b-lbl">Saat Ücreti</td>
-                            <td class="b-val" id="bSaatUcreti">0,00</td>
-                            <td class="b-lbl">Çalışma Saati</td>
-                            <td class="b-val" id="bCalismaSaati">0,00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="6" class="b-sec-hdr">KAZANÇLAR</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="b-sub-hdr">GELİR TANIMI</td>
-                            <td colspan="2" class="b-sub-hdr">SAAT / GÜN</td>
-                            <td class="b-sub-hdr">NET TUTAR</td>
-                            <td class="b-sub-hdr">BRÜT TUTAR</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Normal Çalışma</td>
-                            <td colspan="2" class="b-val-c" id="bNormalSaat">0,00</td>
-                            <td class="b-val">-</td>
-                            <td class="b-val" id="bNormalBrut">0,00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Gece Çalışması</td>
-                            <td colspan="2" class="b-val-c" id="bGeceSaat">0,00</td>
-                            <td class="b-val">-</td>
-                            <td class="b-val" id="bGeceBrut">0,00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Fazla Mesai</td>
-                            <td colspan="2" class="b-val-c" id="bFmSaat">0,00</td>
-                            <td class="b-val">-</td>
-                            <td class="b-val" id="bFmBrut">0,00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Ulusal Bayram</td>
-                            <td colspan="2" class="b-val-c" id="bUlusalSaat">0,00</td>
-                            <td class="b-val">-</td>
-                            <td class="b-val" id="bUlusalBrut">0,00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Dini Bayram</td>
-                            <td colspan="2" class="b-val-c" id="bDiniSaat">0,00</td>
-                            <td class="b-val">-</td>
-                            <td class="b-val" id="bDiniBrut">0,00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Resmi Tatil FM</td>
-                            <td colspan="2" class="b-val-c" id="bResmiSaat">0,00</td>
-                            <td class="b-val">-</td>
-                            <td class="b-val" id="bResmiBrut">0,00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Yol Ücreti</td>
-                            <td colspan="2" class="b-val-c">-</td>
-                            <td class="b-val">-</td>
-                            <td class="b-val" id="bYolBrut">0,00</td>
-                        </tr>
-                        <tr class="b-tot-row">
-                            <td colspan="4">KAZANÇ TOPLAMI</td>
-                            <td class="b-val" id="bNetIkramiyeAlt">0,00</td>
-                            <td class="b-val" id="bKazancToplamBrut">0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="6" class="b-sec-hdr">ÖZEL KESİNTİLER</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" class="b-sub-hdr">KESİNTİ TANIMI</td>
-                            <td colspan="3" class="b-sub-hdr">TUTAR</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">Sendika Kesintisi</td>
-                            <td colspan="3" class="b-val" id="bSendika">0,00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">Vakıf Kesintisi</td>
-                            <td colspan="3" class="b-val" id="bVakif">0,00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">Net BES Kesintisi</td>
-                            <td colspan="3" class="b-val" id="bBes">0,00</td>
-                        </tr>
-                        <tr class="b-tot-row">
-                            <td colspan="3">ÖZEL KESİNTİ TOPLAMI</td>
-                            <td colspan="3" class="b-val" id="bOzelKesintiToplam">0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="6" class="b-sec-hdr">YASAL KESİNTİLER</td>
-                        </tr>
-                        <tr>
-                            <td class="b-lbl">SGK Primi (%14)</td>
-                            <td class="b-val" id="bSgk">0,00</td>
-                            <td class="b-lbl">İşsizlik (%1)</td>
-                            <td class="b-val" id="bIssizlik">0,00</td>
-                            <td class="b-lbl">Vergi Matrahı</td>
-                            <td class="b-val" id="bMatrah">0,00</td>
-                        </tr>
-                        <tr>
-                            <td class="b-lbl">Gelir Vergisi</td>
-                            <td class="b-val" id="bGv">0,00</td>
-                            <td class="b-lbl">Damga Vergisi</td>
-                            <td class="b-val" id="bDv">0,00</td>
-                            <td class="b-lbl">GVİ + DVİ İstisna</td>
-                            <td class="b-val" id="bIstisnaToplam">0,00</td>
-                        </tr>
-                        <tr class="b-tot-row">
-                            <td colspan="5">YASAL KESİNTİ TOPLAMI</td>
-                            <td class="b-val" id="bYasalKesintiToplam">0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="6" class="b-sec-hdr">ÖDEME VE KESİNTİ TOPLAMLARI</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="b-lbl">Brüt Kazanç Toplamı</td>
-                            <td class="b-val" id="bOzetBrut">0,00</td>
-                            <td colspan="2" class="b-lbl">Kesinti Toplamı</td>
-                            <td class="b-val" id="bOzetKesinti">0,00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="b-lbl">Net İkramiye</td>
-                            <td class="b-val" id="bOzetIkramiye">0,00</td>
-                            <td colspan="3" rowspan="2" class="b-net-box">
-                                NET ÖDENEN MAAŞ<br>
-                                <span id="bNetOdenecek" style="font-size:13px;">0,00 TL</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="b-lbl">GVİ / DVİ İstisna</td>
-                            <td class="b-val" id="bOzetIstisna">0,00</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <button type="button" id="maasYazdirBtn" class="print-action-btn" onclick="bordroYazdirOnizleme()">🖨 Yazdır</button>
+                <button type="button" id="maasYazdirBtn" class="print-action-btn" onclick="bordroPopupAc()">🖨 Yazdır</button>
             </div>
         </section>
 
@@ -2387,6 +2278,190 @@
 
     </main>
 
+    <!-- BORDRO GÖRÜNTÜLEME POP-UP MODAL -->
+    <div id="bordroPopupModal" class="info-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="bordroPopupBaslik">
+        <div class="bordro-modal-card">
+            <div class="bordro-popup-header">
+                <div class="bordro-brand-left">
+                    <div class="bordro-brand-logo" id="popupLogoBox">
+                        <img src="Logo.png" alt="BordroApp Logo" onload="this.dataset.loaded='1'" onerror="if(!this.dataset.fb1){this.dataset.fb1='1';this.src='logo.png';}else if(!this.dataset.fb2){this.dataset.fb2='1';this.src='logo.jpg';}else{this.remove();document.getElementById('popupLogoBox').textContent='B';}">
+                    </div>
+                    <div>
+                        <div id="bordroPopupBaslik" class="bordro-brand-title">BordroApp</div>
+                        <div class="bordro-brand-url">bordroapp.web.app</div>
+                    </div>
+                </div>
+                <button type="button" class="secondary-action-btn bordro-popup-close-btn" onclick="bordroPopupKapat()">✕ Kapat</button>
+            </div>
+
+            <div class="bordro-popup-body">
+                <div class="bordro-paper">
+                    <table class="bordro-sheet">
+                        <tr>
+                            <td class="b-lbl">Dönem</td>
+                            <td class="b-val-c" id="pDonem">-</td>
+                            <td class="b-lbl">Vergi Dilimi</td>
+                            <td class="b-val-c" id="pVergiDilimi">%15</td>
+                            <td class="b-lbl">Saat Ücreti</td>
+                            <td class="b-val" id="pSaatUcreti">0,00</td>
+                            <td class="b-lbl">Çalışma Saati</td>
+                            <td class="b-val" id="pCalismaSaati">0,00</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="8" class="b-sec-hdr">KAZANÇLAR</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="b-sub-hdr">GELİR TANIMI</td>
+                            <td colspan="2" class="b-sub-hdr">SAAT / GÜN</td>
+                            <td class="b-sub-hdr">NET TUTAR</td>
+                            <td colspan="2" class="b-sub-hdr">BRÜT TUTAR</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Maaş / Normal Çalışma</td>
+                            <td colspan="2" class="b-val-c" id="pNormalSaat">0,00</td>
+                            <td class="b-val">-</td>
+                            <td colspan="2" class="b-val" id="pNormalBrut">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Gece Zammı / Gece Çalışma</td>
+                            <td colspan="2" class="b-val-c" id="pGeceSaat">0,00</td>
+                            <td class="b-val">-</td>
+                            <td colspan="2" class="b-val" id="pGeceBrut">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Fazla Mesai</td>
+                            <td colspan="2" class="b-val-c" id="pFmSaat">0,00</td>
+                            <td class="b-val">-</td>
+                            <td colspan="2" class="b-val" id="pFmBrut">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Ulusal Bayram</td>
+                            <td colspan="2" class="b-val-c" id="pUlusalSaat">0,00</td>
+                            <td class="b-val">-</td>
+                            <td colspan="2" class="b-val" id="pUlusalBrut">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Dini Bayram</td>
+                            <td colspan="2" class="b-val-c" id="pDiniSaat">0,00</td>
+                            <td class="b-val">-</td>
+                            <td colspan="2" class="b-val" id="pDiniBrut">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Resmi Tatil FM</td>
+                            <td colspan="2" class="b-val-c" id="pResmiSaat">0,00</td>
+                            <td class="b-val">-</td>
+                            <td colspan="2" class="b-val" id="pResmiBrut">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Yol Ücreti</td>
+                            <td colspan="2" class="b-val-c">-</td>
+                            <td class="b-val">-</td>
+                            <td colspan="2" class="b-val" id="pYolBrut">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">İkramiye</td>
+                            <td colspan="2" class="b-val-c">-</td>
+                            <td class="b-val" id="pIkramiyeNet">0,00</td>
+                            <td colspan="2" class="b-val" id="pIkramiyeBrut">0,00</td>
+                        </tr>
+                        <tr class="b-tot-row">
+                            <td colspan="5">TOPLAM KAZANÇ</td>
+                            <td class="b-val" id="pToplamKazancNet">0,00</td>
+                            <td colspan="2" class="b-val" id="pToplamKazancBrut">0,00</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="8" class="b-sec-hdr">ÖZEL KESİNTİLER</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="b-sub-hdr">KESİNTİ TANIMI</td>
+                            <td colspan="4" class="b-sub-hdr">TUTAR</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">Sendika Kesintisi</td>
+                            <td colspan="4" class="b-val" id="pSendika">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">Vakıf Kesintisi</td>
+                            <td colspan="4" class="b-val" id="pVakif">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">Net BES Kesintisi</td>
+                            <td colspan="4" class="b-val" id="pBes">0,00</td>
+                        </tr>
+                        <tr class="b-tot-row">
+                            <td colspan="4">ÖZEL KESİNTİ TOPLAMI</td>
+                            <td colspan="4" class="b-val" id="pOzelKesintiToplam">0,00</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="8" class="b-sec-hdr">YASAL KESİNTİLER</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="b-lbl">Sigorta Matrahı</td>
+                            <td colspan="2" class="b-val" id="pSigortaMatrahi">0,00</td>
+                            <td colspan="2" class="b-lbl">Sigorta Şahıs Tutarı</td>
+                            <td colspan="2" class="b-val" id="pSigortaSahis">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="b-lbl">Gelir Vergisi Matrahı</td>
+                            <td colspan="2" class="b-val" id="pGvMatrahi">0,00</td>
+                            <td colspan="2" class="b-lbl">İşsizlik Şahıs Tutarı</td>
+                            <td colspan="2" class="b-val" id="pIssizlikSahis">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="b-lbl">Damga Vergisi Matrahı</td>
+                            <td colspan="2" class="b-val" id="pDvMatrahi">0,00</td>
+                            <td colspan="2" class="b-lbl">Gelir Vergisi Tutarı</td>
+                            <td colspan="2" class="b-val" id="pGvTutari">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="b-lbl">GVİ / DVİ İstisna</td>
+                            <td colspan="2" class="b-val" id="pIstisnaToplam">0,00</td>
+                            <td colspan="2" class="b-lbl">Damga Vergisi</td>
+                            <td colspan="2" class="b-val" id="pDamgaVergisi">0,00</td>
+                        </tr>
+                        <tr class="b-tot-row">
+                            <td colspan="6">YASAL KESİNTİLER TOPLAMI</td>
+                            <td colspan="2" class="b-val" id="pYasalKesintiToplam">0,00</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="8" class="b-sec-hdr">ÖDEME VE KESİNTİ TOPLAMLARI</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="b-lbl">Brüt Kazanç Toplamı</td>
+                            <td colspan="2" class="b-val" id="pOzetBrut">0,00</td>
+                            <td colspan="2" class="b-lbl">Yasal Kesintiler Toplamı</td>
+                            <td colspan="2" class="b-val" id="pOzetYasal">0,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="b-lbl">Özel Kesintiler Toplamı</td>
+                            <td colspan="2" class="b-val" id="pOzetOzel">0,00</td>
+                            <td colspan="4" rowspan="2" class="b-net-box">
+                                NET ÖDENEN MAAŞ<br>
+                                <span id="pNetOdenecek" style="font-size:13px;">0,00 TL</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="b-lbl">Kesintiler Toplamı</td>
+                            <td colspan="2" class="b-val" id="pOzetKesinti">0,00</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bordro-popup-footer">
+                <button type="button" class="secondary-action-btn" onclick="bordroPopupKapat()">Kapat</button>
+                <div style="display:flex; gap:8px;">
+                    <button type="button" class="pdf-save-btn" onclick="bordroPdfKaydet()">📄 PDF Kaydet</button>
+                    <button type="button" class="popup-print-btn" onclick="bordroYazdir()">🖨 Yazdır</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ENFLASYON HESAPLAMA POP-UP MODAL -->
     <div id="enfSonucModal" class="info-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="enfModalBaslik">
         <div class="info-modal-card">
@@ -2703,19 +2778,21 @@
             const brut = normalBrut + geceBrut + yol + mesaiBrut;
 
             const vakifNetTutar = (su * gs / 100) * v_yuzde;
-            const sgk = brut * 0.14;
-            const issizlik = brut * 0.01;
+            const sigortaMatrahi = brut;
+            const sgkSahis = sigortaMatrahi * 0.14;
+            const issizlikSahis = sigortaMatrahi * 0.01;
             const sendika = su * 7.00;
 
-            const matrah = brut - sgk - issizlik - sendika;
-            let gv = (matrah * vo) - istisnaBilgi.gv;
-            if (gv < 0) gv = 0;
+            const gvMatrahi = Math.max(0, brut - sgkSahis - issizlikSahis - sendika);
+            let gvTutari = (gvMatrahi * vo) - istisnaBilgi.gv;
+            if (gvTutari < 0) gvTutari = 0;
 
-            let dv = (brut * 0.00759) - istisnaBilgi.dv;
-            if (dv < 0) dv = 0;
+            const dvMatrahi = brut;
+            let damgaVergisi = (dvMatrahi * 0.00759) - istisnaBilgi.dv;
+            if (damgaVergisi < 0) damgaVergisi = 0;
 
             const ozelKesintiToplam = sendika + vakifNetTutar + bes;
-            const yasalKesintiToplam = sgk + issizlik + gv + dv;
+            const yasalKesintiToplam = sgkSahis + issizlikSahis + gvTutari + damgaVergisi;
             const net = brut - ozelKesintiToplam - yasalKesintiToplam;
 
             const ikrBrut = su * 30 * 7.5;
@@ -2734,55 +2811,85 @@
             document.getElementById("net-ikramiye").innerText = f2(ikramiyeNet);
             document.getElementById("net-maas").innerText = f2(net) + " TL";
 
-            // Bordro pusulası alanlarını güncelle (isim, şahıs, bölüm, şirket bilgisi içermez)
+            // Pop-up bordro pusulası alanlarını güncelle (isim, şahıs, bölüm, şirket bilgisi içermez)
             const ayAd = (ayVerileri[ay] && ayVerileri[ay].ad) || ay;
             const yilVal = (document.getElementById("vYil") && document.getElementById("vYil").value) || new Date().getFullYear();
-            document.getElementById("bDonemEtiket").innerText = `${ayAd} ${yilVal}`;
-            document.getElementById("bVergiDilimi").innerText = `%${Math.round(vo * 100)}`;
-            document.getElementById("bSaatUcreti").innerText = f2(su);
-            document.getElementById("bCalismaSaati").innerText = f2(gs);
 
-            document.getElementById("bNormalSaat").innerText = f2(gs);
-            document.getElementById("bNormalBrut").innerText = f2(normalBrut);
-            document.getElementById("bGeceSaat").innerText = f2(gz);
-            document.getElementById("bGeceBrut").innerText = f2(geceBrut);
-            document.getElementById("bFmSaat").innerText = f2(fm);
-            document.getElementById("bFmBrut").innerText = f2(fmBrut);
-            document.getElementById("bUlusalSaat").innerText = f2(ul);
-            document.getElementById("bUlusalBrut").innerText = f2(ulusalBrut);
-            document.getElementById("bDiniSaat").innerText = f2(di);
-            document.getElementById("bDiniBrut").innerText = f2(diniBrut);
-            document.getElementById("bResmiSaat").innerText = f2(re);
-            document.getElementById("bResmiBrut").innerText = f2(resmiBrut);
-            document.getElementById("bYolBrut").innerText = f2(yol);
-            document.getElementById("bNetIkramiyeAlt").innerText = f2(ikramiyeNet);
-            document.getElementById("bKazancToplamBrut").innerText = f2(brut);
+            document.getElementById("pDonem").innerText = `${ayAd} ${yilVal}`;
+            document.getElementById("pVergiDilimi").innerText = `%${Math.round(vo * 100)}`;
+            document.getElementById("pSaatUcreti").innerText = f2(su);
+            document.getElementById("pCalismaSaati").innerText = f2(gs);
 
-            document.getElementById("bSendika").innerText = f2(sendika);
-            document.getElementById("bVakif").innerText = f2(vakifNetTutar);
-            document.getElementById("bBes").innerText = f2(bes);
-            document.getElementById("bOzelKesintiToplam").innerText = f2(ozelKesintiToplam);
+            document.getElementById("pNormalSaat").innerText = f2(gs);
+            document.getElementById("pNormalBrut").innerText = f2(normalBrut);
+            document.getElementById("pGeceSaat").innerText = f2(gz);
+            document.getElementById("pGeceBrut").innerText = f2(geceBrut);
+            document.getElementById("pFmSaat").innerText = f2(fm);
+            document.getElementById("pFmBrut").innerText = f2(fmBrut);
+            document.getElementById("pUlusalSaat").innerText = f2(ul);
+            document.getElementById("pUlusalBrut").innerText = f2(ulusalBrut);
+            document.getElementById("pDiniSaat").innerText = f2(di);
+            document.getElementById("pDiniBrut").innerText = f2(diniBrut);
+            document.getElementById("pResmiSaat").innerText = f2(re);
+            document.getElementById("pResmiBrut").innerText = f2(resmiBrut);
+            document.getElementById("pYolBrut").innerText = f2(yol);
+            document.getElementById("pIkramiyeNet").innerText = f2(ikramiyeNet);
+            document.getElementById("pIkramiyeBrut").innerText = f2(ikrBrut);
+            document.getElementById("pToplamKazancNet").innerText = f2(ikramiyeNet);
+            document.getElementById("pToplamKazancBrut").innerText = f2(brut);
 
-            document.getElementById("bSgk").innerText = f2(sgk);
-            document.getElementById("bIssizlik").innerText = f2(issizlik);
-            document.getElementById("bMatrah").innerText = f2(Math.max(0, matrah));
-            document.getElementById("bGv").innerText = f2(gv);
-            document.getElementById("bDv").innerText = f2(dv);
-            document.getElementById("bIstisnaToplam").innerText = f2(istisnaBilgi.gv + istisnaBilgi.dv);
-            document.getElementById("bYasalKesintiToplam").innerText = f2(yasalKesintiToplam);
+            document.getElementById("pSendika").innerText = f2(sendika);
+            document.getElementById("pVakif").innerText = f2(vakifNetTutar);
+            document.getElementById("pBes").innerText = f2(bes);
+            document.getElementById("pOzelKesintiToplam").innerText = f2(ozelKesintiToplam);
 
-            document.getElementById("bOzetBrut").innerText = f2(brut);
-            document.getElementById("bOzetKesinti").innerText = f2(ozelKesintiToplam + yasalKesintiToplam);
-            document.getElementById("bOzetIkramiye").innerText = f2(ikramiyeNet);
-            document.getElementById("bOzetIstisna").innerText = f2(istisnaBilgi.gv + istisnaBilgi.dv);
-            document.getElementById("bNetOdenecek").innerText = f2(net) + " TL";
+            document.getElementById("pSigortaMatrahi").innerText = f2(sigortaMatrahi);
+            document.getElementById("pGvMatrahi").innerText = f2(gvMatrahi);
+            document.getElementById("pDvMatrahi").innerText = f2(dvMatrahi);
+            document.getElementById("pSigortaSahis").innerText = f2(sgkSahis);
+            document.getElementById("pIssizlikSahis").innerText = f2(issizlikSahis);
+            document.getElementById("pGvTutari").innerText = f2(gvTutari);
+            document.getElementById("pDamgaVergisi").innerText = f2(damgaVergisi);
+            document.getElementById("pIstisnaToplam").innerText = f2(istisnaBilgi.gv + istisnaBilgi.dv);
+            document.getElementById("pYasalKesintiToplam").innerText = f2(yasalKesintiToplam);
+
+            document.getElementById("pOzetBrut").innerText = f2(brut);
+            document.getElementById("pOzetYasal").innerText = f2(yasalKesintiToplam);
+            document.getElementById("pOzetOzel").innerText = f2(ozelKesintiToplam);
+            document.getElementById("pOzetKesinti").innerText = f2(yasalKesintiToplam + ozelKesintiToplam);
+            document.getElementById("pNetOdenecek").innerText = f2(net) + " TL";
         };
 
-        window.bordroYazdirOnizleme = function() {
+        window.bordroPopupAc = function() {
+            if (typeof window.hesapla === "function") {
+                window.hesapla();
+            }
+            document.getElementById("bordroPopupModal").classList.add("open");
+        };
+
+        window.bordroPopupKapat = function() {
+            document.getElementById("bordroPopupModal").classList.remove("open");
+        };
+
+        window.bordroYazdir = function() {
             if (typeof window.hesapla === "function") {
                 window.hesapla();
             }
             window.print();
+        };
+
+        window.bordroPdfKaydet = function() {
+            if (typeof window.hesapla === "function") {
+                window.hesapla();
+            }
+            const oncekiBaslik = document.title;
+            const ay = document.getElementById("month").value;
+            const ayAd = (ayVerileri[ay] && ayVerileri[ay].ad) || ay;
+            document.title = `BordroApp_${ayAd}`;
+            window.print();
+            setTimeout(() => {
+                document.title = oncekiBaslik;
+            }, 600);
         };
 
         window.modDegistir = function(mod) {
