@@ -3563,11 +3563,14 @@
         }
 
         window.vardiyaAyVerisiniKaydet = async function() {
-            if (!aktifVardiyaKullanici) return;
+            if (!aktifVardiyaKullanici) {
+                alert("Önce vardiya ekranına giriş yapmalısınız.");
+                return;
+            }
             const btn = document.getElementById("vKaydetBtn");
             const durumEl = document.getElementById("vKayitDurumu");
-            btn.disabled = true;
-            durumEl.innerText = "Kaydediliyor...";
+            if (btn) btn.disabled = true;
+            if (durumEl) durumEl.innerText = "Kaydediliyor...";
 
             const topla = mevcutCizelgeVerisiniTopla();
             const ayEtiket = `${topla.yil}-${String(topla.ay).padStart(2, "0")}`;
@@ -3587,22 +3590,31 @@
             };
 
             yerelVardiyaYaz(anaBelgeId, kayitObj);
+            vardiyaOzetiHesapla();
 
             try {
-                await setDoc(doc(db, "vardiya_kayitlari", anaBelgeId), kayitObj, { merge: true });
-                durumEl.innerText = `${ayEtiket} kaydedildi`;
+                const yazmaPromise = setDoc(doc(db, "vardiya_kayitlari", anaBelgeId), kayitObj, { merge: true });
+                const zamanAsimiPromise = new Promise((_, reject) =>
+                    setTimeout(() => reject(new Error("Bağlantı zaman aşımına uğradı.")), 10000)
+                );
+                await Promise.race([yazmaPromise, zamanAsimiPromise]);
+
+                if (durumEl) durumEl.innerText = `${ayEtiket} kaydedildi`;
                 alert("Vardiya çizelgesi kaydedildi.");
             } catch (err) {
                 console.error("Vardiya kayıt hatası:", err);
-                durumEl.innerText = `${ayEtiket} cihazda`;
-                alert("Bulut kaydı yapılamadı ama veriler cihazınıza kaydedildi: " + err.message);
+                if (durumEl) durumEl.innerText = `${ayEtiket} cihazda`;
+                alert("Bulut kaydı tamamlanamadı, veriler cihazınıza kaydedildi: " + (err.message || err.code || "Bilinmeyen hata"));
             } finally {
-                btn.disabled = false;
+                if (btn) btn.disabled = false;
             }
         };
 
         window.vardiyaExceleAktar = function() {
-            if (!aktifVardiyaKullanici) return;
+            if (!aktifVardiyaKullanici) {
+                alert("Önce giriş yapmalısınız.");
+                return;
+            }
             const adayIdler = vardiyaBelgeIdAdaylariAl();
             const yerelKayit = yerelVardiyaBelgeOku(adayIdler);
             const mevcutTopla = mevcutCizelgeVerisiniTopla();
@@ -3675,30 +3687,52 @@
                 </html>
             `;
 
-            const blob = new Blob(["\ufeff" + excelIcerik], { type: "application/vnd.ms-excel;charset=utf-8;" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `vardiya_${yil}_${String(ay).padStart(2, "0")}.xls`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            try {
+                const blob = new Blob(["\ufeff" + excelIcerik], { type: "application/vnd.ms-excel;charset=utf-8;" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `vardiya_${yil}_${String(ay).padStart(2, "0")}.xls`;
+                a.style.display = "none";
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 1000);
+            } catch (err) {
+                console.error("Excel aktarım hatası:", err);
+                alert("Excel dosyası oluşturulamadı: " + err.message);
+            }
         };
 
         window.vardiyaMaasAktar = function() {
             const topla = mevcutCizelgeVerisiniTopla();
-            document.getElementById("month").value = String(topla.ay);
-            if (topla.saatUcreti > 0) {
-                document.getElementById("saat-ucreti").value = topla.saatUcreti;
-            }
-            document.getElementById("calisma-gun-saati").value = topla.toplamCalisma;
-            document.getElementById("gece-zammi").value = topla.toplamGece;
-            document.getElementById("fm-100").value = topla.toplamMesai;
-            hesapla();
+            const ayEl = document.getElementById("month");
+            const suEl = document.getElementById("saat-ucreti");
+            const csEl = document.getElementById("calisma-gun-saati");
+            const gzEl = document.getElementById("gece-zammi");
+            const fmEl = document.getElementById("fm-100");
 
+            if (ayEl) ayEl.value = String(topla.ay);
+            if (suEl && topla.saatUcreti > 0) suEl.value = topla.saatUcreti;
+            if (csEl) csEl.value = topla.toplamCalisma;
+            if (gzEl) gzEl.value = topla.toplamGece;
+            if (fmEl) fmEl.value = topla.toplamMesai;
+
+            if (typeof window.hesapla === "function") {
+                window.hesapla();
+            }
+
+            document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+            const calcView = document.getElementById("view-calc");
+            if (calcView) calcView.classList.add("active");
+
+            document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
             const maasBtn = document.querySelector('.nav-btn[data-target="view-calc"]');
-            if (maasBtn) ekranDegistir(maasBtn);
+            if (maasBtn) maasBtn.classList.add("active");
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
         };
 
         // --- YÖNETİM PANELİ GİRİŞ KONTROLÜ ---
