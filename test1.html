@@ -142,17 +142,6 @@
             cursor: pointer;
         }
 
-        .btn-danger {
-            padding: 8px 11px;
-            border-radius: 10px;
-            border: 1px solid #fecdd3;
-            background: #fff1f2;
-            color: var(--danger);
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
         .msg-box {
             margin-top: 10px;
             padding: 10px;
@@ -181,6 +170,16 @@
             background: var(--accent-soft);
             border: 1px solid #a7f3d0;
             color: var(--accent);
+        }
+
+        .security-note {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+            font-size: 11.5px;
+            line-height: 1.5;
+            color: var(--muted);
+            text-align: center;
         }
 
         /* GİRİŞ YAPILDIKTAN SONRAKİ UYGULAMA */
@@ -272,12 +271,12 @@
 </head>
 <body>
 
-    <!-- SADECE ÜYE VE E-POSTASI ONAYLI KULLANICILAR GEÇEBİLİR -->
+    <!-- SADECE ÜYELER GEÇEBİLİR -->
     <div id="authGate" class="gate-wrap">
         <div class="gate-card">
             <div class="gate-head">
                 <h1 class="gate-title">BordroApp Giriş</h1>
-                <p class="gate-sub">Sisteme yalnızca onaylı üyeler giriş yapabilir.</p>
+                <p class="gate-sub">E-posta ve şifrenizle giriş yapın veya üye olun.</p>
             </div>
 
             <div class="tabs">
@@ -310,18 +309,14 @@
                     <label for="regPass">Şifre</label>
                     <input type="password" id="regPass" required minlength="6" placeholder="En az 6 karakter">
                 </div>
-                <button type="submit" id="regBtn" class="btn-primary">Üye Ol ve Onay Maili Gönder</button>
+                <button type="submit" id="regBtn" class="btn-primary">Üye Ol</button>
             </form>
 
-            <div id="verifyBox" class="msg-box warn" style="display:none;">
-                <div><strong>E-posta onayı gerekli:</strong> Hesabına doğrulama bağlantısı gönderildi. E-postandaki bağlantıya tıkladıktan sonra giriş yapabilirsin.</div>
-                <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
-                    <button type="button" id="resendVerifyBtn" class="btn-secondary" onclick="dogrulamaMailiTekrarGonder()">Onay Mailini Tekrar Gönder</button>
-                    <button type="button" class="btn-danger" onclick="bekleyenOturumuKapat()">Kapat</button>
-                </div>
-            </div>
-
             <div id="gateMsg" class="msg-box"></div>
+
+            <div class="security-note">
+                Güvenlik sebebiyle üyelik sistemine geçilmiştir. Üye olurken tek seferlik e-posta onayı yapılır; onaylandıktan sonra e-posta ve şifrenizle giriş yapabilirsiniz.
+            </div>
         </div>
     </div>
 
@@ -341,9 +336,9 @@
 
         <main class="wrap">
             <section id="sec-home" class="card">
-                <h3 style="margin:0 0 6px;">Onaylı Üye Alanı</h3>
+                <h3 style="margin:0 0 6px;">Üye Alanı</h3>
                 <p style="margin:0; font-size:13px; color:var(--muted);">
-                    Bu alanı yalnızca e-postasını onaylamış kayıtlı üyeler görebilir. Rolün: <strong id="activeRoleText">user</strong>
+                    Bu alana yalnızca kayıtlı üyeler erişebilir. Rolün: <strong id="activeRoleText">Kullanıcı</strong>
                 </p>
             </section>
 
@@ -362,7 +357,6 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-        // Kendi Firebase config bilgilerinle aynıdır
         const firebaseConfig = {
             apiKey: "AIzaSyCo4jvLP_6kSD0RS8tE5_qjNTveTQJGMDI",
             authDomain: "bordroapp.firebaseapp.com",
@@ -378,6 +372,7 @@
         const db = getFirestore(app);
 
         let aktifProfil = null;
+        let kayitAsamasindaMi = false;
 
         function mesajGoster(tip, metin) {
             const box = document.getElementById("gateMsg");
@@ -394,7 +389,6 @@
 
         window.sekmeDegistir = function(sekme) {
             mesajGizle();
-            document.getElementById("verifyBox").style.display = "none";
             const isLogin = sekme === "login";
             document.getElementById("tabLogin").classList.toggle("active", isLogin);
             document.getElementById("tabRegister").classList.toggle("active", !isLogin);
@@ -402,32 +396,9 @@
             document.getElementById("registerForm").style.display = !isLogin ? "block" : "none";
         };
 
-        window.dogrulamaMailiTekrarGonder = async function() {
-            const user = auth.currentUser;
-            if (!user) {
-                mesajGoster("err", "Önce e-posta ve şifrenle giriş yapmalısın.");
-                return;
-            }
-            const btn = document.getElementById("resendVerifyBtn");
-            btn.disabled = true;
-            try {
-                await sendEmailVerification(user);
-                mesajGoster("ok", "Doğrulama maili tekrar gönderildi. Gelen kutunu ve spam klasörünü kontrol et.");
-            } catch (err) {
-                mesajGoster("err", "Mail gönderilemedi: " + err.message);
-            } finally {
-                btn.disabled = false;
-            }
-        };
-
-        window.bekleyenOturumuKapat = async function() {
-            await signOut(auth);
-            document.getElementById("verifyBox").style.display = "none";
-            mesajGizle();
-        };
-
         window.cikisYap = async function() {
             aktifProfil = null;
+            kayitAsamasindaMi = false;
             await signOut(auth);
         };
 
@@ -450,16 +421,21 @@
             }
         };
 
-        async function profilGetirVeyaOlustur(user, adSoyadOverride = "") {
+        async function profilGetirVeyaOlustur(user, adSoyadOverride = "", onaylandiMi = true) {
             const ref = doc(db, "uyeler", user.uid);
             const snap = await getDoc(ref);
             if (snap.exists()) {
                 const data = snap.data();
+                const guncelOnay = data.emailVerified === true || onaylandiMi;
+                if (data.emailVerified !== true && guncelOnay) {
+                    await setDoc(ref, { emailVerified: true }, { merge: true });
+                }
                 return {
                     uid: user.uid,
                     email: user.email,
                     adSoyad: data.adSoyad || adSoyadOverride || user.email,
-                    role: data.role === "admin" ? "admin" : "user"
+                    role: data.role === "admin" ? "admin" : "user",
+                    emailVerified: guncelOnay
                 };
             }
 
@@ -468,7 +444,7 @@
                 email: user.email,
                 adSoyad: adSoyadOverride || user.email.split("@")[0],
                 role: "user",
-                emailVerified: true,
+                emailVerified: onaylandiMi,
                 createdAt: new Date().toISOString()
             };
             await setDoc(ref, yeniProfil, { merge: true });
@@ -498,123 +474,4 @@
                             <div style="font-weight:800;">${u.adSoyad || "-"}</div>
                             <div style="font-size:12px; color:var(--muted);">${u.email || docSnap.id}</div>
                         </div>
-                        <div style="display:flex; gap:8px; align-items:center;">
-                            <span class="role-badge ${rol === "admin" ? "admin" : ""}">${rol === "admin" ? "Yönetici" : "Kullanıcı"}</span>
-                            <select onchange="kullaniciRolDegistir('${docSnap.id}', this.value)">
-                                <option value="user" ${rol === "user" ? "selected" : ""}>Kullanıcı</option>
-                                <option value="admin" ${rol === "admin" ? "selected" : ""}>Yönetici</option>
-                            </select>
-                        </div>
-                    `;
-                    container.appendChild(row);
-                });
-            } catch (err) {
-                container.innerHTML = "Kullanıcı listesi alınamadı: " + err.message;
-            }
-        };
-
-        window.kullaniciRolDegistir = async function(uid, yeniRol) {
-            if (!aktifProfil || aktifProfil.role !== "admin") return;
-            try {
-                await setDoc(doc(db, "uyeler", uid), {
-                    role: yeniRol === "admin" ? "admin" : "user",
-                    updatedAt: new Date().toISOString()
-                }, { merge: true });
-                kullanicilariListele();
-                alert("Kullanıcı yetkisi güncellendi.");
-            } catch (err) {
-                alert("Yetki güncellenemedi: " + err.message);
-            }
-        };
-
-        document.getElementById("registerForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            mesajGizle();
-            const adSoyad = document.getElementById("regName").value.trim();
-            const email = document.getElementById("regEmail").value.trim().toLowerCase();
-            const pass = document.getElementById("regPass").value;
-            const btn = document.getElementById("regBtn");
-            btn.disabled = true;
-
-            try {
-                const cred = await createUserWithEmailAndPassword(auth, email, pass);
-                await setDoc(doc(db, "uyeler", cred.user.uid), {
-                    uid: cred.user.uid,
-                    adSoyad,
-                    email,
-                    role: "user",
-                    emailVerified: false,
-                    createdAt: new Date().toISOString()
-                }, { merge: true });
-
-                await sendEmailVerification(cred.user);
-                document.getElementById("verifyBox").style.display = "block";
-                mesajGoster("ok", "Üyelik oluşturuldu. E-postana onay bağlantısı gönderildi; onayladıktan sonra giriş yapabilirsin.");
-            } catch (err) {
-                mesajGoster("err", "Üyelik hatası: " + err.message);
-            } finally {
-                btn.disabled = false;
-            }
-        });
-
-        document.getElementById("loginForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            mesajGizle();
-            document.getElementById("verifyBox").style.display = "none";
-            const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-            const pass = document.getElementById("loginPass").value;
-            const btn = document.getElementById("loginBtn");
-            btn.disabled = true;
-
-            try {
-                const cred = await signInWithEmailAndPassword(auth, email, pass);
-                await cred.user.reload();
-
-                if (!cred.user.emailVerified) {
-                    document.getElementById("verifyBox").style.display = "block";
-                    return;
-                }
-
-                await setDoc(doc(db, "uyeler", cred.user.uid), {
-                    emailVerified: true,
-                    lastLoginAt: new Date().toISOString()
-                }, { merge: true });
-            } catch (err) {
-                mesajGoster("err", "Giriş başarısız: E-posta veya şifre hatalı.");
-            } finally {
-                btn.disabled = false;
-            }
-        });
-
-        onAuthStateChanged(auth, async (user) => {
-            const authGate = document.getElementById("authGate");
-            const appShell = document.getElementById("appShell");
-
-            if (!user) {
-                aktifProfil = null;
-                authGate.style.display = "flex";
-                appShell.style.display = "none";
-                return;
-            }
-
-            await user.reload();
-            if (!user.emailVerified) {
-                aktifProfil = null;
-                authGate.style.display = "flex";
-                appShell.style.display = "none";
-                document.getElementById("verifyBox").style.display = "block";
-                return;
-            }
-
-            aktifProfil = await profilGetirVeyaOlustur(user);
-            authGate.style.display = "none";
-            appShell.style.display = "block";
-
-            document.getElementById("activeUserInfo").innerText = `${aktifProfil.adSoyad} (${aktifProfil.email})`;
-            document.getElementById("activeRoleText").innerText = aktifProfil.role === "admin" ? "Yönetici" : "Kullanıcı";
-            document.getElementById("adminPanelBtn").style.display = aktifProfil.role === "admin" ? "inline-block" : "none";
-            ekranGoster("home");
-        });
-    </script>
-</body>
-</html>
+                        <div style="display:flex; gap:
