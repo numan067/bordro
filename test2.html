@@ -14,11 +14,6 @@
             --text-main: #f1f5f9;
             --text-muted: #94a3b8;
             --accent-cyan: #22d3ee;
-            --badge-gunduz: #0ea5e9;
-            --badge-vardiya: #22c55e;
-            --badge-gece: #6366f1;
-            --badge-tatil: #f43f5e;
-            --badge-izin: #eab308;
         }
 
         * {
@@ -37,12 +32,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px 12px;
+            padding: 16px 10px;
         }
 
         .device-frame {
             width: 100%;
-            max-width: 780px;
+            max-width: 820px;
             background: linear-gradient(165deg, #102a52 0%, var(--panel-bg) 55%, #08172d 100%);
             border: 1.5px solid var(--panel-border);
             border-radius: 22px;
@@ -57,9 +52,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 12px;
+            padding-bottom: 10px;
             border-bottom: 1px solid rgba(148, 163, 184, 0.18);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .brand-wrap {
@@ -93,61 +88,85 @@
         .top-icons {
             display: flex;
             align-items: center;
-            gap: 12px;
-            color: #cbd5e1;
-            font-size: 16px;
+            gap: 8px;
         }
 
         .top-icon-btn {
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(148, 163, 184, 0.22);
             color: #e2e8f0;
-            width: 32px;
             height: 32px;
+            padding: 0 10px;
             border-radius: 9px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 700;
         }
 
-        .toolbar {
+        .top-icon-btn.active-mode {
+            background: rgba(34, 211, 238, 0.22);
+            border-color: var(--accent-cyan);
+            color: #ffffff;
+        }
+
+        .schedule-heading-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 14px;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
         .schedule-title {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 800;
             color: #ffffff;
+            margin: 0;
         }
 
-        .selectors {
-            display: flex;
-            align-items: center;
+        .toolbar-controls {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 8px;
+            margin-bottom: 14px;
         }
 
-        .select-pill {
-            background: rgba(15, 23, 42, 0.78);
+        .ctrl-box {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 0;
+        }
+
+        .ctrl-label {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #94a3b8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .select-pill, .rate-input {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.82);
             border: 1px solid rgba(148, 163, 184, 0.35);
             color: #f8fafc;
             border-radius: 8px;
-            padding: 6px 10px;
-            font-size: 13px;
+            padding: 6px 8px;
+            font-size: 12.5px;
             font-weight: 700;
-            cursor: pointer;
+            min-width: 0;
         }
 
-        .select-pill:focus {
+        .select-pill:focus, .rate-input:focus {
             outline: none;
             border-color: var(--accent-cyan);
         }
@@ -156,35 +175,36 @@
             display: grid;
             grid-template-columns: repeat(7, minmax(0, 1fr));
             gap: 6px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .weekday-hdr {
             text-align: center;
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 700;
             color: #cbd5e1;
-            padding: 6px 2px;
+            padding: 4px 2px;
         }
 
         .day-cell {
             background: var(--cell-bg);
-            border: 1px solid rgba(148, 163, 184, 0.16);
+            border: 1.5px solid rgba(148, 163, 184, 0.18);
             border-radius: 10px;
-            min-height: 62px;
-            padding: 6px 5px;
+            min-height: 66px;
+            padding: 5px 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
+            gap: 2px;
             cursor: pointer;
             transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
             user-select: none;
+            min-width: 0;
         }
 
         .day-cell:hover:not(.empty) {
             background: var(--cell-hover);
-            border-color: rgba(56, 189, 248, 0.5);
             transform: translateY(-1px);
         }
 
@@ -194,29 +214,36 @@
             cursor: default;
         }
 
+        .day-cell.border-tatil {
+            border-color: #f43f5e;
+        }
+
+        .day-cell.border-izin {
+            border-color: #eab308;
+        }
+
         .day-cell.selected {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 0 1px var(--accent-cyan);
+            box-shadow: 0 0 0 2px var(--accent-cyan);
         }
 
         .day-number {
-            font-size: 13px;
+            font-size: 10.5px;
             font-weight: 700;
             color: var(--text-muted);
-            line-height: 1.1;
+            line-height: 1;
         }
 
         .day-cell.has-shift .day-number {
-            color: #f8fafc;
+            color: #e2e8f0;
         }
 
         .shift-pill {
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 800;
             color: #ffffff;
-            padding: 2px 7px;
+            padding: 2px 5px;
             border-radius: 6px;
-            line-height: 1.25;
+            line-height: 1.2;
             white-space: nowrap;
             max-width: 100%;
             overflow: hidden;
@@ -224,15 +251,15 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
 
-        .pill-gunduz {
+        .pill-v1 {
             background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
         }
 
-        .pill-vardiya {
+        .pill-v2 {
             background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
         }
 
-        .pill-gece {
+        .pill-v3 {
             background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
         }
 
@@ -243,6 +270,21 @@
         .pill-izin {
             background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
             color: #1e293b;
+        }
+
+        .mesai-tag {
+            font-size: 9px;
+            font-weight: 800;
+            color: #6ee7b7;
+            background: rgba(16, 185, 129, 0.16);
+            border: 1px solid rgba(52, 211, 153, 0.35);
+            border-radius: 5px;
+            padding: 1px 4px;
+            line-height: 1.15;
+            white-space: nowrap;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .summary-row {
@@ -263,7 +305,7 @@
         }
 
         .summary-icon {
-            font-size: 22px;
+            font-size: 20px;
             line-height: 1;
             flex-shrink: 0;
         }
@@ -273,7 +315,7 @@
         }
 
         .summary-label {
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 600;
             color: #cbd5e1;
             white-space: nowrap;
@@ -283,7 +325,7 @@
 
         .summary-value {
             margin-top: 3px;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 900;
             color: #ffffff;
             white-space: nowrap;
@@ -291,8 +333,8 @@
 
         .editor-bar {
             margin-top: 12px;
-            background: rgba(15, 36, 68, 0.65);
-            border: 1px solid rgba(148, 163, 184, 0.2);
+            background: rgba(15, 36, 68, 0.72);
+            border: 1px solid rgba(148, 163, 184, 0.22);
             border-radius: 12px;
             padding: 10px 12px;
             display: flex;
@@ -311,7 +353,7 @@
         }
 
         .mini-input {
-            width: 72px;
+            width: 68px;
             background: rgba(9, 22, 43, 0.9);
             border: 1px solid rgba(148, 163, 184, 0.35);
             color: #fff;
@@ -322,25 +364,46 @@
             text-align: center;
         }
 
-        @media (max-width: 600px) {
+        .action-mini-btn {
+            background: rgba(34, 211, 238, 0.16);
+            border: 1px solid rgba(34, 211, 238, 0.45);
+            color: #e0f2fe;
+            border-radius: 7px;
+            padding: 5px 9px;
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        @media (max-width: 640px) {
+            .toolbar-controls {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
             .device-frame {
                 padding: 12px 10px 16px;
                 border-radius: 16px;
             }
             .schedule-title {
-                font-size: 15px;
+                font-size: 16px;
             }
             .calendar-grid {
                 gap: 4px;
             }
             .day-cell {
-                min-height: 54px;
-                padding: 5px 2px;
+                min-height: 60px;
+                padding: 4px 2px;
                 border-radius: 8px;
             }
+            .day-number {
+                font-size: 9.5px;
+            }
             .shift-pill {
-                font-size: 9px;
-                padding: 2px 4px;
+                font-size: 8.5px;
+                padding: 1.5px 3px;
+            }
+            .mesai-tag {
+                font-size: 8px;
+                padding: 1px 3px;
             }
             .summary-row {
                 gap: 6px;
@@ -350,13 +413,13 @@
                 gap: 6px;
             }
             .summary-icon {
-                font-size: 17px;
+                font-size: 16px;
             }
             .summary-label {
                 font-size: 10px;
             }
             .summary-value {
-                font-size: 14px;
+                font-size: 13.5px;
             }
         }
     </style>
@@ -369,22 +432,29 @@
                 <div class="brand-name">BordroApp</div>
             </div>
             <div class="top-icons">
+                <button type="button" id="topluBtn" class="top-icon-btn" onclick="topluSecimModunuDegistir()">☑️ Toplu Seçim: Kapalı</button>
                 <button type="button" class="top-icon-btn" title="Profil" onclick="alert('Test 2 vardiya çizelgesi aktif.')">👤</button>
-                <button type="button" class="top-icon-btn" title="Hafta Tatili Sıfırla" onclick="haftaTatiliEsitle()">🔄</button>
             </div>
         </div>
 
-        <div class="toolbar">
-            <div class="schedule-title">
+        <div class="schedule-heading-row">
+            <h1 class="schedule-title">
                 <span>🗓️</span>
                 <span>Vardiya Çizelgesi</span>
-            </div>
-            <div class="selectors">
+            </h1>
+        </div>
+
+        <div class="toolbar-controls">
+            <div class="ctrl-box">
+                <label class="ctrl-label" for="yilSec">Yıl</label>
                 <select id="yilSec" class="select-pill" onchange="takvimiCiz()">
                     <option value="2025">2025</option>
                     <option value="2026" selected>2026</option>
                     <option value="2027">2027</option>
                 </select>
+            </div>
+            <div class="ctrl-box">
+                <label class="ctrl-label" for="aySec">Ay</label>
                 <select id="aySec" class="select-pill" onchange="takvimiCiz()">
                     <option value="0">Ocak</option>
                     <option value="1">Şubat</option>
@@ -399,6 +469,23 @@
                     <option value="10" selected>Kasım</option>
                     <option value="11">Aralık</option>
                 </select>
+            </div>
+            <div class="ctrl-box">
+                <label class="ctrl-label" for="haftaTatiliSec">Hafta Tatili</label>
+                <select id="haftaTatiliSec" class="select-pill" onchange="haftaTatiliDegistir()">
+                    <option value="none">Seçili Yok</option>
+                    <option value="1">Pazartesi</option>
+                    <option value="2">Salı</option>
+                    <option value="3">Çarşamba</option>
+                    <option value="4">Perşembe</option>
+                    <option value="5">Cuma</option>
+                    <option value="6" selected>Cumartesi</option>
+                    <option value="0">Pazar</option>
+                </select>
+            </div>
+            <div class="ctrl-box">
+                <label class="ctrl-label" for="saatUcretiInput">Saat Ücreti (TL)</label>
+                <input type="number" id="saatUcretiInput" class="rate-input" min="0" step="0.01" placeholder="0.00">
             </div>
         </div>
 
@@ -429,68 +516,62 @@
         </div>
 
         <div class="editor-bar">
-            <div id="seciliGunBilgi">Günlere tıklayarak vardiya değiştirin (1. gün seçili)</div>
+            <div id="seciliGunBilgi">1. gün seçili</div>
             <div class="editor-controls">
-                <select id="seciliTur" class="select-pill" style="padding:4px 8px; font-size:12px;" onchange="seciliGunGuncelle()">
-                    <option value="gunduz">Gündüz (7.5s)</option>
-                    <option value="vardiya">Vardiya (7.5s)</option>
-                    <option value="gece">Gece (7.5s + Gece)</option>
+                <select id="seciliTur" class="select-pill" style="width:auto; padding:4px 8px; font-size:12px;" onchange="seciliGunleriGuncelle()">
+                    <option value="v1">1. Vardiya</option>
+                    <option value="v2">2. Vardiya</option>
+                    <option value="v3">3. Vardiya</option>
                     <option value="tatil">H.Tatili</option>
                     <option value="izin">İzin</option>
                 </select>
-                <label>F.Mesai: <input type="number" id="seciliMesai" class="mini-input" min="0" step="0.5" value="0" oninput="seciliGunGuncelle()"></label>
-                <label>Eksik: <input type="number" id="seciliEksik" class="mini-input" min="0" step="0.5" value="0" oninput="seciliGunGuncelle()"></label>
+                <label>Mesai: <input type="number" id="seciliMesai" class="mini-input" min="0" step="0.5" value="0" oninput="seciliGunleriGuncelle()"></label>
+                <label>Eksik: <input type="number" id="seciliEksik" class="mini-input" min="0" step="0.5" value="0" oninput="seciliGunleriGuncelle()"></label>
+                <button type="button" class="action-mini-btn" onclick="secimiTemizle()">Seçimi Temizle</button>
             </div>
         </div>
     </div>
 
     <script>
-        const TUR_SIRASI = ["gunduz", "vardiya", "gece", "tatil", "izin"];
+        const TUR_SIRASI = ["v1", "v2", "v3", "tatil", "izin"];
         const TUR_BILGI = {
-            gunduz: { etiket: "Gündüz", sinif: "pill-gunduz", saat: 7.5, gece: 0 },
-            vardiya: { etiket: "Vardiya", sinif: "pill-vardiya", saat: 7.5, gece: 4 },
-            gece: { etiket: "Gece", sinif: "pill-gece", saat: 7.5, gece: 6 },
+            v1: { etiket: "1. Vardiya", sinif: "pill-v1", saat: 7.5, gece: 0 },
+            v2: { etiket: "2. Vardiya", sinif: "pill-v2", saat: 7.5, gece: 4 },
+            v3: { etiket: "3. Vardiya", sinif: "pill-v3", saat: 7.5, gece: 6 },
             tatil: { etiket: "H.Tatili", sinif: "pill-tatil", saat: 0, gece: 0 },
             izin: { etiket: "İzin", sinif: "pill-izin", saat: 7.5, gece: 0 }
         };
 
         const kayitlar = {};
-        let seciliGunNo = 1;
-
-        function donemAnahtari() {
-            const yil = document.getElementById("yilSec").value;
-            const ay = document.getElementById("aySec").value;
-            return `${yil}-${ay}`;
-        }
+        let topluSecimAktif = false;
+        let seciliGunler = [1];
+        let aktifOdakGun = 1;
 
         function donemVerisiniGetir(yil, ay) {
             const key = `${yil}-${ay}`;
             if (kayitlar[key]) return kayitlar[key];
 
             const gunSayisi = new Date(yil, ay + 1, 0).getDate();
+            const tatilVal = document.getElementById("haftaTatiliSec").value;
+            const tatilGunNo = tatilVal === "none" ? -1 : parseInt(tatilVal, 10);
             const map = {};
 
             for (let g = 1; g <= gunSayisi; g++) {
-                const tarih = new Date(yil, ay, g);
-                const hGun = tarih.getDay(); // 0: Paz, 1: Pzt ... 6: Cmt
-                let tur = "gunduz";
+                const hGun = new Date(yil, ay, g).getDay();
+                let tur = "v1";
                 let mesai = 0;
 
                 if (yil === 2026 && ay === 10 && g <= 28) {
-                    const ornekDesen = {
-                        1: "gunduz", 2: "gunduz", 3: "gece", 4: "vardiya", 5: "gunduz",
-                        6: "tatil", 7: "tatil", 8: "gece", 9: "vardiya", 10: "gunduz",
-                        11: "gunduz", 12: "gece", 13: "tatil", 14: "tatil", 15: "vardiya",
-                        16: "gunduz", 17: "gunduz", 18: "gece", 19: "vardiya", 20: "tatil",
+                    const desen = {
+                        1: "v1", 2: "v1", 3: "v3", 4: "v2", 5: "v1",
+                        6: "tatil", 7: "tatil", 8: "v3", 9: "v2", 10: "v1",
+                        11: "v1", 12: "v3", 13: "tatil", 14: "tatil", 15: "v2",
+                        16: "v1", 17: "v1", 18: "v3", 19: "v2", 20: "tatil",
                         21: "tatil"
                     };
-                    if (ornekDesen[g]) {
-                        tur = ornekDesen[g];
-                    } else {
-                        tur = null;
-                    }
+                    tur = desen[g] !== undefined ? desen[g] : null;
                     if ([3, 8, 12, 18].includes(g)) mesai = 6;
-                } else if (hGun === 0 || hGun === 6) {
+                } else if (tatilGunNo !== -1 && hGun === tatilGunNo) {
                     tur = "tatil";
                 }
 
@@ -501,7 +582,13 @@
             return map;
         }
 
-        function haftaTatiliEsitle() {
+        function haftaTatiliDegistir() {
+            const val = document.getElementById("haftaTatiliSec").value;
+            if (val === "none") {
+                takvimiCiz();
+                return;
+            }
+            const tatilGunNo = parseInt(val, 10);
             const yil = parseInt(document.getElementById("yilSec").value, 10);
             const ay = parseInt(document.getElementById("aySec").value, 10);
             const gunSayisi = new Date(yil, ay + 1, 0).getDate();
@@ -509,12 +596,33 @@
 
             for (let g = 1; g <= gunSayisi; g++) {
                 const hGun = new Date(yil, ay, g).getDay();
-                map[g] = {
-                    tur: (hGun === 0 || hGun === 6) ? "tatil" : "gunduz",
-                    mesai: 0,
-                    eksik: 0
-                };
+                const mevcut = map[g] || { tur: null, mesai: 0, eksik: 0 };
+                if (hGun === tatilGunNo) {
+                    mevcut.tur = "tatil";
+                } else if (mevcut.tur === "tatil") {
+                    mevcut.tur = "v1";
+                }
+                map[g] = mevcut;
             }
+            takvimiCiz();
+        }
+
+        function topluSecimModunuDegistir() {
+            topluSecimAktif = !topluSecimAktif;
+            const btn = document.getElementById("topluBtn");
+            if (topluSecimAktif) {
+                btn.classList.add("active-mode");
+                btn.textContent = "☑️ Toplu Seçim: Açık";
+            } else {
+                btn.classList.remove("active-mode");
+                btn.textContent = "☑️ Toplu Seçim: Kapalı";
+                seciliGunler = [aktifOdakGun];
+            }
+            takvimiCiz();
+        }
+
+        function secimiTemizle() {
+            seciliGunler = [aktifOdakGun];
             takvimiCiz();
         }
 
@@ -524,42 +632,66 @@
             const map = donemVerisiniGetir(yil, ay);
             const mevcut = map[gun] || { tur: null, mesai: 0, eksik: 0 };
 
-            if (seciliGunNo === gun) {
-                const idx = mevcut.tur ? TUR_SIRASI.indexOf(mevcut.tur) : -1;
-                const sonrakiTur = TUR_SIRASI[(idx + 1) % TUR_SIRASI.length];
-                mevcut.tur = sonrakiTur;
+            if (topluSecimAktif) {
+                aktifOdakGun = gun;
+                if (seciliGunler.includes(gun)) {
+                    if (seciliGunler.length > 1) {
+                        seciliGunler = seciliGunler.filter(x => x !== gun);
+                    }
+                } else {
+                    seciliGunler.push(gun);
+                }
             } else {
-                seciliGunNo = gun;
-                if (!mevcut.tur) mevcut.tur = "gunduz";
+                if (aktifOdakGun === gun && seciliGunler.length === 1 && seciliGunler[0] === gun) {
+                    const idx = mevcut.tur ? TUR_SIRASI.indexOf(mevcut.tur) : -1;
+                    mevcut.tur = TUR_SIRASI[(idx + 1) % TUR_SIRASI.length];
+                } else {
+                    aktifOdakGun = gun;
+                    seciliGunler = [gun];
+                    if (!mevcut.tur) mevcut.tur = "v1";
+                }
+                map[gun] = mevcut;
             }
 
-            map[gun] = mevcut;
             takvimiCiz();
         }
 
-        function seciliGunGuncelle() {
+        function seciliGunleriGuncelle() {
             const yil = parseInt(document.getElementById("yilSec").value, 10);
             const ay = parseInt(document.getElementById("aySec").value, 10);
             const map = donemVerisiniGetir(yil, ay);
+
             const tur = document.getElementById("seciliTur").value;
             const mesai = Math.max(0, parseFloat(document.getElementById("seciliMesai").value) || 0);
             const eksik = Math.max(0, parseFloat(document.getElementById("seciliEksik").value) || 0);
 
-            map[seciliGunNo] = { tur, mesai, eksik };
+            seciliGunler.forEach(g => {
+                map[g] = { tur, mesai, eksik };
+            });
+
             takvimiCiz();
         }
 
         function editorSenkronizeEt(map, gunSayisi) {
-            if (seciliGunNo > gunSayisi) seciliGunNo = 1;
+            if (aktifOdakGun > gunSayisi) aktifOdakGun = 1;
+            seciliGunler = seciliGunler.filter(g => g >= 1 && g <= gunSayisi);
+            if (seciliGunler.length === 0) seciliGunler = [aktifOdakGun];
+
             const ayAd = document.getElementById("aySec").selectedOptions[0].text;
             const yil = document.getElementById("yilSec").value;
-            const veri = map[seciliGunNo] || { tur: "gunduz", mesai: 0, eksik: 0 };
+            const odakVeri = map[aktifOdakGun] || { tur: "v1", mesai: 0, eksik: 0 };
 
-            document.getElementById("seciliGunBilgi").textContent =
-                `Seçili Gün: ${seciliGunNo} ${ayAd} ${yil} (Aynı güne tekrar basınca vardiya değişir)`;
-            document.getElementById("seciliTur").value = veri.tur || "gunduz";
-            document.getElementById("seciliMesai").value = veri.mesai || 0;
-            document.getElementById("seciliEksik").value = veri.eksik || 0;
+            const bilgiEl = document.getElementById("seciliGunBilgi");
+            if (seciliGunler.length > 1) {
+                const sirali = [...seciliGunler].sort((a, b) => a - b);
+                bilgiEl.textContent = `${sirali.length} gün seçili (${sirali.join(", ")}) — ${ayAd} ${yil}`;
+            } else {
+                bilgiEl.textContent = `${aktifOdakGun} ${ayAd} ${yil} seçili`;
+            }
+
+            document.getElementById("seciliTur").value = odakVeri.tur || "v1";
+            document.getElementById("seciliMesai").value = odakVeri.mesai || 0;
+            document.getElementById("seciliEksik").value = odakVeri.eksik || 0;
         }
 
         function takvimiCiz() {
@@ -567,7 +699,7 @@
             const ay = parseInt(document.getElementById("aySec").value, 10);
             const izgara = document.getElementById("takvimIzgara");
             const gunSayisi = new Date(yil, ay + 1, 0).getDate();
-            const ilkGunPztIdx = (new Date(yil, ay, 1).getDay() + 6) % 7; // Pzt=0 ... Paz=6
+            const ilkGunPztIdx = (new Date(yil, ay, 1).getDay() + 6) % 7;
             const map = donemVerisiniGetir(yil, ay);
 
             izgara.innerHTML = "";
@@ -590,8 +722,18 @@
 
             for (let g = 1; g <= gunSayisi; g++) {
                 const d = map[g] || { tur: null, mesai: 0, eksik: 0 };
+                const isSelected = seciliGunler.includes(g);
+
+                let borderClass = "";
+                if (d.tur === "tatil") borderClass = " border-tatil";
+                else if (d.tur === "izin") borderClass = " border-izin";
+
                 const cell = document.createElement("div");
-                cell.className = "day-cell" + (d.tur ? " has-shift" : "") + (g === seciliGunNo ? " selected" : "");
+                cell.className =
+                    "day-cell" +
+                    (d.tur ? " has-shift" : "") +
+                    borderClass +
+                    (isSelected ? " selected" : "");
                 cell.onclick = () => gunTiklandi(g);
 
                 const numEl = document.createElement("div");
@@ -613,6 +755,13 @@
                 } else if ((d.mesai || 0) > 0) {
                     toplamMesai += d.mesai;
                     toplamCalisma += d.mesai;
+                }
+
+                if ((d.mesai || 0) > 0) {
+                    const mesaiBadge = document.createElement("div");
+                    mesaiBadge.className = "mesai-tag";
+                    mesaiBadge.textContent = `+${d.mesai}s Mesai`;
+                    cell.appendChild(mesaiBadge);
                 }
 
                 izgara.appendChild(cell);
